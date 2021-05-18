@@ -8,12 +8,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float runSpeed;
     float moveSpeed;
     CharacterController characterController;
-    PlayerStatus playerStatus;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        playerStatus = GetComponent<PlayerStatus>();
     }
 
     void Update()
@@ -23,11 +21,11 @@ public class PlayerMovement : MonoBehaviour
 
         moveSpeed = walkSpeed;
 
-        if (Input.GetButton("Sneak") && !playerStatus.IsRunning)
+        if (Input.GetButton("Sneak"))
         {
             moveSpeed = sneakSpeed;
         }
-        if (Input.GetButton("Sprint") && !playerStatus.IsSneaking)
+        else if(Input.GetButton("Sprint"))
         {
             moveSpeed = runSpeed;
         }
@@ -35,7 +33,5 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.right * horizontalMove + transform.forward * verticalMove;
         move = Vector3.ClampMagnitude(move, 1f) * Time.deltaTime;
         characterController.Move(move * moveSpeed);
-
-        print(characterController.velocity.magnitude);
     }
 }

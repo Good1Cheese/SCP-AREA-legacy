@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class GravityMaker : MonoBehaviour
+public class PlayerGravity : MonoBehaviour
 {
+    [SerializeField] float initialVelocityValue = -1f;
     CharacterController characterController;
 
     [SerializeField] float gravity;
@@ -16,7 +17,7 @@ public class GravityMaker : MonoBehaviour
     {
         if (characterController.isGrounded && velocity.y < 0)
         {
-            velocity.y = -1f;
+            velocity.y = initialVelocityValue;
         }
 
         velocity.y += gravity * Time.deltaTime;
