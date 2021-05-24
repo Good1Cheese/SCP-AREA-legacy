@@ -19,7 +19,7 @@ public class InteractionProvider : MonoBehaviour
             bool isHitObjectInteractable = hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactable);
             if (isHitObjectInteractable)
             {
-                if (Input.GetButton("Interaction"))
+                if (Input.GetButtonDown("Interaction"))
                 {
                     interactable.Interact();
                 }

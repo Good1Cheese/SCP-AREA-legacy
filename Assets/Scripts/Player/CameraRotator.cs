@@ -3,8 +3,8 @@ using UnityEngine;
 public class CameraRotator : MonoBehaviour
 {
     [SerializeField] float ySensitivity;
+    [SerializeField] float lookLimit;
     float yRotation;
-    float lookLimit = 82.5f;
 
     void Update()
     {

@@ -1,16 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(PlayerSpeed))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float sneakSpeed;
-    [SerializeField] float walkSpeed;
-    [SerializeField] float runSpeed;
-    float moveSpeed;
+    PlayerSpeed playerSpeed;
     CharacterController characterController;
 
     void Start()
     {
+        playerSpeed = GetComponent<PlayerSpeed>();
         characterController = GetComponent<CharacterController>();
     }
 
@@ -18,20 +16,13 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontalMove = Input.GetAxis("Horizontal");
         float verticalMove = Input.GetAxis("Vertical");
-
-        moveSpeed = walkSpeed;
-
-        if (Input.GetButton("Sneak"))
-        {
-            moveSpeed = sneakSpeed;
-        }
-        else if(Input.GetButton("Sprint"))
-        {
-            moveSpeed = runSpeed;
-        }
+        
+        if (horizontalMove == 0 && verticalMove == 0) { return; }
+        float moveSpeed = playerSpeed.GetPlayerSpeed();
 
         Vector3 move = transform.right * horizontalMove + transform.forward * verticalMove;
         move = Vector3.ClampMagnitude(move, 1f) * Time.deltaTime;
         characterController.Move(move * moveSpeed);
     }
+
 }
