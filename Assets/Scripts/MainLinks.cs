@@ -5,6 +5,7 @@ public class MainLinks : MonoBehaviour
 {
     public static MainLinks Instance { get; private set; }
     public Action OnPlayerRunning { get; set; }
+    public Transform Camera { get; set; }
 
     void Awake()
     {

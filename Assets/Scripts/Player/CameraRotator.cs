@@ -6,6 +6,11 @@ public class CameraRotator : MonoBehaviour
     [SerializeField] float lookLimit;
     float yRotation;
 
+    void Start()
+    {
+        MainLinks.Instance.Camera = transform;    
+    }
+
     void Update()
     {
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * ySensitivity;
