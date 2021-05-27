@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+
 class CameraBobbing : MonoBehaviour
 {
     [SerializeField] float bobFrequency;
@@ -9,8 +8,7 @@ class CameraBobbing : MonoBehaviour
     [SerializeField] [Range(0, 1)] float headBobSmoothing;
 
     float walkingTime;
-    Transform cameraPosition; 
-
+    Transform cameraPosition;
 
     void Start()
     {
@@ -24,18 +22,19 @@ class CameraBobbing : MonoBehaviour
             walkingTime = 0;
             return;
         }
+
         walkingTime += Time.deltaTime;
 
-        Vector3 targetCameraPosition = transform.position + CalcultateHeadBobbingOffset(walkingTime);
+        Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(walkingTime);
         MainLinks.Instance.Camera.position = Vector3.Lerp(MainLinks.Instance.Camera.position, targetCameraPosition, headBobSmoothing);
 
         if ((MainLinks.Instance.Camera.position - targetCameraPosition).magnitude <= 0.001) MainLinks.Instance.Camera.position = targetCameraPosition;
     }
 
-    Vector3 CalcultateHeadBobbingOffset(float time)
+    Vector3 CalculateHeadBobbingOffset(float time)
     {
-        float horizontalOffset = Mathf.Cos(time);
-        float verticalOffset = Mathf.Sin(time);
+        float horizontalOffset = Mathf.Sin(time * bobFrequency) * bobHorizontalAmplitude;
+        float verticalOffset = Mathf.Cos(time * bobFrequency * 2) * bobVerticalAmplitude;
         Vector3 offset = transform.right * horizontalOffset + transform.up * verticalOffset;
 
         return offset;
