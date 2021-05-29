@@ -18,8 +18,9 @@ public class BleedingController : MonoBehaviour
 
         if (duration >= requiredDurationToHeal)
         {
+            print("Bleeding Stopped");
             StopAllCoroutines();
-            isBleeding = true;
+            isBleeding = false;
         }
     }
 

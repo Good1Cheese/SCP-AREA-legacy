@@ -4,28 +4,31 @@ using UnityEngine.UI;
 
 public class PlayerStamina : MonoBehaviour
 {
-    [SerializeField] Slider staminaBar;
     [SerializeField] float staminaRegenerationSpeed;
     [SerializeField] float staminaBurningSpeed;
     [SerializeField] float staminaRegenerationDecoy;
-    public float StaminaValue { get => staminaBar.value; }
 
-    void Start()
+    [SerializeField] float maxStaminaAmout;
+    public float StaminaValue { get; set; }
+
+    void Awake()
     {
+        StaminaValue = maxStaminaAmout;
+        MainLinks.Instance.PlayerStamina = this;
         MainLinks.Instance.OnPlayerRunning += BurnStamina;
     }
 
-    IEnumerator RegenerateStamina(float staminaValue)
+    IEnumerator RegenerateStamina(float currentStaminaAmout)
     {
         yield return new WaitForSeconds(staminaRegenerationDecoy);
 
-        if (staminaBar.value == staminaValue)
+        if (StaminaValue == currentStaminaAmout)
         {
             float previousStaminaValue = 0;
-            while (staminaBar.value < staminaBar.maxValue && !(previousStaminaValue > staminaBar.value))
+            while (StaminaValue < maxStaminaAmout && !(previousStaminaValue > StaminaValue))
             {
-                staminaBar.value += staminaRegenerationSpeed;
-                previousStaminaValue = staminaBar.value;
+                StaminaValue += staminaRegenerationSpeed;
+                previousStaminaValue = StaminaValue;
                 yield return new WaitForSeconds(0.05f);
             }
 
@@ -34,8 +37,8 @@ public class PlayerStamina : MonoBehaviour
 
     void BurnStamina()
     {
-        staminaBar.value -= staminaBurningSpeed;
-        StartCoroutine(RegenerateStamina(staminaBar.value));
+        StaminaValue -= staminaBurningSpeed;
+        StartCoroutine(RegenerateStamina(StaminaValue));
     }
 }
 

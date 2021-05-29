@@ -6,6 +6,7 @@ public class PlayerRotator : MonoBehaviour
 
     void Start()
     {
+        MainLinks.Instance.Player = gameObject;
         Cursor.lockState = CursorLockMode.Locked;    
     }
 
