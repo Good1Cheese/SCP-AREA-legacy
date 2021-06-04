@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerStamina))]
 public class PlayerSpeed : MonoBehaviour
 {
-    [SerializeField] float sneakSpeed;
-    [SerializeField] float walkSpeed;
-    [SerializeField] float runSpeed;
+    [SerializeField] float _sneakSpeed;
+    [SerializeField] float _walkSpeed;
+    [SerializeField] float _runSpeed;
     PlayerStamina playerStamina;
 
     void Start()
@@ -15,16 +16,16 @@ public class PlayerSpeed : MonoBehaviour
 
     public float GetPlayerSpeed()
     {
-        float moveSpeed = walkSpeed;
+        float moveSpeed = _walkSpeed;
 
         if (Input.GetButton("Sneak"))
         {
-            moveSpeed = sneakSpeed;
+            moveSpeed = _sneakSpeed;
         }
         else if (Input.GetButton("Sprint") && playerStamina.StaminaValue > 10)
         {
-            moveSpeed = runSpeed;
             MainLinks.Instance.OnPlayerRunning.Invoke();
+            return _runSpeed;
         }
 
         return moveSpeed;

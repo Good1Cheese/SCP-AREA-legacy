@@ -1,18 +1,17 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(BleedingController))]
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] float maxHealth;
-    BleedingController bleedingController;
+    [SerializeField] float _maxHealth;
+    BleedingController _bleedingController;
     public float Health { get; set; }
 
     void Awake()
     {
-        Health = maxHealth;
+        Health = _maxHealth;
         MainLinks.Instance.PlayerHealthController = this;
-        bleedingController = GetComponent<BleedingController>();
+        _bleedingController = GetComponent<BleedingController>();
     }
 
     public void Damage(float amoutOfDamage)
@@ -29,11 +28,11 @@ public class PlayerHealth : MonoBehaviour
     public void Scratch(float amoutOfDamage)
     {
         Damage(amoutOfDamage);
-        bleedingController.BleedCaller();
+        _bleedingController.Bleed();
     }
 
     void Die()
     {
-        MainLinks.Instance.SceneChanger.ChangeScene((int)SceneChanger.Scenes.RespawnScene);
+        MainLinks.Instance.SceneChanger.ChangeScene((int)SceneTransition.Scenes.RespawnScene);
     }
 }

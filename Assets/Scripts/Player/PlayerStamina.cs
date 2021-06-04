@@ -4,41 +4,48 @@ using UnityEngine.UI;
 
 public class PlayerStamina : MonoBehaviour
 {
-    [SerializeField] float staminaRegenerationSpeed;
-    [SerializeField] float staminaBurningSpeed;
-    [SerializeField] float staminaRegenerationDecoy;
-
-    [SerializeField] float maxStaminaAmout;
+    [SerializeField] float _regenerationDelay;
+    [SerializeField] float _regenerationSpeed;
+    [SerializeField] float _spendingSpeed;
+    [SerializeField] float _maxStaminaAmount;
+    WaitForSeconds waitForSeconds;
+    WaitForSeconds waitForSeconds2;
     public float StaminaValue { get; set; }
 
     void Awake()
     {
-        StaminaValue = maxStaminaAmout;
+        StaminaValue = _maxStaminaAmount;
         MainLinks.Instance.PlayerStamina = this;
         MainLinks.Instance.OnPlayerRunning += BurnStamina;
     }
 
-    IEnumerator RegenerateStamina(float currentStaminaAmout)
+    void Start()
     {
-        yield return new WaitForSeconds(staminaRegenerationDecoy);
+        waitForSeconds = new WaitForSeconds(_regenerationDelay);
+        waitForSeconds2 = new WaitForSeconds(0.05f);
+    }
 
-        if (StaminaValue == currentStaminaAmout)
+    IEnumerator RegenerateStaminaCoroutine(float staminaAmount)
+    {
+        yield return waitForSeconds;
+
+        bool wasPlayerRunningAfterTimeOut = StaminaValue != staminaAmount;
+        if (!wasPlayerRunningAfterTimeOut)
         {
             float previousStaminaValue = 0;
-            while (StaminaValue < maxStaminaAmout && !(previousStaminaValue > StaminaValue))
+            while (StaminaValue < _maxStaminaAmount && !(previousStaminaValue > StaminaValue))
             {
-                StaminaValue += staminaRegenerationSpeed;
+                StaminaValue += _regenerationSpeed;
                 previousStaminaValue = StaminaValue;
-                yield return new WaitForSeconds(0.05f);
+                yield return waitForSeconds2;
             }
-
         }
     }
 
-    void BurnStamina()
+    public void BurnStamina()
     {
-        StaminaValue -= staminaBurningSpeed;
-        StartCoroutine(RegenerateStamina(StaminaValue));
+        StaminaValue -= _spendingSpeed;
+        StartCoroutine(RegenerateStaminaCoroutine(StaminaValue));
     }
 }
 
