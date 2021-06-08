@@ -2,39 +2,39 @@
 
 class CameraBobbing : MonoBehaviour
 {
-    [SerializeField] float _bobFrequency;
-    [SerializeField] float _bobHorizontalAmplitude;
-    [SerializeField] float _bobVerticalAmplitude;
-    [SerializeField] [Range(0, 1)] float _headBobSmoothing;
+    [SerializeField] float m_bobFrequency;
+    [SerializeField] float m_bobHorizontalAmplitude;
+    [SerializeField] float m_bobVerticalAmplitude;
+    [SerializeField] [Range(0, 1)] float m_headBobSmoothing;
 
-    float walkingTime;
-    Transform cameraPosition;
+    float m_walkingTime;
+    Transform m_cameraPosition;
 
     void Start()
     {
-        cameraPosition = MainLinks.Instance.Camera;
+        m_cameraPosition = MainLinks.Instance.Camera;
     }
 
     void Update()
     {
         if (!IsPlayerMoving())
         {
-            walkingTime = 0;
+            m_walkingTime = 0;
             return;
         }
 
-        walkingTime += Time.deltaTime;
+        m_walkingTime += Time.deltaTime;
 
-        Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(walkingTime);
-        MainLinks.Instance.Camera.position = Vector3.Lerp(MainLinks.Instance.Camera.position, targetCameraPosition, _headBobSmoothing);
+        Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(m_walkingTime);
+        MainLinks.Instance.Camera.position = Vector3.Lerp(MainLinks.Instance.Camera.position, targetCameraPosition, m_headBobSmoothing);
 
         if ((MainLinks.Instance.Camera.position - targetCameraPosition).magnitude <= 0.001) MainLinks.Instance.Camera.position = targetCameraPosition;
     }
 
     Vector3 CalculateHeadBobbingOffset(float time)
     {
-        float horizontalOffset = Mathf.Sin(time * _bobFrequency) * _bobHorizontalAmplitude;
-        float verticalOffset = Mathf.Cos(time * _bobFrequency * 2) * _bobVerticalAmplitude;
+        float horizontalOffset = Mathf.Sin(time * m_bobFrequency) * m_bobHorizontalAmplitude;
+        float verticalOffset = Mathf.Cos(time * m_bobFrequency * 2) * m_bobVerticalAmplitude;
         Vector3 offset = transform.right * horizontalOffset + transform.up * verticalOffset;
 
         return offset;

@@ -3,18 +3,18 @@ using UnityEngine;
 [RequireComponent(typeof(RayProvider))]
 public class InteractionProvider : MonoBehaviour
 {
-    [SerializeField] float _maxInteractionDistance;
-    RayProvider _rayProvider;
+    [SerializeField] float m_maxInteractionDistance;
+    RayProvider m_rayProvider;
 
     void Start()
     {
-        _rayProvider = GetComponent<RayProvider>();
+        m_rayProvider = GetComponent<RayProvider>();
     }
 
     void Update()
     {
-        Ray ray = _rayProvider.ProvideRay();
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, _maxInteractionDistance))
+        Ray ray = m_rayProvider.ProvideRay();
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, m_maxInteractionDistance))
         {
             bool isHitObjectInteractable = hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactable);
             if (!isHitObjectInteractable) { return; }

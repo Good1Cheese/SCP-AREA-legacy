@@ -2,15 +2,15 @@
 
 public class RayProvider : MonoBehaviour
 {
-    Transform _transform;
+    Transform m_transform;
 
     void Start()
     {
-        _transform = transform;
+        m_transform = transform;
     }
 
     public Ray ProvideRay()
     {
-        return new Ray(_transform.position, _transform.forward);
+        return new Ray(m_transform.position, m_transform.forward);
     }
 }

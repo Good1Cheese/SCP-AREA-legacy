@@ -10,9 +10,11 @@ public class MainLinks : MonoBehaviour
     public GameObject Player { get; set; }
     public PlayerStamina PlayerStamina { get; set; }
     public PlayerHealth PlayerHealthController { get; set; }
-    public Action OnPlayerRunning { get; set; }
+    public Action OnPlayerRun { get; set; }
+    public Action OnPlayerStoppedRun { get; set; }
     public Action OnPlayerGetsDamage { get; set; }
-    public bool IsPlayerRunning { get; set; }
+    public Action OnPlayerStoppedSneak { get; set; }
+    public Action OnPlayerSneak { get; set; }
 
     void Awake()
     {

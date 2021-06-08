@@ -3,15 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController), typeof(PlayerSpeed))]
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerSpeed _playerSpeed;
-    CharacterController _characterController;
-    Transform _transform;
+    PlayerSpeed m_playerSpeed;
+    CharacterController m_characterController;
+    Transform m_transform;
 
     void Start()
     {
-        _transform = transform;
-        _playerSpeed = GetComponent<PlayerSpeed>();
-        _characterController = GetComponent<CharacterController>();
+        m_transform = transform;
+        m_playerSpeed = GetComponent<PlayerSpeed>();
+        m_characterController = GetComponent<CharacterController>();
     }
 
     void Update()
@@ -20,11 +20,11 @@ public class PlayerMovement : MonoBehaviour
         float verticalMove = Input.GetAxis("Vertical");
 
         if (horizontalMove == 0 && verticalMove == 0) { return; }
-        float moveSpeed = _playerSpeed.GetPlayerSpeed();
-
-        Vector3 move = _transform.right * horizontalMove + _transform.forward * verticalMove;
+        float moveSpeed = m_playerSpeed.GetPlayerSpeed();
+ 
+        Vector3 move = m_transform.right * horizontalMove + m_transform.forward * verticalMove;
         move = Vector3.ClampMagnitude(move, 1f) * Time.deltaTime;
-        _characterController.Move(move * moveSpeed);
+        m_characterController.Move(move * moveSpeed);
     }
 
 }

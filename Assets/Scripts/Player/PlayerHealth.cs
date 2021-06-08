@@ -3,15 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(BleedingController))]
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] float _maxHealth;
-    BleedingController _bleedingController;
+    [SerializeField] float m_maxHealth;
+    BleedingController m_bleedingController;
     public float Health { get; set; }
 
     void Awake()
     {
-        Health = _maxHealth;
+        Health = m_maxHealth;
+        m_bleedingController = GetComponent<BleedingController>();
+    }
+
+    void Start()
+    {
         MainLinks.Instance.PlayerHealthController = this;
-        _bleedingController = GetComponent<BleedingController>();
     }
 
     public void Damage(float amoutOfDamage)
@@ -28,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
     public void Scratch(float amoutOfDamage)
     {
         Damage(amoutOfDamage);
-        _bleedingController.Bleed();
+        m_bleedingController.Bleed();
     }
 
     void Die()

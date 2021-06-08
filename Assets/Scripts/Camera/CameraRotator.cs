@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CameraRotator : MonoBehaviour
 {
-    [SerializeField] float _ySensitivity;
-    [SerializeField] float _verticalLookLimit;
-    float _yRotation;
+    [SerializeField] float m_ySensitivity;
+    [SerializeField] float m_verticalLookLimit;
+    float m_yRotation;
 
     void Start()
     {
@@ -13,11 +13,11 @@ public class CameraRotator : MonoBehaviour
 
     void Update()
     {
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * _ySensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * m_ySensitivity;
 
-        _yRotation -= mouseY;
-        _yRotation = Mathf.Clamp(_yRotation, -_verticalLookLimit, _verticalLookLimit);
+        m_yRotation -= mouseY;
+        m_yRotation = Mathf.Clamp(m_yRotation, -m_verticalLookLimit, m_verticalLookLimit);
 
-        MainLinks.Instance.Camera.localRotation = Quaternion.Euler(_yRotation, 0, 0);
+        MainLinks.Instance.Camera.localRotation = Quaternion.Euler(m_yRotation, 0, 0);
     }
 }

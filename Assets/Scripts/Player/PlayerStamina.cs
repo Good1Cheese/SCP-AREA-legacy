@@ -4,48 +4,59 @@ using UnityEngine.UI;
 
 public class PlayerStamina : MonoBehaviour
 {
-    [SerializeField] float _regenerationDelay;
-    [SerializeField] float _regenerationSpeed;
-    [SerializeField] float _spendingSpeed;
-    [SerializeField] float _maxStaminaAmount;
-    WaitForSeconds waitForSeconds;
-    WaitForSeconds waitForSeconds2;
+    [SerializeField] float m_regenerationSpeed;
+    [SerializeField] float m_spendingSpeed;
+    [SerializeField] float m_delayBeforeRegenerationStart;
+    [SerializeField] float m_maxStaminaAmount;
+
+    WaitForSeconds m_timeOutBeforeRegeneration;
+    WaitForSeconds m_timeOutDuringRegeneration;
+
     public float StaminaValue { get; set; }
+    public bool IsPlayerRunning { get; set; }
+    public bool HasPlayer≈noughStaminaToRun { get { return StaminaValue != 0; } }
 
     void Awake()
     {
-        StaminaValue = _maxStaminaAmount;
+        StaminaValue = m_maxStaminaAmount;
+        MainLinks.Instance.OnPlayerRun += BurnStamina;
+        MainLinks.Instance.OnPlayerStoppedRun += RegenerateStamina;
         MainLinks.Instance.PlayerStamina = this;
-        MainLinks.Instance.OnPlayerRunning += BurnStamina;
     }
 
     void Start()
     {
-        waitForSeconds = new WaitForSeconds(_regenerationDelay);
-        waitForSeconds2 = new WaitForSeconds(0.05f);
+        m_timeOutBeforeRegeneration = new WaitForSeconds(m_delayBeforeRegenerationStart);
+        m_timeOutDuringRegeneration = new WaitForSeconds(0.05f);
     }
 
-    IEnumerator RegenerateStaminaCoroutine(float staminaAmount)
+    void RegenerateStamina()
     {
-        yield return waitForSeconds;
-
-        bool wasPlayerRunningAfterTimeOut = StaminaValue != staminaAmount;
-        if (!wasPlayerRunningAfterTimeOut)
-        {
-            float previousStaminaValue = 0;
-            while (StaminaValue < _maxStaminaAmount && !(previousStaminaValue > StaminaValue))
-            {
-                StaminaValue += _regenerationSpeed;
-                previousStaminaValue = StaminaValue;
-                yield return waitForSeconds2;
-            }
-        }
+        IsPlayerRunning = false;
+        StartCoroutine(RegenerateStaminaCoroutine());
     }
 
     public void BurnStamina()
     {
-        StaminaValue -= _spendingSpeed;
-        StartCoroutine(RegenerateStaminaCoroutine(StaminaValue));
+        IsPlayerRunning = true;
+        StaminaValue -= m_spendingSpeed;
+    }
+
+    IEnumerator RegenerateStaminaCoroutine()
+    {
+        yield return m_timeOutBeforeRegeneration;
+
+        while (StaminaValue < m_maxStaminaAmount && !IsPlayerRunning)
+        {
+            StaminaValue += m_regenerationSpeed;
+            yield return m_timeOutDuringRegeneration;
+        }
+    }
+
+    void OnDisable()
+    {
+        MainLinks.Instance.OnPlayerRun -= BurnStamina;
+        MainLinks.Instance.OnPlayerStoppedRun -= RegenerateStamina;
     }
 }
 

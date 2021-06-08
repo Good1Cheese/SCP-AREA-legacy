@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class PlayerRotator : MonoBehaviour
 {
-    [SerializeField] float _xSensitivity;
-    Transform _transform;
+    [SerializeField] float m_xSensitivity;
+    Transform m_transform;
 
     void Start()
     {
-        _transform = transform;
+        m_transform = transform;
         MainLinks.Instance.Player = gameObject;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        float xRotation = Input.GetAxis("Mouse X") * _xSensitivity * Time.deltaTime;
-        _transform.Rotate(Vector3.up * xRotation);
+        float xRotation = Input.GetAxis("Mouse X") * m_xSensitivity * Time.deltaTime;
+        m_transform.Rotate(Vector3.up * xRotation);
     }
 }

@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class BleedingController : MonoBehaviour
 {
-    [SerializeField] float _delayBeforeHeal;
-    [SerializeField] float _bleedDelay;
-    [SerializeField] float _bleedDamage;
-    bool _isBleeding;
-    float _duration;
-    WaitForSeconds _bleedWaitForSeconds;
+    [SerializeField] float m_timeToStopBleeding;
+    [SerializeField] float m_bleedDelay;
+    [SerializeField] float m_bleedDamage;
+
+    bool m_isBleeding;
+    float m_pressingDuration;
+    WaitForSeconds m_bleedTimeout;
 
     void Start()
     {
-        _bleedWaitForSeconds = new WaitForSeconds(_bleedDelay);
+        m_bleedTimeout = new WaitForSeconds(m_bleedDelay);
     }
 
     void Update()
     {
-        if (!_isBleeding) { return; }
+        if (!m_isBleeding) { return; }
         GetDuradurationOfPressingHealButton();
 
-        if (_duration >= _delayBeforeHeal)
+        if (m_pressingDuration >= m_timeToStopBleeding)
         {
             print("Bleeding Stopped");
             StopAllCoroutines();
-            _isBleeding = false;
+            m_isBleeding = false;
         }
     }
 
@@ -33,23 +34,23 @@ public class BleedingController : MonoBehaviour
 
     IEnumerator BleedCoroutine()
     {
-        _isBleeding = true;
+        m_isBleeding = true;
         var playerHealthController = MainLinks.Instance.PlayerHealthController;
         while (playerHealthController.Health > 0)
         {
-            MainLinks.Instance.PlayerHealthController.Damage(_bleedDamage);
-            yield return _bleedWaitForSeconds;
+            MainLinks.Instance.PlayerHealthController.Damage(m_bleedDamage);
+            yield return m_bleedTimeout;
         }
-        _isBleeding = false;
+        m_isBleeding = false;
     }
 
     void GetDuradurationOfPressingHealButton()
     {
         if (Input.GetButton("Healing"))
         {
-            _duration += Time.deltaTime;
+            m_pressingDuration += Time.deltaTime;
             return;
         }
-        _duration = 0;
+        m_pressingDuration = 0;
     }
 }
