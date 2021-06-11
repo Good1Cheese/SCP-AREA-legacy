@@ -1,21 +1,29 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(BleedingController))]
+[RequireComponent(typeof(CharacterBleeding))]
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] float m_maxHealth;
-    BleedingController m_bleedingController;
-    public float Health { get; set; }
+    CharacterBleeding m_bleedingController;
+
+    [SerializeField] float m_health;
+    public float Health
+    {
+        get => m_health;
+        set
+        {
+            m_health = value;
+            OnHealthValueChanged?.Invoke();
+        }
+    }
+    public Action OnPlayerGetsDamage { get; set; }
+
+    public Action OnHealthValueChanged { get; set; }
 
     void Awake()
     {
-        Health = m_maxHealth;
-        m_bleedingController = GetComponent<BleedingController>();
-    }
-
-    void Start()
-    {
-        MainLinks.Instance.PlayerHealthController = this;
+        m_bleedingController = GetComponent<CharacterBleeding>();
+        MainLinks.Instance.PlayerHealth = this;
     }
 
     public void Damage(float amoutOfDamage)
@@ -23,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
         Health -= amoutOfDamage;
         if (Health > 0)
         {
-            MainLinks.Instance.OnPlayerGetsDamage?.Invoke();
+            OnPlayerGetsDamage?.Invoke();
             return;
         }
         Die();

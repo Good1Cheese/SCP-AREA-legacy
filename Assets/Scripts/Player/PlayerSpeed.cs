@@ -8,30 +8,42 @@ public class PlayerSpeed : MonoBehaviour
     [SerializeField] float m_walkSpeed;
     [SerializeField] float m_runSpeed;
 
+    public Action OnPlayerRun { get; set; }
+    public Action OnPlayerStoppedRun { get; set; }
+    public Action OnPlayerStoppedSneak { get; set; }
+    public Action OnPlayerSneak { get; set; }
+
+    public float SlowDownFactor { get; set; }
+
+    void Awake()
+    {
+        MainLinks.Instance.PlayerSpeed = this;
+    }
+
     public float GetPlayerSpeed()
     {
-        float moveSpeed = m_walkSpeed;
+        float movespeed = m_walkSpeed;
 
         if (Input.GetButton("Sneak"))
         {
-            moveSpeed = m_sneakSpeed;
-            MainLinks.Instance.OnPlayerSneak.Invoke();
+            OnPlayerSneak.Invoke();
+            movespeed = m_sneakSpeed;
         }
         else if (Input.GetButton("Sprint") && MainLinks.Instance.PlayerStamina.HasPlayerЕnoughStaminaToRun)
         {
-            MainLinks.Instance.OnPlayerRun.Invoke();
-            return m_runSpeed;
+            OnPlayerRun.Invoke();
+            movespeed = m_runSpeed;
         }
 
         if (Input.GetButtonUp("Sprint"))
         {
-            MainLinks.Instance.OnPlayerStoppedRun.Invoke();
+            OnPlayerStoppedRun.Invoke();
         }
-        else if(Input.GetButtonUp("Sneak"))
+        else if (Input.GetButtonUp("Sneak"))
         {
-            MainLinks.Instance.OnPlayerStoppedSneak.Invoke();
+            OnPlayerStoppedSneak.Invoke();
         }
 
-        return moveSpeed;
+        return movespeed - SlowDownFactor;
     }
 }

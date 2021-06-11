@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class FovController : MonoBehaviour
+public class DynamicFov : MonoBehaviour
 {
     [SerializeField] float m_fovIncreasingSpeed;
     [SerializeField] float m_fovRestoreSpeed;
@@ -19,8 +19,8 @@ public class FovController : MonoBehaviour
 
     void Start()
     {
-        MainLinks.Instance.OnPlayerRun += IncreaseFov;
-        MainLinks.Instance.OnPlayerStoppedRun += ResetFov;
+        MainLinks.Instance.PlayerSpeed.OnPlayerRun += IncreaseFov;
+        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun += ResetFov;
     }
 
     void IncreaseFov() => StartCoroutine(IncreaseFovCoroutine());
@@ -53,7 +53,7 @@ public class FovController : MonoBehaviour
 
     void OnDisable()
     {
-        MainLinks.Instance.OnPlayerRun -= IncreaseFov;
-        MainLinks.Instance.OnPlayerStoppedRun -= ResetFov;
+        MainLinks.Instance.PlayerSpeed.OnPlayerRun -= IncreaseFov;
+        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun -= ResetFov;
     }
 }

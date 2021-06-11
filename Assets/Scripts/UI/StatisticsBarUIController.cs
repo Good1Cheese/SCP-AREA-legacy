@@ -1,60 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
-//[RequireComponent(typeof(Slider))]
-//public class StaminaBarUIController : MonoBehaviour
-//{
-//    Slider staminaBar;
-//    float cachedStaminaValue;
-
-//    void Start()
-//    {
-//        staminaBar = GetComponent<Slider>();
-//        staminaBar.maxValue = MainLinks.Instance.PlayerStamina.StaminaValue;
-//    }
-
-//    void Update()
-//    {
-//        float staminaValue = MainLinks.Instance.PlayerStamina.StaminaValue;
-//        if (staminaValue != cachedStaminaValue)
-//        {
-//            cachedStaminaValue = staminaValue;
-//            UpdateUI(staminaValue);
-//        }
-//    }
-
-//    void UpdateUI(float value)
-//    {
-//        staminaBar.value = value;
-//    }
-//}
-
 
 [RequireComponent(typeof(Slider))]
 public abstract class StatisticsBarUIController : MonoBehaviour
 {
-    Slider _sliderBar;
-    float _cachedBarValue;
+    Slider m_slider;
 
-    public abstract float GetBarValue();
+    protected abstract float GetBarValue();
+    protected abstract void Subscribe();
+    protected abstract void Unsubscribe();
 
     void Start()
     {
-        _sliderBar = GetComponent<Slider>();
-        _sliderBar.maxValue = GetBarValue();
+        m_slider = GetComponent<Slider>();
+        float startBarValue = GetBarValue();
+        m_slider.maxValue = startBarValue;
+        m_slider.value = startBarValue;
+
+        Subscribe();
     }
 
-    void Update()
+    protected void UpdateUI()
     {
-        float barValue = GetBarValue();
-        if (barValue != _cachedBarValue)
-        {
-            _cachedBarValue = barValue;
-            UpdateUI(barValue);
-        }
+        m_slider.value = GetBarValue();
     }
 
-    void UpdateUI(float value)
+    void OnDisable()
     {
-        _sliderBar.value = value;
+        Unsubscribe();
     }
 }

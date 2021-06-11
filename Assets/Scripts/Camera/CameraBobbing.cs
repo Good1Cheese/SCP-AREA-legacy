@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(BobbingWhileRun), typeof(BobbingWhileSneak))]
 class CameraBobbing : MonoBehaviour
 {
     [SerializeField] float m_bobFrequency;
-    [SerializeField] float m_bobHorizontalAmplitude;
+    [SerializeField] readonly float m_bobHorizontalAmplitude;
     [SerializeField] float m_bobVerticalAmplitude;
     [SerializeField] [Range(0, 1)] float m_headBobSmoothing;
 
     float m_walkingTime;
     Transform m_cameraPosition;
+    (float, float) m_changableField;
+
+    public float BobFrequency { get => m_bobFrequency; set => m_bobFrequency = value; }
+    public float BobVerticalAmplitude { get => m_bobVerticalAmplitude; set => m_bobVerticalAmplitude = value; }
 
     void Start()
     {
+        m_changableField = (m_bobFrequency, m_bobVerticalAmplitude);
         m_cameraPosition = MainLinks.Instance.Camera;
     }
 
@@ -26,9 +32,9 @@ class CameraBobbing : MonoBehaviour
         m_walkingTime += Time.deltaTime;
 
         Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(m_walkingTime);
-        MainLinks.Instance.Camera.position = Vector3.Lerp(MainLinks.Instance.Camera.position, targetCameraPosition, m_headBobSmoothing);
+        m_cameraPosition.position = Vector3.Lerp(m_cameraPosition.position, targetCameraPosition, m_headBobSmoothing);
 
-        if ((MainLinks.Instance.Camera.position - targetCameraPosition).magnitude <= 0.001) MainLinks.Instance.Camera.position = targetCameraPosition;
+        if ((m_cameraPosition.position - targetCameraPosition).magnitude <= 0.001) m_cameraPosition.position = targetCameraPosition;
     }
 
     Vector3 CalculateHeadBobbingOffset(float time)
@@ -46,6 +52,12 @@ class CameraBobbing : MonoBehaviour
         float verticalMove = Input.GetAxis("Vertical");
 
         return horizontalMove != 0 || verticalMove != 0;
+    }
+
+    public void ResetBobbingValues()
+    {
+        m_bobFrequency = m_changableField.Item1;
+        m_bobVerticalAmplitude = m_changableField.Item2;
     }
 }
 
