@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4946365241885662669}
   - component: {fileID: 4946365241885662667}
   m_Layer: 5
-  m_Name: Background
+  m_Name: HealthCell (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,13 +30,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4946365242901219670}
-  m_RootOrder: 0
+  m_Father: {fileID: 4946365242609000724}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 105.64673, y: 87.89484}
+  m_SizeDelta: {x: 53.407654, y: 12.785095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4946365241885662668
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11638e9cd6f22af4985b9065b1d52593, type: 3}
+  m_Sprite: {fileID: 21300000, guid: edc7ed6c73a444d46987c6c5c84eff5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4946365242083328998}
   - component: {fileID: 4946365242083328996}
   m_Layer: 5
-  m_Name: Background
+  m_Name: HealthCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,13 +118,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4946365242737539820}
-  m_RootOrder: 0
+  m_Father: {fileID: 4946365242609000724}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 52.71292, y: 87.89484}
+  m_SizeDelta: {x: 53.407654, y: 12.785095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4946365242083328997
 CanvasRenderer:
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11638e9cd6f22af4985b9065b1d52593, type: 3}
+  m_Sprite: {fileID: 21300000, guid: edc7ed6c73a444d46987c6c5c84eff5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -362,42 +362,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &4946365242608770755
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4946365242608770754}
-  m_Layer: 5
-  m_Name: HealthCell
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4946365242608770754
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946365242608770755}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4946365243408626160}
-  m_Father: {fileID: 4946365242609000724}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 158.34079, y: 88.0762}
-  m_SizeDelta: {x: 52.9323, y: 24.9329}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4946365242609000728
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,10 +395,10 @@ RectTransform:
   - {fileID: 4946365243759933130}
   - {fileID: 4946365242876041172}
   - {fileID: 4946365243355923889}
-  - {fileID: 4946365242737539820}
-  - {fileID: 4946365242901219670}
-  - {fileID: 4946365242608770754}
-  - {fileID: 4946365242880340552}
+  - {fileID: 4946365243136062533}
+  - {fileID: 4946365243408626160}
+  - {fileID: 4946365241885662670}
+  - {fileID: 4946365242083328999}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -504,42 +468,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &4946365242737539821
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4946365242737539820}
-  m_Layer: 5
-  m_Name: HealthCell
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4946365242737539820
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946365242737539821}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4946365242083328999}
-  m_Father: {fileID: 4946365242609000724}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 52.47528, y: 88.0762}
-  m_SizeDelta: {x: 52.9323, y: 24.9329}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4946365242876041173
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,78 +570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f797fd9f0fee8d46a05772ef639d900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4946365242880340553
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4946365242880340552}
-  m_Layer: 5
-  m_Name: HealthCell
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4946365242880340552
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946365242880340553}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4946365243136062533}
-  m_Father: {fileID: 4946365242609000724}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 211.27, y: 88.0762}
-  m_SizeDelta: {x: 52.9323, y: 24.9329}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &4946365242901219671
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4946365242901219670}
-  m_Layer: 5
-  m_Name: HealthCell
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4946365242901219670
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4946365242901219671}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4946365241885662670}
-  m_Father: {fileID: 4946365242609000724}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 105.40906, y: 88.0762}
-  m_SizeDelta: {x: 52.9323, y: 24.9329}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4946365242908492701
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +658,7 @@ GameObject:
   - component: {fileID: 4946365243136062531}
   - component: {fileID: 4946365243136062532}
   m_Layer: 5
-  m_Name: Background
+  m_Name: HealthCell (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -819,13 +675,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4946365242880340552}
-  m_RootOrder: 0
+  m_Father: {fileID: 4946365242609000724}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 211.50769, y: 87.89484}
+  m_SizeDelta: {x: 53.407654, y: 12.785095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4946365243136062530
 CanvasRenderer:
@@ -855,7 +711,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11638e9cd6f22af4985b9065b1d52593, type: 3}
+  m_Sprite: {fileID: 21300000, guid: edc7ed6c73a444d46987c6c5c84eff5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1028,7 +884,7 @@ GameObject:
   - component: {fileID: 4946365243408626159}
   - component: {fileID: 4946365243408626157}
   m_Layer: 5
-  m_Name: Background
+  m_Name: HealthCell (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1045,13 +901,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4946365242608770754}
-  m_RootOrder: 0
+  m_Father: {fileID: 4946365242609000724}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 158.57843, y: 87.89484}
+  m_SizeDelta: {x: 53.407654, y: 12.785095}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4946365243408626158
 CanvasRenderer:
@@ -1081,7 +937,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11638e9cd6f22af4985b9065b1d52593, type: 3}
+  m_Sprite: {fileID: 21300000, guid: edc7ed6c73a444d46987c6c5c84eff5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
