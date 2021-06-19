@@ -1,9 +1,12 @@
 using UnityEngine;
+using Zenject;
 
 public class SettingsSceneController : MonoBehaviour
 {
+    [Inject] SceneTransition m_sceneTransition;
+
     public void ReturnToMainMenu()
     {
-        MainLinks.Instance.SceneChanger.ChangeScene((int)SceneTransition.Scenes.StartScene);
+        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.StartScene);
     }
 }

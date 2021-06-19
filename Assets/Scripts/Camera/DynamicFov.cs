@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class DynamicFov : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class DynamicFov : MonoBehaviour
     [SerializeField] float m_delayDuringFovChange;
     [SerializeField] float m_fovDuringRun;
     [SerializeField] float m_startFov;
+    [Inject] PlayerSpeed m_playerSpeed;
 
     WaitForSeconds m_timeoutWhileFovChanging;
     Camera mainCamera;
@@ -23,8 +25,8 @@ public class DynamicFov : MonoBehaviour
 
     void Start()
     {
-        MainLinks.Instance.PlayerSpeed.OnPlayerRun += IncreaseFov;
-        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun += ResetFov;
+        m_playerSpeed.OnPlayerRun += IncreaseFov;
+        m_playerSpeed.OnPlayerStoppedRun += ResetFov;
         m_increaseCoroutine = IncreaseFovCoroutine();
         m_resetCoroutine = ResetFovCoroutine();
     }
@@ -34,7 +36,7 @@ public class DynamicFov : MonoBehaviour
 
     IEnumerator IncreaseFovCoroutine()
     {
-        StopResetCoroutine();
+        StopFovResettingCoroutine();
         while (mainCamera.fieldOfView <= m_fovDuringRun)
         {
             mainCamera.fieldOfView += m_fovIncreasingSpeed;
@@ -44,7 +46,7 @@ public class DynamicFov : MonoBehaviour
 
     IEnumerator ResetFovCoroutine()
     {
-        StopIncreaseCoroutine();
+        StopFovIncreasingCoroutine();
         while (mainCamera.fieldOfView >= m_startFov)
         {
             mainCamera.fieldOfView -= m_fovRestoreSpeed;
@@ -52,13 +54,13 @@ public class DynamicFov : MonoBehaviour
         }
     }
 
-    void StopIncreaseCoroutine()
+    void StopFovIncreasingCoroutine()
     {
         StopCoroutine(m_increaseCoroutine);
         m_increaseCoroutine = IncreaseFovCoroutine();
     }
 
-    void StopResetCoroutine()
+    void StopFovResettingCoroutine()
     {
         StopCoroutine(m_resetCoroutine);
         m_resetCoroutine = ResetFovCoroutine();
@@ -66,7 +68,7 @@ public class DynamicFov : MonoBehaviour
 
     void OnDisable()
     {
-        MainLinks.Instance.PlayerSpeed.OnPlayerRun -= IncreaseFov;
-        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun -= ResetFov;
+        m_playerSpeed.OnPlayerRun -= IncreaseFov;
+        m_playerSpeed.OnPlayerStoppedRun -= ResetFov;
     }
 }

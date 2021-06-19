@@ -1,23 +1,26 @@
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using Zenject;
 
 [RequireComponent(typeof(Slider))]
 public class HealthBarUIController : StatisticsBarUIController
 {
+    [Inject] PlayerHealth m_playerHealth;
+
     protected override float GetBarValue()
     {
-        return MainLinks.Instance.PlayerHealth.Health;
+        return m_playerHealth.Health;
     }
 
     protected override void Subscribe()
     {
-        MainLinks.Instance.PlayerHealth.OnHealthValueChanged += UpdateUI;
+        m_playerHealth.OnHealthValueChanged += UpdateUI;
     }
 
     protected override void Unsubscribe()
     {
-        MainLinks.Instance.PlayerHealth.OnHealthValueChanged -= UpdateUI;
+        m_playerHealth.OnHealthValueChanged -= UpdateUI;
     }
 }
 

@@ -1,14 +1,17 @@
 using UnityEngine;
+using Zenject;
 
 public class SoundPlayerOnPlayerDamage : SoundPlayerOnAction
 {
+    [Inject] PlayerHealth m_playerHealth;
+
     protected override void SubscribeToAction()
     {
-        MainLinks.Instance.PlayerHealth.OnPlayerGetsDamage += PlaySound;
+        m_playerHealth.OnPlayerGetsDamage += PlaySound;
     }
 
     protected override void UnsubscribeToAction()
     {
-        MainLinks.Instance.PlayerHealth.OnPlayerGetsDamage -= PlaySound;
+        m_playerHealth.OnPlayerGetsDamage -= PlaySound;
     }
 }

@@ -10,15 +10,15 @@ class CameraBobbing : MonoBehaviour
 
     float m_walkingTime;
     Transform m_cameraPosition;
-    (float, float) m_changableField;
+    (float, float) m_startValuesOfChangableFields;
 
     public float BobFrequency { get => m_bobFrequency; set => m_bobFrequency = value; }
     public float BobVerticalAmplitude { get => m_bobVerticalAmplitude; set => m_bobVerticalAmplitude = value; }
 
     void Start()
     {
-        m_changableField = (m_bobFrequency, m_bobVerticalAmplitude);
-        m_cameraPosition = MainLinks.Instance.Camera;
+        m_startValuesOfChangableFields = (m_bobFrequency, m_bobVerticalAmplitude);
+        m_cameraPosition = transform.GetChild(0).transform;
     }
 
     void Update()
@@ -56,8 +56,8 @@ class CameraBobbing : MonoBehaviour
 
     public void ResetBobbingValues()
     {
-        m_bobFrequency = m_changableField.Item1;
-        m_bobVerticalAmplitude = m_changableField.Item2;
+        m_bobFrequency = m_startValuesOfChangableFields.Item1;
+        m_bobVerticalAmplitude = m_startValuesOfChangableFields.Item2;
     }
 }
 

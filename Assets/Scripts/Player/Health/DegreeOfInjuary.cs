@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
+using Zenject;
 
 [RequireComponent(typeof(Volume))]
 public class DegreeOfInjuary : MonoBehaviour
@@ -8,6 +9,9 @@ public class DegreeOfInjuary : MonoBehaviour
     [SerializeField] float m_slowDownFactorDuringStrongBleeding;
     [SerializeField] float m_saturationDuringWeakInjuary;
     [SerializeField] float m_saturationDuringStrongInjuary;
+    [Inject] PlayerSpeed m_playerSpeed;
+    [Inject] PlayerStamina m_playerStamina;
+    [Inject] PlayerHealth m_playerHealth;
 
     ColorAdjustments m_colorAdjustments;
     float m_riskyHpAmout;
@@ -20,13 +24,13 @@ public class DegreeOfInjuary : MonoBehaviour
 
     void Start()
     {
-        float m_maxPlayerHealth = MainLinks.Instance.PlayerHealth.Health;
+        float m_maxPlayerHealth = m_playerHealth.Health;
         m_riskyHpAmout = m_maxPlayerHealth - (m_maxPlayerHealth / 2);
-        MainLinks.Instance.PlayerHealth.OnPlayerGetsDamage += CheckInjuaryDegree;
+        m_playerHealth.OnPlayerGetsDamage += CheckInjuaryDegree;
     }
     void CheckInjuaryDegree()
     {
-        float health = MainLinks.Instance.PlayerHealth.Health;
+        float health = m_playerHealth.Health;
         if (health >= m_riskyHpAmout)
         {
             OnWeekInjuary();
@@ -48,17 +52,17 @@ public class DegreeOfInjuary : MonoBehaviour
     {
         ForbideRun();
         m_colorAdjustments.saturation.value = m_saturationDuringStrongInjuary;
-        MainLinks.Instance.PlayerSpeed.SlowDownFactor = m_slowDownFactorDuringStrongBleeding;
+        m_playerSpeed.SlowDownFactor = m_slowDownFactorDuringStrongBleeding;
     }
 
-    static void ForbideRun()
+    void ForbideRun()
     {
-        MainLinks.Instance.PlayerStamina.StaminaValue = 0;
-        MainLinks.Instance.PlayerStamina.enabled = false;
+        m_playerStamina.StaminaValue = 0;
+        m_playerStamina.enabled = false;
     }
 
     void OnDisable()
     {
-        MainLinks.Instance.PlayerHealth.OnPlayerGetsDamage -= CheckInjuaryDegree;
+        m_playerHealth.OnPlayerGetsDamage -= CheckInjuaryDegree;
     }
 }

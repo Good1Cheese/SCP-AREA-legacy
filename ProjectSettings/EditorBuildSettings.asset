@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/RespawnScene.unity
     guid: 494199f71f416984ab306ddd10b9fad8
   - enabled: 1
-    path: Assets/Scenes/TestScene from pasha.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/TestScene.unity
+    guid: 8abc5781da7a7bd4ca3e383c36357051
   m_configObjects: {}

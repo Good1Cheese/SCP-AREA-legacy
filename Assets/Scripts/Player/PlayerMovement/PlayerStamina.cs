@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class PlayerStamina : MonoBehaviour
 {
+    [Inject] PlayerSpeed m_playerSpeed;
+    [Inject] CharacterBleeding m_playerBleeding;
+
     [SerializeField] float m_regenerationSpeed;
     [SerializeField] float m_spendingSpeed;
     [SerializeField] float m_delayDuringRegeneration;
@@ -25,23 +29,21 @@ public class PlayerStamina : MonoBehaviour
             OnStaminaValueChanged?.Invoke();
         }
     }
-
     public Action OnStaminaValueChanged { get; set; }
-    public bool HasPlayer≈noughStaminaToRun { get { return StaminaValue != 0; } }
 
     void Awake()
-    {
-        m_maxStaminaAmount = m_staminaValue;
-        MainLinks.Instance.PlayerStamina = this;
-        MainLinks.Instance.PlayerSpeed.OnPlayerRun += BurnStamina;
-        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun += RegenerateStamina;
-    }
-
-    void Start()
     {
         m_regenerationCoroutine = RegenerateStaminaCoroutine();
         m_timeoutBeforeRegeneration = new WaitForSeconds(m_delayBeforeRegenerationStart);
         m_timeoutDuringRegeneration = new WaitForSeconds(m_delayDuringRegeneration);
+    }
+
+    void Start()
+    {
+        m_maxStaminaAmount = m_staminaValue;
+        m_playerSpeed.OnPlayerRun += BurnStamina;
+        m_playerSpeed.OnPlayerStoppedRun += RegenerateStamina;
+        m_playerBleeding.OnPlayerStartBleeding += StopRegeneration;
     }
 
     void RegenerateStamina()
@@ -74,8 +76,8 @@ public class PlayerStamina : MonoBehaviour
 
     void OnDisable()
     {
-        MainLinks.Instance.PlayerSpeed.OnPlayerRun -= BurnStamina;
-        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
+        m_playerSpeed.OnPlayerRun -= BurnStamina;
+        m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
     }
 }
 

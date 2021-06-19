@@ -1,12 +1,16 @@
-﻿public class SoundPlayerOnPlayerBleeding : SoundPlayerOnAction
+﻿using Zenject;
+
+public class SoundPlayerOnPlayerBleeding : SoundPlayerOnAction
 {
+    [Inject] CharacterBleeding m_playerBleeding;
+
     protected override void SubscribeToAction()
     {
-        MainLinks.Instance.PlayerBleeding.OnPlayerBleeding += PlaySound;
+        m_playerBleeding.OnPlayerBleeding += PlaySound;
     }
 
     protected override void UnsubscribeToAction()
     {
-        MainLinks.Instance.PlayerBleeding.OnPlayerBleeding -= PlaySound;
+        m_playerBleeding.OnPlayerBleeding -= PlaySound;
     }
 }

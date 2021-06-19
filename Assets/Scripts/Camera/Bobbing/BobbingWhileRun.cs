@@ -6,43 +6,21 @@
 //    [SerializeField] float m_bobVerticalAmplitudeWhileRun;
 
 //    CameraBobbing m_cameraBobbing;
-
-//    void Awake()
-//    {
-//        m_cameraBobbing = GetComponent<CameraBobbing>();
-//    }
-
-//    void Start()
-//    {
-//        MainLinks.Instance.PlayerSpeed.OnPlayerRun += ChangeBobbingDuringRun;
-//        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun += m_cameraBobbing.ResetBobbingValues;
-//    }
-
-//    void ChangeBobbingDuringRun()
-//    {
-//        m_cameraBobbing.BobFrequency = m_bobFrequencyWhileRun;
-//        m_cameraBobbing.BobVerticalAmplitude = m_bobVerticalAmplitudeWhileRun;
-//    }
-
-//    void OnDisable()
-//    {
-//        MainLinks.Instance.PlayerSpeed.OnPlayerRun -= ChangeBobbingDuringRun;
-//        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun -= m_cameraBobbing.ResetBobbingValues;
-//    }
-
-//}
+using Zenject;
 
 class BobbingWhileRun : BobbingChangeWhileAction
 {
+    [Inject] PlayerSpeed m_playerSpeed;
+
     protected override void Subscribe()
     {
-        MainLinks.Instance.PlayerSpeed.OnPlayerRun += ChangeBobbingDuringRun;
-        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun += m_cameraBobbing.ResetBobbingValues;
+        m_playerSpeed.OnPlayerRun += ChangeBobbingDuringRun;
+        m_playerSpeed.OnPlayerStoppedRun += m_cameraBobbing.ResetBobbingValues;
     }
 
     protected override void Unsubscribe()
     {
-        MainLinks.Instance.PlayerSpeed.OnPlayerRun -= ChangeBobbingDuringRun;
-        MainLinks.Instance.PlayerSpeed.OnPlayerStoppedRun -= m_cameraBobbing.ResetBobbingValues;
+        m_playerSpeed.OnPlayerRun -= ChangeBobbingDuringRun;
+        m_playerSpeed.OnPlayerStoppedRun -= m_cameraBobbing.ResetBobbingValues;
     }
 }

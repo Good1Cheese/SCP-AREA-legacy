@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 public class PlayerSpeed : MonoBehaviour
 {
@@ -7,17 +8,14 @@ public class PlayerSpeed : MonoBehaviour
     [SerializeField] float m_walkSpeed;
     [SerializeField] float m_runSpeed;
 
+    [Inject] PlayerStamina m_playerStamina;
+
+    public float SlowDownFactor { get; set; }
+
     public Action OnPlayerRun { get; set; }
     public Action OnPlayerStoppedRun { get; set; }
     public Action OnPlayerStoppedSneak { get; set; }
     public Action OnPlayerSneak { get; set; }
-
-    public float SlowDownFactor { get; set; }
-
-    void Awake()
-    {
-        MainLinks.Instance.PlayerSpeed = this;
-    }
 
     public float GetPlayerSpeed()
     {
@@ -28,7 +26,7 @@ public class PlayerSpeed : MonoBehaviour
             OnPlayerSneak.Invoke();
             movespeed = m_sneakSpeed;
         }
-        else if (Input.GetButton("Sprint") && MainLinks.Instance.PlayerStamina.HasPlayerЕnoughStaminaToRun)
+        else if (Input.GetButton("Sprint") && m_playerStamina.StaminaValue > 0)
         {
             OnPlayerRun.Invoke();
             movespeed = m_runSpeed;

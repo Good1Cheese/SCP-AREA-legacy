@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class CharacterBleeding : MonoBehaviour
 {
     [SerializeField] float m_timeToStopBleeding;
     [SerializeField] float m_bleedDelay;
     [SerializeField] float m_bleedDamage;
+    [Inject] EventManager m_eventManager;
+    [Inject] PlayerHealth m_playerHealth;
 
     bool m_isBleeding;
     float m_pressingDuration;
     WaitForSeconds m_bleedTimeout;
     IEnumerator m_bleedingCoroutine;
-
+    public Action OnPlayerStartBleeding { get; set; }
     public Action OnPlayerBleeding { get; set; }
 
     void Awake()
     {
-        MainLinks.Instance.PlayerBleeding = this;
         m_bleedTimeout = new WaitForSeconds(m_bleedDelay);
         m_bleedingCoroutine = BleedCoroutine();
     }
@@ -38,18 +40,17 @@ public class CharacterBleeding : MonoBehaviour
     {
         if (m_isBleeding) { return; }
         StartCoroutine(m_bleedingCoroutine);
-        MainLinks.Instance.PlayerStamina.StopRegeneration();
+        OnPlayerStartBleeding.Invoke();
     }
 
     IEnumerator BleedCoroutine()
     {
         m_isBleeding = true;
-        var playerHealthController = MainLinks.Instance.PlayerHealth;
-        while (playerHealthController.Health > 0)
+        while (m_playerHealth.Health > 0)
         {
             yield return m_bleedTimeout;
-            OnPlayerBleeding?.Invoke();
-            MainLinks.Instance.PlayerHealth.DamageBleeding(m_bleedDamage);
+            OnPlayerBleeding.Invoke();
+            m_playerHealth.DamageBleeding(m_bleedDamage);
         }
         m_isBleeding = false;
     }

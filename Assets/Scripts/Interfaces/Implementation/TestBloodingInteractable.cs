@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class TestBloodingInteractable : MonoBehaviour, IInteractable
 {
-    [SerializeField] PlayerHealthSystem a;
+    [SerializeField] PlayerHealth a;
     public void Interact()
     {
-        a.Damage();
+        a.Scratch(10);
     }
 }

@@ -1,15 +1,18 @@
 using UnityEngine;
+using Zenject;
 
 public class MainMenuUIManager : MonoBehaviour
 {
+    [Inject] SceneTransition m_sceneTransition;
+
     public void Play()
     {
-        MainLinks.Instance.SceneChanger.ChangeScene((int)SceneTransition.Scenes.ScpScene);
+        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.ScpScene);
     }
 
     public void EnterSettings()
     {
-        MainLinks.Instance.SceneChanger.ChangeScene((int)SceneTransition.Scenes.SettingsScene);
+        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.SettingsScene);
     }
 
     public void Exit() => Application.Quit();

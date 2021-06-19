@@ -1,23 +1,26 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 [RequireComponent(typeof(Slider))]
 public class StaminaBarUIController : StatisticsBarUIController
 {
+    [Inject] PlayerStamina m_playerStamina;
+
     protected override float GetBarValue()
     {
-        return MainLinks.Instance.PlayerStamina.StaminaValue;
+        return m_playerStamina.StaminaValue;
     }
 
     protected override void Subscribe()
     {
-        MainLinks.Instance.PlayerStamina.OnStaminaValueChanged += UpdateUI;
+        m_playerStamina.OnStaminaValueChanged += UpdateUI;
     }
 
     protected override void Unsubscribe()
     {
-        MainLinks.Instance.PlayerStamina.OnStaminaValueChanged -= UpdateUI;
+        m_playerStamina.OnStaminaValueChanged -= UpdateUI;
     }
 }
 

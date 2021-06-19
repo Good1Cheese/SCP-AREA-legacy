@@ -4,11 +4,12 @@ public class CameraRotator : MonoBehaviour
 {
     [SerializeField] float m_ySensitivity;
     [SerializeField] float m_verticalLookLimit;
+    Transform m_transform;
     float m_yRotation;
 
     void Start()
     {
-        MainLinks.Instance.Camera = transform;
+        m_transform = transform;
     }
 
     void Update()
@@ -18,6 +19,6 @@ public class CameraRotator : MonoBehaviour
         m_yRotation -= mouseY;
         m_yRotation = Mathf.Clamp(m_yRotation, -m_verticalLookLimit, m_verticalLookLimit);
 
-        MainLinks.Instance.Camera.localRotation = Quaternion.Euler(m_yRotation, 0, 0);
+        m_transform.localRotation = Quaternion.Euler(m_yRotation, 0, 0);
     }
 }

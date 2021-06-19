@@ -3,11 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
-    void Start()
-    {
-        MainLinks.Instance.SceneChanger = this;
-    }
-
     public enum Scenes
     {
         StartScene = 0,

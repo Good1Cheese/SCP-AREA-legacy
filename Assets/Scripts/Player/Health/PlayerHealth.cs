@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(CharacterBleeding), typeof(DegreeOfInjuary))]
 public class PlayerHealth : MonoBehaviour
 {
-    CharacterBleeding m_bleedingController;
-
     [SerializeField] float m_health;
+    CharacterBleeding m_bleedingController;
+    [Inject] SceneTransition m_sceneTransition;
+
     public float Health
     {
         get => m_health;
@@ -23,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
     void Awake()
     {
         m_bleedingController = GetComponent<CharacterBleeding>();
-        MainLinks.Instance.PlayerHealth = this;
     }
 
     public void Damage(float amoutOfDamage)
@@ -55,6 +56,6 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        MainLinks.Instance.SceneChanger.ChangeScene((int)SceneTransition.Scenes.RespawnScene);
+        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.RespawnScene);
     }
 }
