@@ -6,14 +6,15 @@ using Zenject;
 
 public class PlayerStamina : MonoBehaviour
 {
-    [Inject] PlayerSpeed m_playerSpeed;
-    [Inject] CharacterBleeding m_playerBleeding;
+  //  [Inject] CharacterBleeding m_playerBleeding;
 
     [SerializeField] float m_regenerationSpeed;
     [SerializeField] float m_spendingSpeed;
     [SerializeField] float m_delayDuringRegeneration;
     [SerializeField] float m_delayBeforeRegenerationStart;
     [SerializeField] float m_staminaValue;
+    [Inject] PlayerMovementSpeed m_playerSpeed;
+    [Inject] PlayerHealthSystem m_playerHealth;
 
     WaitForSeconds m_timeoutBeforeRegeneration;
     WaitForSeconds m_timeoutDuringRegeneration;
@@ -43,7 +44,8 @@ public class PlayerStamina : MonoBehaviour
         m_maxStaminaAmount = m_staminaValue;
         m_playerSpeed.OnPlayerRun += BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun += RegenerateStamina;
-        m_playerBleeding.OnPlayerStartBleeding += StopRegeneration;
+        m_playerHealth.OnPlayerGetsDamage += StopRegeneration;
+    //    m_playerBleeding.OnPlayerStartBleeding += StopRegeneration;
     }
 
     void RegenerateStamina()
@@ -74,10 +76,17 @@ public class PlayerStamina : MonoBehaviour
         m_regenerationCoroutine = RegenerateStaminaCoroutine();
     }
 
+    public void DisableRunAbility()
+    {
+        StaminaValue = 0;
+        this.enabled = false;
+    }
+
     void OnDisable()
     {
         m_playerSpeed.OnPlayerRun -= BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
+        m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }
 }
 

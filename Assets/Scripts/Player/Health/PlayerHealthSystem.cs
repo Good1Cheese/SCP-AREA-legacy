@@ -1,39 +1,51 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class PlayerHealthSystem : MonoBehaviour
 {
     [SerializeField] Sprite m_imageForEmptyCell;
     [SerializeField] Sprite m_imageForFullCell;
-    int m_currentHealthCellIndex = 0;
-    int m_healthCellsLength;
+    int m_currentHealthCellIndex;
+
     public static List<PlayerHealthCell> HealthCells { get; set; } = new List<PlayerHealthCell>();
+
+    public Action OnPlayerDie { get; set; }
+    public Action OnPlayerGetsDamage { get; set; }
 
     void Start()
     {
-        m_healthCellsLength = HealthCells.Count;
+        m_currentHealthCellIndex = HealthCells.Count - 1;
     }
 
     public void Damage()
     {
-        HealthCells[m_currentHealthCellIndex].Image.sprite = m_imageForEmptyCell;
-        m_currentHealthCellIndex++;
-        if (m_currentHealthCellIndex >= m_healthCellsLength)
+        OnPlayerGetsDamage?.Invoke();
+        HealthCells[m_currentHealthCellIndex].SetSprite(m_imageForEmptyCell);
+        m_currentHealthCellIndex--;
+        if (m_currentHealthCellIndex < 0)
         {
             Die();
         }
     }
 
+    public void Bleed()
+    {
+
+    }
+
     public void Heal()
     {
-        HealthCells[m_currentHealthCellIndex].Image.sprite = m_imageForFullCell;
+        HealthCells[m_currentHealthCellIndex].SetSprite(m_imageForFullCell);
         m_currentHealthCellIndex++;
     }
 
+    public int GetCurrentHealthPercent() => m_currentHealthCellIndex * 100 / HealthCells.Count;
+
     void Die()
     {
-      // TODO: Replace with Zenject
-      //  MainLinks.Instance.SceneChanger.ChangeScene((int)SceneTransition.Scenes.RespawnScene);
+        OnPlayerDie?.Invoke();
     }
 }
 

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(CharacterBleeding), typeof(DegreeOfInjuary))]
+[RequireComponent(typeof(CharacterBleeding), typeof(DegreeOfInjury))]
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] float m_health;

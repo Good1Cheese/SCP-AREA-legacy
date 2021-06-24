@@ -2,15 +2,14 @@
 using UnityEngine;
 using Zenject;
 
-public class PlayerSpeed : MonoBehaviour
+public class PlayerMovementSpeed : MonoBehaviour
 {
     [SerializeField] float m_sneakSpeed;
     [SerializeField] float m_walkSpeed;
     [SerializeField] float m_runSpeed;
 
     [Inject] PlayerStamina m_playerStamina;
-
-    public float SlowDownFactor { get; set; }
+    float slowDownFactor;
 
     public Action OnPlayerRun { get; set; }
     public Action OnPlayerStoppedRun { get; set; }
@@ -41,6 +40,11 @@ public class PlayerSpeed : MonoBehaviour
             OnPlayerStoppedSneak.Invoke();
         }
 
-        return movespeed - SlowDownFactor;
+        return movespeed - slowDownFactor;
+    }
+
+    public void SlowDownSpeed(float slowDownFactor)
+    {
+        this.slowDownFactor = slowDownFactor;
     }
 }

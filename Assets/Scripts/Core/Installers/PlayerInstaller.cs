@@ -1,29 +1,29 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(CharacterBleeding))]
+[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealthSystem), typeof(PlayerInventory))]
 public class PlayerInstaller : MonoInstaller
 {
     PlayerStamina m_playerStamina;
-    PlayerSpeed m_playerSpeed;
-    PlayerHealth m_playerHealth;
-    CharacterBleeding m_playerBleeding;
+    PlayerMovementSpeed m_playerSpeed;
+    PlayerHealthSystem m_playerHealth;
+    PlayerInventory m_playerInventory;
 
     public override void InstallBindings()
     {
         GetComponents();
-        Container.Bind<EventManager>().AsSingle().NonLazy();
         Container.BindInstance(m_playerStamina).AsSingle();
         Container.BindInstance(m_playerSpeed).AsSingle();
         Container.BindInstance(m_playerHealth).AsSingle();
-        Container.BindInstance(m_playerBleeding).AsSingle();
+        Container.BindInstance(m_playerInventory).AsSingle();
+        // Container.BindInstances(m_playerStamina, m_playerSpeed, m_playerHealth, m_playerInventory);
     }
 
     void GetComponents()
     {
         m_playerStamina = GetComponent<PlayerStamina>();
-        m_playerSpeed = GetComponent<PlayerSpeed>();
-        m_playerHealth = GetComponent<PlayerHealth>();
-        m_playerBleeding = GetComponent<CharacterBleeding>();
+        m_playerSpeed = GetComponent<PlayerMovementSpeed>();
+        m_playerHealth = GetComponent<PlayerHealthSystem>();
+        m_playerInventory = GetComponent<PlayerInventory>();
     }
 }

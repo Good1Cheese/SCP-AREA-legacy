@@ -8,7 +8,7 @@ public class PlayerRotator : MonoBehaviour
     void Start()
     {
         m_transform = transform;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
