@@ -8,6 +8,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] int m_maxClotsCount;
 
     int currentItemIndex;
+    Transform m_transform;
     Item_SO[] inventory;
     public Item_SO[] Inventory { get => inventory; }
     public Action OnItemAdded { get; set; }
@@ -15,6 +16,7 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         inventory = new Item_SO[m_maxClotsCount];
+        m_transform = transform;
     }
 
     public bool AddItem(Item_SO item)
@@ -35,10 +37,20 @@ public class PlayerInventory : MonoBehaviour
             if (inventory[i] == item)
             {
                 inventory[i] = null;
+                ActivateItem(item);
                 OnItemAdded.Invoke();
+                if (i > currentItemIndex ) { return; }
                 currentItemIndex = i;
+                    
                 return;
             }
         }
+    }
+
+    void ActivateItem(Item_SO item)
+    {
+        GameObject gameobject = item.gameobject;
+        gameobject.SetActive(true);
+        gameobject.transform.position = m_transform.position;
     }
 }

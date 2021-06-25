@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_canvas: {fileID: 0}
+  rectTransform: {fileID: 0}
 --- !u!1 &7820679479324534535
 GameObject:
   m_ObjectHideFlags: 0

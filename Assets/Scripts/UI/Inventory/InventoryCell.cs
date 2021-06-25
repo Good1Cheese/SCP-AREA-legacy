@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(InventorySlotMoving))]
-public class InventorySlot : MonoBehaviour
+[RequireComponent(typeof(InventoryCellMoving))]
+public class InventoryCell : MonoBehaviour
 {
     [SerializeField] Image m_image;
 
-    InventorySlotMoving m_InventorySlotInteractions;
+    InventoryCellMoving m_InventorySlotInteractions;
     Item_SO m_item;
+
     public Item_SO Item { get => m_item; }
 
     void Awake()
     {
-        m_InventorySlotInteractions = GetComponent<InventorySlotMoving>();
+        m_InventorySlotInteractions = GetComponent<InventoryCellMoving>();
         PlayerInventoryUI.InventorySlots.Add(this);
     }
 

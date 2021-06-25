@@ -6,7 +6,7 @@ public class PlayerInventoryUI : MonoBehaviour
 {
     [Inject] PlayerInventory m_playerInventory;
 
-    public static List<InventorySlot> InventorySlots { get; set; } = new List<InventorySlot>();
+    public static List<InventoryCell> InventorySlots { get; set; } = new List<InventoryCell>();
 
     void Start()
     {
