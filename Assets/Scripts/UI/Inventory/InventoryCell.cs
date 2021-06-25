@@ -1,26 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(InventoryCellMoving))]
-public class InventoryCell : MonoBehaviour
+public class InventoryCell : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] Image m_image;
 
-    InventoryCellMoving m_InventorySlotInteractions;
     Item_SO m_item;
 
     public Item_SO Item { get => m_item; }
+    public static Action<PointerEventData> OnItemClicked { get; set; }
 
     void Awake()
     {
-        m_InventorySlotInteractions = GetComponent<InventoryCellMoving>();
         PlayerInventoryUI.InventorySlots.Add(this);
     }
 
     public void SetItem(Item_SO item)
     {
         m_item = item;
-        m_InventorySlotInteractions.enabled = true;
         m_image.sprite = item.sprite;
         m_image.enabled = true;
     }
@@ -28,15 +27,16 @@ public class InventoryCell : MonoBehaviour
     public void ClearSlot()
     {
         m_item = null;
-        m_InventorySlotInteractions.enabled = false;
         m_image.sprite = null;
         m_image.enabled = false;
     }
 
-    public void UseItem()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (m_item == null) { return; }
-        Item.Use();
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OnItemClicked.Invoke(eventData);
+        }
     }
 
 }
