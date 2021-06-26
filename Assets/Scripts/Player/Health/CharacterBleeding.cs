@@ -8,8 +8,7 @@ public class CharacterBleeding : MonoBehaviour
     [SerializeField] float m_timeToStopBleeding;
     [SerializeField] float m_bleedDelay;
     [SerializeField] float m_bleedDamage;
-    [Inject] EventManager m_eventManager;
-    [Inject] PlayerHealth m_playerHealth;
+//    [Inject] PlayerHealth m_playerHealth;
 
     bool m_isBleeding;
     float m_pressingDuration;
@@ -46,11 +45,11 @@ public class CharacterBleeding : MonoBehaviour
     IEnumerator BleedCoroutine()
     {
         m_isBleeding = true;
-        while (m_playerHealth.Health > 0)
+        while (true)//m_playerHealth.Health > 0)
         {
             yield return m_bleedTimeout;
             OnPlayerBleeding.Invoke();
-            m_playerHealth.DamageBleeding(m_bleedDamage);
+           // m_playerHealth.DamageBleeding(m_bleedDamage);
         }
         m_isBleeding = false;
     }

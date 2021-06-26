@@ -18,7 +18,7 @@ public abstract class SoundPlayerOnAction : MonoBehaviour
         audioSource.Play();
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         UnsubscribeToAction();
     }

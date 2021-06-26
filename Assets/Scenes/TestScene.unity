@@ -235,6 +235,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113452537}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &290291868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4027346018825526834, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+  m_PrefabInstance: {fileID: 1404334547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &374035222 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 374035222, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
@@ -989,6 +994,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Player '
       objectReference: {fileID: 0}
+    - target: {fileID: 4616315369042777221, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
+      propertyPath: m_InventoryUI
+      value: 
+      objectReference: {fileID: 290291868}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
 --- !u!1 &1145135606
@@ -1607,6 +1616,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1890722454511254895, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_Name
+      value: Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 1890722454511254895, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4027346018825526834, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4946365242609000724, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1695,12 +1716,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
-    - target: {fileID: 4946365242908492700, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 4946365242609000728, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946365242876041173, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4946365242908492700, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946365242908492700, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946365243759933131, guid: 9f99c6d9a3c5d39449625ded08f22c50, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2240,7 +2273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: b4c0f2ef9375cee43a807f2b2198225d, type: 2}
   _monoInstallers:
   - {fileID: 374035222}
   _installerPrefabs: []

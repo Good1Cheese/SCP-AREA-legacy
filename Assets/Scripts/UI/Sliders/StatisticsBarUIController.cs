@@ -26,7 +26,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
         m_slider.value = GetBarValue();
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         Unsubscribe();
     }

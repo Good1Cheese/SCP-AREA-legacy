@@ -5,12 +5,17 @@ using Zenject;
 public class PlayerInventoryUI : MonoBehaviour
 {
     [Inject] PlayerInventory m_playerInventory;
+    [Inject] SettingsPresetInstaller settingsPresetInstaller;
+    GameObject m_gameObject;
 
     public static List<InventoryCell> InventorySlots { get; set; } = new List<InventoryCell>();
 
     void Start()
     {
+        m_gameObject = gameObject;
+        m_gameObject.SetActive(false);
         m_playerInventory.OnItemAdded += UpdateUI;
+        m_playerInventory.OnInvenoryButtonPressed += ActivateOrCloseUI;
     }
 
     void UpdateUI()
@@ -30,9 +35,15 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
-    void OnDisable()
+    void ActivateOrCloseUI(bool isUIActivated)
+    {
+        gameObject.SetActive(isUIActivated);
+    }
+
+    void OnDestroy()
     {
         m_playerInventory.OnItemAdded -= UpdateUI;
+        m_playerInventory.OnInvenoryButtonPressed -= ActivateOrCloseUI;
     }
 
 }

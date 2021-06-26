@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
@@ -11,9 +12,24 @@ public class SceneTransition : MonoBehaviour
         ScpScene = 3
     }
 
-    public void ChangeScene(int index)
+    public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
+    }
+
+    public void LoadSceneAsynchronously(int index) => StartCoroutine(LoadSceneAsynchronouslyCoroutine(index));
+
+    public IEnumerator LoadSceneAsynchronouslyCoroutine(int index)
+    {
+        var loadingSceneProcess = SceneManager.LoadSceneAsync(index);
+
+        while (!loadingSceneProcess.isDone)
+        {
+            float progress = Mathf.Clamp01(loadingSceneProcess.progress / .9f);
+            print(progress);
+
+            yield return null;
+        }
     }
 
 }

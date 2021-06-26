@@ -7,12 +7,12 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void Play()
     {
-        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.ScpScene);
+        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
     }
 
     public void EnterSettings()
     {
-        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.SettingsScene);
+        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.SettingsScene);
     }
 
     public void Exit() => Application.Quit();

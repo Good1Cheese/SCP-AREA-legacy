@@ -1,16 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController), typeof(PlayerMovementSpeed), typeof(PlayerStamina))]
+[RequireComponent(typeof(CharacterController), typeof(MovementSpeed), typeof(PlayerStamina))]
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerMovementSpeed m_playerSpeed;
+    MovementSpeed m_playerSpeed;
     CharacterController m_characterController;
     Transform m_transform;
 
     void Start()
     {
         m_transform = transform;
-        m_playerSpeed = GetComponent<PlayerMovementSpeed>();
+        m_playerSpeed = GetComponent<MovementSpeed>();
         m_characterController = GetComponent<CharacterController>();
     }
 

@@ -5,7 +5,7 @@ using Zenject;
 public class PlayerInstaller : MonoInstaller
 {
     PlayerStamina m_playerStamina;
-    PlayerMovementSpeed m_playerSpeed;
+    MovementSpeed m_playerSpeed;
     PlayerHealthSystem m_playerHealth;
     PlayerInventory m_playerInventory;
 
@@ -22,7 +22,7 @@ public class PlayerInstaller : MonoInstaller
     void GetComponents()
     {
         m_playerStamina = GetComponent<PlayerStamina>();
-        m_playerSpeed = GetComponent<PlayerMovementSpeed>();
+        m_playerSpeed = GetComponent<MovementSpeed>();
         m_playerHealth = GetComponent<PlayerHealthSystem>();
         m_playerInventory = GetComponent<PlayerInventory>();
     }

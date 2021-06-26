@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-public class PlayerMovementSpeed : MonoBehaviour
+public class MovementSpeed : MonoBehaviour
 {
     [SerializeField] float m_sneakSpeed;
     [SerializeField] float m_walkSpeed;

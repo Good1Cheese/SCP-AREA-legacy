@@ -13,7 +13,7 @@ public class PlayerStamina : MonoBehaviour
     [SerializeField] float m_delayDuringRegeneration;
     [SerializeField] float m_delayBeforeRegenerationStart;
     [SerializeField] float m_staminaValue;
-    [Inject] PlayerMovementSpeed m_playerSpeed;
+    [Inject] MovementSpeed m_playerSpeed;
     [Inject] PlayerHealthSystem m_playerHealth;
 
     WaitForSeconds m_timeoutBeforeRegeneration;
@@ -82,7 +82,7 @@ public class PlayerStamina : MonoBehaviour
         this.enabled = false;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         m_playerSpeed.OnPlayerRun -= BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;

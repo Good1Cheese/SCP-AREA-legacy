@@ -1,10 +1,10 @@
 using UnityEngine;
 using Zenject;
 
-public class SquatEffectOfCamera : MonoBehaviour
+public class SquatEffect : MonoBehaviour
 {
     [SerializeField] float m_sneakHeadHeight;
-    [Inject] PlayerMovementSpeed m_playerSpeed;
+    [Inject] MovementSpeed m_playerSpeed;
 
     float m_startHeadHeight;
     Transform m_transform;
@@ -31,7 +31,7 @@ public class SquatEffectOfCamera : MonoBehaviour
         m_transform.localPosition = localPosition;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         m_playerSpeed.OnPlayerSneak -= LowerHeadHeight;
         m_playerSpeed.OnPlayerStoppedSneak -= RestoreHeadHeight;

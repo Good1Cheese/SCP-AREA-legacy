@@ -9,7 +9,7 @@ public class DynamicFov : MonoBehaviour
     [SerializeField] float m_delayDuringFovChange;
     [SerializeField] float m_fovDuringRun;
     [SerializeField] float m_startFov;
-    [Inject] PlayerMovementSpeed m_playerSpeed;
+    [Inject] MovementSpeed m_playerSpeed;
 
     WaitForSeconds m_timeoutWhileFovChanging;
     Camera mainCamera;
@@ -66,7 +66,7 @@ public class DynamicFov : MonoBehaviour
         m_resetCoroutine = ResetFovCoroutine();
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         m_playerSpeed.OnPlayerRun -= IncreaseFov;
         m_playerSpeed.OnPlayerStoppedRun -= ResetFov;

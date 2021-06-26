@@ -9,7 +9,7 @@ public class DegreeOfInjury : MonoBehaviour
     [SerializeField] float m_slowDownFactorWhileInjured;
     [SerializeField] float m_startLensDistortionIntensity;
     [SerializeField] float m_startSaturation;
-    [Inject] PlayerMovementSpeed m_playerSpeed;
+    [Inject] MovementSpeed m_playerSpeed;
     [Inject] PlayerStamina m_playerStamina;
     [Inject] PlayerHealthSystem m_playerHealth;
 
@@ -48,7 +48,7 @@ public class DegreeOfInjury : MonoBehaviour
         m_lensDistortion.intensity.value = m_startLensDistortionIntensity * m_effectMultiplier;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         m_playerHealth.OnPlayerGetsDamage -= CheckInjuaryDegree;
     }

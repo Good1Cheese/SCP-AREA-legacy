@@ -7,6 +7,6 @@ public class SettingsSceneController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        m_sceneTransition.ChangeScene((int)SceneTransition.Scenes.StartScene);
+        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.StartScene);
     }
 }

@@ -17,7 +17,6 @@ public class ItemHandler : MonoBehaviour, IInteractable
         m_gameObject = gameObject;
     }
 
-
     public void Interact()
     {
         m_item_SO.gameobject = m_gameObject;

@@ -22,7 +22,7 @@ abstract class BobbingChangeWhileAction : MonoBehaviour
         m_cameraBobbing.BobVerticalAmplitude = m_bobVerticalAmplitudeWhileAction;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         Unsubscribe();
     }
