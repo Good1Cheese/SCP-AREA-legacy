@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Zenject;
 using UnityEngine;
 
 
@@ -7,6 +8,8 @@ public class PlayerHealthSystem : MonoBehaviour
 {
     [SerializeField] Sprite m_imageForEmptyCell;
     [SerializeField] Sprite m_imageForFullCell;
+
+    [Inject] SceneTransition m_sceneTransition;
     int m_currentHealthCellIndex;
 
     public static List<PlayerHealthCell> HealthCells { get; set; } = new List<PlayerHealthCell>();
@@ -46,6 +49,7 @@ public class PlayerHealthSystem : MonoBehaviour
     void Die()
     {
         OnPlayerDie?.Invoke();
+        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.RespawnScene);
     }
 }
 

@@ -33,6 +33,7 @@ public class InventoryCell : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (m_item == null) { return; }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnItemClicked.Invoke(eventData);

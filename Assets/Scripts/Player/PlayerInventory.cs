@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] int m_maxClotsCount;
+    [SerializeField] int m_maxSlotsAmount;
 
     bool isUIActivated;
     int currentItemIndex;
@@ -13,11 +13,11 @@ public class PlayerInventory : MonoBehaviour
     Item_SO[] inventory;
     public Item_SO[] Inventory { get => inventory; }
     public Action OnItemAdded { get; set; }
-    public Action<bool> OnInvenoryButtonPressed { get; set; }
+    public Action<bool> OnInventoryButtonPressed { get; set; }
 
     void Start()
     {
-        inventory = new Item_SO[m_maxClotsCount];
+        inventory = new Item_SO[m_maxSlotsAmount];
         m_transform = transform;
     }
 
@@ -26,13 +26,13 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))
         {
             isUIActivated = !isUIActivated;
-            OnInvenoryButtonPressed.Invoke(isUIActivated);
+            OnInventoryButtonPressed.Invoke(isUIActivated);
         }
     }
 
     public bool AddItem(Item_SO item)
     {
-        if (currentItemIndex >= m_maxClotsCount) { return false; }
+        if (currentItemIndex >= m_maxSlotsAmount) { return false; }
 
         Inventory[currentItemIndex] = item;
         OnItemAdded.Invoke();

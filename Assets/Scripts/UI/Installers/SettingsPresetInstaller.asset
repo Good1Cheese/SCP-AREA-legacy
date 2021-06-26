@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e855f64372ff784eb63cecb6a15cf26, type: 3}
   m_Name: SettingsPresetInstaller
   m_EditorClassIdentifier: 
-  generalSensivity: 1
+  generalSensivity: 0.3

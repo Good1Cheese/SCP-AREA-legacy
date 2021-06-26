@@ -19,7 +19,7 @@ public class HorizontalRotator : MonoBehaviour
         m_transform = transform;
         m_startYSensitivity = m_ySensitivity;
         Cursor.lockState = CursorLockMode.Locked;
-        m_playerInventory.OnInvenoryButtonPressed += DisableRotation;
+        m_playerInventory.OnInventoryButtonPressed += DisableRotation;
     }
 
     void Update()
@@ -60,6 +60,6 @@ public class HorizontalRotator : MonoBehaviour
 
     void OnDestroy()
     {
-        m_playerInventory.OnInvenoryButtonPressed -= DisableRotation;
+        m_playerInventory.OnInventoryButtonPressed -= DisableRotation;
     }
 }
