@@ -2,7 +2,7 @@
 
 class BobbingWhileSneak : BobbingChangeWhileAction
 {
-    [Inject] MovementSpeed m_playerSpeed;
+    [Inject] readonly MovementSpeed m_playerSpeed;
 
     protected override void Subscribe()
     {

@@ -3,7 +3,7 @@ using Zenject;
 
 public class MainMenuUIManager : MonoBehaviour
 {
-    [Inject] SceneTransition m_sceneTransition;
+    [Inject] readonly SceneTransition m_sceneTransition;
 
     public void Play()
     {

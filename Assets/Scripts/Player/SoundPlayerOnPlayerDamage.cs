@@ -3,7 +3,7 @@ using Zenject;
 
 public class SoundPlayerOnPlayerDamage : SoundPlayerOnAction
 {
-    [Inject] PlayerHealthSystem m_playerHealth;
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     protected override void SubscribeToAction()
     {

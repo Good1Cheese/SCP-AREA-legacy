@@ -7,9 +7,9 @@ public class MovementSpeed : MonoBehaviour
     [SerializeField] float m_sneakSpeed;
     [SerializeField] float m_walkSpeed;
     [SerializeField] float m_runSpeed;
+    [Inject] readonly PlayerStamina m_playerStamina;
 
-    [Inject] PlayerStamina m_playerStamina;
-    float slowDownFactor;
+    float m_slowDownFactor;
 
     public Action OnPlayerRun { get; set; }
     public Action OnPlayerStoppedRun { get; set; }
@@ -40,11 +40,11 @@ public class MovementSpeed : MonoBehaviour
             OnPlayerStoppedSneak.Invoke();
         }
 
-        return movespeed - slowDownFactor;
+        return movespeed - m_slowDownFactor;
     }
 
     public void SlowDownSpeed(float slowDownFactor)
     {
-        this.slowDownFactor = slowDownFactor;
+        m_slowDownFactor = slowDownFactor;
     }
 }

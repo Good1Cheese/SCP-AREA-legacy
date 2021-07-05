@@ -13,8 +13,8 @@ public class PlayerStamina : MonoBehaviour
     [SerializeField] float m_delayDuringRegeneration;
     [SerializeField] float m_delayBeforeRegenerationStart;
     [SerializeField] float m_staminaValue;
-    [Inject] MovementSpeed m_playerSpeed;
-    [Inject] PlayerHealthSystem m_playerHealth;
+    [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     WaitForSeconds m_timeoutBeforeRegeneration;
     WaitForSeconds m_timeoutDuringRegeneration;
@@ -48,15 +48,15 @@ public class PlayerStamina : MonoBehaviour
     //    m_playerBleeding.OnPlayerStartBleeding += StopRegeneration;
     }
 
-    void RegenerateStamina()
-    {
-        StartCoroutine(m_regenerationCoroutine);
-    }
-
     void BurnStamina()
     {
         StaminaValue -= m_spendingSpeed;
         StopRegeneration();
+    }
+
+    void RegenerateStamina()
+    {
+        StartCoroutine(m_regenerationCoroutine);
     }
 
     IEnumerator RegenerateStaminaCoroutine()
@@ -79,7 +79,7 @@ public class PlayerStamina : MonoBehaviour
     public void DisableRunAbility()
     {
         StaminaValue = 0;
-        this.enabled = false;
+        enabled = false;
     }
 
     void OnDestroy()

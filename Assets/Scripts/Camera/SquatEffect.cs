@@ -4,7 +4,7 @@ using Zenject;
 public class SquatEffect : MonoBehaviour
 {
     [SerializeField] float m_sneakHeadHeight;
-    [Inject] MovementSpeed m_playerSpeed;
+    [Inject] readonly MovementSpeed m_playerSpeed;
 
     float m_startHeadHeight;
     Transform m_transform;

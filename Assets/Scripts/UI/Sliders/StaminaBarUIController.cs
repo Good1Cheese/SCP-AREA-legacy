@@ -6,7 +6,7 @@ using Zenject;
 [RequireComponent(typeof(Slider))]
 public class StaminaBarUIController : StatisticsBarUIController
 {
-    [Inject] PlayerStamina m_playerStamina;
+    [Inject] readonly PlayerStamina m_playerStamina;
 
     protected override float GetBarValue()
     {

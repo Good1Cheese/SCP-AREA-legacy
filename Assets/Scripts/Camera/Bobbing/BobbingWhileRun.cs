@@ -10,7 +10,7 @@ using Zenject;
 
 class BobbingWhileRun : BobbingChangeWhileAction
 {
-    [Inject] MovementSpeed m_playerSpeed;
+    [Inject] readonly MovementSpeed m_playerSpeed;
 
     protected override void Subscribe()
     {

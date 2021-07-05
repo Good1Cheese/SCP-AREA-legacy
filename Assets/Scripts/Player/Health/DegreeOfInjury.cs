@@ -6,12 +6,13 @@ using Zenject;
 [RequireComponent(typeof(Volume))]
 public class DegreeOfInjury : MonoBehaviour
 {
+    [SerializeField] int m_lowHealthPercent;
     [SerializeField] float m_slowDownFactorWhileInjured;
     [SerializeField] float m_startLensDistortionIntensity;
     [SerializeField] float m_startSaturation;
-    [Inject] MovementSpeed m_playerSpeed;
-    [Inject] PlayerStamina m_playerStamina;
-    [Inject] PlayerHealthSystem m_playerHealth;
+    [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly PlayerStamina m_playerStamina;
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     float m_effectMultiplier = 1;
     ColorAdjustments m_colorAdjustments;
@@ -34,7 +35,7 @@ public class DegreeOfInjury : MonoBehaviour
         SetEffects();
         m_playerSpeed.SlowDownSpeed(m_slowDownFactorWhileInjured);
 
-        if (m_playerHealth.GetCurrentHealthPercent() <= 25)
+        if (m_playerHealth.GetCurrentHealthPercent() <= m_lowHealthPercent)
         {
             m_playerStamina.DisableRunAbility();
         }

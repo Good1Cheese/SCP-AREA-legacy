@@ -1,72 +1,41 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class CharacterBleeding : MonoBehaviour
 {
-    [SerializeField] float m_timeToStopBleeding;
-    [SerializeField] float m_bleedDelay;
-    [SerializeField] float m_bleedDamage;
-//    [Inject] PlayerHealth m_playerHealth;
+    [SerializeField] float m_delayDuringBleeding;
+    [SerializeField] float m_increasingTimeForBleeding;
+    [SerializeField] Sprite m_imageForBleedingCell;
+    [Inject] readonly PlayerHealth m_playerHealthSystem;
 
-    bool m_isBleeding;
-    float m_pressingDuration;
-    WaitForSeconds m_bleedTimeout;
-    IEnumerator m_bleedingCoroutine;
-    public Action OnPlayerStartBleeding { get; set; }
+    WaitForSeconds m_timeoutDuringBleeding;
+    public bool IsPlayerBleeding { get; set; }
+
     public Action OnPlayerBleeding { get; set; }
-
-    void Awake()
-    {
-        m_bleedTimeout = new WaitForSeconds(m_bleedDelay);
-        m_bleedingCoroutine = BleedCoroutine();
-    }
-
-    void Update()
-    {
-        if (!m_isBleeding) { return; }
-        GetDuradurationOfPressingHealButton();
-
-        if (m_pressingDuration >= m_timeToStopBleeding)
-        {
-            StopBleeding();
-            m_isBleeding = false;
-        }
-    }
 
     public void Bleed()
     {
-        if (m_isBleeding) { return; }
-        StartCoroutine(m_bleedingCoroutine);
-        OnPlayerStartBleeding.Invoke();
+        if (IsPlayerBleeding) { return; }
+
+        IsPlayerBleeding = true;
+        StartCoroutine(BleedCoroutine());
     }
 
     IEnumerator BleedCoroutine()
     {
-        m_isBleeding = true;
-        while (true)//m_playerHealth.Health > 0)
+        while (m_playerHealthSystem.GetCurrentHealthPercent() > 0)
         {
-            yield return m_bleedTimeout;
+            m_timeoutDuringBleeding = new WaitForSeconds(m_delayDuringBleeding);
+            m_playerHealthSystem.GetCurrentHealthCell().SetSprite(m_imageForBleedingCell);
+
+            yield return m_timeoutDuringBleeding;
+
             OnPlayerBleeding.Invoke();
-           // m_playerHealth.DamageBleeding(m_bleedDamage);
+            m_playerHealthSystem.Damage();
+            m_delayDuringBleeding -= m_increasingTimeForBleeding;
         }
-        m_isBleeding = false;
-    }
-
-    void StopBleeding()
-    {
-        StopCoroutine(m_bleedingCoroutine);
-        m_bleedingCoroutine = BleedCoroutine();
-    }
-
-    void GetDuradurationOfPressingHealButton()
-    {
-        if (Input.GetButton("Healing"))
-        {
-            m_pressingDuration += Time.deltaTime;
-            return;
-        }
-        m_pressingDuration = 0;
+        IsPlayerBleeding = false;
     }
 }

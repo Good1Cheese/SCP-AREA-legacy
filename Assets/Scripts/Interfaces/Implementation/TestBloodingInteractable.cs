@@ -1,10 +1,11 @@
 using UnityEngine;
+using Zenject;
 
 public class TestBloodingInteractable : MonoBehaviour, IInteractable
 {
-    [SerializeField] PlayerHealthSystem a;
+    [Inject] readonly CharacterBleeding m_playerBleeding;
     public void Interact()
     {
-        a.Damage();
+        m_playerBleeding.Bleed();
     }
 }

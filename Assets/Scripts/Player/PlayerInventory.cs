@@ -1,23 +1,24 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EquipmentInventory))]
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] int m_maxSlotsAmount;
 
-    bool isUIActivated;
-    int currentItemIndex;
+    bool m_isUIActivated;
     Transform m_transform;
-    Item_SO[] inventory;
-    public Item_SO[] Inventory { get => inventory; }
-    public Action OnItemAdded { get; set; }
+ 
+    public Item_SO[] Inventory { get; set; }
+    public Action OnInventoryChanged { get; set; }
     public Action<bool> OnInventoryButtonPressed { get; set; }
+    public int CurrentItemIndex { get; set; }
+
+    public Action<Vector2, InventorySlot> OnItemClicked { get; set; }
 
     void Start()
     {
-        inventory = new Item_SO[m_maxSlotsAmount];
+        Inventory = new Item_SO[m_maxSlotsAmount];
         m_transform = transform;
     }
 
@@ -25,43 +26,42 @@ public class PlayerInventory : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory"))
         {
-            isUIActivated = !isUIActivated;
-            OnInventoryButtonPressed.Invoke(isUIActivated);
+            m_isUIActivated = !m_isUIActivated;
+            OnInventoryButtonPressed.Invoke(m_isUIActivated);
         }
     }
 
     public bool AddItem(Item_SO item)
     {
-        if (currentItemIndex >= m_maxSlotsAmount) { return false; }
+        if (CurrentItemIndex >= m_maxSlotsAmount) { return false; }
 
-        Inventory[currentItemIndex] = item;
-        OnItemAdded.Invoke();
+        Inventory[CurrentItemIndex] = item;
+        CurrentItemIndex++;
 
-        currentItemIndex++;
+        OnInventoryChanged.Invoke();
         return true;
     }
 
-    public void RemoveItem(Item_SO item)    
+    public void RemoveItem(Item_SO item)
     {
-        for (int i = 0; i < inventory.Length; i++)
+        int indexOfLastEnterance = 0;
+        for (int i = 0; i < Inventory.Length; i++)
         {
-            if (inventory[i] == item)
+            if (Inventory[i] == item)
             {
-                inventory[i] = null;
-                SpawnItem(item);
-                OnItemAdded.Invoke();
-                if (i > currentItemIndex ) { return; }
-                currentItemIndex = i;
-                    
-                return;
+                indexOfLastEnterance = i;
             }
         }
+
+        Inventory[indexOfLastEnterance] = null;
+        CurrentItemIndex = indexOfLastEnterance;
+
+        OnInventoryChanged.Invoke();
     }
 
-    void SpawnItem(Item_SO item)
+    public void SpawnItem(Item_SO item)
     {
-        GameObject gameobject = item.gameobject;
-        gameobject.SetActive(true);
-        gameobject.transform.position = m_transform.position;
+        GameObject gameobjectOfItem = item.gameobject;
+        Instantiate(gameobjectOfItem, m_transform.position, gameobjectOfItem.transform.rotation);
     }
 }

@@ -1,37 +1,40 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Zenject;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
-    [Inject] PlayerInventory m_playerInventory;
-    [Inject] SettingsPresetInstaller m_settingsPresetInstaller;
+    [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly SettingsPresetInstaller m_settingsPresetInstaller;
     GameObject m_gameObject;
 
-    public static List<InventoryCell> InventorySlots { get; set; } = new List<InventoryCell>();
+    public PickableItemSlot[] InventoryCells { get; set; }
+
+    void Awake()
+    {
+        InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
+        m_playerInventory.OnInventoryChanged += UpdateUI;
+        m_playerInventory.OnInventoryButtonPressed += ActivateOrCloseUI;
+    }
 
     void Start()
     {
         m_gameObject = gameObject;
         m_gameObject.SetActive(false);
-        m_playerInventory.OnItemAdded += UpdateUI;
-        m_playerInventory.OnInventoryButtonPressed += ActivateOrCloseUI;
     }
 
     void UpdateUI()
     {
         int inventoryLength = m_playerInventory.Inventory.Length;
-        for (int i = 0, b = inventoryLength - 1; i < inventoryLength; i++, b--)
+        for (int i = 0; i < inventoryLength; i++)
         {
             Item_SO item = m_playerInventory.Inventory[i];
             if (item != null)
             {
-                InventorySlots[b].SetItem(item);
+                InventoryCells[i].SetItem(item);
+                continue;
             }
-            else
-            {
-                InventorySlots[b].ClearSlot();
-            }
+            InventoryCells[i].ClearSlot();
         }
     }
 
@@ -42,7 +45,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     void OnDestroy()
     {
-        m_playerInventory.OnItemAdded -= UpdateUI;
+        m_playerInventory.OnInventoryChanged -= UpdateUI;
         m_playerInventory.OnInventoryButtonPressed -= ActivateOrCloseUI;
     }
 

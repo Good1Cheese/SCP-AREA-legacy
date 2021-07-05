@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4490448435668429653}
   - component: {fileID: 4490448435668429672}
   - component: {fileID: 7529293685295383700}
+  - component: {fileID: 4986046973850489624}
   - component: {fileID: 4490448435668429648}
   - component: {fileID: 4490448435668429663}
   - component: {fileID: 4490448435668429652}
@@ -22,6 +23,7 @@ GameObject:
   - component: {fileID: 8624051450222127644}
   - component: {fileID: 374035222}
   - component: {fileID: 4616315369042777221}
+  - component: {fileID: 1862949079603886047}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -87,7 +89,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_imageForEmptyCell: {fileID: 21300000, guid: f9bd16a898eab944ca19b18609944689, type: 3}
-  m_imageForFullCell: {fileID: 21300000, guid: edc7ed6c73a444d46987c6c5c84eff5d, type: 3}
+--- !u!114 &4986046973850489624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d271a8d37299b4db37345b52dff895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_delayDuringBleeding: 5
+  m_increasingTimeForBleeding: 1
+  m_imageForBleedingCell: {fileID: 21300000, guid: b254a2b99fdabe74c8e3ea6f16e35039, type: 3}
 --- !u!114 &4490448435668429648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0c65c1a4707a54c9f8dd8cca0c1f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_lowHealthPercent: 25
   m_slowDownFactorWhileInjured: 1.5
   m_startLensDistortionIntensity: -0.1
   m_startSaturation: -10
@@ -316,6 +333,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxSlotsAmount: 8
+--- !u!114 &1862949079603886047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a62960b52d3ed469178dd0d7047680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4490448435717744917
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxInteractionDistance: 5
+  m_radiousOfSphereInteraction: 0.5
 --- !u!114 &4490448437021268878
 MonoBehaviour:
   m_ObjectHideFlags: 0
