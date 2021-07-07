@@ -1,7 +1,8 @@
 ﻿
 using UnityEngine;
 
-public abstract class Mask_SO : WearableItem_SO
+[CreateAssetMenu(fileName = "new Mask", menuName = "ScriptableObjects/Mask")]
+public class Mask_SO : WearableItem_SO
 {
     public override void Equip()
     {
@@ -10,9 +11,8 @@ public abstract class Mask_SO : WearableItem_SO
 
     public override void Use()
     {
-        Debug.Log("dsa");
+        throw new System.NotImplementedException();
     }
-
 }
 
 

@@ -2,8 +2,7 @@
 
 public class WeaponCell : WearableItemSlot
 {
-    [Inject]
-    protected override void AddToEquipmentInventory(EquipmentInventory m_equipmentInventory)
+    protected override void AddToEquipmentInventory()
     {
         m_equipmentInventory.WeaponHandler = this;
     }

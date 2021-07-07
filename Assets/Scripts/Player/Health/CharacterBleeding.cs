@@ -8,19 +8,34 @@ public class CharacterBleeding : MonoBehaviour
     [SerializeField] float m_delayDuringBleeding;
     [SerializeField] float m_increasingTimeForBleeding;
     [SerializeField] Sprite m_imageForBleedingCell;
+    [SerializeField] Sprite m_imageForFullCell;
     [Inject] readonly PlayerHealth m_playerHealthSystem;
 
     WaitForSeconds m_timeoutDuringBleeding;
-    public bool IsPlayerBleeding { get; set; }
+    IEnumerator m_bleedCoroutine;
 
+    public bool IsPlayerBleeding { get; set; }
     public Action OnPlayerBleeding { get; set; }
+
+    void Start()
+    {
+        m_bleedCoroutine = BleedCoroutine();    
+    }
 
     public void Bleed()
     {
         if (IsPlayerBleeding) { return; }
 
         IsPlayerBleeding = true;
-        StartCoroutine(BleedCoroutine());
+        StartCoroutine(m_bleedCoroutine);
+    }
+
+    public void StopBleeding()
+    {
+        IsPlayerBleeding = false;
+        StopCoroutine(m_bleedCoroutine);
+        m_bleedCoroutine = BleedCoroutine();
+        m_playerHealthSystem.GetCurrentHealthCell().SetSprite(m_imageForFullCell);
     }
 
     IEnumerator BleedCoroutine()
@@ -32,7 +47,7 @@ public class CharacterBleeding : MonoBehaviour
 
             yield return m_timeoutDuringBleeding;
 
-            OnPlayerBleeding.Invoke();
+            OnPlayerBleeding?.Invoke();
             m_playerHealthSystem.Damage();
             m_delayDuringBleeding -= m_increasingTimeForBleeding;
         }

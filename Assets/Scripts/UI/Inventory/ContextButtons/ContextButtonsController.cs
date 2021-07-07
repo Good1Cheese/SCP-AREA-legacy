@@ -5,7 +5,7 @@ public abstract class ContextButtonsController : MonoBehaviour
 {
     [SerializeField] protected Vector2 m_offset;
 
-    [Inject] public PlayerInventory PlayerInventory { get; set; }
+    [Inject] public PlayerInventory PlayerInventory { get; }
     public InventorySlot CurrentCell { get; set; }
     public Transform Transform { get; set; }
     public GameObject GameObject { get; set; }

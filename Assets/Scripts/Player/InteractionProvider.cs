@@ -3,8 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(RayProvider))]
 public class InteractionProvider : MonoBehaviour
 {
+    [SerializeField] RectTransform m_canvas;
+    [SerializeField] Vector3 m_offset;
     [SerializeField] float m_maxInteractionDistance;
     [SerializeField] float m_radiousOfSphereInteraction;
+
+    IInteractable m_interactable;
     RayProvider m_rayProvider;
 
     void Start()
@@ -14,17 +18,25 @@ public class InteractionProvider : MonoBehaviour
 
     void Update()
     {
+        //if (m_interactable != null)
+        //{
+        //    m_interactable.ResetShader();
+        //}
+
         Ray ray = m_rayProvider.ProvideRay();
 
         if (Physics.SphereCast(ray, m_radiousOfSphereInteraction, out RaycastHit raycastHit, m_maxInteractionDistance))
         {
-            bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out IInteractable interactable);
+            bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_interactable);
 
             if (!isHitObjectInteractable) { return; }
 
+
+            m_canvas.position = raycastHit.collider.ClosestPoint(transform.position);
+
             if (Input.GetButtonDown("Interaction"))
             {
-                interactable.Interact();
+                m_interactable.Interact();
             }
         }
 

@@ -1,7 +1,8 @@
 ﻿
 using UnityEngine;
 
-public abstract class Weapon_SO : WearableItem_SO
+[CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/Weapon")]
+public class Weapon_SO : WearableItem_SO
 {
     public override void Equip()
     {
@@ -10,9 +11,8 @@ public abstract class Weapon_SO : WearableItem_SO
 
     public override void Use()
     {
-        Debug.Log("dsa");
+        throw new System.NotImplementedException();
     }
-
 }
 
 

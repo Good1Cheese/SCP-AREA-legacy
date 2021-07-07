@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(BobbingWhileRun), typeof(BobbingWhileSneak))]
 class CameraBobbing : MonoBehaviour
@@ -7,6 +8,7 @@ class CameraBobbing : MonoBehaviour
     [SerializeField] float m_bobHorizontalAmplitude;
     [SerializeField] float m_bobVerticalAmplitude;
     [SerializeField] [Range(0, 1)] float m_headBobSmoothing;
+    [Inject] PlayerMovement m_playerMovement;
 
     float m_walkingTime;
     Transform m_cameraPosition;
@@ -35,6 +37,11 @@ class CameraBobbing : MonoBehaviour
         m_cameraPosition.position = Vector3.Lerp(m_cameraPosition.position, targetCameraPosition, m_headBobSmoothing);
 
         if ((m_cameraPosition.position - targetCameraPosition).magnitude <= 0.001) m_cameraPosition.position = targetCameraPosition;
+    }
+
+    void ResetTime()
+    {
+        m_walkingTime = 0;
     }
 
     Vector3 CalculateHeadBobbingOffset(float time)

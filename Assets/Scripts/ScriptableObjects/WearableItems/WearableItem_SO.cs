@@ -1,6 +1,6 @@
 ﻿public abstract class WearableItem_SO : Item_SO
 {
-    public new EquipmentInventory Inventory;
+    protected EquipmentInventory Inventory;
 
     public override void GetDependencies(PlayerInstaller playerInstaller)
     {

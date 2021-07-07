@@ -5,7 +5,6 @@ using Zenject;
 public class PlayerInventoryUI : MonoBehaviour
 {
     [Inject] readonly PlayerInventory m_playerInventory;
-    [Inject] readonly SettingsPresetInstaller m_settingsPresetInstaller;
     GameObject m_gameObject;
 
     public PickableItemSlot[] InventoryCells { get; set; }
@@ -28,7 +27,7 @@ public class PlayerInventoryUI : MonoBehaviour
         int inventoryLength = m_playerInventory.Inventory.Length;
         for (int i = 0; i < inventoryLength; i++)
         {
-            Item_SO item = m_playerInventory.Inventory[i];
+            PickableItem_SO item = m_playerInventory.Inventory[i];
             if (item != null)
             {
                 InventoryCells[i].SetItem(item);

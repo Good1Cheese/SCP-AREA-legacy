@@ -2,8 +2,7 @@
 
 public class MaskCell : WearableItemSlot
 {
-    [Inject]
-    protected override void AddToEquipmentInventory(EquipmentInventory m_equipmentInventory)
+    protected override void AddToEquipmentInventory()
     {
         m_equipmentInventory.MaskHandler = this;
     }

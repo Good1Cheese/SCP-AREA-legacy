@@ -44,8 +44,8 @@ public class PlayerStamina : MonoBehaviour
         m_maxStaminaAmount = m_staminaValue;
         m_playerSpeed.OnPlayerRun += BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun += RegenerateStamina;
+        m_playerHealth.OnPlayerHeals += RegenerateStamina;
         m_playerHealth.OnPlayerGetsDamage += StopRegeneration;
-    //    m_playerBleeding.OnPlayerStartBleeding += StopRegeneration;
     }
 
     void BurnStamina()
@@ -86,6 +86,7 @@ public class PlayerStamina : MonoBehaviour
     {
         m_playerSpeed.OnPlayerRun -= BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
+        m_playerHealth.OnPlayerHeals -= RegenerateStamina;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }
 }

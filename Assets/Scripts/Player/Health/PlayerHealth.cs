@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] Sprite m_imageForEmptyCell;
     [Inject] readonly SceneTransition m_sceneTransition;
+    [Inject] readonly CharacterBleeding m_characterBleeding;
 
     public int CurrentHealthCellIndex { get; set; }
     public int LastHealthCellIndex { get; set; } = 0;
@@ -15,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
     public Action OnPlayerDie { get; set; }
     public Action OnFirstInjuary { get; set; }
     public Action OnPlayerGetsDamage { get; set; }
+    public Action OnPlayerHeals { get; set; }
 
     void Start()
     {
@@ -31,6 +33,16 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void Heal()
+    {
+        if (CurrentHealthCellIndex == HealthCells.Count - 1
+            || m_characterBleeding.IsPlayerBleeding) {   return; }
+
+        CurrentHealthCellIndex++;
+        GetCurrentHealthCell().MakeCellFull();
+        OnPlayerHeals.Invoke();
     }
 
     public HealthCell GetCurrentHealthCell()

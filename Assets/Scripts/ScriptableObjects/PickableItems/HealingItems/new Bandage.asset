@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42593303af9f25d4285f091d7a026ac4, type: 3}
+  m_Name: new Bandage
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: dff2610e868d3584fb0c347c7ad48c25, type: 3}
+  gameobject: {fileID: 1954986874671301865, guid: 4bf8564b8f0cb8846ac6b41622c8cc48, type: 3}
+  title: Simple Bandage

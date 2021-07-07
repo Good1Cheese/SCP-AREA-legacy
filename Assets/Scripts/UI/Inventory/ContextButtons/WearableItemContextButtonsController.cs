@@ -4,15 +4,15 @@ using Zenject;
 [RequireComponent(typeof(IDropable))]
 public class WearableItemContextButtonsController : ContextButtonsController
 {
-    [Inject] readonly EquipmentInventory equipmentInventory;
+    [Inject] readonly new EquipmentInventory PlayerInventory;
 
     public override void ActiveteOnAction()
     {
-        equipmentInventory.OnItemClicked += ActivateContextButtons;
+        PlayerInventory.OnItemClicked += ActivateContextButtons;
     }
 
     public override void DeactiveteOnAction()
     {
-        equipmentInventory.OnItemClicked -= ActivateContextButtons;
+        PlayerInventory.OnItemClicked -= ActivateContextButtons;
     }
 }

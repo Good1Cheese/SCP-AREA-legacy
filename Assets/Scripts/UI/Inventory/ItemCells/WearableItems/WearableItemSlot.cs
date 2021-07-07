@@ -1,11 +1,15 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 public abstract class WearableItemSlot : InventorySlot
 {
-    [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] protected readonly EquipmentInventory m_equipmentInventory;
+
+    void Awake()
+    {
+        AddToEquipmentInventory();
+    }
 
     public override void OnItemSetted()
     {
@@ -22,6 +26,6 @@ public abstract class WearableItemSlot : InventorySlot
         return m_equipmentInventory.OnItemClicked;
     }
 
-    protected abstract void AddToEquipmentInventory(EquipmentInventory m_equipmentInventory);
+    protected abstract void AddToEquipmentInventory();
 
 }

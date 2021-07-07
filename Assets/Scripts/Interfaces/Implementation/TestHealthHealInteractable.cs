@@ -1,11 +1,11 @@
 using UnityEngine;
 using Zenject;
 
-public class TestHealthHealInteractable : MonoBehaviour, IInteractable
+public class TestHealthHealInteractable : IInteractable
 {
     [Inject] readonly PlayerHealth m_playerBleeding;
 
-    public void Interact()
+    public override void Interact()
     {
         m_playerBleeding.Damage();
     }

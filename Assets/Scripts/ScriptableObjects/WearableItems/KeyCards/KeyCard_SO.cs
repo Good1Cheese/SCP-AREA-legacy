@@ -1,8 +1,11 @@
 
 using UnityEngine;
 
-public abstract class KeyCard_SO : WearableItem_SO
+[CreateAssetMenu(fileName = "new KeyCard", menuName = "ScriptableObjects/KeyCard")]
+public class KeyCard_SO : WearableItem_SO
 {
+    public int accsesLevel;
+
     public override void Equip()
     {
         Inventory.KeyCardHandler.SetItem(this);
@@ -10,8 +13,7 @@ public abstract class KeyCard_SO : WearableItem_SO
 
     public override void Use()
     {
-        Debug.Log("dsa");
+        throw new System.NotImplementedException();
     }
-
 }
 

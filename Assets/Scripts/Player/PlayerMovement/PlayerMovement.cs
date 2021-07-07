@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [Inject] readonly MovementSpeed m_playerSpeed;
     CharacterController m_characterController;
     Transform m_transform;
+
+    public bool IsPlayerMoving { get; set; }
 
     void Start()
     {
@@ -19,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
         float horizontalMove = Input.GetAxis("Horizontal");
         float verticalMove = Input.GetAxis("Vertical");
 
+        IsPlayerMoving = false;
         if (horizontalMove == 0 && verticalMove == 0) { return; }
+        IsPlayerMoving = true;
         float moveSpeed = m_playerSpeed.GetPlayerSpeed();
  
         Vector3 move = m_transform.right * horizontalMove + m_transform.forward * verticalMove;

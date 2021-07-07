@@ -9,7 +9,7 @@ public class PlayerInventory : MonoBehaviour
     bool m_isUIActivated;
     Transform m_transform;
  
-    public Item_SO[] Inventory { get; set; }
+    public PickableItem_SO[] Inventory { get; set; }
     public Action OnInventoryChanged { get; set; }
     public Action<bool> OnInventoryButtonPressed { get; set; }
     public int CurrentItemIndex { get; set; }
@@ -18,7 +18,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        Inventory = new Item_SO[m_maxSlotsAmount];
+        Inventory = new PickableItem_SO[m_maxSlotsAmount];
         m_transform = transform;
     }
 
@@ -31,7 +31,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public bool AddItem(Item_SO item)
+    public bool AddItem(PickableItem_SO item)
     {
         if (CurrentItemIndex >= m_maxSlotsAmount) { return false; }
 

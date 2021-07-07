@@ -4,7 +4,7 @@ public class InteractionForWearableItemCell : MonoBehaviour, IDropable
 {
     ContextButtonsController contextButtonsController;
 
-    PlayerInventory m_playerInventory { get; set; }
+    PlayerInventory m_playerInventory;
 
     void Start()
     {

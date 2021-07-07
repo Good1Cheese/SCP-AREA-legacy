@@ -5,7 +5,7 @@ abstract class BobbingChangeWhileAction : MonoBehaviour
     [SerializeField] float m_bobFrequencyWhileAction;
     [SerializeField] float m_bobVerticalAmplitudeWhileAction;
 
-    protected CameraBobbing m_cameraBobbing;
+    [SerializeField] protected CameraBobbing m_cameraBobbing;
 
     protected abstract void Subscribe();
     protected abstract void Unsubscribe();

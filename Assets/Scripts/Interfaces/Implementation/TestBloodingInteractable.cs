@@ -1,10 +1,10 @@
 using UnityEngine;
 using Zenject;
 
-public class TestBloodingInteractable : MonoBehaviour, IInteractable
+public class TestBloodingInteractable : IInteractable
 {
     [Inject] readonly CharacterBleeding m_playerBleeding;
-    public void Interact()
+    public override void Interact()
     {
         m_playerBleeding.Bleed();
     }

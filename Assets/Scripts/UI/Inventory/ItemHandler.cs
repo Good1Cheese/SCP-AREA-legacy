@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class ItemHandler : MonoBehaviour, IInteractable
+public class ItemHandler : IInteractable
 {
     [SerializeField] Item_SO m_item_SO;
 
@@ -13,10 +13,9 @@ public class ItemHandler : MonoBehaviour, IInteractable
         m_item_SO.GetDependencies(playerInstaller);
     }
 
-    public void Interact()
+    public override void Interact()
     {
         m_item_SO.Equip();
         Destroy(gameObject);
     }
-
 }

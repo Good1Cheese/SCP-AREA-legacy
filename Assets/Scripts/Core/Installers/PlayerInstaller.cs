@@ -4,6 +4,7 @@ using Zenject;
 [RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerInventory))]
 public class PlayerInstaller : MonoInstaller
 {
+    public PlayerMovement PlayerMovement { get; set; }
     public PlayerStamina PlayerStamina { get; set; }
     public MovementSpeed PlayerSpeed { get; set; }
     public PlayerHealth PlayerHealth { get; set; }
@@ -14,6 +15,7 @@ public class PlayerInstaller : MonoInstaller
     public override void InstallBindings()
     {
         GetComponents();
+        Container.BindInstance(PlayerMovement).AsSingle();
         Container.BindInstance(PlayerStamina).AsSingle();
         Container.BindInstance(PlayerSpeed).AsSingle();
         Container.BindInstance(PlayerHealth).AsSingle();
@@ -26,6 +28,7 @@ public class PlayerInstaller : MonoInstaller
 
     void GetComponents()
     {
+        PlayerMovement = GetComponent<PlayerMovement>();
         PlayerStamina = GetComponent<PlayerStamina>();
         PlayerSpeed = GetComponent<MovementSpeed>();
         PlayerHealth = GetComponent<PlayerHealth>();

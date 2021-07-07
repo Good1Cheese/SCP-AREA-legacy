@@ -4,25 +4,25 @@ public class InteractionForPickableItemCell : MonoBehaviour, IUseable, IDropable
 {
     ContextButtonsController contextButtonsController;
 
-    public PlayerInventory PlayerInventory { get; set; }
+    PlayerInventory m_playerInventory;
 
     void Start()
     {
         contextButtonsController = GetComponent<ContextButtonsController>();
-        PlayerInventory = contextButtonsController.PlayerInventory;
+        m_playerInventory = contextButtonsController.PlayerInventory;
     }
 
     public void UseItem()
     {
         contextButtonsController.CurrentCell.Item.Use();
-        PlayerInventory.RemoveItem(contextButtonsController.CurrentCell.Item);
+        m_playerInventory.RemoveItem(contextButtonsController.CurrentCell.Item);
         contextButtonsController.GameObject.SetActive(false);
     }
 
     public void DropItem()
     {
-        PlayerInventory.SpawnItem(contextButtonsController.CurrentCell.Item);
-        PlayerInventory.RemoveItem(contextButtonsController.CurrentCell.Item);
+        m_playerInventory.SpawnItem(contextButtonsController.CurrentCell.Item);
+        m_playerInventory.RemoveItem(contextButtonsController.CurrentCell.Item);
         contextButtonsController.GameObject.SetActive(false);
     }
 
