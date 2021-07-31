@@ -11,5 +11,7 @@
     {
         Inventory.AddItem(this);    
     }
+
+    public abstract void Use();
 }
 

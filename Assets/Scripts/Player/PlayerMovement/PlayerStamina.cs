@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 public class PlayerStamina : MonoBehaviour
@@ -14,6 +13,7 @@ public class PlayerStamina : MonoBehaviour
     [SerializeField] float m_delayBeforeRegenerationStart;
     [SerializeField] float m_staminaValue;
     [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly PlayerMovement m_playerMovement;
     [Inject] readonly PlayerHealth m_playerHealth;
 
     WaitForSeconds m_timeoutBeforeRegeneration;
@@ -21,6 +21,8 @@ public class PlayerStamina : MonoBehaviour
     IEnumerator m_regenerationCoroutine;
 
     float m_maxStaminaAmount;
+    bool hasPlayerStamina;
+
     public float StaminaValue
     {
         get => m_staminaValue;
@@ -31,19 +33,34 @@ public class PlayerStamina : MonoBehaviour
         }
     }
     public Action OnStaminaValueChanged { get; set; }
+    public bool HasPlayerStamina
+    {
+        get 
+        {
+            HasPlayerStamina = StaminaValue > 0;
+            return hasPlayerStamina;
+        }
+
+        set
+        {
+            if (hasPlayerStamina && !value) { m_playerSpeed.OnPlayerStoppedRun.Invoke(); }
+            hasPlayerStamina = value;
+        }
+    }
 
     void Awake()
     {
         m_regenerationCoroutine = RegenerateStaminaCoroutine();
         m_timeoutBeforeRegeneration = new WaitForSeconds(m_delayBeforeRegenerationStart);
-        m_timeoutDuringRegeneration = new WaitForSeconds(m_delayDuringRegeneration);
+        m_timeoutDuringRegeneration = new WaitForSeconds(m_delayDuringRegeneration); 
+        m_maxStaminaAmount = m_staminaValue;
     }
 
     void Start()
     {
-        m_maxStaminaAmount = m_staminaValue;
         m_playerSpeed.OnPlayerRun += BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun += RegenerateStamina;
+        m_playerMovement.OnPlayerStoppedMoving += RegenerateStamina;
         m_playerHealth.OnPlayerHeals += RegenerateStamina;
         m_playerHealth.OnPlayerGetsDamage += StopRegeneration;
     }
@@ -86,6 +103,7 @@ public class PlayerStamina : MonoBehaviour
     {
         m_playerSpeed.OnPlayerRun -= BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
+        m_playerMovement.OnPlayerStoppedMoving -= RegenerateStamina;
         m_playerHealth.OnPlayerHeals -= RegenerateStamina;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }

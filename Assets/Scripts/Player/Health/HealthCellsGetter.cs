@@ -3,7 +3,7 @@ using Zenject;
 
 public class HealthCellsGetter : MonoBehaviour
 {
-    [Inject] PlayerHealth m_playerHealth;
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     void Awake()
     {

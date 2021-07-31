@@ -1,12 +1,4 @@
-﻿//using UnityEngine;
-
-//class BobbingWhileRun : MonoBehaviour
-//{
-//    [SerializeField] float m_bobFrequencyWhileRun;
-//    [SerializeField] float m_bobVerticalAmplitudeWhileRun;
-
-//    CameraBobbing m_cameraBobbing;
-using Zenject;
+﻿using Zenject;
 
 class BobbingWhileRun : BobbingChangeWhileAction
 {

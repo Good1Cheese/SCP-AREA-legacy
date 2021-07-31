@@ -1,51 +1,35 @@
+using System;
 using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(RayProvider))]
 public class InteractionProvider : MonoBehaviour
 {
-    [SerializeField] RectTransform m_canvas;
-    [SerializeField] Vector3 m_offset;
     [SerializeField] float m_maxInteractionDistance;
     [SerializeField] float m_radiousOfSphereInteraction;
+    [Inject] readonly RayProvider m_rayProvider;
 
     IInteractable m_interactable;
-    RayProvider m_rayProvider;
 
-    void Start()
-    {
-        m_rayProvider = GetComponent<RayProvider>();
-    }
+    public Action OnPlayerFindUnInteractable;
+    public Action<Collider> OnPlayerFindInteractable;
 
     void Update()
     {
-        //if (m_interactable != null)
-        //{
-        //    m_interactable.ResetShader();
-        //}
-
-        Ray ray = m_rayProvider.ProvideRay();
-
-        if (Physics.SphereCast(ray, m_radiousOfSphereInteraction, out RaycastHit raycastHit, m_maxInteractionDistance))
+        if (Physics.SphereCast(
+            m_rayProvider.ProvideRay(), m_radiousOfSphereInteraction, out RaycastHit raycastHit, m_maxInteractionDistance))
         {
             bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_interactable);
 
-            if (!isHitObjectInteractable) { return; }
+            if (!isHitObjectInteractable) { OnPlayerFindUnInteractable.Invoke(); return; }
 
-
-            m_canvas.position = raycastHit.collider.ClosestPoint(transform.position);
+            OnPlayerFindInteractable.Invoke(raycastHit.collider);
 
             if (Input.GetButtonDown("Interaction"))
             {
                 m_interactable.Interact();
             }
         }
-
     }
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Debug.DrawLine(origin, origin + Toorigin * m_currentHitDisnace);
-    //    Gizmos.DrawWireSphere(origin + Toorigin * m_currentHitDisnace, m_radiousOfSphereInteraction);
-    //}
 }
+    

@@ -15,21 +15,11 @@ public class MovementSpeed : MonoBehaviour
     public Action OnPlayerStoppedRun { get; set; }
     public Action OnPlayerStoppedSneak { get; set; }
     public Action OnPlayerSneak { get; set; }
+    public Action OnPlayerWalks { get; set; }
 
     public float GetPlayerSpeed()
     {
-        float movespeed = m_walkSpeed;
-
-        if (Input.GetButton("Sneak"))
-        {
-            OnPlayerSneak.Invoke();
-            movespeed = m_sneakSpeed;
-        }
-        else if (Input.GetButton("Sprint") && m_playerStamina.StaminaValue > 0)
-        {
-            OnPlayerRun.Invoke();
-            movespeed = m_runSpeed;
-        }
+        float moveSpeed = m_walkSpeed;
 
         if (Input.GetButtonUp("Sprint"))
         {
@@ -40,7 +30,26 @@ public class MovementSpeed : MonoBehaviour
             OnPlayerStoppedSneak.Invoke();
         }
 
-        return movespeed - m_slowDownFactor;
+        if (Input.GetButton("Sprint") && m_playerStamina.HasPlayerStamina)
+        {
+            OnPlayerRun.Invoke();
+
+            if (Input.GetButton("Sneak"))
+            {
+                OnPlayerStoppedSneak.Invoke();
+            }
+
+            return m_runSpeed;
+        }
+        else if (Input.GetButton("Sneak"))
+        {
+            OnPlayerSneak.Invoke();
+
+            return m_sneakSpeed;
+        }
+
+        OnPlayerWalks.Invoke();
+        return moveSpeed - m_slowDownFactor;
     }
 
     public void SlowDownSpeed(float slowDownFactor)

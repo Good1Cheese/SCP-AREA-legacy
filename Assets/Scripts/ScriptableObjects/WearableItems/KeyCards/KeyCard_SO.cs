@@ -8,12 +8,7 @@ public class KeyCard_SO : WearableItem_SO
 
     public override void Equip()
     {
-        Inventory.KeyCardHandler.SetItem(this);
-    }
-
-    public override void Use()
-    {
-        throw new System.NotImplementedException();
+        Inventory.KeyCardCell.SetItem(this);
     }
 }
 

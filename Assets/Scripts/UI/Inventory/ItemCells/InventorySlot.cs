@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -25,14 +24,15 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public abstract void OnItemSetted();
     public abstract void OnItemDeleted();
-    public abstract Action<Vector2, InventorySlot> GetActionToInvokeOnClick();
+
+    public abstract void OnRightClick();
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (Item == null) { return; }
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            GetActionToInvokeOnClick().Invoke(eventData.position, this);
+            OnRightClick();
         }
     }
 }

@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: KeyCard Level 3
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  gameobject: {fileID: 9221003884425552241, guid: eeb46c1a6f5312e41ab8e1ec8ac8f9c4, type: 3}
-  title: 'KeyCard with third level '
+  gameobject: {fileID: 4814494892807416716, guid: eeb46c1a6f5312e41ab8e1ec8ac8f9c4, type: 3}
   accsesLevel: 3

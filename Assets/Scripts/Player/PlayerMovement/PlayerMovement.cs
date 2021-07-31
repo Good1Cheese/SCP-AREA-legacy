@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
     CharacterController m_characterController;
     Transform m_transform;
 
-    public bool IsPlayerMoving { get; set; }
+    bool IsPlayerMoving;
+    public Action OnPlayerStoppedMoving { get; set; }
 
     void Start()
     {
@@ -22,11 +23,19 @@ public class PlayerMovement : MonoBehaviour
         float horizontalMove = Input.GetAxis("Horizontal");
         float verticalMove = Input.GetAxis("Vertical");
 
-        IsPlayerMoving = false;
-        if (horizontalMove == 0 && verticalMove == 0) { return; }
+        if (horizontalMove == 0 && verticalMove == 0) 
+        { 
+            if (IsPlayerMoving)
+            {
+                OnPlayerStoppedMoving.Invoke();
+            }
+
+            IsPlayerMoving = false;
+            return;
+        }
         IsPlayerMoving = true;
         float moveSpeed = m_playerSpeed.GetPlayerSpeed();
- 
+
         Vector3 move = m_transform.right * horizontalMove + m_transform.forward * verticalMove;
         move = Vector3.ClampMagnitude(move, 1f) * Time.deltaTime;
         m_characterController.Move(move * moveSpeed);

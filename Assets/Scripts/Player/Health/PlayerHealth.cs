@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] Sprite m_imageForEmptyCell;
-    [Inject] readonly SceneTransition m_sceneTransition;
     [Inject] readonly CharacterBleeding m_characterBleeding;
 
     public int CurrentHealthCellIndex { get; set; }
@@ -57,10 +56,9 @@ public class PlayerHealth : MonoBehaviour
 
     public int GetCurrentHealthPercent() => (CurrentHealthCellIndex * 100 / HealthCells.Count) + 25;
 
-    void Die()
+    public void Die()
     {
         OnPlayerDie?.Invoke();
-        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.RespawnScene);
     }
 
 }

@@ -9,7 +9,7 @@ public class DoorInteractable : IInteractable
 
     public override void Interact()
     {
-        var keyCard = m_equipmentInventory.KeyCardHandler.Item as KeyCard_SO;
+        var keyCard = m_equipmentInventory.KeyCardCell.Item as KeyCard_SO;
         if (keyCard != null && keyCard.accsesLevel >= m_doorLevel)
         {
             print("Succses");

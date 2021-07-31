@@ -8,10 +8,9 @@ class CameraBobbing : MonoBehaviour
     [SerializeField] float m_bobHorizontalAmplitude;
     [SerializeField] float m_bobVerticalAmplitude;
     [SerializeField] [Range(0, 1)] float m_headBobSmoothing;
-    [Inject] PlayerMovement m_playerMovement;
 
     float m_walkingTime;
-    Transform m_cameraPosition;
+    Transform m_cameraTransform;
     (float, float) m_startValuesOfChangableFields;
 
     public float BobFrequency { get => m_bobFrequency; set => m_bobFrequency = value; }
@@ -20,7 +19,7 @@ class CameraBobbing : MonoBehaviour
     void Start()
     {
         m_startValuesOfChangableFields = (m_bobFrequency, m_bobVerticalAmplitude);
-        m_cameraPosition = transform.GetChild(0).transform;
+        m_cameraTransform = Camera.main.transform;
     }
 
     void Update()
@@ -34,9 +33,9 @@ class CameraBobbing : MonoBehaviour
         m_walkingTime += Time.deltaTime;
 
         Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(m_walkingTime);
-        m_cameraPosition.position = Vector3.Lerp(m_cameraPosition.position, targetCameraPosition, m_headBobSmoothing);
+        m_cameraTransform.position = Vector3.Lerp(m_cameraTransform.position, targetCameraPosition, m_headBobSmoothing);
 
-        if ((m_cameraPosition.position - targetCameraPosition).magnitude <= 0.001) m_cameraPosition.position = targetCameraPosition;
+        if ((m_cameraTransform.position - targetCameraPosition).magnitude <= 0.001) m_cameraTransform.position = targetCameraPosition;
     }
 
     void ResetTime()

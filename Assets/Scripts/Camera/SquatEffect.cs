@@ -19,15 +19,18 @@ public class SquatEffect : MonoBehaviour
 
     void LowerHeadHeight()
     {
-        Vector3 localPosition = m_transform.localPosition;
-        localPosition.y = m_sneakHeadHeight;
-        m_transform.localPosition = localPosition;
+        SetYByLocalPosition(m_sneakHeadHeight);
     }
 
     void RestoreHeadHeight()
     {
+        SetYByLocalPosition(m_startHeadHeight);
+    }
+
+    void SetYByLocalPosition(float newY)
+    {
         Vector3 localPosition = m_transform.localPosition;
-        localPosition.y = m_startHeadHeight;
+        localPosition.y = newY;
         m_transform.localPosition = localPosition;
     }
 

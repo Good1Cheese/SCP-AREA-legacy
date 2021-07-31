@@ -7,11 +7,13 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] float m_xSensitivity;
     [SerializeField] float m_verticalLookLimit;
     [SerializeField] Transform m_camera;
-    [Inject] readonly SettingsPresetInstaller m_settingsPresetInstaller;
     [Inject] readonly PlayerInventory m_playerInventory;
 
     Transform m_transform;
     float m_yRotation;
+
+    public float m_mouseY { get; set; }
+    public float m_mouseX { get; set; }
 
     void Start()
     {
@@ -28,9 +30,9 @@ public class PlayerRotator : MonoBehaviour
 
     void RotateHorizontally()
     {
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * m_ySensitivity * m_settingsPresetInstaller.generalSensivity;
+        m_mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * m_ySensitivity;
 
-        m_yRotation -= mouseY;
+        m_yRotation -= m_mouseY;
         m_yRotation = Mathf.Clamp(m_yRotation, -m_verticalLookLimit, m_verticalLookLimit);
 
         m_camera.localRotation = Quaternion.Euler(m_yRotation, 0, 0);
@@ -38,22 +40,15 @@ public class PlayerRotator : MonoBehaviour
 
     void RotateVertically()
     {
-        float xRotation = Input.GetAxis("Mouse X") * Time.deltaTime * m_xSensitivity * m_settingsPresetInstaller.generalSensivity;
-        m_transform.Rotate(Vector3.up * xRotation);
+        m_mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * m_xSensitivity;
+        m_transform.Rotate(Vector3.up * m_mouseX);
     }
 
     void DisableRotation(bool isUIAlreadyActivated)
     {
-        if (isUIAlreadyActivated)
-        {
-            m_settingsPresetInstaller.generalSensivity = 0;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            return;
-        }
-        m_settingsPresetInstaller.generalSensivity = 1;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = isUIAlreadyActivated;
+        enabled = !enabled;
+        Cursor.lockState = (isUIAlreadyActivated) ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     void OnDestroy()

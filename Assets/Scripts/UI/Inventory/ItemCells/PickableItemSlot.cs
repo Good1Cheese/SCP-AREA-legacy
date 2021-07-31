@@ -1,10 +1,11 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using Zenject;
+using UnityEngine.EventSystems;
+using TMPro;
 
-public class PickableItemSlot : InventorySlot
+public class PickableItemSlot : InventorySlot, IPointerClickHandler
 {
+    [SerializeField] TextMeshProUGUI m_itemDescription;
     [Inject] readonly PlayerInventory playerInventory;
     GameObject m_gameObject;
 
@@ -16,6 +17,7 @@ public class PickableItemSlot : InventorySlot
 
     public override void OnItemSetted()
     {
+        m_itemDescription.text = Item.description;
         m_gameObject.SetActive(true);
     }
 
@@ -24,8 +26,22 @@ public class PickableItemSlot : InventorySlot
         m_gameObject.SetActive(false);
     }
 
-    public override Action<Vector2, InventorySlot> GetActionToInvokeOnClick()
+    public override void OnRightClick()
     {
-        return playerInventory.OnItemClicked;
+        playerInventory.OnItemRightClicked.Invoke(this);
+    }
+
+    public void OnLeftClick()
+    {
+        playerInventory.OnItemLeftClicked.Invoke(this);
+    }
+
+    public new void OnPointerClick(PointerEventData eventData)
+    {
+        base.OnPointerClick(eventData);
+        if (eventData.clickCount == 2)
+        {
+            OnLeftClick();
+        }
     }
 }

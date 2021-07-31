@@ -4,7 +4,8 @@
 public abstract class Item_SO : ScriptableObject
 {
     public Sprite sprite;
-    public GameObject gameobject;
+    public GameObject gameObject;
+    public string description;
 
     public Item_SO Item { get; set; }
 
@@ -12,5 +13,8 @@ public abstract class Item_SO : ScriptableObject
 
     public abstract void Equip();
 
-    public abstract void Use();
+    public virtual void OnDestroy()
+    {
+
+    }
 }
