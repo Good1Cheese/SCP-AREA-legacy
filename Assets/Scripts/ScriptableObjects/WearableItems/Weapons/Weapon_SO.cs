@@ -14,28 +14,25 @@ public class Weapon_SO : WearableItem_SO
 
     public Vector3 spawnOffset;
     public Vector3 bulletSpawnPoint;
+    public GameObject bulletHolePrefab;
 
     public RuntimeAnimatorController weaponAnimationContoller;
+
+    public Silencer_SO silencer;
 
     public AudioClip shotSound;
     public AudioClip reloadSound;
     public AudioClip shotSoundWithSilencer;
     public AudioClip missFireSound;
 
-    public Silencer_SO silencer_SO;
-
-    public static Action<Weapon_SO> OnSilencerEquiped;
-
     public override void Equip()
     {
-        Inventory.WeaponCell.SetItem(this);
+        Inventory.WeaponSlot.SetItem(this);
     }
 
-    public void EquipSilencer(Silencer_SO silencer)
+    public override bool HasPlayerThisItem()
     {
-        silencer_SO = silencer;
-        OnSilencerEquiped.Invoke(this);
+        return Inventory.WeaponSlot.Item != null;
     }
-
 }
 

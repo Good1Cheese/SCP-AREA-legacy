@@ -14,9 +14,8 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
     void Start()
     {
         m_playerTransform = m_equipmentInventory.transform;
-        m_equipmentInventory.WeaponCell.OnWeaponChanged += SpawnWeapon;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped += DestroyGun;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped += SpawnWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged += SpawnWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped += DestroyGun;
     }
 
     public void SpawnWeapon(Weapon_SO weapon_SO)
@@ -29,9 +28,8 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
     public void SpawnWeapon()
     {
         m_spawnedGun = null;
-        Instantiate(m_weapon.gameObject,
-            m_playerTransform.position + m_playerTransform.forward,
-            m_weapon.gameObject.transform.rotation);
+        m_weapon.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
+        m_weapon.gameObject.SetActive(true);
     }
 
     public void DestroyGun()
@@ -41,8 +39,7 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
 
     void OnDestroy()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged -= SpawnWeapon;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped -= DestroyGun;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped -= SpawnWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SpawnWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= DestroyGun;
     }
 }

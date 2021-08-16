@@ -5,6 +5,7 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
 {
     [SerializeField] float multyplierOfBulletSpawnPointRadious;
     [SerializeField] Transform m_bulletSpawnPoint;
+    [SerializeField] Transform m_playerTransform;
     [Inject] readonly WeaponFire m_weaponFire;
 
     bool IsPlayerAiming;
@@ -25,7 +26,7 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
     void SetPlayerAimState()
     {
         IsPlayerAiming = !IsPlayerAiming;
-    }
+    }   
 
     public Ray ProvideRay()
     {
@@ -36,7 +37,7 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
         }
         else
         {
-            ray.origin = m_bulletSpawnPoint.position + (Vector3)Random.insideUnitCircle * multyplierOfBulletSpawnPointRadious;
+            ray.origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * multyplierOfBulletSpawnPointRadious;
             m_weaponFire.OnPlayerShootedWithoutAim.Invoke();
         }
 

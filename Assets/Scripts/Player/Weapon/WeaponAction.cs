@@ -11,17 +11,17 @@ public abstract class WeaponAction : MonoBehaviour
 
     void Start()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged += SetWeapon;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped += SetWeaponToZero;
-        m_equipmentInventory.WeaponCell.OnWeaponActivated += SetActive;
-        m_playerInventory.OnInventoryButtonPressed += SetActiveState;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetWeaponToZero;
+        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated += SetActive;
+        m_playerInventory.OnInventoryButtonPressed += SetActiveState; 
         enabled = false;
     }
 
-    protected void SetActiveState(bool isUIActive)
+    protected void SetActiveState()
     {
         if (!m_weaponActivator.IsWeaponActive) { return; }
-        enabled = !enabled;
+        SetActive();
     }
 
     protected void SetActive()
@@ -41,9 +41,9 @@ public abstract class WeaponAction : MonoBehaviour
 
     protected void OnDestroy()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged -= SetWeapon;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped -= SetWeaponToZero;
-        m_equipmentInventory.WeaponCell.OnWeaponActivated -= SetActive;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= SetWeaponToZero;
+        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated -= SetActive;
         m_playerInventory.OnInventoryButtonPressed -= SetActiveState;
     }
 }

@@ -3,7 +3,7 @@ using Zenject;
 
 public class WeaponMissFireSound : WeaponSoundPlayer
 {
-    [Inject] readonly WeaponAmmoController m_weaponAmmoController;
+    [Inject] readonly WeaponMiss m_weaponAmmoController;
 
     protected override void SubscribeToAction()
     {

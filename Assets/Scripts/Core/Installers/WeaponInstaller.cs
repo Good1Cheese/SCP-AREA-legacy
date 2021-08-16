@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponActivator), typeof(WeaponRecoil), typeof(WeaponAmmoController))]
+[RequireComponent(typeof(WeaponActivator), typeof(WeaponRecoil), typeof(WeaponSpawnerAndDestroyer))]
 public class WeaponInstaller : MonoInstaller
 {
     public WeaponActivator WeaponActivator { get; set; }
@@ -9,9 +9,9 @@ public class WeaponInstaller : MonoInstaller
     public WeaponReload WeaponReload { get; set; }
     public WeaponAim WeaponAiming { get; set; }
     public Animator WeaponAnimator { get; set; }
-    public WeaponAmmoController WeaponAmmoController { get; set; }
+    public WeaponMiss WeaponAmmoController { get; set; }
     public IRayProvider RayForShootingProvider { get; set; }
-    public WeaponSpawnerAndDestroyer WeaponGameObjectController { get; set; }
+    public WeaponSpawnerAndDestroyer WeaponSpawnerAndDestroyer { get; set; }
 
     public override void InstallBindings()
     {
@@ -23,18 +23,18 @@ public class WeaponInstaller : MonoInstaller
         Container.BindInstance(WeaponAnimator).AsSingle();
         Container.BindInstance(WeaponAmmoController).AsSingle();
         Container.BindInstance(RayForShootingProvider).AsSingle();
-        Container.BindInstance(WeaponGameObjectController).AsSingle();
+        Container.BindInstance(WeaponSpawnerAndDestroyer).AsSingle();
     }
 
     void GetComponents()
     {
         RayForShootingProvider = GetComponent<IRayProvider>();
-        WeaponAmmoController = GetComponent<WeaponAmmoController>();
+        WeaponAmmoController = GetComponent<WeaponMiss>();
         WeaponActivator = GetComponent<WeaponActivator>();
         WeaponFire = GetComponent<WeaponFire>();
         WeaponReload = GetComponent<WeaponReload>();
         WeaponAiming = GetComponent<WeaponAim>();
         WeaponAnimator = GetComponent<Animator>();
-        WeaponGameObjectController = GetComponent<WeaponSpawnerAndDestroyer>();
+        WeaponSpawnerAndDestroyer = GetComponent<WeaponSpawnerAndDestroyer>();
     }
 }

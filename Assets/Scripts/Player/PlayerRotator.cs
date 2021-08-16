@@ -19,7 +19,7 @@ public class PlayerRotator : MonoBehaviour
     {
         m_transform = transform;
         Cursor.lockState = CursorLockMode.Locked;
-        m_playerInventory.OnInventoryButtonPressed += DisableRotation;
+        m_playerInventory.OnInventoryButtonPressed += DisableRotationAndMouse;
     }
 
     void Update()
@@ -44,15 +44,15 @@ public class PlayerRotator : MonoBehaviour
         m_transform.Rotate(Vector3.up * m_mouseX);
     }
 
-    void DisableRotation(bool isUIAlreadyActivated)
+    void DisableRotationAndMouse()
     {
-        Cursor.visible = isUIAlreadyActivated;
+        Cursor.visible = enabled;
         enabled = !enabled;
-        Cursor.lockState = (isUIAlreadyActivated) ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.lockState = (!enabled) ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     void OnDestroy()
     {
-        m_playerInventory.OnInventoryButtonPressed -= DisableRotation;
+        m_playerInventory.OnInventoryButtonPressed -= DisableRotationAndMouse;
     }
 }

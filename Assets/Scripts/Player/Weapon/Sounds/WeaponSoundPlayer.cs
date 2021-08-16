@@ -9,15 +9,15 @@ public abstract class WeaponSoundPlayer : SoundPlayerOnAction
 
     void Awake()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged += ChangeAudio;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped += SetAudioToNull;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged += ChangeAudio;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetAudioToNull;
         SubscribeToAction();
     }
 
     void OnDestroy()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged -= ChangeAudio;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped -= SetAudioToNull;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged -= ChangeAudio;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= SetAudioToNull;
         UnscribeToAction();
     }
 

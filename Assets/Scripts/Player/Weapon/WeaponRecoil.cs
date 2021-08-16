@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(Animator))]
 public class WeaponRecoil : WeaponAction
 {
     [Inject] readonly Animator m_weaponAnimator;

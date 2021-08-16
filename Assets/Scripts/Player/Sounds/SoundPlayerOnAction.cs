@@ -15,7 +15,7 @@ public abstract class SoundPlayerOnAction : MonoBehaviour
         audioSource.Play();
     }
 
-    protected void StopSound()
+    protected virtual void StopSound()
     {
         audioSource.Stop();
     }

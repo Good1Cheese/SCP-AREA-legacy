@@ -9,7 +9,7 @@ public class MainInstaller : MonoInstaller
     public override void InstallBindings()
     {
         GetComponents();
-        Container.BindInstance(m_sceneTransition);
+        Container.BindInstance(m_sceneTransition).AsSingle();
     }
 
     void GetComponents()

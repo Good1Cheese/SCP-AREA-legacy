@@ -15,10 +15,10 @@ public class AmmoCountUIUpdater : MonoBehaviour
 
     void Awake()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged += SetWeapon;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped += DeActivateWeaponUI;
-        m_equipmentInventory.WeaponCell.OnWeaponActivated += ActiveOrDisableUI;
-        m_equipmentInventory.WeaponCell.OnAmmoAdded += UpdateUIProperly;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped += DeActivateWeaponUI;
+        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated += ActiveOrDisableUI;
+        m_equipmentInventory.WeaponSlot.OnAmmoAdded += UpdateUIProperly;
         m_weaponFire.OnPlayerShooted += UpdateUI;
         m_weaponReload.OnPlayerReloaded += UpdateUI;
     }
@@ -57,10 +57,10 @@ public class AmmoCountUIUpdater : MonoBehaviour
 
     void OnDestroy()
     {
-        m_equipmentInventory.WeaponCell.OnWeaponChanged -= SetWeapon;
-        m_equipmentInventory.WeaponCell.OnWeaponDropped -= DeActivateWeaponUI;
-        m_equipmentInventory.WeaponCell.OnWeaponActivated -= ActiveOrDisableUI;
-        m_equipmentInventory.WeaponCell.OnAmmoAdded -= UpdateUIProperly;
+        m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= DeActivateWeaponUI;
+        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated -= ActiveOrDisableUI;
+        m_equipmentInventory.WeaponSlot.OnAmmoAdded -= UpdateUIProperly;
         m_weaponFire.OnPlayerShooted -= UpdateUI;
         m_weaponReload.OnPlayerReloaded -= UpdateUI;
     }

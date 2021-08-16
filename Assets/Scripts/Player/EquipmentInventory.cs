@@ -4,13 +4,13 @@ using UnityEngine;
 public class EquipmentInventory : MonoBehaviour
 {
     [SerializeField] Vector3 m_itemsOffsetForSpawn;
-    [SerializeField] KeyCardCell keyCardCell;
-    [SerializeField] WeaponCell weaponCell;
-    [SerializeField] MaskCell maskCell;
+    [SerializeField] KeyCardSlot keyCardSlot;
+    [SerializeField] WeaponSlot weaponSlot;
+    [SerializeField] MaskSlot maskSlot;
 
-    public KeyCardCell KeyCardCell { get => keyCardCell; }
-    public WeaponCell WeaponCell { get => weaponCell; }
-    public MaskCell MaskCell { get => maskCell; }
+    public KeyCardSlot KeyCardSlot { get => keyCardSlot; }
+    public WeaponSlot WeaponSlot { get => weaponSlot; }
+    public MaskSlot MaskSlot { get => maskSlot; }
 
     public Action<WearableItemSlot> OnItemClicked { get; set; }
 

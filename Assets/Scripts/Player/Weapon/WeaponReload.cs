@@ -16,12 +16,15 @@ public class WeaponReload : WeaponAction
             if (m_currentGun_SO.cartridgeСlipAmmo == m_currentGun_SO.cartidgeClipMaxAmmo
                 || m_currentGun_SO.ammoCount == 0) { return; }
 
-            m_equipmentInventory.WeaponCell.WeaponAction = Reload();
+            if (m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
+            StartCoroutine(Reload());
         }
     }
 
     IEnumerator Reload()
     {
+        m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = true;
+
         int ammoToReload = (m_currentGun_SO.ammoCount >= m_currentGun_SO.cartidgeClipMaxAmmo)
             ? m_currentGun_SO.cartidgeClipMaxAmmo
             : m_currentGun_SO.ammoCount;
@@ -33,7 +36,7 @@ public class WeaponReload : WeaponAction
 
         yield return m_timeoutAfterReload;
 
-        m_equipmentInventory.WeaponCell.WeaponAction = null;
+        m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
 
 

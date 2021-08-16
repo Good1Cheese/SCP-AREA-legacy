@@ -4,6 +4,7 @@ using Zenject;
 public class WearableItemsInteraction : MonoBehaviour
 {
     [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly WeaponSpawnerAndDestroyer m_weaponSpawnerAndDestroyer;
 
     void Start()
     {
@@ -13,6 +14,7 @@ public class WearableItemsInteraction : MonoBehaviour
     public void DropItem(WearableItemSlot wearableItemSlot)
     {
         wearableItemSlot.ClearSlot();
+        m_weaponSpawnerAndDestroyer.SpawnWeapon();
     }
 
     void OnDestroy()

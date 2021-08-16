@@ -5,8 +5,7 @@ public class Ammo_SO : PickableItem_SO
 {
     Weapon_SO m_weapon;
     Weapon_SO m_previousWeapon;
-    PlayerInventory m_playerInventory;
-    WeaponCell m_weaponCell;
+    WeaponSlot m_weaponCell;
 
     public int ammoCount;
     public int caliber;
@@ -25,19 +24,18 @@ public class Ammo_SO : PickableItem_SO
     public override void GetDependencies(PlayerInstaller playerInstaller)
     {
         base.GetDependencies(playerInstaller);
-        m_playerInventory = playerInstaller.PlayerInventory;
-        m_weaponCell = playerInstaller.EquipmentInventory.WeaponCell;
+        m_weaponCell = playerInstaller.EquipmentInventory.WeaponSlot;
 
         m_weaponCell.OnWeaponChanged += AddAmmoToGun;
         m_weaponCell.OnWeaponDropped += ResetAmmoByGun;
-        m_playerInventory.OnInventoryChanged += VerifyAmmoExistance;
+        Inventory.OnInventoryChanged += VerifyAmmoExistance;
     }
 
     void AddAmmoToGun(Weapon_SO weapon)
     {
         m_weapon = weapon;
 
-        if (m_playerInventory.HasItem(this) && weapon.caliber == caliber)
+        if (Inventory.HasItem(this) && weapon.caliber == caliber)
         {
             weapon.ammoCount = ammoCount;
             m_previousWeapon = m_weapon;
@@ -55,7 +53,7 @@ public class Ammo_SO : PickableItem_SO
 
     void VerifyAmmoExistance()
     {
-        if (m_playerInventory.HasItem(this)) { return; }
+        if (Inventory.HasItem(this)) { return; }
 
         if (m_weapon != null)
         {
@@ -74,10 +72,9 @@ public class Ammo_SO : PickableItem_SO
 
     public override void OnDestroy()
     {
-        Debug.Log("das");
         m_weaponCell.OnWeaponChanged -= AddAmmoToGun;
         m_weaponCell.OnWeaponDropped -= ResetAmmoByGun;
-        m_playerInventory.OnInventoryChanged -= VerifyAmmoExistance;
+        Inventory.OnInventoryChanged -= VerifyAmmoExistance;
         m_weapon = null;
         m_previousWeapon = null;
     }

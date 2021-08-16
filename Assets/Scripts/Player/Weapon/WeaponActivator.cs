@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponFire), typeof(WeaponSpawnerAndDestroyer), typeof(WeaponReload))]
+[RequireComponent(typeof(WeaponFire), typeof(WeaponMiss), typeof(WeaponReload))]
 public class WeaponActivator : MonoBehaviour
 {
     [Inject] readonly WeaponSpawnerAndDestroyer m_weaponGameObjectController;
@@ -12,23 +12,27 @@ public class WeaponActivator : MonoBehaviour
 
     void Start()
     {
-        m_playerInventory.OnInventoryButtonPressed += SetActiveState;
+        m_playerInventory.OnInventoryButtonPressed += SetActiveState; 
     }
 
     void Update()
     {
         if (!Input.GetButtonDown("TakeGun") || m_weaponGameObjectController.CurrentGunGameObject == null) { return; }
 
-        m_equipmentInventory.WeaponCell.OnWeaponActivated.Invoke();
-
         GameObject m_currentGun = m_weaponGameObjectController.CurrentGunGameObject;
-        IsWeaponActive = !m_currentGun.activeSelf;
-        m_currentGun.SetActive(!m_currentGun.activeSelf);
+        ActivateOrDeactivateWeapon(m_currentGun, !m_currentGun.activeSelf);
     }
 
-    void SetActiveState(bool isUIActive)
+    public void ActivateOrDeactivateWeapon(GameObject m_currentGun, bool activateGun)
     {
-        enabled = !isUIActive;
+        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated.Invoke();
+        IsWeaponActive = activateGun;
+        m_currentGun.SetActive(activateGun);
+    }
+
+    void SetActiveState()
+    {
+        enabled = !enabled;
     }
 
     void OnDestroy()

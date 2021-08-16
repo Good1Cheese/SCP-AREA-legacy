@@ -6,6 +6,7 @@ using Zenject;
 public class PlayerMovement : MonoBehaviour
 {
     [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly PauseMenu m_pauseMenu;
     CharacterController m_characterController;
     Transform m_transform;
 
@@ -16,6 +17,12 @@ public class PlayerMovement : MonoBehaviour
     {
         m_transform = transform;
         m_characterController = GetComponent<CharacterController>();
+        m_pauseMenu.OnPauseMenuButtonPressed += SetActiveOrUnActive;
+    }
+
+    void SetActiveOrUnActive()
+    {
+        enabled = !enabled;
     }
 
     void Update()
@@ -41,4 +48,8 @@ public class PlayerMovement : MonoBehaviour
         m_characterController.Move(move * moveSpeed);
     }
 
+    void OnDestroy()
+    {
+        m_pauseMenu.OnPauseMenuButtonPressed += SetActiveOrUnActive;
+    }
 }

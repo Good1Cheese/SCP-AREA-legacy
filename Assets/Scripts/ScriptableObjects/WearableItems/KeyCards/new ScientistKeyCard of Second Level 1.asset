@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db0558e5e4534f40b0ab94d4fb90151, type: 3}
+  m_Name: new ScientistKeyCard of Second Level 1
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  gameObject: {fileID: 6020154334738328816, guid: c16495d0d577c8b4fa84307af3e5bdd2, type: 3}
+  description: 
+  TypeOfKeyCard: 1

@@ -13,14 +13,14 @@ public class GravityForce : MonoBehaviour
         m_characterController = GetComponent<CharacterController>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (m_characterController.isGrounded && m_velocity.y < 0)
         {
             m_velocity.y = m_initialVelocityValue;
         }
 
-        m_velocity.y += m_gravity * Time.deltaTime;
-        m_characterController.Move(m_velocity * Time.deltaTime);
+        m_velocity.y += m_gravity * Time.fixedDeltaTime;
+        m_characterController.Move(m_velocity * Time.fixedDeltaTime);
     }
 }

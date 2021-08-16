@@ -1,18 +1,32 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(EquipmentInventory))]
 public class PlayerInventory : MonoBehaviour
 {
+    [SerializeField] PlayerInventoryUI m_playerInventoryUI;
     [SerializeField] int m_maxSlotsAmount;
     [SerializeField] Vector3 m_itemsOffsetForSpawn;
+    [Inject] readonly PauseMenu m_pauseMenu;
 
     public bool IsUIActivte { get; set; }
     Transform m_transform;
 
     public PickableItem_SO[] Inventory { get; set; }
     public Action OnInventoryChanged { get; set; }
-    public Action<bool> OnInventoryButtonPressed { get; set; }
+    public Action OnInventoryButtonPressed { get; set; }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Inventory"))
+        {
+            if (m_pauseMenu.IsGamePaused) { return; }
+            OnInventoryButtonPressed.Invoke();
+            m_playerInventoryUI.ActivateOrCloseUI();
+        }
+    }
+
 
     public bool HasItem(PickableItem_SO item)
     {
@@ -31,7 +45,7 @@ public class PlayerInventory : MonoBehaviour
     public Action<PickableItemSlot> OnItemRightClicked { get; set; }
     public Action<PickableItemSlot> OnItemLeftClicked { get; set; }
 
-    void Start()
+    void Awake()
     {
         Inventory = new PickableItem_SO[m_maxSlotsAmount];
         m_transform = transform;
@@ -48,16 +62,6 @@ public class PlayerInventory : MonoBehaviour
         }
         return null;
     }
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Inventory"))
-        {
-            IsUIActivte = !IsUIActivte;
-            OnInventoryButtonPressed.Invoke(IsUIActivte);
-        }
-    }
-
     public void AddItem(PickableItem_SO item)
     {
         if (CurrentItemIndex >= m_maxSlotsAmount) { return; }
@@ -88,7 +92,9 @@ public class PlayerInventory : MonoBehaviour
     public void SpawnItem(PickableItemSlot slot)
     {
         GameObject gameobjectOfItem = slot.Item.gameObject;
-        Instantiate(gameobjectOfItem, m_transform.position + m_transform.forward, gameobjectOfItem.transform.rotation);
+        gameobjectOfItem.SetActive(true);
+        gameobjectOfItem.transform.position = m_transform.position + m_transform.forward;
         RemoveItem(slot.Item);
+       // Instantiate(gameobjectOfItem, m_transform.position + m_transform.forward, gameobjectOfItem.transform.rotation);
     }
 }

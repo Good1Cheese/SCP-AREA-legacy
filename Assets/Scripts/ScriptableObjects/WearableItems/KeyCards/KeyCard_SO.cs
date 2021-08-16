@@ -1,14 +1,14 @@
-
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "new KeyCard", menuName = "ScriptableObjects/KeyCard")]
-public class KeyCard_SO : WearableItem_SO
+public abstract class KeyCard_SO : WearableItem_SO
 {
-    public int accsesLevel;
-
     public override void Equip()
     {
-        Inventory.KeyCardCell.SetItem(this);
+        Inventory.KeyCardSlot.SetItem(this);
+    }
+
+    public override bool HasPlayerThisItem()
+    {
+        return Inventory.KeyCardSlot.Item != null;
     }
 }
 
+    

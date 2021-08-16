@@ -3,27 +3,29 @@ using Zenject;
 public class WeaponShotSound : WeaponSoundPlayer
 {
     [Inject] readonly WeaponFire m_weaponFire;
+    Weapon_SO m_weapon;
 
     protected override void SubscribeToAction()
     {
         m_weaponFire.OnPlayerShooted += PlaySound;
-        Weapon_SO.OnSilencerEquiped += ChangeAudioWithSilencer;
+        m_equipmentInventory.WeaponSlot.OnSilencerEquiped += ChangeAudioWithSilencer;
     }
 
     protected override void UnscribeToAction()
     {
-        Weapon_SO.OnSilencerEquiped -= ChangeAudioWithSilencer;
         m_weaponFire.OnPlayerShooted -= PlaySound;
+        m_equipmentInventory.WeaponSlot.OnSilencerEquiped -= ChangeAudioWithSilencer;
     }
 
     protected override void ChangeAudio(Weapon_SO weapon)
     {
         audioSource.clip = weapon.shotSound;
+        m_weapon = weapon;
     }
 
-    void ChangeAudioWithSilencer(Weapon_SO weapon)
+    void ChangeAudioWithSilencer()
     {
-        audioSource.clip = weapon.shotSoundWithSilencer;
+        audioSource.clip = m_weapon.shotSoundWithSilencer;
     }
 
 

@@ -12,6 +12,11 @@
         Inventory.AddItem(this);    
     }
 
+    public override bool HasPlayerThisItem()
+    {
+        return !gameObject.activeSelf;
+    }
+
     public abstract void Use();
 }
 

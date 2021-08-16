@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 86165868}
   - component: {fileID: 7487425542671704203}
   - component: {fileID: 719478325580480186}
+  - component: {fileID: 4906315331970770613}
   - component: {fileID: 141266703381938076}
   - component: {fileID: 1955211647258080879}
   - component: {fileID: 1922647528}
@@ -150,8 +151,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf1d29090fcc8546bdddc12e1a3d342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multyplierOfBulletSpawnPointRadious: 0.25
+  multyplierOfBulletSpawnPointRadious: 0.5
   m_bulletSpawnPoint: {fileID: 1425020529}
+  m_playerTransform: {fileID: 4490448435668429654}
 --- !u!114 &719478325580480186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +164,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e5f3c736424ec94ab5336b41f275ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4906315331970770613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589210396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a3739dcb62ff0644af18ec9bfa63dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &141266703381938076
@@ -521,7 +535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1425020529
 Transform:
   m_ObjectHideFlags: 0
@@ -771,6 +785,7 @@ MonoBehaviour:
   m_slowDownFactorIncreasingPerStep: 0.5
   m_startLensDistortionIntensity: -0.1
   m_startSaturation: -10
+  m_effectsMultiplierStartValue: 0
   m_effectsMultiplier: 1
   m_effectsMultiplierIncreasingPerStep: 0.5
 --- !u!114 &4490448435668429663
@@ -1203,6 +1218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1190b612544389f44a3a8d9afa12e9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerInventoryUI: {fileID: 0}
   m_maxSlotsAmount: 8
   m_itemsOffsetForSpawn: {x: 0, y: 0, z: 1}
 --- !u!114 &1862949079603886047
@@ -1218,9 +1234,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_itemsOffsetForSpawn: {x: 0, y: 0, z: 1}
-  keyCardCell: {fileID: 0}
-  weaponCell: {fileID: 0}
-  maskCell: {fileID: 0}
+  keyCardSlot: {fileID: 0}
+  weaponSlot: {fileID: 0}
+  maskSlot: {fileID: 0}
 --- !u!114 &1002861546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,7 +1644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_markCanvas: {fileID: 0}
-  m_playerTransform: {fileID: 0}
+  m_playerTransform: {fileID: 4490448435668429654}
 --- !u!114 &4490448437021268878
 MonoBehaviour:
   m_ObjectHideFlags: 0

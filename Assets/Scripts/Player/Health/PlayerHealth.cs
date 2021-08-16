@@ -13,7 +13,6 @@ public class PlayerHealth : MonoBehaviour
     public int LastHealthCellIndex { get; set; } = 0;
     public List<HealthCell> HealthCells { get; set; } = new List<HealthCell>();
     public Action OnPlayerDie { get; set; }
-    public Action OnFirstInjuary { get; set; }
     public Action OnPlayerGetsDamage { get; set; }
     public Action OnPlayerHeals { get; set; }
 

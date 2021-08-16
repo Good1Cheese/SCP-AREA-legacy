@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +12,6 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
         m_playerInventory.OnInventoryChanged += UpdateUI;
-        m_playerInventory.OnInventoryButtonPressed += ActivateOrCloseUI;
     }
 
     void Start()
@@ -37,15 +35,14 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
-    void ActivateOrCloseUI(bool isUIActivated)
+    public void ActivateOrCloseUI()
     {
-        gameObject.SetActive(isUIActivated);
+        m_gameObject.SetActive(!m_gameObject.activeSelf);
     }
 
     void OnDestroy()
     {
         m_playerInventory.OnInventoryChanged -= UpdateUI;
-        m_playerInventory.OnInventoryButtonPressed -= ActivateOrCloseUI;
     }
 
 }
