@@ -4,14 +4,13 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
 using Zenject;
 
-public class PlayerDeathAnimation : MonoBehaviour
+public class DeathAnimationPlayer : MonoBehaviour
 {
     [SerializeField] float m_delayAfterDeathAnimation;
     [SerializeField] float m_delayDuringBlackout;
     [SerializeField] float m_blackoutSpeed;
 
     [Inject] readonly SceneTransition m_sceneTransition;
-    [Inject] readonly PlayerHealth m_playerHealth;
 
     Animator m_playerDeathAnimator;
     ColorAdjustments m_colorAdjustments;
@@ -29,17 +28,12 @@ public class PlayerDeathAnimation : MonoBehaviour
 
     void Awake()
     {
-        m_playerHealth.OnPlayerDie += PlayDealthAnimation;
-    }
-
-    void Start()
-    {
         m_playerDeathAnimator = GetComponent<Animator>();
         m_timeoutAfterDeathAnimation = new WaitForSeconds(m_delayAfterDeathAnimation);
         m_timeoutDuringBlackout = new WaitForSeconds(m_delayDuringBlackout);
     }
 
-    void PlayDealthAnimation()
+    public void PlayDealthAnimation()
     {
         Time.timeScale = 0.5f;
         m_colorAdjustments.saturation.value = m_colorAdjustments.saturation.min;
@@ -73,8 +67,4 @@ public class PlayerDeathAnimation : MonoBehaviour
         return m_vignette.intensity.value < m_vignette.intensity.max;
     }
 
-    void OnDestroy()
-    {
-        m_playerHealth.OnPlayerDie -= PlayDealthAnimation;
-    }
 }

@@ -8,11 +8,6 @@ public class Mask_SO : WearableItem_SO
     {
         Inventory.MaskSlot.SetItem(this);
     }
-
-    public override bool HasPlayerThisItem()
-    {
-        return Inventory.MaskSlot.Item != null;
-    }
 }
 
 

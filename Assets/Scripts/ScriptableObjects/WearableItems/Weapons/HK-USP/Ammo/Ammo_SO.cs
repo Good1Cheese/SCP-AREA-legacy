@@ -13,6 +13,7 @@ public class Ammo_SO : PickableItem_SO
     public override void Equip()
     {
         base.Equip();
+        if (m_weapon == null) { return; }
         AddAmmoToGun(m_weapon);
     }
 
@@ -35,6 +36,7 @@ public class Ammo_SO : PickableItem_SO
     {
         m_weapon = weapon;
 
+        Debug.Log(weapon);
         if (Inventory.HasItem(this) && weapon.caliber == caliber)
         {
             weapon.ammoCount = ammoCount;

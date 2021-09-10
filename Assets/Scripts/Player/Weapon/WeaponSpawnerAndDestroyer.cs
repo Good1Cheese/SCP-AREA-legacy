@@ -2,18 +2,19 @@
 using Zenject;
 
 public class WeaponSpawnerAndDestroyer : MonoBehaviour
-{ 
+{
     [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly Transform m_playerTransform;
+
     Weapon_SO m_weapon;
     GameObject m_spawnedGun;
+    Transform m_transform;
 
-    Transform m_playerTransform;
-    
     public GameObject CurrentGunGameObject { get => m_spawnedGun; }
 
     void Start()
     {
-        m_playerTransform = m_equipmentInventory.transform;
+        m_transform = transform;
         m_equipmentInventory.WeaponSlot.OnWeaponChanged += SpawnWeapon;
         m_equipmentInventory.WeaponSlot.OnWeaponDropped += DestroyGun;
     }
@@ -21,11 +22,15 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
     public void SpawnWeapon(Weapon_SO weapon_SO)
     {
         m_weapon = weapon_SO;
-        m_spawnedGun = Instantiate(weapon_SO.weaponForPlayer, transform);
+        if (m_weapon.playerWeapon == null)
+        {
+            m_weapon.playerWeapon = Instantiate(weapon_SO.weaponForPlayerPrefab, transform);
+        }
+        m_spawnedGun = m_weapon.playerWeapon;
         m_spawnedGun.SetActive(false);
     }
 
-    public void SpawnWeapon()
+    public void DespawnWeapon()
     {
         m_spawnedGun = null;
         m_weapon.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public class PlayerMarkController : MonoBehaviour
+public class PlayerMarkActivator : MonoBehaviour
 {
     [SerializeField] RectTransform m_markCanvas;
-    [SerializeField] Transform m_playerTransform;
+    [Inject] readonly Transform m_playerTransform;
 
     InteractionProvider m_interactionProvider;
     GameObject m_canvasGameObject;

@@ -11,12 +11,14 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
     public void SetItem(Item_SO item)
     {
         Item = item;
+        item.IsItemInInventory = true;
         m_image.sprite = item.sprite;
         OnItemSetted();
     }
 
     public void ClearSlot()
     {
+        Item.IsItemInInventory = false;
         Item = null;
         m_image.sprite = null;
         OnItemDeleted();

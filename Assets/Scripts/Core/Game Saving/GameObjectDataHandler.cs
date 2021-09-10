@@ -10,6 +10,10 @@ public class GameObjectDataHandler : DataHandler
     public Quaternion rotation;
     public bool isGameObjectActive;
 
+    void Start()
+    {
+        m_gameSaving.SaveData.Add(this);
+    }
     void Awake()
     {
         m_transform = transform;
@@ -30,5 +34,10 @@ public class GameObjectDataHandler : DataHandler
         m_gameObject.SetActive(isGameObjectActive);
     }
 
+    public override void FromJson(string json)
+    {
+        JsonUtility.FromJsonOverwrite(json, this);
+        _transform = m_transform;
+        LoadData();
+    }
 }
-

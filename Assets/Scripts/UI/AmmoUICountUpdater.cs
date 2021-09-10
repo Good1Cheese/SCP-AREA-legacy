@@ -3,30 +3,23 @@ using Zenject;
 using TMPro;
 using System;
 
-public class AmmoCountUIUpdater : MonoBehaviour
+public class AmmoUICountUpdater : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_textMeshProUGUI;
     [Inject] readonly EquipmentInventory m_equipmentInventory;
     [Inject] readonly WeaponFire m_weaponFire;
     [Inject] readonly WeaponReload m_weaponReload;
 
-    GameObject m_gameObject;
     Weapon_SO m_weapon;
+
+    public TextMeshProUGUI TextMeshProUGUI { get => m_textMeshProUGUI; }
 
     void Awake()
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped += DeActivateWeaponUI;
-        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated += ActiveOrDisableUI;
         m_equipmentInventory.WeaponSlot.OnAmmoAdded += UpdateUIProperly;
         m_weaponFire.OnPlayerShooted += UpdateUI;
         m_weaponReload.OnPlayerReloaded += UpdateUI;
-    }
-
-    void Start()
-    {
-        m_gameObject = gameObject;
-        m_gameObject.SetActive(false);
     }
 
     void SetWeapon(Weapon_SO weapon)
@@ -34,32 +27,19 @@ public class AmmoCountUIUpdater : MonoBehaviour
         m_weapon = weapon;
     }
 
-    void DeActivateWeaponUI()
+    public void UpdateUI()
     {
-        m_gameObject.SetActive(false);
-    }
-
-    void ActiveOrDisableUI()
-    {
-        UpdateUI();
-        m_gameObject.SetActive(!gameObject.activeSelf);
-    }
-
-    void UpdateUI()
-    {
-        m_textMeshProUGUI.text = string.Format($"{m_weapon.cartridge—lipAmmo}/{m_weapon.ammoCount}");
+        TextMeshProUGUI.text = string.Format($"{m_weapon.cartridge—lipAmmo}/{m_weapon.ammoCount}");
     }
 
     void UpdateUIProperly(Weapon_SO weapon)
     {
-        m_textMeshProUGUI.text = string.Format($"{weapon.cartridge—lipAmmo}/{weapon.ammoCount}");
+        TextMeshProUGUI.text = string.Format($"{weapon.cartridge—lipAmmo}/{weapon.ammoCount}");
     }
 
     void OnDestroy()
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= DeActivateWeaponUI;
-        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated -= ActiveOrDisableUI;
         m_equipmentInventory.WeaponSlot.OnAmmoAdded -= UpdateUIProperly;
         m_weaponFire.OnPlayerShooted -= UpdateUI;
         m_weaponReload.OnPlayerReloaded -= UpdateUI;

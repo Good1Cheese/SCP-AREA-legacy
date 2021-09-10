@@ -9,11 +9,10 @@ public class WeaponSway : WeaponAction
     Quaternion m_originRotation;
     Transform m_transform;
 
-    void Start()
+    void Awake()
     {
         m_transform = transform;
         m_originRotation = m_transform.localRotation;
-        enabled = false;
     }
 
     void Update()

@@ -1,14 +1,18 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 public class InventoryDataSaving : DataHandler
 {
     [Inject] readonly PlayerInventory m_playerInventory;
     public PickableItem_SO[] m_inventory;
+    public string[] m_itemsName;
 
+    public Transform PropsHandler { get; set; }
 
     void Start()
     {
         m_inventory = new PickableItem_SO[m_playerInventory.Inventory.Length];
+        m_itemsName = new string[m_playerInventory.Inventory.Length];
     }
 
     public override void SaveData()
@@ -16,6 +20,10 @@ public class InventoryDataSaving : DataHandler
         for (int i = 0; i < m_inventory.Length; i++)
         {
             m_inventory[i] = m_playerInventory.Inventory[i];
+            if (m_inventory[i] != null)
+            {
+                m_itemsName[i] = m_playerInventory.Inventory[i].gameObject.name;
+            }
         }
     }
 
@@ -25,15 +33,26 @@ public class InventoryDataSaving : DataHandler
         for (int i = 0; i < m_inventory.Length; i++)
         {
             m_playerInventory.Inventory[i] = m_inventory[i];
-            if (m_inventory[i] != null) { m_playerInventory.CurrentItemIndex = i + 1; }
+            if (m_inventory[i] != null) { DisableItem(m_playerInventory.Inventory[i]); m_playerInventory.CurrentItemIndex = i + 1; }
         }
         m_playerInventory.OnInventoryChanged.Invoke();
     }
 
-    void OnEnable()
+    void DisableItem(Item_SO item_SO)
     {
-        m_gameSaving.SaveData.Add(this);
+        item_SO.gameObject.SetActive(item_SO.IsItemInInventory);
     }
 
+    public override void FromJson(string json)
+    {
+        JsonUtility.FromJsonOverwrite(json, this);
 
+        for (int i = 0; i < m_inventory.Length; i++)
+        {
+            if (string.IsNullOrEmpty(m_itemsName[i])) { return; }
+
+            GameObject item = PropsHandler.Find(m_itemsName[i]).gameObject;
+            item.GetComponent<ItemHandler>().Interact();
+        }
+    }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/Weapon")]
 public class Weapon_SO : WearableItem_SO
 {
-    public GameObject weaponForPlayer;
+    public GameObject weaponForPlayerPrefab;
+    public GameObject playerWeapon;
 
     public int damagePerShot;
     public int cartridgeСlipAmmo;
@@ -25,14 +26,18 @@ public class Weapon_SO : WearableItem_SO
     public AudioClip shotSoundWithSilencer;
     public AudioClip missFireSound;
 
+    public void SetSilencer(Silencer_SO silencer)
+    {
+        this.silencer = silencer;
+        silencer.gameObject.SetActive(weaponForPlayerPrefab.activeSelf);
+
+        silencer.SilencerTransform.localPosition = silencer.positionForSilencer;
+        silencer.SilencerTransform.localRotation = silencer.rotationForSilencer;
+    }
+
     public override void Equip()
     {
         Inventory.WeaponSlot.SetItem(this);
-    }
-
-    public override bool HasPlayerThisItem()
-    {
-        return Inventory.WeaponSlot.Item != null;
     }
 }
 

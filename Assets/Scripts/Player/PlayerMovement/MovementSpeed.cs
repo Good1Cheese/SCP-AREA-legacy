@@ -17,6 +17,8 @@ public class MovementSpeed : MonoBehaviour
     public Action OnPlayerSneak { get; set; }
     public Action OnPlayerWalks { get; set; }
 
+    public bool IsPlayerRunning { get; set; }
+
     public float GetPlayerSpeed()
     {
         float moveSpeed = m_walkSpeed;
@@ -24,6 +26,7 @@ public class MovementSpeed : MonoBehaviour
         if (Input.GetButtonUp("Sprint"))
         {
             OnPlayerStoppedRun.Invoke();
+            IsPlayerRunning = false;
         }
         else if (Input.GetButtonUp("Sneak"))
         {
@@ -33,10 +36,12 @@ public class MovementSpeed : MonoBehaviour
         if (Input.GetButton("Sprint") && m_playerStamina.HasPlayerStamina)
         {
             OnPlayerRun.Invoke();
+            IsPlayerRunning = true;
 
             if (Input.GetButton("Sneak"))
             {
                 OnPlayerStoppedSneak.Invoke();
+                IsPlayerRunning = false;
             }
 
             return m_runSpeed;

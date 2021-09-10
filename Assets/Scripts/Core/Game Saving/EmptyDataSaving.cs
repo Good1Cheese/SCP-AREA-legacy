@@ -1,10 +1,5 @@
-public class EmptyDataHandler : DataHandler
+public class EmptyDataSaving : DataHandler
 {
-    void Start()
-    {
-
-    }
-
     public override void LoadData()
     {
         print("Empty Load");

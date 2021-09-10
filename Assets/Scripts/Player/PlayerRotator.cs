@@ -8,8 +8,8 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] float m_verticalLookLimit;
     [SerializeField] Transform m_camera;
     [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly Transform m_playerTransform;
 
-    Transform m_transform;
     float m_yRotation;
 
     public float m_mouseY { get; set; }
@@ -17,7 +17,6 @@ public class PlayerRotator : MonoBehaviour
 
     void Start()
     {
-        m_transform = transform;
         Cursor.lockState = CursorLockMode.Locked;
         m_playerInventory.OnInventoryButtonPressed += DisableRotationAndMouse;
     }
@@ -41,7 +40,7 @@ public class PlayerRotator : MonoBehaviour
     void RotateVertically()
     {
         m_mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * m_xSensitivity;
-        m_transform.Rotate(Vector3.up * m_mouseX);
+        m_playerTransform.Rotate(Vector3.up * m_mouseX);
     }
 
     void DisableRotationAndMouse()

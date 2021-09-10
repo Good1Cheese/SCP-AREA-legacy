@@ -60,14 +60,14 @@ public class PlayerStamina : MonoBehaviour
     {
         m_playerSpeed.OnPlayerRun += BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun += RegenerateStamina;
-        m_playerMovement.OnPlayerStoppedMoving += GetRegenerateStamina;
+        m_playerMovement.OnPlayerStoppedMoving += RegenerateStaminaAfterPlayerStopped;
         m_playerHealth.OnPlayerHeals += RegenerateStamina;
         m_playerHealth.OnPlayerGetsDamage += StopRegeneration;
     }
 
-    void GetRegenerateStamina()
+    void RegenerateStaminaAfterPlayerStopped()
     {
-        if (StaminaValue == MaxStaminaAmount) { return; }
+        if (StaminaValue == MaxStaminaAmount || !m_playerSpeed.IsPlayerRunning) { return; }
         RegenerateStamina();
     }
 
@@ -112,7 +112,7 @@ public class PlayerStamina : MonoBehaviour
     {
         m_playerSpeed.OnPlayerRun -= BurnStamina;
         m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
-        m_playerMovement.OnPlayerStoppedMoving -= GetRegenerateStamina;
+        m_playerMovement.OnPlayerStoppedMoving -= RegenerateStaminaAfterPlayerStopped;
         m_playerHealth.OnPlayerHeals -= RegenerateStamina;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }

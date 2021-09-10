@@ -13,6 +13,7 @@ public class CounterItemsInInventory : MonoBehaviour
     {   
         m_textMesh = GetComponent<TextMeshProUGUI>();
         m_playerInventory.OnInventoryChanged += UpdateItemsCount;
+        m_playerInventory.OnInventoryRemaded += UpdateItemsCount;
     }
 
     void UpdateItemsCount()
@@ -23,6 +24,7 @@ public class CounterItemsInInventory : MonoBehaviour
     void OnDestroy()
     {
         m_playerInventory.OnInventoryChanged -= UpdateItemsCount;
+        m_playerInventory.OnInventoryRemaded -= UpdateItemsCount;
     }
 }
     

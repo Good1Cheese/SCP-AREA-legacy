@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using Zenject;
 
-public class SaveDataListHandler : DataHandler
+public class ItemsSaveScriptsSaving : DataHandler
 {
+    [Inject] readonly EmptyDataSaving m_emptyDataSaving;
     public DataHandler[] saveDataArray;
-
-    void Awake()
-    {
-        m_gameSaving.SaveData.Add(this);
-    }
 
     void Start()
     {
@@ -17,16 +12,13 @@ public class SaveDataListHandler : DataHandler
 
     public override void SaveData()
     {
-        for (int i = 0; i < m_gameSaving.SaveData.Count; i++)
-        {
-            saveDataArray[i] = m_gameSaving.SaveData[i];
-        }
     }
 
     public override void LoadData()
     {
         for (int i = 0; i < m_gameSaving.SaveData.Count; i++)
         {
+            if (m_gameSaving.SaveData[i] != m_emptyDataSaving) { return; }
             m_gameSaving.SaveData[i] = saveDataArray[i];
         }
     }

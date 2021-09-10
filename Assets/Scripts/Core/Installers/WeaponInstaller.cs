@@ -10,7 +10,7 @@ public class WeaponInstaller : MonoInstaller
     public WeaponAim WeaponAiming { get; set; }
     public Animator WeaponAnimator { get; set; }
     public WeaponMiss WeaponAmmoController { get; set; }
-    public IRayProvider RayForShootingProvider { get; set; }
+    public RayForShootingProvider RayForShootingProvider { get; set; }
     public WeaponSpawnerAndDestroyer WeaponSpawnerAndDestroyer { get; set; }
 
     public override void InstallBindings()
@@ -28,7 +28,7 @@ public class WeaponInstaller : MonoInstaller
 
     void GetComponents()
     {
-        RayForShootingProvider = GetComponent<IRayProvider>();
+        RayForShootingProvider = GetComponent<RayForShootingProvider>();
         WeaponAmmoController = GetComponent<WeaponMiss>();
         WeaponActivator = GetComponent<WeaponActivator>();
         WeaponFire = GetComponent<WeaponFire>();

@@ -12,6 +12,7 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
         m_playerInventory.OnInventoryChanged += UpdateUI;
+        m_playerInventory.OnInventoryRemaded += UpdateUI;
     }
 
     void Start()
@@ -31,7 +32,12 @@ public class PlayerInventoryUI : MonoBehaviour
                 InventoryCells[i].SetItem(item);
                 continue;
             }
-            InventoryCells[i].ClearSlot();
+
+            if (InventoryCells[i].Item != null)
+            {
+                print(InventoryCells[i].Item);
+                InventoryCells[i].ClearSlot();
+            }
         }
     }
 
@@ -43,6 +49,7 @@ public class PlayerInventoryUI : MonoBehaviour
     void OnDestroy()
     {
         m_playerInventory.OnInventoryChanged -= UpdateUI;
+        m_playerInventory.OnInventoryRemaded -= UpdateUI;
     }
 
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(ItemDataHandler))]
-public class ItemDataSaving : MonoBehaviour//, IDataHandler
+public class ItemDataController : MonoBehaviour//, IDataHandler
 {
     [Inject] readonly PlayerInventory m_playerInventory;
 
@@ -22,7 +22,7 @@ public class ItemDataSaving : MonoBehaviour//, IDataHandler
 
     void SetSavableState()
     {
-        if (m_itemHandler.Item_SO.HasPlayerThisItem())
+        if (m_itemHandler.Item_SO.IsItemInInventory)
         {
             m_itemDataHandler.BecomeUnsaveable();
             return;

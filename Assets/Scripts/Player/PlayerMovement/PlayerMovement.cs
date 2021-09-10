@@ -7,15 +7,14 @@ public class PlayerMovement : MonoBehaviour
 {
     [Inject] readonly MovementSpeed m_playerSpeed;
     [Inject] readonly PauseMenu m_pauseMenu;
+    [Inject] readonly Transform m_playerTransform;
     CharacterController m_characterController;
-    Transform m_transform;
 
     bool IsPlayerMoving;
     public Action OnPlayerStoppedMoving { get; set; }
 
     void Start()
     {
-        m_transform = transform;
         m_characterController = GetComponent<CharacterController>();
         m_pauseMenu.OnPauseMenuButtonPressed += SetActiveOrUnActive;
     }
@@ -43,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         IsPlayerMoving = true;
         float moveSpeed = m_playerSpeed.GetPlayerSpeed();
 
-        Vector3 move = m_transform.right * horizontalMove + m_transform.forward * verticalMove;
+        Vector3 move = m_playerTransform.right * horizontalMove + m_playerTransform.forward * verticalMove;
         move = Vector3.ClampMagnitude(move, 1f) * Time.deltaTime;
         m_characterController.Move(move * moveSpeed);
     }

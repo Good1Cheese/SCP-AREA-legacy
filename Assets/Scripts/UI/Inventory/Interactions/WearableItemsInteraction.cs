@@ -14,7 +14,7 @@ public class WearableItemsInteraction : MonoBehaviour
     public void DropItem(WearableItemSlot wearableItemSlot)
     {
         wearableItemSlot.ClearSlot();
-        m_weaponSpawnerAndDestroyer.SpawnWeapon();
+        m_weaponSpawnerAndDestroyer.DespawnWeapon();
     }
 
     void OnDestroy()

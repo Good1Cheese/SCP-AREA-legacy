@@ -5,6 +5,7 @@ using TMPro;
 
 public class PickableItemSlot : InventorySlot, IPointerClickHandler
 {
+    const int CLICK_COUNT_TO_USE = 2;
     [SerializeField] TextMeshProUGUI m_itemDescription;
     [Inject] readonly PlayerInventory playerInventory;
     GameObject m_gameObject;
@@ -39,7 +40,7 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
     public new void OnPointerClick(PointerEventData eventData)
     {
         base.OnPointerClick(eventData);
-        if (eventData.clickCount == 2)
+        if (eventData.clickCount == CLICK_COUNT_TO_USE)
         {
             OnLeftClick();
         }

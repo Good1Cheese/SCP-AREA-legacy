@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(ItemDataSaving))]
+[RequireComponent(typeof(ItemDataController))]
 public class ItemHandler : IInteractable
 {
     [SerializeField] Item_SO m_item_SO;

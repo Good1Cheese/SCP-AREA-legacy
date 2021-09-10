@@ -4,11 +4,4 @@ public abstract class KeyCard_SO : WearableItem_SO
     {
         Inventory.KeyCardSlot.SetItem(this);
     }
-
-    public override bool HasPlayerThisItem()
-    {
-        return Inventory.KeyCardSlot.Item != null;
-    }
 }
-
-    

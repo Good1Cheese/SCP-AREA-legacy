@@ -6,7 +6,7 @@ using Zenject;
 [RequireComponent(typeof(WeaponShotSound), typeof(IRayProvider), typeof(WeaponAim))]
 public class WeaponFire : WeaponAction
 {
-    [Inject] readonly IRayProvider rayForShootingProvider;
+    [Inject] readonly RayForShootingProvider rayForShootingProvider;
 
     WaitForSeconds m_timeoutAfterShooting;
 
@@ -17,6 +17,7 @@ public class WeaponFire : WeaponAction
 
     void Update()
     {
+        rayForShootingProvider.ProvideRay12();
         if (!Input.GetMouseButtonDown(0) || m_currentGun_SO.cartridge—lipAmmo <= 0) { return; }
 
         if (m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
@@ -25,12 +26,13 @@ public class WeaponFire : WeaponAction
 
     IEnumerator Shoot()
     {
+        m_currentGun_SO.cartridge—lipAmmo--;
+        OnPlayerShooted.Invoke();
+
         m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 
         if (!Physics.Raycast(rayForShootingProvider.ProvideRay(), out RaycastHit raycastHit)) { yield break; }
 
-        m_currentGun_SO.cartridge—lipAmmo--;
-        OnPlayerShooted.Invoke();
         OnRayLaunched.Invoke(raycastHit);
 
         yield return m_timeoutAfterShooting;

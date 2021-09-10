@@ -15,6 +15,8 @@ public class PlayerInstaller : MonoInstaller
     public EquipmentInventory EquipmentInventory { get; set; }
     public CharacterBleeding CharacterBleeding { get; set; }
     public Volume Volume { get; set; }
+    public Transform PlayerTransform { get; set; }
+    public GameObject PlayerGameObject { get; set; }
 
     public override void InstallBindings()
     {
@@ -30,6 +32,8 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(RayProvider).AsSingle();
         Container.BindInstance(Volume).AsSingle();
         Container.BindInstance(this).AsSingle();
+        Container.BindInstance(PlayerTransform).AsSingle();
+        Container.BindInstance(PlayerGameObject).AsSingle();
     }
 
     void GetComponents()
@@ -44,5 +48,7 @@ public class PlayerInstaller : MonoInstaller
         EquipmentInventory = GetComponent<EquipmentInventory>();
         RayProvider = GetComponent<RayProvider>();
         Volume = GetComponent<Volume>();
+        PlayerTransform = transform;
+        PlayerGameObject = gameObject;
     }
 }

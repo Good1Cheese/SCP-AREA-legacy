@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -12,7 +13,13 @@ public class WeaponActivator : MonoBehaviour
 
     void Start()
     {
-        m_playerInventory.OnInventoryButtonPressed += SetActiveState; 
+        m_playerInventory.OnInventoryButtonPressed += SetActiveState;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetWeaponActiveState;
+    }
+
+    void SetWeaponActiveState()
+    {
+        IsWeaponActive = false;
     }
 
     void Update()
@@ -27,7 +34,7 @@ public class WeaponActivator : MonoBehaviour
     {
         m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated.Invoke();
         IsWeaponActive = activateGun;
-        m_currentGun.SetActive(activateGun);
+        m_weaponGameObjectController.CurrentGunGameObject.SetActive(activateGun);
     }
 
     void SetActiveState()
