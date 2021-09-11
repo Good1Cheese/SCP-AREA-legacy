@@ -6,10 +6,9 @@ using Zenject;
 public class GameLoading : MonoBehaviour
 {
     [Inject] readonly GameSaving m_gameSaving;
-    [Inject] readonly EmptyDataSaving m_emptyDataSaving;
 
     public Action OnGameLoaded { get; set; }
-    public bool WasGameLoadedFromMenu { get; set; } = false;
+    public bool WasGameLoadedFromMenu { get; set; } = true ;
 
     public void Load()
     {
@@ -28,14 +27,14 @@ public class GameLoading : MonoBehaviour
     {
         string json;
 
-        //if (WasGameLoadedFromMenu)
-        //{
-        //    for (int i = 0; (json = reader.ReadLine()) != null; i++)
-        //    {
-        //        m_gameSaving.SaveData[i].FromJson(json);
-        //    }
-        //    WasGameLoadedFromMenu = false;
-        //}
+        if (WasGameLoadedFromMenu)
+        {
+            for (int i = 0; (json = reader.ReadLine()) != null; i++)
+            {
+                m_gameSaving.SaveData[i].FromJson(json);
+            }
+            WasGameLoadedFromMenu = false;
+        }
 
         for (int i = 0; (json = reader.ReadLine()) != null; i++)
         {
