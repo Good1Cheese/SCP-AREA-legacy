@@ -618,7 +618,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   savedWeapon: {fileID: 0}
-  isWeaponActive: 0
+  isActive: 0
+  ammoCount: 0
+  "cartridge\u0421lipAmmo": 0
   weaponName: 
 --- !u!114 &328103092
 MonoBehaviour:
@@ -642,7 +644,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1425020529}
   - component: {fileID: 1425020532}
-  - component: {fileID: 1425020531}
   - component: {fileID: 1425020530}
   m_Layer: 0
   m_Name: Cube
@@ -650,7 +651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1425020529
 Transform:
   m_ObjectHideFlags: 0
@@ -673,47 +674,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425020528}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1425020531
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425020528}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 257
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1425020530
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -799,10 +759,12 @@ GameObject:
   - component: {fileID: 4156118415210723924}
   - component: {fileID: 6293114973103321128}
   - component: {fileID: 374035222}
-  - component: {fileID: 4616315369042777221}
   - component: {fileID: 1862949079603886047}
+  - component: {fileID: 5842301476311961185}
+  - component: {fileID: 7631615567846849151}
   - component: {fileID: 1002861546}
   - component: {fileID: 122316324}
+  - component: {fileID: 190845134}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -868,7 +830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9951b59ec0295b5488e1dddc7293f64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_imageForEmptyCell: {fileID: 21300000, guid: f9bd16a898eab944ca19b18609944689, type: 3}
 --- !u!114 &4986046973850489624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,13 +859,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lowHealthPercent: 25
-  m_slowDownFactorWhileInjured: 0.5
-  m_slowDownFactorIncreasingPerStep: 0.5
-  m_startLensDistortionIntensity: -0.1
-  m_startSaturation: -10
-  m_effectsMultiplierStartValue: 1
-  m_effectsMultiplier: 1
-  m_effectsMultiplierIncreasingPerStep: 0.5
+  m_slowDownValues:
+  - 1
+  - 2
+  - 3
+  - 4
+  m_lensDistortionValues:
+  - -0.1
+  - -0.2
+  - -0.3
+  - -0.4
+  m_saturationValues:
+  - -10
+  - -15
+  - -25
+  - -20
 --- !u!114 &4490448435668429663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,21 +1292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044758f5bad964d48b06493265550253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4616315369042777221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490448435668429674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1190b612544389f44a3a8d9afa12e9fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_playerInventoryUI: {fileID: 0}
-  m_maxSlotsAmount: 8
-  m_itemsOffsetForSpawn: {x: 0, y: 0, z: 1}
 --- !u!114 &1862949079603886047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1354,6 +1308,33 @@ MonoBehaviour:
   keyCardSlot: {fileID: 0}
   weaponSlot: {fileID: 0}
   maskSlot: {fileID: 0}
+--- !u!114 &5842301476311961185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d2dac8423db85449c6a89b0c3b3283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxSlotsAmount: 8
+  m_itemsOffsetForSpawn: {x: 0, y: 0, z: 0}
+--- !u!114 &7631615567846849151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b163dd3160aec648859be39c2dc6eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerInventoryUI: {fileID: 0}
 --- !u!114 &1002861546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,7 +1363,24 @@ MonoBehaviour:
   _transform: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
-  isGameObjectActive: 0
+  isActive: 0
+--- !u!114 &190845134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 0}
 --- !u!1 &4490448435717744917
 GameObject:
   m_ObjectHideFlags: 0

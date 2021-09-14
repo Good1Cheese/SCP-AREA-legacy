@@ -33,12 +33,12 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
         if (IsPlayerAiming)
         {
             ray.origin = m_bulletSpawnPoint.position;
-            m_weaponFire.OnPlayerShootedWithAim.Invoke();
+            m_weaponFire.OnPlayerShootedWithAim?.Invoke();
         }
         else
         {
             ray.origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * multyplierOfBulletSpawnPointRadious;
-            m_weaponFire.OnPlayerShootedWithoutAim.Invoke();
+            m_weaponFire.OnPlayerShootedWithoutAim?.Invoke();
         }
 
         ray.direction = transform.forward;

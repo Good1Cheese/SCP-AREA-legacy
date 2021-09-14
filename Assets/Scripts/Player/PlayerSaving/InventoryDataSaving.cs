@@ -3,7 +3,7 @@ using Zenject;
 
 public class InventoryDataSaving : DataHandler
 {
-    [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly PickableItemsInventory m_playerInventory;
     public PickableItem_SO[] m_inventory;
     public string[] m_itemsName;
 
@@ -40,10 +40,10 @@ public class InventoryDataSaving : DataHandler
 
     void DisableItem(Item_SO item_SO)
     {
-        item_SO.gameObject.SetActive(item_SO.IsItemInInventory);
+        item_SO.gameObject.SetActive(item_SO.IsInInventory);
     }
 
-    public override void FromJson(string json)
+    public override void LoadDataFromMenu(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
 

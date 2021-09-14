@@ -3,7 +3,7 @@ using Zenject;
 
 public class PickableItemsInteraction : MonoBehaviour
 {
-    [Inject] public PlayerInventory PlayerInventory { get; }
+    [Inject] public PickableItemsInventory PlayerInventory { get; }
 
     void Start()
     {

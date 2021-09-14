@@ -8,12 +8,13 @@ public class GameObjectDataHandler : DataHandler
     public Transform _transform;
     public Vector3 position;
     public Quaternion rotation;
-    public bool isGameObjectActive;
+    public bool isActive;
 
     void Start()
     {
         m_gameSaving.SaveData.Add(this);
     }
+
     void Awake()
     {
         m_transform = transform;
@@ -25,16 +26,16 @@ public class GameObjectDataHandler : DataHandler
         _transform = m_transform;
         position = m_transform.position;
         rotation = m_transform.rotation;
-        isGameObjectActive = m_gameObject.activeInHierarchy;
+        isActive = m_gameObject.activeInHierarchy;
     }
 
     public override void LoadData()
     {
         _transform.SetPositionAndRotation(position, rotation);
-        m_gameObject.SetActive(isGameObjectActive);
+        m_gameObject.SetActive(isActive);
     }
 
-    public override void FromJson(string json)
+    public override void LoadDataFromMenu(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
         _transform = m_transform;

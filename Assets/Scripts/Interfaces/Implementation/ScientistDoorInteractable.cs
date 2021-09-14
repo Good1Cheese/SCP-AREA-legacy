@@ -5,7 +5,7 @@ using Zenject;
 public class ScientistDoorInteractable : IInteractable
 {
     [SerializeField] ScientistKeyCard_SO.TypesOfScientistCard m_typesOfSecurityCard;
-    [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly WearableItemsInventory m_equipmentInventory;
 
     public override void Interact()
     {

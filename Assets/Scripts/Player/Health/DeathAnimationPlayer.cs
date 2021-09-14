@@ -6,6 +6,7 @@ using Zenject;
 
 public class DeathAnimationPlayer : MonoBehaviour
 {
+    [SerializeField] float m_timeScaleOnDeath;
     [SerializeField] float m_delayAfterDeathAnimation;
     [SerializeField] float m_delayDuringBlackout;
     [SerializeField] float m_blackoutSpeed;
@@ -33,17 +34,15 @@ public class DeathAnimationPlayer : MonoBehaviour
         m_timeoutDuringBlackout = new WaitForSeconds(m_delayDuringBlackout);
     }
 
-    public void PlayDealthAnimation()
+    public void PlayDeathAnimation()
     {
-        Time.timeScale = 0.5f;
+        Time.timeScale = m_timeScaleOnDeath;
         m_colorAdjustments.saturation.value = m_colorAdjustments.saturation.min;
 
         m_playerDeathAnimator.SetTrigger("OnPlayerDeath");
-
-        StartCoroutine(PlayDealthAnimationCoroutine());
+        StartCoroutine(PlayDeathAnimationCoroutine());
     }
-
-    IEnumerator PlayDealthAnimationCoroutine()
+    IEnumerator PlayDeathAnimationCoroutine()
     {
         yield return m_timeoutAfterDeathAnimation;
 
@@ -52,19 +51,18 @@ public class DeathAnimationPlayer : MonoBehaviour
             m_vignette.intensity.value += m_blackoutSpeed;
             yield return m_timeoutDuringBlackout;
 
-            if (!IsVingetteIntensityNotFull())
+            if (IsVingetteIntensityFull())
             {
                 m_colorAdjustments.colorFilter.value = Color.black;
             }
         }
-        while (IsVingetteIntensityNotFull());
+        while (!IsVingetteIntensityFull());
 
         m_sceneTransition.LoadScene((int)SceneTransition.Scenes.RespawnScene);
     }
 
-    bool IsVingetteIntensityNotFull()
+    bool IsVingetteIntensityFull()
     {
-        return m_vignette.intensity.value < m_vignette.intensity.max;
+        return !(m_vignette.intensity.value < m_vignette.intensity.max);
     }
-
 }

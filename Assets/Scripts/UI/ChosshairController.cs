@@ -6,7 +6,7 @@ public class ChosshairController : MonoBehaviour
 {
     [SerializeField] Image m_crosshairWithWeapon;
     [SerializeField] Image m_crosshairWithWeapon1;
-    [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly WearableItemsInventory m_equipmentInventory;
 
 
 }

@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b85a2d9afabf864dae888d815c00efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fileName: Player.txt
 --- !u!114 &-6005136785035326472
 MonoBehaviour:
   m_ObjectHideFlags: 0

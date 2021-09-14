@@ -27,7 +27,7 @@ public class WeaponFire : WeaponAction
     IEnumerator Shoot()
     {
         m_currentGun_SO.cartridge—lipAmmo--;
-        OnPlayerShooted.Invoke();
+        OnPlayerShooted?.Invoke();
 
         m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 

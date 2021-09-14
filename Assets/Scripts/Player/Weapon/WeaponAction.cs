@@ -3,8 +3,8 @@ using Zenject;
 
 public abstract class WeaponAction : MonoBehaviour
 {
-    [Inject] protected readonly EquipmentInventory m_equipmentInventory;
-    [Inject] protected readonly PlayerInventory m_playerInventory;
+    [Inject] protected readonly WearableItemsInventory m_equipmentInventory;
+    [Inject] protected readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
     [Inject] protected WeaponActivator m_weaponActivator;
 
     protected Weapon_SO m_currentGun_SO;
@@ -13,20 +13,20 @@ public abstract class WeaponAction : MonoBehaviour
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
         m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetWeaponToZero;
-        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated += SetActive;
-        m_playerInventory.OnInventoryButtonPressed += SetActiveState; 
+        m_equipmentInventory.WeaponSlot.IsWeaponActived += SetActive;
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed += SetActiveState; 
         enabled = false;
     }
 
     protected void SetActiveState()
     {
         if (!m_weaponActivator.IsWeaponActive) { return; }
-        SetActive();
+        enabled = !enabled;
     }
 
-    protected void SetActive()
+    protected void SetActive(bool activeState)
     {
-        enabled = !enabled;
+        enabled = activeState;
     }
 
     protected virtual void SetWeapon(Weapon_SO weapon)
@@ -43,7 +43,7 @@ public abstract class WeaponAction : MonoBehaviour
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
         m_equipmentInventory.WeaponSlot.OnWeaponDropped -= SetWeaponToZero;
-        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated -= SetActive;
-        m_playerInventory.OnInventoryButtonPressed -= SetActiveState;
+        m_equipmentInventory.WeaponSlot.IsWeaponActived -= SetActive;
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= SetActiveState;
     }
 }

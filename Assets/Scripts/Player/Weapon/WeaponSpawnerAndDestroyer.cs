@@ -3,48 +3,46 @@ using Zenject;
 
 public class WeaponSpawnerAndDestroyer : MonoBehaviour
 {
-    [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly WearableItemsInventory m_equipmentInventory;
     [Inject] readonly Transform m_playerTransform;
 
-    Weapon_SO m_weapon;
+    public Weapon_SO Weapon { get; set; }
     GameObject m_spawnedGun;
-    Transform m_transform;
 
     public GameObject CurrentGunGameObject { get => m_spawnedGun; }
 
     void Start()
     {
-        m_transform = transform;
         m_equipmentInventory.WeaponSlot.OnWeaponChanged += SpawnWeapon;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped += DestroyGun;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped += HideGun;
     }
 
     public void SpawnWeapon(Weapon_SO weapon_SO)
     {
-        m_weapon = weapon_SO;
-        if (m_weapon.playerWeapon == null)
+        Weapon = weapon_SO;
+        if (Weapon.playerWeapon == null)
         {
-            m_weapon.playerWeapon = Instantiate(weapon_SO.weaponForPlayerPrefab, transform);
+            Weapon.playerWeapon = Instantiate(weapon_SO.weaponForPlayerPrefab, transform);
         }
-        m_spawnedGun = m_weapon.playerWeapon;
-        m_spawnedGun.SetActive(false);
+        m_spawnedGun = Weapon.playerWeapon;
+        HideGun();
     }
 
     public void DespawnWeapon()
     {
         m_spawnedGun = null;
-        m_weapon.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
-        m_weapon.gameObject.SetActive(true);
+        Weapon.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
+        Weapon.gameObject.SetActive(true);
     }
 
-    public void DestroyGun()
+    public void HideGun()
     {
-        Destroy(m_spawnedGun);
+        m_spawnedGun.SetActive(false);
     }
 
     void OnDestroy()
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SpawnWeapon;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= DestroyGun;
+        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= HideGun;
     }
 }

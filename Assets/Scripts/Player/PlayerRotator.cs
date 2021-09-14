@@ -7,7 +7,7 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] float m_xSensitivity;
     [SerializeField] float m_verticalLookLimit;
     [SerializeField] Transform m_camera;
-    [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
     [Inject] readonly Transform m_playerTransform;
 
     float m_yRotation;
@@ -18,7 +18,7 @@ public class PlayerRotator : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        m_playerInventory.OnInventoryButtonPressed += DisableRotationAndMouse;
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed += DisableRotationAndMouse;
     }
 
     void Update()
@@ -46,12 +46,12 @@ public class PlayerRotator : MonoBehaviour
     void DisableRotationAndMouse()
     {
         Cursor.visible = enabled;
+        Cursor.lockState = enabled ? CursorLockMode.None : CursorLockMode.Locked;
         enabled = !enabled;
-        Cursor.lockState = (!enabled) ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     void OnDestroy()
     {
-        m_playerInventory.OnInventoryButtonPressed -= DisableRotationAndMouse;
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= DisableRotationAndMouse;
     }
 }

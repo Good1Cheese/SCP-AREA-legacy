@@ -7,15 +7,14 @@ public abstract class Item_SO : ScriptableObject
     public GameObject gameObject;
     public string description;
 
-    public bool IsItemInInventory { get; set; }
-    public Item_SO Item { get; set; }
+    public bool IsInInventory;
+
+    public virtual void OnDestroy()
+    {
+        IsInInventory = false;
+    }
 
     public abstract void GetDependencies(PlayerInstaller playerInstaller);
 
     public abstract void Equip();
-
-    public virtual void OnDestroy()
-    {
-
-    }
 }

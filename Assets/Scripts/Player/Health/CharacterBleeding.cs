@@ -7,9 +7,11 @@ public class CharacterBleeding : MonoBehaviour
 {
     [SerializeField] float m_delayDuringBleeding;
     [SerializeField] float m_increasingTimeForBleeding;
+
     [SerializeField] Sprite m_imageForBleedingCell;
     [SerializeField] Sprite m_imageForFullCell;
-    [Inject] readonly PlayerHealth m_playerHealthSystem;
+
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     WaitForSeconds m_timeoutDuringBleeding;
     IEnumerator m_bleedCoroutine;
@@ -24,7 +26,13 @@ public class CharacterBleeding : MonoBehaviour
     {
         m_bleedCoroutine = BleedCoroutine();
         CreateBleedingTimeout(DelayDuringBleeding);
+        m_playerHealth.OnPlayerGetsDamage += MoveBleedingCellAway;
+    }
 
+    void MoveBleedingCellAway()
+    {
+        if (!IsPlayerBleeding) { return; }
+        m_playerHealth.GetCurrentHealthCell().SetSprite(m_imageForBleedingCell);
     }
 
     public void Bleed()
@@ -38,31 +46,35 @@ public class CharacterBleeding : MonoBehaviour
     public void StopBleeding()
     {
         IsPlayerBleeding = false;
+
         StopCoroutine(m_bleedCoroutine);
         m_bleedCoroutine = BleedCoroutine();
-        m_playerHealthSystem.GetCurrentHealthCell().SetSprite(m_imageForFullCell);
-    }
-
-    IEnumerator BleedCoroutine()
-    {
-        OnPlayerBleedingStarted?.Invoke();
-        while (m_playerHealthSystem.GetCurrentHealthPercent() > 0)
-        {
-            m_playerHealthSystem.GetCurrentHealthCell().SetSprite(m_imageForBleedingCell);
-
-            yield return m_timeoutDuringBleeding;
-
-            OnPlayerBleeding?.Invoke();
-            m_playerHealthSystem.Damage();
-            m_delayDuringBleeding -= m_increasingTimeForBleeding;
-        }
-        IsPlayerBleeding = false;
-        CreateBleedingTimeout(DelayDuringBleeding);
-        OnPlayerBleedingEnded?.Invoke();
+        m_playerHealth.GetCurrentHealthCell().SetSprite(m_imageForFullCell);
     }
 
     public void CreateBleedingTimeout(float time)
     {
         m_timeoutDuringBleeding = new WaitForSeconds(time);
+    }
+
+    IEnumerator BleedCoroutine()
+    {
+        OnPlayerBleedingStarted?.Invoke();
+
+        while (m_playerHealth.GetCurrentHealthPercent() > 0)
+        {
+            print(m_playerHealth.GetCurrentHealthPercent());
+            m_playerHealth.GetCurrentHealthCell().SetSprite(m_imageForBleedingCell);
+
+            yield return m_timeoutDuringBleeding;
+
+            OnPlayerBleeding?.Invoke();
+            m_playerHealth.Damage();
+            m_delayDuringBleeding -= m_increasingTimeForBleeding;
+        }
+        IsPlayerBleeding = false;
+        CreateBleedingTimeout(DelayDuringBleeding);
+
+        OnPlayerBleedingEnded?.Invoke();
     }
 }

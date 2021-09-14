@@ -6,28 +6,32 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterBleeding))]
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] Sprite m_imageForEmptyCell;
     [Inject] readonly CharacterBleeding m_characterBleeding;
 
-    public int CurrentHealthCellIndex { get; set; }
-    public int LastHealthCellIndex { get; set; } = 0;
-    public List<HealthCell> HealthCells { get; set; } = new List<HealthCell>();
+    public const int LastCellIndex = 0;
+
+    public int CurrentCellIndex { get; set; }
+    public int HealableCellIndex { get; private set; }
+
+    public List<HealthCell> Cells { get; set; } = new List<HealthCell>();
+
     public Action OnPlayerDie { get; set; }
     public Action OnPlayerGetsDamage { get; set; }
     public Action OnPlayerHeals { get; set; }
 
     void Start()
     {
-        CurrentHealthCellIndex = HealthCells.Count - 1;
+        CurrentCellIndex = Cells.Count - 1;
+        HealableCellIndex = CurrentCellIndex;
     }
 
     public void Damage()
     {
         GetCurrentHealthCell().MakeCellEmpty();
-        CurrentHealthCellIndex--;
+        CurrentCellIndex--;
 
         OnPlayerGetsDamage?.Invoke();
-        if (CurrentHealthCellIndex < LastHealthCellIndex)
+        if (CurrentCellIndex < LastCellIndex)
         {
             Die();
         }
@@ -35,29 +39,28 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal()
     {
-        if (CurrentHealthCellIndex == HealthCells.Count - 1
-            || m_characterBleeding.IsPlayerBleeding) {   return; }
+        if (CurrentCellIndex == Cells.Count - 1
+            || m_characterBleeding.IsPlayerBleeding) { return; }
 
-        CurrentHealthCellIndex++;
+        CurrentCellIndex++;
         GetCurrentHealthCell().MakeCellFull();
-        OnPlayerHeals.Invoke();
+        OnPlayerHeals?.Invoke();
     }
 
     public HealthCell GetCurrentHealthCell()
     {
-        return HealthCells[CurrentHealthCellIndex];
+        return Cells[CurrentCellIndex];
     }
 
-    public HealthCell GetFirstHealthCell()
+    public int GetCurrentHealthPercent()
     {
-        return HealthCells[HealthCells.Count - 1];
+        return (CurrentCellIndex + 1) * 100 / Cells.Count;
     }
-
-    public int GetCurrentHealthPercent() => (CurrentHealthCellIndex * 100 / HealthCells.Count) + 25;
 
     public void Die()
     {
         OnPlayerDie?.Invoke();
+        gameObject.SetActive(false);
     }
 
 }

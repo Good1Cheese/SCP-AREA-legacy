@@ -30,11 +30,13 @@ public class PauseMenuUI : MonoBehaviour
 
     public void SaveGame()
     {
+        m_pauseMenu.PauseGameOrUnpauseGame();
         m_gameSaver.Save();
     }
 
     public void LoadGame()
     {
+        m_pauseMenu.PauseGameOrUnpauseGame();
         m_gameLoader.Load();
     }
 

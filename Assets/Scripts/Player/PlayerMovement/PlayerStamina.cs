@@ -9,9 +9,12 @@ public class PlayerStamina : MonoBehaviour
 
     [SerializeField] float m_regenerationSpeed;
     [SerializeField] float m_spendingSpeed;
+
     [SerializeField] float m_delayDuringRegeneration;
     [SerializeField] float m_delayBeforeRegenerationStart;
+
     [SerializeField] float m_staminaValue;
+
     [Inject] readonly MovementSpeed m_playerSpeed;
     [Inject] readonly PlayerMovement m_playerMovement;
     [Inject] readonly PlayerHealth m_playerHealth;

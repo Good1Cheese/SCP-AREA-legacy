@@ -6,14 +6,14 @@ using Zenject;
 public class WeaponActivator : MonoBehaviour
 {
     [Inject] readonly WeaponSpawnerAndDestroyer m_weaponGameObjectController;
-    [Inject] readonly PlayerInventory m_playerInventory;
-    [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
+    [Inject] readonly WearableItemsInventory m_equipmentInventory;
 
     public bool IsWeaponActive { get; set; }
 
     void Start()
     {
-        m_playerInventory.OnInventoryButtonPressed += SetActiveState;
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed += SetActiveState;
         m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetWeaponActiveState;
     }
 
@@ -26,15 +26,14 @@ public class WeaponActivator : MonoBehaviour
     {
         if (!Input.GetButtonDown("TakeGun") || m_weaponGameObjectController.CurrentGunGameObject == null) { return; }
 
-        GameObject m_currentGun = m_weaponGameObjectController.CurrentGunGameObject;
-        ActivateOrDeactivateWeapon(m_currentGun, !m_currentGun.activeSelf);
+        SetWeaponActiveState(!m_weaponGameObjectController.CurrentGunGameObject.activeSelf);
     }
 
-    public void ActivateOrDeactivateWeapon(GameObject m_currentGun, bool activateGun)
+    public void SetWeaponActiveState(bool activeGunState)
     {
-        m_equipmentInventory.WeaponSlot.OnWeaponActivatedOrDeactivated.Invoke();
-        IsWeaponActive = activateGun;
-        m_weaponGameObjectController.CurrentGunGameObject.SetActive(activateGun);
+        m_equipmentInventory.WeaponSlot.IsWeaponActived?.Invoke(activeGunState);
+        IsWeaponActive = activeGunState;
+        m_weaponGameObjectController.CurrentGunGameObject.SetActive(activeGunState);
     }
 
     void SetActiveState()
@@ -44,6 +43,6 @@ public class WeaponActivator : MonoBehaviour
 
     void OnDestroy()
     {
-        m_playerInventory.OnInventoryButtonPressed -= SetActiveState;
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= SetActiveState;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
@@ -7,16 +8,9 @@ using Zenject;
 public class InjuryState : MonoBehaviour
 {
     [SerializeField] int m_lowHealthPercent;
-
-    [SerializeField] float m_slowDownFactorWhileInjured;
-    [SerializeField] float m_slowDownFactorIncreasingPerStep;
-
-    [SerializeField] float m_startLensDistortionIntensity;
-    [SerializeField] float m_startSaturation;
-
-    [SerializeField] float m_effectsMultiplierStartValue;
-    [SerializeField] float m_effectsMultiplier;
-    [SerializeField] float m_effectsMultiplierIncreasingPerStep;
+    [SerializeField] float[] m_slowDownValues;
+    [SerializeField] float[] m_lensDistortionValues;
+    [SerializeField] float[] m_saturationValues;
 
     [Inject] readonly MovementSpeed m_playerSpeed;
     [Inject] readonly PlayerStamina m_playerStamina;
@@ -25,6 +19,8 @@ public class InjuryState : MonoBehaviour
 
     ColorAdjustments m_colorAdjustments;
     LensDistortion m_lensDistortion;
+
+    int m_currentCellIndex = - 1;
 
     [Inject]
     void Construct(Volume volume)
@@ -35,59 +31,44 @@ public class InjuryState : MonoBehaviour
 
     void Start()
     {
-        m_playerHealth.OnPlayerGetsDamage += ActiveteEffects;
-        m_playerHealth.OnPlayerHeals += DeactivateEffects;
-        m_playerHealth.OnPlayerHeals += DeactivateEffects;
+        m_playerHealth.OnPlayerGetsDamage += IntensifyEffects;
+        m_playerHealth.OnPlayerHeals += ReduceEffects;
         m_gameLoading.OnGameLoaded += ResetEffects;
     }
 
-    void ActiveteEffects()
+    void IntensifyEffects()
     {
-        IntensifyEffects();
-        m_playerSpeed.SlowDownSpeed(m_slowDownFactorWhileInjured);
+        m_currentCellIndex++;
+
+        SetEffectsValues();
 
         if (m_playerHealth.GetCurrentHealthPercent() <= m_lowHealthPercent)
         {
             m_playerStamina.DisableRunAbility();
         }
-
-        m_effectsMultiplier += m_effectsMultiplierIncreasingPerStep;
-        m_slowDownFactorWhileInjured += m_slowDownFactorIncreasingPerStep;
-    }
-
-    void DeactivateEffects()
-    {
-        m_slowDownFactorWhileInjured -= m_slowDownFactorIncreasingPerStep;
-        m_effectsMultiplier -= m_effectsMultiplierIncreasingPerStep;
-
-        ReduceEffects();
-        m_playerSpeed.SlowDownSpeed(m_slowDownFactorWhileInjured);
-
-    }
-
-    void ResetEffects()
-    {
-        int healthCellsCount = m_playerHealth.HealthCells.Count - m_playerHealth.CurrentHealthCellIndex - 1;
-        m_effectsMultiplier = m_effectsMultiplierStartValue + m_effectsMultiplierIncreasingPerStep * healthCellsCount;
-        m_colorAdjustments.saturation.value = m_startSaturation * m_effectsMultiplier * healthCellsCount;
-        m_lensDistortion.intensity.value = m_startLensDistortionIntensity * m_effectsMultiplier * healthCellsCount;
     }
 
     void ReduceEffects()
     {
-        m_colorAdjustments.saturation.value -= m_startSaturation;
-        m_lensDistortion.intensity.value -= m_startLensDistortionIntensity;
+        m_currentCellIndex--;
+        SetEffectsValues();
     }
 
-    void IntensifyEffects()
+    void SetEffectsValues()
     {
-        m_colorAdjustments.saturation.value = m_startSaturation * m_effectsMultiplier;
-        m_lensDistortion.intensity.value = m_startLensDistortionIntensity * m_effectsMultiplier;
+        m_colorAdjustments.saturation.value = m_saturationValues[m_currentCellIndex];
+        m_lensDistortion.intensity.value = m_lensDistortionValues[m_currentCellIndex];
+        m_playerSpeed.SlowDownSpeed(m_slowDownValues[m_currentCellIndex]);
+    }
+
+    void ResetEffects()
+    {
+        // Сделать сохранение эффектов
     }
 
     void OnDestroy()
     {
-        m_playerHealth.OnPlayerGetsDamage -= ActiveteEffects;
-        m_playerHealth.OnPlayerHeals -= DeactivateEffects;
+        m_playerHealth.OnPlayerGetsDamage -= IntensifyEffects;
+        m_playerHealth.OnPlayerHeals -= ReduceEffects;
     }
 }

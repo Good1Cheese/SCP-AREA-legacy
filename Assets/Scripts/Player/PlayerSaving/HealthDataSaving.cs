@@ -9,16 +9,16 @@ public class HealthDataSaving : DataHandler
 
     public override void SaveData()
     {
-        fullCellsCount = m_playerHealth.CurrentHealthCellIndex;
+        fullCellsCount = m_playerHealth.CurrentCellIndex;
     }
 
     public override void LoadData()
     {
-        m_playerHealth.CurrentHealthCellIndex = fullCellsCount;
-        for (int i = 0; i < m_playerHealth.HealthCells.Count; i++)
+        m_playerHealth.CurrentCellIndex = fullCellsCount;
+        for (int i = 0; i < m_playerHealth.Cells.Count; i++)
         {
-            if (i > fullCellsCount) { m_playerHealth.HealthCells[i].MakeCellEmpty(); continue; }
-            m_playerHealth.HealthCells[i].MakeCellFull();
+            if (i > fullCellsCount) { m_playerHealth.Cells[i].MakeCellEmpty(); continue; }
+            m_playerHealth.Cells[i].MakeCellFull();
         }
     }
 

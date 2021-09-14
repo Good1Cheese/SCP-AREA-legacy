@@ -5,19 +5,13 @@ using Zenject;
 
 public class PauseMenu : MonoBehaviour
 {
-    [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
     [Inject] readonly PlayerHealth m_playerHealth;
 
     Action deactivateAction;
 
     public bool IsGamePaused { get; set; }
     public Action OnPauseMenuButtonPressed { get; set; }
-
-    void Start()
-    {
-        deactivateAction = delegate { gameObject.SetActive(false); };
-        m_playerHealth.OnPlayerDie += deactivateAction;
-    }
 
     void Update()
     {
@@ -30,12 +24,7 @@ public class PauseMenu : MonoBehaviour
     public void PauseGameOrUnpauseGame()
     {
         IsGamePaused = !IsGamePaused;
-        m_playerInventory.OnInventoryButtonPressed.Invoke();
+        m_inventoryAcviteStateSetter.OnInventoryButtonPressed?.Invoke();
         OnPauseMenuButtonPressed.Invoke();
-    }
-
-    void OnDestroy()
-    {
-        m_playerHealth.OnPlayerDie -= deactivateAction;
     }
 }

@@ -14,6 +14,7 @@ public class WeaponMissFireSound : WeaponSoundPlayer
     {
         m_weaponAmmoController.OnAmmoRunOut -= PlaySound;
     }
+
     protected override void ChangeAudio(Weapon_SO weapon)
     {
         if (weapon == null) { return; }

@@ -5,7 +5,7 @@ using Zenject;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class CounterItemsInInventory : MonoBehaviour
 {
-    [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly PickableItemsInventory m_playerInventory;
 
     TextMeshProUGUI m_textMesh;
 

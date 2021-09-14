@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class EquipmentInventory : MonoBehaviour
+public class WearableItemsInventory : MonoBehaviour
 {
     [SerializeField] Vector3 m_itemsOffsetForSpawn;
     [SerializeField] KeyCardSlot keyCardSlot;

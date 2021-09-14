@@ -28,7 +28,7 @@ public class PlayerDeath : MonoBehaviour
         m_gameObject.transform.SetPositionAndRotation(m_playerTransform.position, m_playerTransform.rotation);
         m_gameObject.SetActive(true);
 
-        m_playerDeathAnimation.PlayDealthAnimation();
+        m_playerDeathAnimation.PlayDeathAnimation();
     }
 
     void OnDestroy()

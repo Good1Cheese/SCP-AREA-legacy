@@ -8,10 +8,10 @@ public class Weapon_SO : WearableItem_SO
     public GameObject playerWeapon;
 
     public int damagePerShot;
-    public int cartridgeСlipAmmo;
-    public int ammoCount;
-    public int cartidgeClipMaxAmmo;
     public int caliber;
+    public int ammoCount;
+    public int cartridgeСlipAmmo;
+    public int cartidgeClipMaxAmmo;
 
     public Vector3 spawnOffset;
     public Vector3 bulletSpawnPoint;
@@ -38,6 +38,13 @@ public class Weapon_SO : WearableItem_SO
     public override void Equip()
     {
         Inventory.WeaponSlot.SetItem(this);
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        cartridgeСlipAmmo = 0;
+        ammoCount = 0;
     }
 }
 

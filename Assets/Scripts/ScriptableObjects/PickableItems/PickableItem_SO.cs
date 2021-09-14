@@ -1,6 +1,6 @@
 ﻿public abstract class PickableItem_SO : Item_SO
 {
-    protected PlayerInventory Inventory { get; set; }
+    protected PickableItemsInventory Inventory { get; set; }
 
     public override void GetDependencies(PlayerInstaller playerInstaller)
     {

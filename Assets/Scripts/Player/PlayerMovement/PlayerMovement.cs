@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         { 
             if (IsPlayerMoving)
             {
-                OnPlayerStoppedMoving.Invoke();
+                OnPlayerStoppedMoving?.Invoke();
             }
 
             IsPlayerMoving = false;

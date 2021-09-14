@@ -4,7 +4,7 @@ using Zenject;
 public class WeaponShot : MonoBehaviour
 {
     [Inject] readonly WeaponFire m_weaponFire;
-    [Inject] readonly EquipmentInventory m_equipmentInventory;
+    [Inject] readonly WearableItemsInventory m_equipmentInventory;
 
     IDamagable m_damagable;
     Weapon_SO m_weapon;

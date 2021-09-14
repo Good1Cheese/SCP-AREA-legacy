@@ -426,7 +426,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 7766370858883765938}
   m_HandleRect: {fileID: 0}
@@ -695,7 +695,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1071620464423917108}
   - component: {fileID: 3395979601263708936}
-  - component: {fileID: 795634965}
+  - component: {fileID: 978135094}
+  - component: {fileID: 978135096}
   m_Layer: 5
   m_Name: Health Cell (3)
   m_TagString: Untagged
@@ -763,7 +764,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 2753056550517112444}
   m_HandleRect: {fileID: 0}
@@ -775,7 +776,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &795634965
+--- !u!114 &978135094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -784,7 +785,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 4205576027446296214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671825990186d1344927b2a64c0719ab, type: 3}
+  m_Script: {fileID: 11500000, guid: d233288f581006141b34abe48f1c704b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_healthIncreasingPerStep: 0.0125
+  m_delayWhileHealing: 0.05
+  m_delayBeforeHealing: 1
+--- !u!114 &978135096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4205576027446296214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4805bdcf4e6044294a1da46ad0daa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_image: {fileID: 7085484844154286404}
@@ -1493,7 +1509,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 5812408485805225766}
   m_HandleRect: {fileID: 0}
@@ -1669,7 +1685,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 6261989587072164392}
   m_HandleRect: {fileID: 0}

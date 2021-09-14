@@ -8,7 +8,7 @@ public class StaminaBarUIController : StatisticsBarUIController
 {
     [Inject] readonly PlayerStamina m_playerStamina;
 
-    protected override float GetBarValue()
+    protected override float GetValue()
     {
         return m_playerStamina.StaminaValue;
     }

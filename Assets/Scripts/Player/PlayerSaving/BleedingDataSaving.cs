@@ -6,7 +6,7 @@ public class BleedingDataSaving : DataHandler
     [Inject] readonly CharacterBleeding m_characterBleeding;
 
     public float bleedTime;
-    bool IsBleedingGoing;
+    bool m_isBleedingGoing;
 
     void Awake()
     {
@@ -16,22 +16,22 @@ public class BleedingDataSaving : DataHandler
 
     void Update()
     {
-        if (IsBleedingGoing)
+        if (m_isBleedingGoing)
         {
-            if (bleedTime <= 0) { IsBleedingGoing = false; }
+            if (bleedTime <= 0) { m_isBleedingGoing = false; }
             bleedTime -= Time.deltaTime;
         }
     }
 
     void GetBleedingTime()
     {
-        IsBleedingGoing = true;
+        m_isBleedingGoing = true;
         bleedTime = m_characterBleeding.DelayDuringBleeding;
     }
 
     public override void SaveData()
     {
-        IsBleedingGoing = false;
+        m_isBleedingGoing = false;
     }
 
     public override void LoadData()

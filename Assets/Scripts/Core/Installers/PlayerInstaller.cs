@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Zenject;
 
-[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerInventory))]
+[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PickableItemsInventory))]
 public class PlayerInstaller : MonoInstaller
 {
     public PlayerMovement PlayerMovement { get; set; }
@@ -11,10 +11,10 @@ public class PlayerInstaller : MonoInstaller
     public MovementSpeed PlayerSpeed { get; set; }
     public PlayerHealth PlayerHealth { get; set; }
     public RayProvider RayProvider { get; set; }
-    public PlayerInventory PlayerInventory { get; set; }
-    public EquipmentInventory EquipmentInventory { get; set; }
+    public PickableItemsInventory PlayerInventory { get; set; }
+    public WearableItemsInventory EquipmentInventory { get; set; }
+    public InventoryAcviteStateSetter InventoryAcviteStateSetter { get; set; }
     public CharacterBleeding CharacterBleeding { get; set; }
-    public Volume Volume { get; set; }
     public Transform PlayerTransform { get; set; }
     public GameObject PlayerGameObject { get; set; }
 
@@ -29,8 +29,8 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(CharacterBleeding).AsSingle();
         Container.BindInstance(PlayerInventory).AsSingle();
         Container.BindInstance(EquipmentInventory).AsSingle();
+        Container.BindInstance(InventoryAcviteStateSetter).AsSingle();
         Container.BindInstance(RayProvider).AsSingle();
-        Container.BindInstance(Volume).AsSingle();
         Container.BindInstance(this).AsSingle();
         Container.BindInstance(PlayerTransform).AsSingle();
         Container.BindInstance(PlayerGameObject).AsSingle();
@@ -44,10 +44,10 @@ public class PlayerInstaller : MonoInstaller
         PlayerSpeed = GetComponent<MovementSpeed>();
         PlayerHealth = GetComponent<PlayerHealth>();
         CharacterBleeding = GetComponent<CharacterBleeding>();
-        PlayerInventory = GetComponent<PlayerInventory>();
-        EquipmentInventory = GetComponent<EquipmentInventory>();
+        PlayerInventory = GetComponent<PickableItemsInventory>();
+        EquipmentInventory = GetComponent<WearableItemsInventory>();
+        InventoryAcviteStateSetter = GetComponent<InventoryAcviteStateSetter>();
         RayProvider = GetComponent<RayProvider>();
-        Volume = GetComponent<Volume>();
         PlayerTransform = transform;
         PlayerGameObject = gameObject;
     }

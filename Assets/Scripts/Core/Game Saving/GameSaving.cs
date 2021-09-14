@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameSaving : MonoBehaviour
 {
-    public string FileName { get; set; } = "Player.txt";
+    [SerializeField] string m_fileName;
     public List<DataHandler> SaveData { get; set; } = new List<DataHandler>();
     public Action OnGameSaving { get; set; }
 
@@ -33,7 +33,7 @@ public class GameSaving : MonoBehaviour
 
     public string GetSaveFilePath()
     {
-        return Application.persistentDataPath + "/" + FileName;
+        return Application.persistentDataPath + "/" + m_fileName;
     }
 
 }

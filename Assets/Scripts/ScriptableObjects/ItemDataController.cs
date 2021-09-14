@@ -4,7 +4,7 @@ using Zenject;
 [RequireComponent(typeof(ItemDataHandler))]
 public class ItemDataController : MonoBehaviour//, IDataHandler
 {
-    [Inject] readonly PlayerInventory m_playerInventory;
+    [Inject] readonly PickableItemsInventory m_playerInventory;
 
     ItemHandler m_itemHandler;
     ItemDataHandler m_itemDataHandler;
@@ -22,7 +22,7 @@ public class ItemDataController : MonoBehaviour//, IDataHandler
 
     void SetSavableState()
     {
-        if (m_itemHandler.Item_SO.IsItemInInventory)
+        if (m_itemHandler.Item_SO.IsInInventory)
         {
             m_itemDataHandler.BecomeUnsaveable();
             return;

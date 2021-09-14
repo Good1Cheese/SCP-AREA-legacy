@@ -8,7 +8,7 @@ public class GameLoading : MonoBehaviour
     [Inject] readonly GameSaving m_gameSaving;
 
     public Action OnGameLoaded { get; set; }
-    public bool WasGameLoadedFromMenu { get; set; } = true ;
+    public bool WasGameLoadedFromMenu { get; set; }
 
     public void Load()
     {
@@ -31,7 +31,7 @@ public class GameLoading : MonoBehaviour
         {
             for (int i = 0; (json = reader.ReadLine()) != null; i++)
             {
-                m_gameSaving.SaveData[i].FromJson(json);
+                m_gameSaving.SaveData[i].LoadDataFromMenu(json);
             }
             WasGameLoadedFromMenu = false;
         }

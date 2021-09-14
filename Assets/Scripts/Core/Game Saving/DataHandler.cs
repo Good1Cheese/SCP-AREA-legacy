@@ -10,7 +10,7 @@ public abstract class DataHandler : MonoBehaviour
         return JsonUtility.ToJson(this);
     }
 
-    public virtual void FromJson(string json)
+    public virtual void LoadDataFromMenu(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
         LoadData();

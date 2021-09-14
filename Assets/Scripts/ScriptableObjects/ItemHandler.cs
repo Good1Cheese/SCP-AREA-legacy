@@ -23,6 +23,7 @@ public class ItemHandler : IInteractable
 
     public override void Interact()
     {
+        m_item_SO.IsInInventory = true;
         GameObject.SetActive(false);
         m_item_SO.Equip();
     }

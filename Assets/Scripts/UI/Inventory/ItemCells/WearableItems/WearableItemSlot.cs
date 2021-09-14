@@ -3,9 +3,9 @@ using Zenject;
 
 public abstract class WearableItemSlot : InventorySlot
 {
-    [Inject] protected readonly EquipmentInventory m_equipmentInventory;
+    [Inject] protected readonly WearableItemsInventory m_equipmentInventory;
 
-    public override void OnItemSetted()
+    public override void OnItemSet()
     {
         m_image.enabled = true;
     }
