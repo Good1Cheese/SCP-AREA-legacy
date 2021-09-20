@@ -4,15 +4,15 @@ using Zenject;
 [RequireComponent(typeof(AmmoUICountUpdater))]
 public class AmmoUIActivator : MonoBehaviour
 {
-    [Inject] readonly WearableItemsInventory m_equipmentInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
     AmmoUICountUpdater m_ammoUICountUpdater;
     GameObject m_textMeshProGameObject;
 
     void Awake()
     {
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped += DeactivateWeaponUI;
-        m_equipmentInventory.WeaponSlot.IsWeaponActived += ActiveOrDisableUI;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += DeactivateWeaponUI;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += ActiveOrDisableUI;
     }
 
     void Start()
@@ -35,7 +35,7 @@ public class AmmoUIActivator : MonoBehaviour
 
     void OnDestroy()
     {
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= DeactivateWeaponUI;
-        m_equipmentInventory.WeaponSlot.IsWeaponActived -= ActiveOrDisableUI;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= DeactivateWeaponUI;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= ActiveOrDisableUI;
     }
 }

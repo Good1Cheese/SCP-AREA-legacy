@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class RayForShootingProvider : WeaponAction, IRayProvider
+public class RayForShootingProvider : MonoBehaviour, IRayProvider
 {
-    [SerializeField] float multyplierOfBulletSpawnPointRadious;
+    [SerializeField] float m_multyplierOfBulletSpawnPointRadious;
     [SerializeField] Transform m_bulletSpawnPoint;
+
+    [Inject] WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly Transform m_playerTransform;
-    [Inject] readonly WeaponFire m_weaponFire;
+    [Inject] readonly WeaponAim m_weaponAim;
+
+    public System.Action<RaycastHit> OnRayLaunched { get; set; }
 
     bool IsPlayerAiming;
     Ray ray;
@@ -21,6 +25,7 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
     void Awake()
     {
         ray = new Ray();
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
     void SetPlayerAimState()
@@ -33,12 +38,12 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
         if (IsPlayerAiming)
         {
             ray.origin = m_bulletSpawnPoint.position;
-            m_weaponFire.OnPlayerShootedWithAim?.Invoke();
+            m_weaponAim.OnPlayerShootedWithAim?.Invoke();
         }
         else
         {
-            ray.origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * multyplierOfBulletSpawnPointRadious;
-            m_weaponFire.OnPlayerShootedWithoutAim?.Invoke();
+            ray.origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * m_multyplierOfBulletSpawnPointRadious;
+            m_weaponAim.OnPlayerShootedWithoutAim?.Invoke();
         }
 
         ray.direction = transform.forward;
@@ -46,13 +51,8 @@ public class RayForShootingProvider : WeaponAction, IRayProvider
         return ray;
     }
 
-    public void ProvideRay12()
+    void SetWeapon(Weapon_SO weapon_SO)
     {
-        Debug.DrawRay(m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * multyplierOfBulletSpawnPointRadious, transform.forward, Color.red);
-    }
-
-    protected override void SetWeapon(Weapon_SO weapon)
-    {
-        m_bulletSpawnPoint.localPosition = weapon.bulletSpawnPoint;
+        m_bulletSpawnPoint.localPosition = weapon_SO.bulletSpawnPoint;
     }
 }

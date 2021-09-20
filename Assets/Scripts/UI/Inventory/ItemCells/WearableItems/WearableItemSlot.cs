@@ -3,7 +3,7 @@ using Zenject;
 
 public abstract class WearableItemSlot : InventorySlot
 {
-    [Inject] protected readonly WearableItemsInventory m_equipmentInventory;
+    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
 
     public override void OnItemSet()
     {
@@ -17,7 +17,7 @@ public abstract class WearableItemSlot : InventorySlot
 
     public override void OnRightClick()
     {
-        m_equipmentInventory.OnItemClicked.Invoke(this);
+        m_wearableItemsInventory.OnItemClicked.Invoke(this);
     }
 
 

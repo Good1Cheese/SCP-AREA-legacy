@@ -10,10 +10,9 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
     [Inject] readonly PickableItemsInventory playerInventory;
     GameObject m_gameObject;
 
-    void Start()
+    void Awake()
     {
         m_gameObject = gameObject;
-        m_gameObject.SetActive(false);
     }
 
     public override void OnItemSet()

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class InventoryDataSaving : DataHandler
+public class InventoryDataSaving : DataSaving
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
     public PickableItem_SO[] m_inventory;
@@ -15,7 +15,7 @@ public class InventoryDataSaving : DataHandler
         m_itemsName = new string[m_playerInventory.Inventory.Length];
     }
 
-    public override void SaveData()
+    public override void Save()
     {
         for (int i = 0; i < m_inventory.Length; i++)
         {
@@ -27,7 +27,7 @@ public class InventoryDataSaving : DataHandler
         }
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         m_playerInventory.CurrentItemIndex = 0;
         for (int i = 0; i < m_inventory.Length; i++)

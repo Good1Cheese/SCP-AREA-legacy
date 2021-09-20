@@ -5,10 +5,7 @@ using Zenject;
 
 public class PauseMenu : MonoBehaviour
 {
-    [Inject] readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
-    [Inject] readonly PlayerHealth m_playerHealth;
-
-    Action deactivateAction;
+    [Inject] readonly WearableInventoryActivator m_wearableInventoryActivator;
 
     public bool IsGamePaused { get; set; }
     public Action OnPauseMenuButtonPressed { get; set; }
@@ -17,6 +14,10 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetButtonDown("PauseMenu"))
         {
+            if (m_wearableInventoryActivator.IsInventoryActivated)
+            {
+                m_wearableInventoryActivator.ActivateOrDeactivateMenu();
+            }
             PauseGameOrUnpauseGame();
         }
     }
@@ -24,7 +25,7 @@ public class PauseMenu : MonoBehaviour
     public void PauseGameOrUnpauseGame()
     {
         IsGamePaused = !IsGamePaused;
-        m_inventoryAcviteStateSetter.OnInventoryButtonPressed?.Invoke();
+        m_wearableInventoryActivator.OnInventoryButtonPressed?.Invoke();
         OnPauseMenuButtonPressed.Invoke();
     }
 }

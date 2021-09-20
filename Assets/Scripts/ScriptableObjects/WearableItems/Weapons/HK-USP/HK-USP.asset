@@ -15,19 +15,22 @@ MonoBehaviour:
   sprite: {fileID: 0}
   gameObject: {fileID: 0}
   description: "\u0422\u0443\u0434\u0430 \u0435\u0433\u043E"
-  weaponForPlayerPrefab: {fileID: 7735998174741333828, guid: 4d2c2bace596775438bf021a0216552f, type: 3}
+  IsInInventory: 0
+  playerWeaponPrefab: {fileID: 7735998174741333828, guid: 4d2c2bace596775438bf021a0216552f, type: 3}
   playerWeapon: {fileID: 0}
   damagePerShot: 10
-  "cartridge\u0421lipAmmo": 4
-  ammoCount: 0
-  cartidgeClipMaxAmmo: 8
   caliber: 1
+  ammoCount: 0
+  clipAmmo: 0
+  clipMaxAmmo: 8
+  delayAfterShot: 0.3
   spawnOffset: {x: 0.78, y: -0.519, z: 0.801}
   bulletSpawnPoint: {x: -0.003282806, y: 0.2457163, z: 0.4906375}
   bulletHolePrefab: {fileID: 5088676403618374141, guid: 3e7fda179aea8d64fa703584d4992b74, type: 3}
   weaponAnimationContoller: {fileID: 9100000, guid: 4b9fd3655a02a4b4ca10361a850a019e, type: 2}
-  silencer: {fileID: 11400000, guid: 4f91abb46f0b1d9488e541b108ae57f9, type: 2}
-  shotSound: {fileID: 8300000, guid: a85360f604e10eb4a866bca985350e23, type: 3}
-  reloadSound: {fileID: 8300000, guid: 994b97635fcc603468f7f6c9dbd18b78, type: 3}
-  shotSoundWithSilencer: {fileID: 8300000, guid: 83960ef2b1336374e95f06fc16c37d13, type: 3}
-  missFireSound: {fileID: 8300000, guid: 2e8a703ccb206784eaae2224383870d8, type: 3}
+  silencer_SO: {fileID: 0}
+  currentShotSound: {fileID: 0}
+  shotSoundPrefab: {fileID: 8300000, guid: a85360f604e10eb4a866bca985350e23, type: 3}
+  missFireSoundPrefab: {fileID: 8300000, guid: 2e8a703ccb206784eaae2224383870d8, type: 3}
+  shotSoundWithSilencerPrefab: {fileID: 8300000, guid: 63b0a0c7679e8c04087f1fd61ac894cf, type: 3}
+  reloadSoundPrefab: {fileID: 8300000, guid: 994b97635fcc603468f7f6c9dbd18b78, type: 3}

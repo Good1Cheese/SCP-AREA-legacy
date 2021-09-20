@@ -2,35 +2,37 @@
 using Zenject;
 
 [RequireComponent(typeof(Animator))]
-public class WeaponRecoil : WeaponAction
+public class WeaponRecoil : MonoBehaviour
 {
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly Animator m_weaponAnimator;
-    [Inject] readonly WeaponFire weaponFire;
+    [Inject] readonly WeaponAim m_weaponAim;
 
     void Awake()
     {
-        weaponFire.OnPlayerShootedWithAim += ActivateRecoilInAim;
-        weaponFire.OnPlayerShootedWithoutAim += ActivateRecoilWithoutAim;
+        m_weaponAim.OnPlayerShootedWithAim += ActivateRecoilInAim;
+        m_weaponAim.OnPlayerShootedWithoutAim += ActivateRecoilWithoutAim;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
     void ActivateRecoilInAim()
     {
         m_weaponAnimator.SetTrigger("OnPlayerShootedWithAim");
     }
+
     void ActivateRecoilWithoutAim()
     {
         m_weaponAnimator.SetTrigger("OnPlayerShootedWithoutAim");
     }
 
-    protected override void SetWeapon(Weapon_SO weapon)
+    void SetWeapon(Weapon_SO weapon)
     {
         m_weaponAnimator.runtimeAnimatorController = weapon.weaponAnimationContoller;
     }
 
-    new void OnDestroy()
+    void OnDestroy()
     {
-        base.OnDestroy();
-        weaponFire.OnPlayerShootedWithAim -= ActivateRecoilInAim;
-        weaponFire.OnPlayerShootedWithoutAim -= ActivateRecoilWithoutAim;
+        m_weaponAim.OnPlayerShootedWithAim -= ActivateRecoilInAim;
+        m_weaponAim.OnPlayerShootedWithoutAim -= ActivateRecoilWithoutAim;
     }
 }

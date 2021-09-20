@@ -7,6 +7,7 @@ public class MovementSpeed : MonoBehaviour
     [SerializeField] float m_sneakSpeed;
     [SerializeField] float m_walkSpeed;
     [SerializeField] float m_runSpeed;
+
     [Inject] readonly PlayerStamina m_playerStamina;
 
     float m_slowDownFactor;
@@ -21,18 +22,12 @@ public class MovementSpeed : MonoBehaviour
 
     public float GetPlayerSpeed()
     {
-        float moveSpeed = m_walkSpeed;
+        StopMovement();
+        return GetSpecialSpeed();
+    }
 
-        if (Input.GetButtonUp("Sprint"))
-        {
-            OnPlayerStoppedRun?.Invoke();
-            IsPlayerRunning = false;
-        }
-        else if (Input.GetButtonUp("Sneak"))
-        {
-            OnPlayerStoppedSneak.Invoke();
-        }
-
+    float GetSpecialSpeed()
+    {
         if (Input.GetButton("Sprint") && m_playerStamina.HasPlayerStamina)
         {
             OnPlayerRun?.Invoke();
@@ -42,19 +37,33 @@ public class MovementSpeed : MonoBehaviour
             {
                 OnPlayerStoppedSneak?.Invoke();
                 IsPlayerRunning = false;
+                return m_sneakSpeed - m_slowDownFactor;
             }
 
-            return m_runSpeed;
+            return m_runSpeed - m_slowDownFactor;
         }
         else if (Input.GetButton("Sneak"))
         {
             OnPlayerSneak?.Invoke();
 
-            return m_sneakSpeed;
+            return m_sneakSpeed - m_slowDownFactor;
         }
 
         OnPlayerWalks?.Invoke();
-        return moveSpeed - m_slowDownFactor;
+        return m_walkSpeed - m_slowDownFactor;
+    }
+
+    void StopMovement()
+    {
+        if (Input.GetButtonUp("Sprint"))
+        {
+            OnPlayerStoppedRun?.Invoke();
+            IsPlayerRunning = false;
+        }
+        else if (Input.GetButtonUp("Sneak"))
+        {
+            OnPlayerStoppedSneak.Invoke();
+        }
     }
 
     public void SlowDownSpeed(float slowDownFactor)

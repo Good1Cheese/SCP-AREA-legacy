@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class HealthCellHealEffect : MonoBehaviour
 {
     [SerializeField] float m_healthIncreasingPerStep;
     [SerializeField] float m_delayWhileHealing;
     [SerializeField] float m_delayBeforeHealing;
+
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     WaitForSeconds m_timeoutWhileHealing;
     WaitForSeconds m_timeoutBeforeHealing;
@@ -44,6 +47,9 @@ public class HealthCellHealEffect : MonoBehaviour
             yield return m_timeoutWhileHealing;
         }
 
+ //       if (m_playerHealth.HealthCells.CurrentCellIndex < m_playerHealth.HealthCells.LastCellIndex) { m_playerHealth.HealthCells.CurrentCellIndex++; }
+
+        m_playerHealth.OnPlayerHeals?.Invoke();
         StopHealEffect();
     }
 }

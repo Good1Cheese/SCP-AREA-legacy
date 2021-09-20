@@ -1,38 +1,34 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(WeaponMissFireSound))]
-public class WeaponMiss : WeaponAction
+public class WeaponMiss : MonoBehaviour
 {
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     WaitForSeconds m_timeoutAfterAction;
 
     public Action OnAmmoRunOut { get; set; }
 
-    void Update()
+    void Start()
     {
-        if (!Input.GetMouseButtonDown(0) || m_currentGun_SO.cartridgeСlipAmmo != 0) { return; }
-
-        if (m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
-        StartCoroutine(ActivateMissSound());
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
-    IEnumerator ActivateMissSound()
+    public IEnumerator ActivateMissSound()
     {
-        m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = true;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 
         OnAmmoRunOut.Invoke();
         yield return m_timeoutAfterAction;
 
-        m_equipmentInventory.WeaponSlot.WeaponAction = null;
-
-        m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = false;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
 
-    protected override void SetWeapon(Weapon_SO weapon)
+    void SetWeapon(Weapon_SO weapon_SO)
     {
-        base.SetWeapon(weapon);
-        m_timeoutAfterAction = new WaitForSeconds(weapon.missFireSound.length);
+        m_timeoutAfterAction = new WaitForSeconds(weapon_SO.delayAfterShot);
     }
 
 }

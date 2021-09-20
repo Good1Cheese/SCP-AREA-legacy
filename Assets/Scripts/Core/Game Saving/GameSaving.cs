@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameSaving : MonoBehaviour
 {
     [SerializeField] string m_fileName;
-    public List<DataHandler> SaveData { get; set; } = new List<DataHandler>();
+    public List<DataSaving> SaveData { get; set; } = new List<DataSaving>();
     public Action OnGameSaving { get; set; }
 
     public void Save()
@@ -26,7 +25,7 @@ public class GameSaving : MonoBehaviour
     {
         foreach (var dataHandler in SaveData)
         {
-            dataHandler.SaveData();
+            dataHandler.Save();
             writer.WriteLine(dataHandler.ToJson());
         }
     }
@@ -35,5 +34,4 @@ public class GameSaving : MonoBehaviour
     {
         return Application.persistentDataPath + "/" + m_fileName;
     }
-
 }

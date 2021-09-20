@@ -8,15 +8,19 @@ public class GameLoading : MonoBehaviour
     [Inject] readonly GameSaving m_gameSaving;
 
     public Action OnGameLoaded { get; set; }
-    public bool WasGameLoadedFromMenu { get; set; }
+    public bool WasGameLoadedFromMenu { get; set; } = false;
 
     public void Load()
     {
         string path = m_gameSaving.GetSaveFilePath();
 
-        if (!File.Exists(path)) { Debug.LogWarning("File not found"); return; }
+        if (!File.Exists(path)) 
+        {
+            Debug.LogWarning("File not found"); 
+            return;
+        }
 
-        using StreamReader reader = new StreamReader(path);
+        StreamReader reader = new StreamReader(path);
         LoadSavedData(reader);
 
         reader.Close();
@@ -39,8 +43,9 @@ public class GameLoading : MonoBehaviour
         for (int i = 0; (json = reader.ReadLine()) != null; i++)
         {
             if (json.Length <= 2) { continue; }
+
             JsonUtility.FromJsonOverwrite(json, m_gameSaving.SaveData[i]);
-            m_gameSaving.SaveData[i].LoadData();
+            m_gameSaving.SaveData[i].Load();
         }
     }
 

@@ -7,7 +7,7 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] float m_xSensitivity;
     [SerializeField] float m_verticalLookLimit;
     [SerializeField] Transform m_camera;
-    [Inject] readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
+    [Inject] readonly WearableInventoryActivator m_inventoryAcviteStateSetter;
     [Inject] readonly Transform m_playerTransform;
 
     float m_yRotation;

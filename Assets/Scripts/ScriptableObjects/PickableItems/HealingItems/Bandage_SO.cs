@@ -15,4 +15,10 @@ public class Bandage_SO : PickableItem_SO
     {
         m_playerBleeding.StopBleeding();
     }
+
+    public override void OnItemUsed()
+    {
+        if (!m_playerBleeding.IsPlayerBleeding) { return; }
+        base.OnItemUsed();
+    }
 }

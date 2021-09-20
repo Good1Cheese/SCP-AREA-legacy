@@ -1,61 +1,66 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class WeaponDataSaving : DataHandler
+public class WeaponDataSaving : DataSaving
 {
-    [Inject] readonly WearableItemsInventory m_equipmentInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly WeaponActivator m_weaponActivator;
 
-    GameObject weapon;
-
-    public Item_SO savedWeapon;
+    public Weapon_SO savedWeapon;
+    public Silencer_SO silencer_SO;
     public bool isActive;
+    public string weaponName;
     public int ammoCount;
     public int cartridgeСlipAmmo;
-    public string weaponName;
 
     public Transform PropsHandler { get; set; }
 
-    public override void SaveData()
+    public override void Save()
     {
         isActive = m_weaponActivator.IsWeaponActive;
 
-        Weapon_SO weapon_SO = m_equipmentInventory.WeaponSlot.Item as Weapon_SO;
-        if (weapon_SO == null) { return; }
+        savedWeapon = m_wearableItemsInventory.WeaponSlot.Item as Weapon_SO;
+        if (savedWeapon == null) { return; }
 
-        savedWeapon = weapon_SO;
-        ammoCount = weapon_SO.ammoCount;
-        cartridgeСlipAmmo = weapon_SO.cartridgeСlipAmmo;
-        weaponName = m_equipmentInventory.WeaponSlot.Item.gameObject.name;
+        silencer_SO = savedWeapon.silencer_SO;
+        weaponName = m_wearableItemsInventory.WeaponSlot.Item.gameObject.name;
+        ammoCount = savedWeapon.ammoCount;
+        cartridgeСlipAmmo = savedWeapon.clipAmmo;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         //if (m_equipmentInventory.WeaponSlot.Item != null && m_equipmentInventory.WeaponSlot.Item != savedWeapon) { m_equipmentInventory.WeaponSlot.Clear(); }
+
         bool didPlayerTakeWeapon = savedWeapon != null;
-        if (m_equipmentInventory.WeaponSlot.Item != null)
+
+        Weapon_SO weapon = m_wearableItemsInventory.WeaponSlot.Item as Weapon_SO;
+        if (weapon != null)
         {
-            Weapon_SO weapon = m_equipmentInventory.WeaponSlot.Item as Weapon_SO;
             if (!didPlayerTakeWeapon)
             {
                 weapon.gameObject.SetActive(true);
             }
 
-            m_equipmentInventory.WeaponSlot.Clear();
+            if (m_weaponActivator.IsWeaponActive) { m_weaponActivator.SetWeaponActiveState(false); }
+            weapon.IsInInventory = false;
+            m_wearableItemsInventory.WeaponSlot.Clear();
         }
 
         if (!didPlayerTakeWeapon) { return; }
 
-        Weapon_SO weapon_SO = savedWeapon as Weapon_SO;
-        m_equipmentInventory.WeaponSlot.SetItem(weapon_SO);
-        LoadWeaponData(weapon_SO);
+        m_wearableItemsInventory.WeaponSlot.SetItem(savedWeapon);
+        LoadWeaponData();
     }
 
-    void LoadWeaponData(Weapon_SO weapon_SO)
+    void LoadWeaponData()
     {
-        weapon_SO.ammoCount = ammoCount;
-        weapon_SO.cartridgeСlipAmmo = cartridgeСlipAmmo;
+        savedWeapon.IsInInventory = true;
+        savedWeapon.ammoCount = ammoCount;
+        savedWeapon.clipAmmo = cartridgeСlipAmmo;
         m_weaponActivator.SetWeaponActiveState(isActive);
+
+        if (silencer_SO != null) { silencer_SO.Equip(); }
     }
 
     public override void LoadDataFromMenu(string json)
@@ -64,10 +69,10 @@ public class WeaponDataSaving : DataHandler
 
         if (string.IsNullOrEmpty(weaponName)) { return; }
 
-        weapon = PropsHandler.Find(weaponName).gameObject;
-        ItemHandler weaponItemHandler = weapon.GetComponent<ItemHandler>();
+        print(silencer_SO.name);
+        GameObject weaponGameObject = PropsHandler.Find(weaponName).gameObject;
 
-        weaponItemHandler.Interact();
-        LoadWeaponData(weaponItemHandler.Item_SO as Weapon_SO);
+        weaponGameObject.GetComponent<ItemHandler>().Interact();
+        LoadWeaponData();
     }
 }

@@ -9,7 +9,7 @@ public class CounterItemsInInventory : MonoBehaviour
 
     TextMeshProUGUI m_textMesh;
 
-    void Start()
+    void Awake()
     {   
         m_textMesh = GetComponent<TextMeshProUGUI>();
         m_playerInventory.OnInventoryChanged += UpdateItemsCount;

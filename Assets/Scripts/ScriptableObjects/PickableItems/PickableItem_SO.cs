@@ -1,17 +1,24 @@
-﻿public abstract class PickableItem_SO : Item_SO
+﻿using System;
+
+public abstract class PickableItem_SO : Item_SO
 {
-    protected PickableItemsInventory Inventory { get; set; }
+    protected PickableItemsInventory PickableItemsInventory { get; set; }
 
     public override void GetDependencies(PlayerInstaller playerInstaller)
     {
-        Inventory = playerInstaller.PlayerInventory;
+        PickableItemsInventory = playerInstaller.PlayerInventory;
     }
 
     public override void Equip()
     {
-        Inventory.AddItem(this);    
+        PickableItemsInventory.AddItem(this);    
     }
 
     public abstract void Use();
+
+    public virtual void OnItemUsed()
+    {
+        PickableItemsInventory.RemoveItem(this);
+    }
 }
 

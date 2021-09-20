@@ -13,37 +13,37 @@ public class WeaponReload : WeaponAction
     {
         if (Input.GetButtonDown("Reload"))
         {
-            if (m_currentGun_SO.cartridgeСlipAmmo == m_currentGun_SO.cartidgeClipMaxAmmo
-                || m_currentGun_SO.ammoCount == 0) { return; }
+            if (m_weapon_SO.clipAmmo == m_weapon_SO.clipMaxAmmo
+                || m_weapon_SO.ammoCount == 0) { print(m_weapon_SO.clipAmmo == m_weapon_SO.clipMaxAmmo); return; }
 
-            if (m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
+            if (m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
             StartCoroutine(Reload());
         }
     }
 
     IEnumerator Reload()
     {
-        m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = true;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 
-        int ammoToReload = (m_currentGun_SO.ammoCount >= m_currentGun_SO.cartidgeClipMaxAmmo)
-            ? m_currentGun_SO.cartidgeClipMaxAmmo
-            : m_currentGun_SO.ammoCount;
+        int ammoToReload = (m_weapon_SO.ammoCount >= m_weapon_SO.clipMaxAmmo)
+            ? m_weapon_SO.clipMaxAmmo
+            : m_weapon_SO.ammoCount;
 
-        m_currentGun_SO.cartridgeСlipAmmo = ammoToReload;
-        m_currentGun_SO.ammoCount -= ammoToReload;
+        m_weapon_SO.clipAmmo = ammoToReload;
+        m_weapon_SO.ammoCount -= ammoToReload;
 
         OnPlayerReloaded.Invoke();
 
         yield return m_timeoutAfterReload;
 
-        m_equipmentInventory.WeaponSlot.IsWeaponActionIsGoing = false;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
 
 
     protected override void SetWeapon(Weapon_SO weapon)
     {
         base.SetWeapon(weapon);
-        m_timeoutAfterReload = new WaitForSeconds(weapon.reloadSound.length);
+        m_timeoutAfterReload = new WaitForSeconds(weapon.reloadSoundPrefab.length);
     }
 
 }

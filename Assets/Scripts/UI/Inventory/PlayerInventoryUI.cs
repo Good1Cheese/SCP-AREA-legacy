@@ -1,5 +1,6 @@
 using UnityEngine;
 using Zenject;
+using System.Linq;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         m_gameObject = gameObject;
         m_gameObject.SetActive(false);
+
+        foreach (var inventotyCell in InventoryCells)
+        {
+            inventotyCell.gameObject.SetActive(false);
+        }
     }
 
     void Renew()

@@ -12,12 +12,16 @@ public class Silencer_SO : WearableItem_SO
 
     public override void Equip()
     {
-        Weapon_SO weapon = (Weapon_SO)Inventory.WeaponSlot.Item;
+        Weapon_SO weapon = Inventory.WeaponSlot.Item as Weapon_SO;
         if (weapon == null) { gameObject.SetActive(true); return; }
 
-        Destroy(gameObject);
         gameObject = Instantiate(silencerForPlayer, weapon.playerWeapon.transform);
         SilencerTransform = gameObject.transform;
+
+        GameObject worldSilencer = Instantiate(silencerForPlayer, weapon.gameObject.transform);
+        worldSilencer.transform.position = Vector3.zero;
+        worldSilencer.transform.localPosition = positionForSilencer;
+
 
         Inventory.WeaponSlot.OnSilencerEquiped.Invoke();
         weapon.SetSilencer(this);

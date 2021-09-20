@@ -8,6 +8,7 @@ using Zenject;
 public class InjuryState : MonoBehaviour
 {
     [SerializeField] int m_lowHealthPercent;
+
     [SerializeField] float[] m_slowDownValues;
     [SerializeField] float[] m_lensDistortionValues;
     [SerializeField] float[] m_saturationValues;
@@ -20,7 +21,7 @@ public class InjuryState : MonoBehaviour
     ColorAdjustments m_colorAdjustments;
     LensDistortion m_lensDistortion;
 
-    int m_currentCellIndex = - 1;
+    int m_currentCellIndex;
 
     [Inject]
     void Construct(Volume volume)
@@ -31,26 +32,27 @@ public class InjuryState : MonoBehaviour
 
     void Start()
     {
-        m_playerHealth.OnPlayerGetsDamage += IntensifyEffects;
+        m_playerHealth.OnPlayerGetsDamage += ActivateEffects;
         m_playerHealth.OnPlayerHeals += ReduceEffects;
-        m_gameLoading.OnGameLoaded += ResetEffects;
+        m_playerHealth.OnPlayerDies += OnDestroy;
     }
 
-    void IntensifyEffects()
+    public void ActivateEffects()
     {
-        m_currentCellIndex++;
-
+        m_currentCellIndex = m_playerHealth.HealthCells.GetCurrentCellIndex();
         SetEffectsValues();
-
-        if (m_playerHealth.GetCurrentHealthPercent() <= m_lowHealthPercent)
-        {
-            m_playerStamina.DisableRunAbility();
-        }
     }
 
     void ReduceEffects()
     {
-        m_currentCellIndex--;
+        m_currentCellIndex = m_playerHealth.HealthCells.GetCurrentCellIndex();
+
+        if (m_playerHealth.HealthCells.IsCurrentCellLast())
+        {
+            DisableEffects();
+            return;
+        }
+
         SetEffectsValues();
     }
 
@@ -61,14 +63,16 @@ public class InjuryState : MonoBehaviour
         m_playerSpeed.SlowDownSpeed(m_slowDownValues[m_currentCellIndex]);
     }
 
-    void ResetEffects()
+    void DisableEffects()
     {
-        // Сделать сохранение эффектов
+        m_colorAdjustments.saturation.value = 0;
+        m_lensDistortion.intensity.value = 0;
+        m_playerSpeed.SlowDownSpeed(0);
     }
 
     void OnDestroy()
     {
-        m_playerHealth.OnPlayerGetsDamage -= IntensifyEffects;
+        m_playerHealth.OnPlayerGetsDamage -= ActivateEffects;
         m_playerHealth.OnPlayerHeals -= ReduceEffects;
     }
 }

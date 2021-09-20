@@ -422,7 +422,7 @@ MonoBehaviour:
   _transform: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
-  isGameObjectActive: 0
+  isActive: 0
 --- !u!114 &7432298425916697159
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,10 +16,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         m_characterController = GetComponent<CharacterController>();
-        m_pauseMenu.OnPauseMenuButtonPressed += SetActiveOrUnActive;
+        m_pauseMenu.OnPauseMenuButtonPressed += ReverseEnableState;
     }
 
-    void SetActiveOrUnActive()
+    void ReverseEnableState()
     {
         enabled = !enabled;
     }
@@ -49,6 +49,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnDestroy()
     {
-        m_pauseMenu.OnPauseMenuButtonPressed += SetActiveOrUnActive;
+        m_pauseMenu.OnPauseMenuButtonPressed -= ReverseEnableState;
     }
 }

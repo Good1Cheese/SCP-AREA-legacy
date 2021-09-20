@@ -6,12 +6,9 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
     [Inject] readonly WearableItemsInventory m_equipmentInventory;
     [Inject] readonly Transform m_playerTransform;
 
-    public Weapon_SO Weapon { get; set; }
-    GameObject m_spawnedGun;
+    Weapon_SO m_weapon_SO;
 
-    public GameObject CurrentGunGameObject { get => m_spawnedGun; }
-
-    void Start()
+    void Awake()
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged += SpawnWeapon;
         m_equipmentInventory.WeaponSlot.OnWeaponDropped += HideGun;
@@ -19,26 +16,27 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
 
     public void SpawnWeapon(Weapon_SO weapon_SO)
     {
-        Weapon = weapon_SO;
-        if (Weapon.playerWeapon == null)
+        m_weapon_SO = weapon_SO;
+
+        if (m_weapon_SO.playerWeapon == null)
         {
-            Weapon.playerWeapon = Instantiate(weapon_SO.weaponForPlayerPrefab, transform);
+            m_weapon_SO.playerWeapon = Instantiate(weapon_SO.playerWeaponPrefab, transform);
         }
-        m_spawnedGun = Weapon.playerWeapon;
-        HideGun();
+
+        m_weapon_SO.playerWeapon.SetActive(false);
     }
 
     public void DespawnWeapon()
     {
-        m_spawnedGun = null;
-        Weapon.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
-        Weapon.gameObject.SetActive(true);
+        m_weapon_SO.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
+        m_weapon_SO.gameObject.SetActive(true);
     }
 
     public void HideGun()
     {
-        m_spawnedGun.SetActive(false);
+        m_weapon_SO.playerWeapon.SetActive(false);
     }
+
 
     void OnDestroy()
     {

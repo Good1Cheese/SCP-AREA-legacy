@@ -3,19 +3,19 @@ using Zenject;
 
 public class WeaponShot : MonoBehaviour
 {
-    [Inject] readonly WeaponFire m_weaponFire;
-    [Inject] readonly WearableItemsInventory m_equipmentInventory;
+    [Inject] readonly RayForShootingProvider m_rayForShootingProvider;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
     IDamagable m_damagable;
     Weapon_SO m_weapon;
 
     void Start()
     {
-        m_weaponFire.OnRayLaunched += AttendShot;
-        m_equipmentInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_rayForShootingProvider.OnRayLaunched += AttendShot;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
-    private void AttendShot(RaycastHit raycastHit)
+    void AttendShot(RaycastHit raycastHit)
     {
         bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_damagable);
         if (isHitObjectInteractable)
@@ -38,7 +38,7 @@ public class WeaponShot : MonoBehaviour
 
     void OnDestroy()
     {
-        m_weaponFire.OnRayLaunched -= AttendShot;
-        m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_rayForShootingProvider.OnRayLaunched -= AttendShot;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

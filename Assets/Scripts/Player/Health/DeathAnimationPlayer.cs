@@ -42,6 +42,7 @@ public class DeathAnimationPlayer : MonoBehaviour
         m_playerDeathAnimator.SetTrigger("OnPlayerDeath");
         StartCoroutine(PlayDeathAnimationCoroutine());
     }
+
     IEnumerator PlayDeathAnimationCoroutine()
     {
         yield return m_timeoutAfterDeathAnimation;

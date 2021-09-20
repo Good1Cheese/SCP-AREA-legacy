@@ -16,7 +16,7 @@ public class WeaponReloadSound : WeaponSoundPlayer
 
     protected override void ChangeAudio(Weapon_SO weapon)
     {
-        audioSource.clip = weapon.reloadSound;
+        audioSource.clip = weapon.reloadSoundPrefab;
     }
 
 }

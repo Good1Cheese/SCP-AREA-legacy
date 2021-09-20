@@ -3,47 +3,43 @@ using Zenject;
 
 public abstract class WeaponAction : MonoBehaviour
 {
-    [Inject] protected readonly WearableItemsInventory m_equipmentInventory;
-    [Inject] protected readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
+    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly WearableInventoryActivator m_inventoryAcviteStateSetter;
     [Inject] protected WeaponActivator m_weaponActivator;
 
-    protected Weapon_SO m_currentGun_SO;
+    protected Weapon_SO m_weapon_SO;
 
-    void Start()
+    protected void Start()
     {
-        m_equipmentInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetWeaponToZero;
-        m_equipmentInventory.WeaponSlot.IsWeaponActived += SetActive;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += SetActive;
         m_inventoryAcviteStateSetter.OnInventoryButtonPressed += SetActiveState; 
         enabled = false;
     }
 
-    protected void SetActiveState()
+    void SetActiveState()
     {
         if (!m_weaponActivator.IsWeaponActive) { return; }
-        enabled = !enabled;
+
+        if (!m_weapon_SO.IsInInventory) { return; }
+
+        SetActive(!enabled);
     }
 
-    protected void SetActive(bool activeState)
+    void SetActive(bool activeState)
     {
         enabled = activeState;
     }
 
-    protected virtual void SetWeapon(Weapon_SO weapon)
+    protected virtual void SetWeapon(Weapon_SO weapon_SO)
     {
-        m_currentGun_SO = weapon;
-    }
-
-    protected virtual void SetWeaponToZero()
-    {
-        m_currentGun_SO = null;
+        m_weapon_SO = weapon_SO;
     }
 
     protected void OnDestroy()
     {
-        m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped -= SetWeaponToZero;
-        m_equipmentInventory.WeaponSlot.IsWeaponActived -= SetActive;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetActive;
         m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= SetActiveState;
     }
 }

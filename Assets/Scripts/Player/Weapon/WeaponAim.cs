@@ -2,9 +2,13 @@
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(IRayProvider))]
 public class WeaponAim : WeaponAction
 {
     [Inject] readonly Animator m_weaponAnimator;
+
+    public Action OnPlayerShootedWithAim { get; set; }
+    public Action OnPlayerShootedWithoutAim { get; set; }
 
     public Action OnPlayerAimed { get; set; }
     public Action OnPlayerInTakedAim { get; set; }

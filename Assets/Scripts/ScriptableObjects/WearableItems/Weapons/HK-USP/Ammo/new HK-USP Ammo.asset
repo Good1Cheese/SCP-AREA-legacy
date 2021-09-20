@@ -15,5 +15,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   gameObject: {fileID: 0}
   description: 
-  ammoCount: 20
+  IsInInventory: 0
+  ammoCount: 1000
   caliber: 1

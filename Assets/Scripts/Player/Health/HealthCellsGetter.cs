@@ -7,6 +7,6 @@ public class HealthCellsGetter : MonoBehaviour
 
     void Awake()
     {
-        m_playerHealth.Cells.AddRange(GetComponentsInChildren<HealthCell>());    
+        m_playerHealth.HealthCells.AddCells(GetComponentsInChildren<HealthCell>());    
     }
 }

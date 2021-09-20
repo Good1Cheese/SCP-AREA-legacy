@@ -18,4 +18,10 @@ public class Medkit_SO : PickableItem_SO
         m_playerHealth.Heal();
         m_playerBleeding.StopBleeding();
     }
+
+    public override void OnItemUsed()
+    {
+        if (m_playerHealth.HealthCells.IsCurrentCellLast()) { return; }
+        base.OnItemUsed();
+    }
 }

@@ -9,7 +9,7 @@ namespace Assets.Scripts.ScriptableObjects
 
         void Awake()
         {
-            DataHandler[] collection = GetComponentsInChildren<DataHandler>();
+            DataSaving[] collection = GetComponentsInChildren<DataSaving>();
             m_gameSaver.SaveData.AddRange(collection);
         }
     }

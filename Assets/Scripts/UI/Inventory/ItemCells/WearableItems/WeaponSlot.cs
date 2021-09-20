@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections;
 
 public class WeaponSlot : WearableItemSlot
 {
-    IEnumerator weaponAction;
-    public IEnumerator WeaponAction
-    {
-        get => weaponAction;
-        set
-        {
-            if (weaponAction != null && value != null) { return; }
-            weaponAction = value;
-            if (value == null) { return; }
-            StartCoroutine(weaponAction);
-        }
-    }
-
     public Action<Weapon_SO> OnWeaponChanged { get; set; }
     public Action<Weapon_SO> OnAmmoAdded { get; set; }
 

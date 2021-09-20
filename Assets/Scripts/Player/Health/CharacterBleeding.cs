@@ -32,7 +32,7 @@ public class CharacterBleeding : MonoBehaviour
     void MoveBleedingCellAway()
     {
         if (!IsPlayerBleeding) { return; }
-        m_playerHealth.GetCurrentHealthCell().SetSprite(m_imageForBleedingCell);
+        m_playerHealth.HealthCells.GetFirstFilledCell().SetSprite(m_imageForBleedingCell);
     }
 
     public void Bleed()
@@ -49,7 +49,7 @@ public class CharacterBleeding : MonoBehaviour
 
         StopCoroutine(m_bleedCoroutine);
         m_bleedCoroutine = BleedCoroutine();
-        m_playerHealth.GetCurrentHealthCell().SetSprite(m_imageForFullCell);
+        m_playerHealth.HealthCells.GetFirstFilledCell().SetSprite(m_imageForFullCell);
     }
 
     public void CreateBleedingTimeout(float time)
@@ -61,17 +61,18 @@ public class CharacterBleeding : MonoBehaviour
     {
         OnPlayerBleedingStarted?.Invoke();
 
-        while (m_playerHealth.GetCurrentHealthPercent() > 0)
+        while (m_playerHealth.HealthCells.GetFirstFilledCell().IsFull)
         {
-            print(m_playerHealth.GetCurrentHealthPercent());
-            m_playerHealth.GetCurrentHealthCell().SetSprite(m_imageForBleedingCell);
+            m_playerHealth.HealthCells.GetFirstFilledCell().SetSprite(m_imageForBleedingCell);
 
             yield return m_timeoutDuringBleeding;
 
             OnPlayerBleeding?.Invoke();
             m_playerHealth.Damage();
+
             m_delayDuringBleeding -= m_increasingTimeForBleeding;
         }
+
         IsPlayerBleeding = false;
         CreateBleedingTimeout(DelayDuringBleeding);
 

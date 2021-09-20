@@ -8,18 +8,22 @@ public class HealthCell : MonoBehaviour
 
     public Slider Slider { get => m_slider;}
 
+    public bool IsFull { get; set; } = true;
+
     public void SetSprite(Sprite sprite)
     {
         m_image.sprite = sprite;
     }
 
-    public virtual void MakeCellEmpty()
+    public virtual void Clear()
     {
         Slider.value = 0;
+        IsFull = false;
     }
 
-    public void MakeCellFull()
+    public void Fill()
     {
         Slider.value = Slider.maxValue;
+        IsFull = true;
     }
 }

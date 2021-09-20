@@ -1,5 +1,4 @@
-﻿using System;
-using Zenject;
+﻿using Zenject;
 
 public class PlayerBleedingSound : SoundPlayerOnAction
 {

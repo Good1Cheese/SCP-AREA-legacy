@@ -27,5 +27,4 @@ public abstract class SoundPlayerOnAction : MonoBehaviour
 
     protected abstract void SubscribeToAction();
     protected abstract void UnscribeToAction();
-
 }

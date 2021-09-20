@@ -3,10 +3,9 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(StaminaUseDisabler))]
 public class PlayerStamina : MonoBehaviour
 {
-  //  [Inject] CharacterBleeding m_playerBleeding;
-
     [SerializeField] float m_regenerationSpeed;
     [SerializeField] float m_spendingSpeed;
 
@@ -34,6 +33,7 @@ public class PlayerStamina : MonoBehaviour
         }
     }
     public Action OnStaminaValueChanged { get; set; }
+
     public bool HasPlayerStamina
     {
         get 
@@ -41,7 +41,7 @@ public class PlayerStamina : MonoBehaviour
             bool hasPlayerStamina = StaminaValue > 0;
             if (!hasPlayerStamina && hadPlayerStamina)
             {
-                OnStaminaRanOut.Invoke();
+                OnStaminaRanOut?.Invoke();
             }
             hadPlayerStamina = hasPlayerStamina;
             return hasPlayerStamina;
@@ -50,10 +50,11 @@ public class PlayerStamina : MonoBehaviour
 
     public float MaxStaminaAmount { get; set; }
     public Action OnStaminaRanOut { get; set; }
+    public float SpendingSpeed { get => m_spendingSpeed; set => m_spendingSpeed = value; }
 
     void Awake()
     {
-        m_regenerationCoroutine = RegenerateStaminaCoroutine();
+        m_regenerationCoroutine = RegenerateCoroutine();
         m_timeoutBeforeRegeneration = new WaitForSeconds(m_delayBeforeRegenerationStart);
         m_timeoutDuringRegeneration = new WaitForSeconds(m_delayDuringRegeneration); 
         MaxStaminaAmount = m_staminaValue;
@@ -61,32 +62,31 @@ public class PlayerStamina : MonoBehaviour
 
     void Start()
     {
-        m_playerSpeed.OnPlayerRun += BurnStamina;
-        m_playerSpeed.OnPlayerStoppedRun += RegenerateStamina;
-        m_playerMovement.OnPlayerStoppedMoving += RegenerateStaminaAfterPlayerStopped;
-        m_playerHealth.OnPlayerHeals += RegenerateStamina;
+        m_playerSpeed.OnPlayerRun += Burn;
+        m_playerSpeed.OnPlayerStoppedRun += Regenerate;
+        m_playerMovement.OnPlayerStoppedMoving += RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage += StopRegeneration;
     }
 
-    void RegenerateStaminaAfterPlayerStopped()
+    void RegenerateAfterPlayerStopped()
     {
         if (StaminaValue == MaxStaminaAmount || !m_playerSpeed.IsPlayerRunning) { return; }
-        RegenerateStamina();
+        Regenerate();
     }
 
-    void BurnStamina()
+    void Burn()
     {
-        StaminaValue -= m_spendingSpeed;
+        StaminaValue -= SpendingSpeed * Time.deltaTime;
         StopRegeneration();
     }
 
-    public void RegenerateStamina()
+    public void Regenerate()
     {
         StopRegeneration();
         StartCoroutine(m_regenerationCoroutine);
     }
 
-    IEnumerator RegenerateStaminaCoroutine()
+    IEnumerator RegenerateCoroutine()
     {
         print("Started Regeneration");
         yield return m_timeoutBeforeRegeneration;
@@ -94,7 +94,7 @@ public class PlayerStamina : MonoBehaviour
 
         while (m_staminaValue < MaxStaminaAmount)
         {
-            StaminaValue += m_regenerationSpeed;
+            StaminaValue += m_regenerationSpeed * Time.deltaTime;
             yield return m_timeoutDuringRegeneration;
         }
     }
@@ -102,21 +102,14 @@ public class PlayerStamina : MonoBehaviour
     public void StopRegeneration()
     {
         StopCoroutine(m_regenerationCoroutine);
-        m_regenerationCoroutine = RegenerateStaminaCoroutine();
-    }
-
-    public void DisableRunAbility()
-    {
-        StaminaValue = 0;
-        enabled = false;
+        m_regenerationCoroutine = RegenerateCoroutine();
     }
 
     void OnDestroy()
     {
-        m_playerSpeed.OnPlayerRun -= BurnStamina;
-        m_playerSpeed.OnPlayerStoppedRun -= RegenerateStamina;
-        m_playerMovement.OnPlayerStoppedMoving -= RegenerateStaminaAfterPlayerStopped;
-        m_playerHealth.OnPlayerHeals -= RegenerateStamina;
+        m_playerSpeed.OnPlayerRun -= Burn;
+        m_playerSpeed.OnPlayerStoppedRun -= Regenerate;
+        m_playerMovement.OnPlayerStoppedMoving -= RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }
 }

@@ -3,29 +3,29 @@ using Zenject;
 
 public class PickableItemsInteraction : MonoBehaviour
 {
-    [Inject] public PickableItemsInventory PlayerInventory { get; }
+    [Inject] public PickableItemsInventory PickableItemsInventory { get; }
 
     void Start()
     {
-        PlayerInventory.OnItemRightClicked += DropItem;
-        PlayerInventory.OnItemLeftClicked += UseItem;
+        PickableItemsInventory.OnItemRightClicked += DropItem;
+        PickableItemsInventory.OnItemLeftClicked += UseItem;
     }
 
     public void UseItem(PickableItemSlot pickableItemSlot)
     {
         var item = pickableItemSlot.Item as PickableItem_SO;
         item.Use();
-        PlayerInventory.RemoveItem(item);
+        item.OnItemUsed();
     }
 
     public void DropItem(PickableItemSlot pickableItemSlot)
     {
-        PlayerInventory.SpawnItem(pickableItemSlot);
+        PickableItemsInventory.SpawnItem(pickableItemSlot);
     }
 
     void OnDestroy()
     {
-        PlayerInventory.OnItemRightClicked -= DropItem;
-        PlayerInventory.OnItemLeftClicked += UseItem;
+        PickableItemsInventory.OnItemRightClicked -= DropItem;
+        PickableItemsInventory.OnItemLeftClicked += UseItem;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class BleedingDataSaving : DataHandler
+public class BleedingDataSaving : DataSaving
 {
     [Inject] readonly CharacterBleeding m_characterBleeding;
 
@@ -11,14 +11,19 @@ public class BleedingDataSaving : DataHandler
     void Awake()
     {
         m_characterBleeding.OnPlayerBleedingStarted += GetBleedingTime;
-        m_characterBleeding.OnPlayerBleedingEnded += SaveData;
+        m_characterBleeding.OnPlayerBleedingEnded += Save;
     }
 
     void Update()
     {
         if (m_isBleedingGoing)
         {
-            if (bleedTime <= 0) { m_isBleedingGoing = false; }
+            if (bleedTime <= 0) 
+            { 
+                m_isBleedingGoing = false;
+                return; 
+            }
+
             bleedTime -= Time.deltaTime;
         }
     }
@@ -29,16 +34,17 @@ public class BleedingDataSaving : DataHandler
         bleedTime = m_characterBleeding.DelayDuringBleeding;
     }
 
-    public override void SaveData()
+    public override void Save()
     {
         m_isBleedingGoing = false;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         if (bleedTime > 0) 
         {
             m_characterBleeding.CreateBleedingTimeout(bleedTime);
+            m_characterBleeding.Bleed();
             return;
         }
         m_characterBleeding.StopBleeding();
@@ -47,6 +53,6 @@ public class BleedingDataSaving : DataHandler
     void OnDestroy()
     {
         m_characterBleeding.OnPlayerBleedingStarted -= GetBleedingTime;
-        m_characterBleeding.OnPlayerBleedingEnded -= SaveData;
+        m_characterBleeding.OnPlayerBleedingEnded -= Save;
     }
 }

@@ -1,39 +1,31 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(WeaponFire), typeof(WeaponMiss), typeof(WeaponReload))]
-public class WeaponActivator : MonoBehaviour
+public class WeaponActivator : WeaponAction
 {
-    [Inject] readonly WeaponSpawnerAndDestroyer m_weaponGameObjectController;
-    [Inject] readonly InventoryAcviteStateSetter m_inventoryAcviteStateSetter;
-    [Inject] readonly WearableItemsInventory m_equipmentInventory;
-
     public bool IsWeaponActive { get; set; }
 
-    void Start()
+    new void Start()
     {
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += SetWeaponToNull;
         m_inventoryAcviteStateSetter.OnInventoryButtonPressed += SetActiveState;
-        m_equipmentInventory.WeaponSlot.OnWeaponDropped += SetWeaponActiveState;
     }
 
-    void SetWeaponActiveState()
-    {
-        IsWeaponActive = false;
-    }
 
     void Update()
     {
-        if (!Input.GetButtonDown("TakeGun") || m_weaponGameObjectController.CurrentGunGameObject == null) { return; }
+        if (!Input.GetButtonDown("TakeGun") || m_weapon_SO == null) { return; }
 
-        SetWeaponActiveState(!m_weaponGameObjectController.CurrentGunGameObject.activeSelf);
+        SetWeaponActiveState(!m_weapon_SO.playerWeapon.activeSelf);
     }
 
     public void SetWeaponActiveState(bool activeGunState)
     {
-        m_equipmentInventory.WeaponSlot.IsWeaponActived?.Invoke(activeGunState);
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived?.Invoke(activeGunState);
         IsWeaponActive = activeGunState;
-        m_weaponGameObjectController.CurrentGunGameObject.SetActive(activeGunState);
+        m_weapon_SO.playerWeapon.SetActive(activeGunState);
     }
 
     void SetActiveState()
@@ -41,8 +33,15 @@ public class WeaponActivator : MonoBehaviour
         enabled = !enabled;
     }
 
-    void OnDestroy()
+    private void SetWeaponToNull()
     {
+        m_weapon_SO = null;
+    }
+
+    new void OnDestroy()
+    {
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= SetWeaponToNull;
         m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= SetActiveState;
     }
 }

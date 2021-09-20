@@ -1,11 +1,11 @@
-public class EmptyDataSaving : DataHandler
+public class EmptyDataSaving : DataSaving
 {
-    public override void LoadData()
+    public override void Load()
     {
         print("Empty Load");
     }
 
-    public override void SaveData()
+    public override void Save()
     {
         print("Empty Save");
     }

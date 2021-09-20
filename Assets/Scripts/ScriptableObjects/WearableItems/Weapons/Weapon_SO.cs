@@ -1,17 +1,19 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/Weapon")]
 public class Weapon_SO : WearableItem_SO
 {
-    public GameObject weaponForPlayerPrefab;
+    public GameObject playerWeaponPrefab;
     public GameObject playerWeapon;
 
     public int damagePerShot;
     public int caliber;
     public int ammoCount;
-    public int cartridgeСlipAmmo;
-    public int cartidgeClipMaxAmmo;
+    public int clipAmmo;
+    public int clipMaxAmmo;
+
+    public float delayAfterShot;
+    public WaitForSeconds timeoutAfterShot;
 
     public Vector3 spawnOffset;
     public Vector3 bulletSpawnPoint;
@@ -19,20 +21,21 @@ public class Weapon_SO : WearableItem_SO
 
     public RuntimeAnimatorController weaponAnimationContoller;
 
-    public Silencer_SO silencer;
+    public Silencer_SO silencer_SO;
 
-    public AudioClip shotSound;
-    public AudioClip reloadSound;
-    public AudioClip shotSoundWithSilencer;
-    public AudioClip missFireSound;
+    public AudioClip currentShotSound;
+    public AudioClip shotSoundPrefab;
+    public AudioClip missFireSoundPrefab;
+    public AudioClip shotSoundWithSilencerPrefab;
+    public AudioClip reloadSoundPrefab;
 
-    public void SetSilencer(Silencer_SO silencer)
+    public void SetSilencer(Silencer_SO silencer_SO)
     {
-        this.silencer = silencer;
-        silencer.gameObject.SetActive(weaponForPlayerPrefab.activeSelf);
+        this.silencer_SO = silencer_SO;
+        silencer_SO.gameObject.SetActive(playerWeaponPrefab.activeSelf);
 
-        silencer.SilencerTransform.localPosition = silencer.positionForSilencer;
-        silencer.SilencerTransform.localRotation = silencer.rotationForSilencer;
+        silencer_SO.SilencerTransform.localPosition = silencer_SO.positionForSilencer;
+        silencer_SO.SilencerTransform.localRotation = silencer_SO.rotationForSilencer;
     }
 
     public override void Equip()
@@ -43,8 +46,10 @@ public class Weapon_SO : WearableItem_SO
     public override void OnDestroy()
     {
         base.OnDestroy();
-        cartridgeСlipAmmo = 0;
+        clipAmmo = 0;
         ammoCount = 0;
+        currentShotSound = shotSoundPrefab;
+        silencer_SO = null;
     }
 }
 

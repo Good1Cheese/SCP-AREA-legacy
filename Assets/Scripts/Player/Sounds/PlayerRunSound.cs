@@ -21,8 +21,8 @@ public class PlayerRunSound : SoundPlayerOnAction
     {
         m_playerSpeed.OnPlayerRun += PlaySound;
         m_playerSpeed.OnPlayerStoppedRun += StopSound;
+        m_playerStamina.OnStaminaRanOut += StopSound;
         m_playerMovement.OnPlayerStoppedMoving += StopSound;
-        m_playerStamina.OnStaminaRanOut += StopSound; 
         m_pauseMenu.OnPauseMenuButtonPressed += StopSound;
     }
 
@@ -30,8 +30,8 @@ public class PlayerRunSound : SoundPlayerOnAction
     {
         m_playerSpeed.OnPlayerRun -= PlaySound;
         m_playerSpeed.OnPlayerStoppedRun -= StopSound;
-        m_playerMovement.OnPlayerStoppedMoving -= StopSound;
         m_playerStamina.OnStaminaRanOut -= StopSound;
+        m_playerMovement.OnPlayerStoppedMoving -= StopSound;
         m_pauseMenu.OnPauseMenuButtonPressed -= StopSound;
     }
 }
