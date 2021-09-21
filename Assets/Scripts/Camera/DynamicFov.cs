@@ -9,8 +9,9 @@ public class DynamicFov : MonoBehaviour
     [SerializeField] float m_delayDuringFovChange;
     [SerializeField] float m_fovDuringRun;
     [SerializeField] float m_startFov;
+
     [Inject] readonly MovementSpeed m_playerSpeed;
-    [Inject] PlayerMovement m_playerMovement;
+    [Inject] readonly PlayerMovement m_playerMovement;
 
     WaitForSeconds m_timeoutWhileFovChanging;
     Camera mainCamera;

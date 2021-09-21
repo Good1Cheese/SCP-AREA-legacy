@@ -1723,8 +1723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d095cfdc84f6aa4cbe4aef790658045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxInteractionDistance: 100
-  m_radiousOfSphereInteraction: 0.5
+  m_maxInteractionDistance: 20
+  m_radiousOfSphereInteraction: 1
 --- !u!114 &8505820498695554874
 MonoBehaviour:
   m_ObjectHideFlags: 0

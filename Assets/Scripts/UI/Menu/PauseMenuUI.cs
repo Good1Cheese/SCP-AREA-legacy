@@ -19,6 +19,7 @@ public class PauseMenuUI : MonoBehaviour
 
     public void ActivateOrDeacrivateUI()
     {
+        print("das");
         Time.timeScale = (m_gameObject.activeSelf) ? 1 : 0;
         m_gameObject.SetActive(!m_gameObject.activeSelf);
     }
@@ -43,6 +44,7 @@ public class PauseMenuUI : MonoBehaviour
     public void Exit()
     {
         sceneTransition.LoadScene((int)SceneTransition.Scenes.StartScene);
+        Time.timeScale = 1;
     }
 
     void OnDestroy()

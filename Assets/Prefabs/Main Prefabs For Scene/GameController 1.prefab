@@ -78,6 +78,8 @@ GameObject:
   - component: {fileID: 4504709229982532497}
   - component: {fileID: 4504709229982532499}
   - component: {fileID: 4504709229982532498}
+  - component: {fileID: 937838527}
+  - component: {fileID: 937838528}
   m_Layer: 0
   m_Name: GameController 1
   m_TagString: Untagged
@@ -136,3 +138,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e5b1ab68b72f7b42b40485d43086361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &937838527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 1
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 36264f6a725cb5c49972816d7dbee536, type: 2}
+--- !u!114 &937838528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0c65c1a4707a54c9f8dd8cca0c1f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lowHealthPercent: 25
+  m_slowDownValues:
+  - 2
+  - 1
+  - 0.6
+  - 0.3
+  m_lensDistortionValues:
+  - -0.4
+  - -0.3
+  - -0.2
+  - -0.1
+  m_saturationValues:
+  - -25
+  - -20
+  - -15
+  - -10
