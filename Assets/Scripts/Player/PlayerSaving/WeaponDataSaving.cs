@@ -6,8 +6,8 @@ public class WeaponDataSaving : DataSaving
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly WeaponActivator m_weaponActivator;
 
-    public Weapon_SO savedWeapon;
-    public Silencer_SO silencer_SO;
+    public WeaponHandler savedWeaponHandler;
+    public SilencerHandler silencer_SO;
     public bool isActive;
     public string weaponName;
     public int ammoCount;
@@ -19,48 +19,77 @@ public class WeaponDataSaving : DataSaving
     {
         isActive = m_weaponActivator.IsWeaponActive;
 
-        savedWeapon = m_wearableItemsInventory.WeaponSlot.Item as Weapon_SO;
-        if (savedWeapon == null) { return; }
+        savedWeaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler;
 
-        silencer_SO = savedWeapon.silencer_SO;
-        weaponName = m_wearableItemsInventory.WeaponSlot.Item.gameObject.name;
-        ammoCount = savedWeapon.ammoCount;
-        cartridgeСlipAmmo = savedWeapon.clipAmmo;
+        if (savedWeaponHandler == null) { return; }
+
+        silencer_SO = savedWeaponHandler.SilencerHandler;
+        weaponName = m_wearableItemsInventory.WeaponSlot.ItemHandler.gameObject.name;
+        ammoCount = savedWeaponHandler.AmmoCount;
+        cartridgeСlipAmmo = savedWeaponHandler.ClipAmmo;
     }
 
     public override void Load()
     {
-        //if (m_equipmentInventory.WeaponSlot.Item != null && m_equipmentInventory.WeaponSlot.Item != savedWeapon) { m_equipmentInventory.WeaponSlot.Clear(); }
+        ////if (m_equipmentInventory.WeaponSlot.Item != null && m_equipmentInventory.WeaponSlot.Item != savedWeapon) { m_equipmentInventory.WeaponSlot.Clear(); }
 
-        bool didPlayerTakeWeapon = savedWeapon != null;
+        //bool didPlayerTakeWeapon = savedWeaponHandler != null;
 
-        Weapon_SO weapon = m_wearableItemsInventory.WeaponSlot.Item as Weapon_SO;
-        if (weapon != null)
+        //var weaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler;
+        //if (weaponHandler != null)
+        //{
+        //    if (!didPlayerTakeWeapon)
+        //    {
+        //        weaponHandler.gameObject.SetActive(true);
+        //    }
+
+        //    if (m_weaponActivator.IsWeaponActive)
+        //    {
+        //        m_weaponActivator.SetWeaponActiveState(false);
+        //    }
+
+        //    if (weaponHandler != savedWeaponHandler) { m_wearableItemsInventory.WeaponSlot.Clear(); }
+        //}
+
+        //if (!didPlayerTakeWeapon) { return; }
+
+        //m_wearableItemsInventory.WeaponSlot.SetItem(savedWeaponHandler);
+        //LoadWeaponData();
+
+        var currentWeaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler;
+
+        if (currentWeaponHandler == null && savedWeaponHandler == null) { return; }
+        if (currentWeaponHandler == savedWeaponHandler) { m_weaponActivator.SetWeaponActiveState(isActive); return; }
+
+        if (isActive != m_weaponActivator.IsWeaponActive)
         {
-            if (!didPlayerTakeWeapon)
-            {
-                weapon.gameObject.SetActive(true);
-            }
-
-            if (m_weaponActivator.IsWeaponActive) { m_weaponActivator.SetWeaponActiveState(false); }
-            weapon.IsInInventory = false;
-            m_wearableItemsInventory.WeaponSlot.Clear();
+            print(isActive);
+            print(m_weaponActivator.IsWeaponActive);
+            m_weaponActivator.SetWeaponActiveState(isActive);
         }
 
-        if (!didPlayerTakeWeapon) { return; }
+        if (currentWeaponHandler == null && savedWeaponHandler != null)
+        {
+            savedWeaponHandler.gameObject.SetActive(false);
+            m_wearableItemsInventory.WeaponSlot.SetItem(savedWeaponHandler);
 
-        m_wearableItemsInventory.WeaponSlot.SetItem(savedWeapon);
-        LoadWeaponData();
+            return;
+        }
+        m_wearableItemsInventory.WeaponSlot.ClearSlot();
+        currentWeaponHandler.gameObject.SetActive(true);
+
     }
 
     void LoadWeaponData()
     {
-        savedWeapon.IsInInventory = true;
-        savedWeapon.ammoCount = ammoCount;
-        savedWeapon.clipAmmo = cartridgeСlipAmmo;
+        savedWeaponHandler.IsInInventory = true;
+        savedWeaponHandler.AmmoCount = ammoCount;
+        savedWeaponHandler.ClipAmmo = cartridgeСlipAmmo;
         m_weaponActivator.SetWeaponActiveState(isActive);
 
-        if (silencer_SO != null) { silencer_SO.Equip(); }
+        if (silencer_SO == null) { return; }
+        savedWeaponHandler.SilencerHandler.Equip();
+
     }
 
     public override void LoadDataFromMenu(string json)
@@ -68,8 +97,6 @@ public class WeaponDataSaving : DataSaving
         JsonUtility.FromJsonOverwrite(json, this);
 
         if (string.IsNullOrEmpty(weaponName)) { return; }
-
-        print(silencer_SO.name);
         GameObject weaponGameObject = PropsHandler.Find(weaponName).gameObject;
 
         weaponGameObject.GetComponent<ItemHandler>().Interact();

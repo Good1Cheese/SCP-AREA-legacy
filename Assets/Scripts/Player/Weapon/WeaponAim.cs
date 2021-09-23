@@ -29,8 +29,8 @@ public class WeaponAim : WeaponAction
 
     }
 
-    protected new void SetWeapon(Weapon_SO weapon)
+    protected new void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weaponAnimator.runtimeAnimatorController = weapon.weaponAnimationContoller;
+        m_weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 }

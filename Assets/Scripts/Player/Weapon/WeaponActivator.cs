@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(WeaponFire), typeof(WeaponMiss), typeof(WeaponReload))]
@@ -16,16 +15,16 @@ public class WeaponActivator : WeaponAction
 
     void Update()
     {
-        if (!Input.GetButtonDown("TakeGun") || m_weapon_SO == null) { return; }
+        if (!Input.GetButtonDown("TakeGun") || m_weaponHandler == null) { return; }
 
-        SetWeaponActiveState(!m_weapon_SO.playerWeapon.activeSelf);
+        SetWeaponActiveState(!m_weaponHandler.PlayerWeapon.activeSelf);
     }
 
     public void SetWeaponActiveState(bool activeGunState)
     {
         m_wearableItemsInventory.WeaponSlot.IsWeaponActived?.Invoke(activeGunState);
         IsWeaponActive = activeGunState;
-        m_weapon_SO.playerWeapon.SetActive(activeGunState);
+        m_weaponHandler.PlayerWeapon.SetActive(activeGunState);
     }
 
     void SetActiveState()
@@ -35,7 +34,7 @@ public class WeaponActivator : WeaponAction
 
     private void SetWeaponToNull()
     {
-        m_weapon_SO = null;
+        m_weaponHandler = null;
     }
 
     new void OnDestroy()

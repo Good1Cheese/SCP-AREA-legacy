@@ -10,6 +10,8 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
     [Inject] readonly PickableItemsInventory playerInventory;
     GameObject m_gameObject;
 
+    public int SlotIndex { get; set; }
+
     void Awake()
     {
         m_gameObject = gameObject;
@@ -17,7 +19,7 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     public override void OnItemSet()
     {
-        m_itemDescription.text = Item.description;
+        m_itemDescription.text = ItemHandler.GetItem().description;
         m_gameObject.SetActive(true);
     }
 
@@ -28,7 +30,7 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     public override void OnRightClick()
     {
-        playerInventory.OnItemRightClicked.Invoke(this);
+        playerInventory.OnItemRightClicked.Invoke(this, SlotIndex);
     }
 
     public new void OnPointerClick(PointerEventData eventData)
@@ -42,6 +44,6 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     public void OnLeftClick()
     {
-        playerInventory.OnItemLeftClicked.Invoke(this);
+        playerInventory.OnItemLeftClicked.Invoke(this, SlotIndex);
     }
 }

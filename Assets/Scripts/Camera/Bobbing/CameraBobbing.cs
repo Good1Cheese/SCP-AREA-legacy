@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Zenject;
 
-[RequireComponent(typeof(BobbingWhileRun), typeof(BobbingWhileSneak))]
+[RequireComponent(typeof(BobbingWhileRun))]
 class CameraBobbing : MonoBehaviour
 {
     [SerializeField] float m_bobFrequency;

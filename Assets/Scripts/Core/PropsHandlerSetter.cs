@@ -7,6 +7,12 @@ public class PropsHandlerSetter : MonoBehaviour
 
     void Awake()
     {
+        if (m_weaponDataSaving == null || m_inventoryDataSaving == null) 
+        {
+            Debug.LogError("Fields aren't serialized", this);
+            return;
+        }
+
         m_weaponDataSaving.PropsHandler = transform;
         m_inventoryDataSaving.PropsHandler = transform;
     }

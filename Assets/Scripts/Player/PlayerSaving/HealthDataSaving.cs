@@ -3,7 +3,7 @@
 public class HealthDataSaving : DataSaving
 {
     [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject] readonly InjuryState m_injuryState;
+    [Inject] readonly InjuryEffectsController m_injuryState;
 
     public int fullCellsCount;
 

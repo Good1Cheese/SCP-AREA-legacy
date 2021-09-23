@@ -4,7 +4,7 @@ using Zenject;
 public class GameControllerInstaller : MonoInstaller
 {
     PauseMenu m_pauseMenu;
-    InjuryState m_injuryState;
+    InjuryEffectsController m_injuryState;
     Volume m_volume;
 
     public override void InstallBindings()
@@ -18,7 +18,7 @@ public class GameControllerInstaller : MonoInstaller
     void GetComponents()
     {
         m_pauseMenu = GetComponent<PauseMenu>();
-        m_injuryState = GetComponent<InjuryState>();
+        m_injuryState = GetComponent<InjuryEffectsController>();
         m_volume = GetComponent<Volume>();
     }
 }

@@ -21,9 +21,8 @@ public class WeaponFire : WeaponAction
     {
         if (!Input.GetMouseButtonDown(0) || m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
 
-        if (m_weapon_SO.clipAmmo == 0) 
+        if (m_weaponHandler.ClipAmmo == 0) 
         {
-            print("das");
             StartCoroutine(m_weaponMiss.ActivateMissSound());
             return;
         }
@@ -33,7 +32,7 @@ public class WeaponFire : WeaponAction
 
     IEnumerator Shoot()
     {
-        m_weapon_SO.clipAmmo--;
+        m_weaponHandler.ClipAmmo--;
         OnPlayerShooted?.Invoke();
 
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = true;
@@ -42,14 +41,13 @@ public class WeaponFire : WeaponAction
 
         m_rayForShootingProvider.OnRayLaunched.Invoke(raycastHit);
 
-        yield return m_weapon_SO.timeoutAfterShot;
+        yield return m_weaponHandler.Weapon_SO.timeoutAfterShot;
 
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
     
-    protected override void SetWeapon(Weapon_SO weapon_SO)
+    protected override void SetWeapon(WeaponHandler weaponHandler)
     {
-        base.SetWeapon(weapon_SO);
-        weapon_SO.timeoutAfterShot ??= new WaitForSeconds(weapon_SO.delayAfterShot);
+        base.SetWeapon(weaponHandler);
     }
 }

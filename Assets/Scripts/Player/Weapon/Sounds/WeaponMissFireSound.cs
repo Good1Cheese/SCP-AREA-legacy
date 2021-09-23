@@ -15,8 +15,8 @@ public class WeaponMissFireSound : WeaponSoundPlayer
         m_weaponAmmoController.OnAmmoRunOut -= PlaySound;
     }
 
-    protected override void ChangeAudio(Weapon_SO weapon)
+    protected override void ChangeAudio(WeaponHandler weaponHandler)
     {
-        audioSource.clip = weapon.missFireSoundPrefab;
+        audioSource.clip = weaponHandler.Weapon_SO.missFireSoundPrefab;
     }
 }

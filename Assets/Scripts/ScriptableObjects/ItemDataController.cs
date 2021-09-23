@@ -1,18 +1,18 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(ItemDataHandler))]
-public class ItemDataController : MonoBehaviour//, IDataHandler
+[RequireComponent(typeof(ItemDataSaving))]
+public class ItemDataController : MonoBehaviour
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
 
-    ItemHandler m_itemHandler;
-    ItemDataHandler m_itemDataHandler;
+    public ItemHandler ItemHandler { get; set; }
+    public ItemDataSaving ItemDataHandler { get; set; }
 
     void Awake()
     {
-        m_itemHandler = GetComponent<ItemHandler>();
-        m_itemDataHandler = GetComponent<ItemDataHandler>();
+        ItemHandler = GetComponent<ItemHandler>();
+        ItemDataHandler = GetComponent<ItemDataSaving>();
     }
 
     void Start()
@@ -22,13 +22,23 @@ public class ItemDataController : MonoBehaviour//, IDataHandler
 
     void SetSavableState()
     {
-        if (m_itemHandler.Item_SO.IsInInventory)
+        if (ItemHandler.IsInInventory)
         {
-            m_itemDataHandler.BecomeUnsaveable();
+            ItemDataHandler.BecomeUnsaveable();
             return;
         }
-        if (m_itemDataHandler.IsSubscribed) { return; }
-        m_itemDataHandler.BecomeSaveable();
+        if (ItemDataHandler.IsSubscribed) { return; }
+        ItemDataHandler.BecomeSaveable();
+    }
+
+    public void SetSavableState(bool isSaveable)
+    {
+        if (isSaveable)
+        {
+            ItemDataHandler.BecomeSaveable();
+            return;
+        }
+        ItemDataHandler.BecomeUnsaveable();
     }
 
     void OnDestroy()

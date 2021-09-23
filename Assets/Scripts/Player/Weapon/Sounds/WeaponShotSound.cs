@@ -1,31 +1,40 @@
+using UnityEngine;
 using Zenject;
 
 public class WeaponShotSound : WeaponSoundPlayer
 {
     [Inject] readonly WeaponFire m_weaponFire;
-    Weapon_SO m_weapon;
+    WeaponHandler m_weaponHandler;
 
     protected override void SubscribeToAction()
     {
         m_weaponFire.OnPlayerShooted += PlaySound;
         m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped += ChangeAudioWithSilencer;
+        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped += ChangeAudioWithSilencer;
     }
 
     protected override void UnscribeToAction()
     {
         m_weaponFire.OnPlayerShooted -= PlaySound;
         m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped -= ChangeAudioWithSilencer;
+        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped -= ChangeAudioWithSilencer;
     }
 
-    protected override void ChangeAudio(Weapon_SO weapon)
+    protected override void ChangeAudio(WeaponHandler weaponHandler)
     {
-        audioSource.clip = weapon.currentShotSound;
-        m_weapon = weapon;
+        m_weaponHandler = weaponHandler;
+        audioSource.clip = weaponHandler.CurrentShotSound;
     }
 
     void ChangeAudioWithSilencer()
     {
-        m_weapon.currentShotSound = m_weapon.shotSoundWithSilencerPrefab;
-        audioSource.clip = m_weapon.currentShotSound;
+        AudioClip shotSound = m_weaponHandler.Weapon_SO.shotSoundPrefab;
+        if (m_weaponHandler.SilencerHandler != null)
+        {
+            shotSound = m_weaponHandler.Weapon_SO.shotSoundWithSilencerPrefab;
+        }
+
+        m_weaponHandler.CurrentShotSound = shotSound;
+        audioSource.clip = m_weaponHandler.CurrentShotSound;
     }
 }

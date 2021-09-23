@@ -8,12 +8,12 @@ public class SecurityDoorInteractable : IInteractable
 
     public override void Interact()
     {
-        var keyCard = m_wearableItemsInventory.KeyCardSlot.Item as SecurityKeyCard_SO;
-        if (keyCard != null && keyCard.TypeOfKeyCard == m_typesOfSecurityCard)
-        {
-            print("Succses");
-            return;
-        }
-        print("Access Denied");
+        //var keyCard = m_wearableItemsInventory.KeyCardSlot.ItemHandler as SecurityKeyCard_SO;
+        //if (keyCard != null && keyCard.TypeOfKeyCard == m_typesOfSecurityCard)
+        //{
+        //    print("Succses");
+        //    return;
+        //}
+        //print("Access Denied");
     }
 }

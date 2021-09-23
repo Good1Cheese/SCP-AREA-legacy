@@ -8,11 +8,11 @@ public class PlayerRotator : MonoBehaviour
 
     [SerializeField] float m_verticalLookLimit;
 
-    [SerializeField] float m_smoothTime = 5;
+    [SerializeField] float m_smoothTime;
 
     [SerializeField] Transform m_camera;
 
-    [Inject] readonly WearableInventoryActivator m_inventoryAcviteStateSetter;
+    [Inject] readonly WearableInventoryActivator m_werableInventoryAcviteStateSetter;
     [Inject] readonly Transform m_playerTransform;
 
     float m_yRotation;
@@ -21,10 +21,13 @@ public class PlayerRotator : MonoBehaviour
     float m_mouseY;
     float m_mouseX;
 
+    public float YRotation { get => m_yRotation; set => m_yRotation = value; }
+    public float XRotation { get => m_xRotation; set => m_xRotation = value; }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        m_inventoryAcviteStateSetter.OnInventoryButtonPressed += DisableRotationAndMouse;
+        m_werableInventoryAcviteStateSetter.OnInventoryButtonPressed += DisableRotation;
     }
 
     void Update()
@@ -37,10 +40,10 @@ public class PlayerRotator : MonoBehaviour
     {
         m_mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * m_ySensitivity;
 
-        m_yRotation -= m_mouseY;
-        m_yRotation = Mathf.Clamp(m_yRotation, -m_verticalLookLimit, m_verticalLookLimit);
+        YRotation -= m_mouseY;
+        YRotation = Mathf.Clamp(YRotation, -m_verticalLookLimit, m_verticalLookLimit);
 
-        Quaternion cameraTargetRotation = Quaternion.Euler(m_yRotation, 0, 0);
+        Quaternion cameraTargetRotation = Quaternion.Euler(YRotation, 0, 0);
         m_camera.localRotation = Quaternion.Slerp(m_camera.localRotation, cameraTargetRotation, m_smoothTime * Time.deltaTime);
     }
 
@@ -48,13 +51,13 @@ public class PlayerRotator : MonoBehaviour
     {
         m_mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * m_xSensitivity;
 
-        m_xRotation += m_mouseX;
-        Quaternion plaeyerTargetRotation = Quaternion.Euler(0, m_xRotation, 0);
+        XRotation += m_mouseX;
+        Quaternion playerTargetRotation = Quaternion.Euler(0, XRotation, 0);
 
-        m_playerTransform.localRotation = Quaternion.Slerp(m_playerTransform.localRotation, plaeyerTargetRotation, m_smoothTime * Time.deltaTime);
+        m_playerTransform.localRotation = Quaternion.Slerp(m_playerTransform.localRotation, playerTargetRotation, m_smoothTime * Time.deltaTime);
     }
 
-    void DisableRotationAndMouse()
+    void DisableRotation()
     {
         Cursor.visible = enabled;
         Cursor.lockState = enabled ? CursorLockMode.None : CursorLockMode.Locked;
@@ -63,6 +66,6 @@ public class PlayerRotator : MonoBehaviour
 
     void OnDestroy()
     {
-        m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= DisableRotationAndMouse;
+        m_werableInventoryAcviteStateSetter.OnInventoryButtonPressed -= DisableRotation;
     }
 }

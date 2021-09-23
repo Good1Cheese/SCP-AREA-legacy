@@ -1,6 +1,5 @@
 using UnityEngine;
 using Zenject;
-using System.Linq;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
@@ -11,20 +10,22 @@ public class PlayerInventoryUI : MonoBehaviour
 
     void Awake()
     {
-        InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
+        m_gameObject = gameObject;
         m_playerInventory.OnInventoryChanged += Renew;
         m_playerInventory.OnInventoryRemaded += Renew;
     }
 
     void Start()
     {
-        m_gameObject = gameObject;
-        m_gameObject.SetActive(false);
+        InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
 
-        foreach (var inventotyCell in InventoryCells)
+        for (int i = 0; i < InventoryCells.Length; i++)
         {
-            inventotyCell.gameObject.SetActive(false);
+            InventoryCells[i].SlotIndex = i;
+            InventoryCells[i].gameObject.SetActive(false);
         }
+
+        m_gameObject.SetActive(false);
     }
 
     void Renew()
@@ -32,16 +33,15 @@ public class PlayerInventoryUI : MonoBehaviour
         int inventoryLength = m_playerInventory.Inventory.Length;
         for (int i = 0; i < inventoryLength; i++)
         {
-            PickableItem_SO item = m_playerInventory.Inventory[i];
+            PickableItemHandler item = m_playerInventory.Inventory[i];
             if (item != null)
             {
                 InventoryCells[i].SetItem(item);
                 continue;
             }
 
-            if (InventoryCells[i].Item != null)
+            if (InventoryCells[i].ItemHandler != null)
             {
-                print(InventoryCells[i].Item);
                 InventoryCells[i].Clear();
             }
         }

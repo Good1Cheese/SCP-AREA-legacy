@@ -9,12 +9,12 @@ public class ScientistDoorInteractable : IInteractable
 
     public override void Interact()
     {
-        var keyCard = m_wearableItemsInventory.KeyCardSlot.Item as ScientistKeyCard_SO;
-        if (keyCard != null && keyCard.TypeOfKeyCard == m_typesOfSecurityCard)
-        {
-            print("Succses");
-            return;
-        }
-        print("Access Denied");
+        //var keyCard = m_wearableItemsInventory.KeyCardSlot.ItemHandler as ScientistKeyCard_SO;
+        //if (keyCard != null && keyCard.TypeOfKeyCard == m_typesOfSecurityCard)
+        //{
+        //    print("Succses");
+        //    return;
+        //}
+        //print("Access Denied");
     }
 }

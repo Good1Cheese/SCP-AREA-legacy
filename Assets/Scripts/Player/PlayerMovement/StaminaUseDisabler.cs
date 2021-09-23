@@ -15,6 +15,7 @@ public class StaminaUseDisabler : MonoBehaviour
     void Start()
     {
         m_startSpendingValue = m_playerStamina.SpendingSpeed;
+        m_disableCoroutine = DisableCoroutine(0);
     }
 
     public void Disable(float effectTime)
@@ -25,13 +26,13 @@ public class StaminaUseDisabler : MonoBehaviour
 
     public void StopDisabling()
     {
-        print("dsa");
         StopCoroutine(m_disableCoroutine);
+        m_playerStamina.SpendingSpeed = m_startSpendingValue;
     }
 
     public IEnumerator DisableCoroutine(float effectTime)
     {
-        OnUseDisabled.Invoke(effectTime);
+        OnUseDisabled?.Invoke(effectTime);
         m_playerStamina.SpendingSpeed = 0;
         m_playerStamina.StaminaValue = m_playerStamina.MaxStaminaAmount;
 

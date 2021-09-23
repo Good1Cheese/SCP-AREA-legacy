@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: new Medkit
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 91a2042ee7bc91342ad10f1374a6ad8c, type: 3}
-  gameObject: {fileID: 4080021611125983310, guid: 73f31a36cf24fe246a9cae9e52b94360, type: 3}
-  description: "\u0422\u0443\u0434\u0430 \u0435\u0433\u043E"
+  description: 

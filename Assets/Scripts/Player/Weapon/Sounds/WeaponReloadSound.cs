@@ -14,9 +14,9 @@ public class WeaponReloadSound : WeaponSoundPlayer
         m_weaponReload.OnPlayerReloaded -= PlaySound;
     }
 
-    protected override void ChangeAudio(Weapon_SO weapon)
+    protected override void ChangeAudio(WeaponHandler weaponHandler)
     {
-        audioSource.clip = weapon.reloadSoundPrefab;
+        audioSource.clip = weaponHandler.Weapon_SO.reloadSoundPrefab;
     }
 
 }

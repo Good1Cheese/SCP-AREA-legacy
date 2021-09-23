@@ -6,26 +6,26 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] protected Image m_image;
 
-    public Item_SO Item { get; set; }
+    public ItemHandler ItemHandler { get; set; }
 
-    public void SetItem(Item_SO item)
+    public void SetItem(ItemHandler item)
     {
-        Item = item;
-        m_image.sprite = item.sprite;
+        ItemHandler = item;
+        m_image.sprite = item.GetItem().sprite;
         OnItemSet();
     }
 
     public void Clear()
     {
-        Item.IsInInventory = false;
-        Item = null;
+        ItemHandler.IsInInventory = false;
+        ItemHandler = null;
         m_image.sprite = null;
         OnItemDeleted();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Item == null) { return; }
+        if (ItemHandler == null) { return; }
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {

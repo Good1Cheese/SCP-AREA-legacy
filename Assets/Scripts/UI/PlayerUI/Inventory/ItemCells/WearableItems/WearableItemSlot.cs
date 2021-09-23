@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 public abstract class WearableItemSlot : InventorySlot
 {
@@ -12,6 +11,14 @@ public abstract class WearableItemSlot : InventorySlot
 
     public override void OnItemDeleted()
     {
+        m_image.enabled = false;
+    }
+
+    public virtual void ClearSlot()
+    {
+        ItemHandler.IsInInventory = false;
+        ItemHandler = null;
+        m_image.sprite = null;
         m_image.enabled = false;
     }
 

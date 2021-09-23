@@ -10,15 +10,15 @@ public class GameObjectDataSaving : DataSaving
     public Quaternion rotation;
     public bool isActive;
 
-    void Start()
-    {
-        m_gameSaving.SaveData.Add(this);
-    }
-
     void Awake()
     {
         m_transform = transform;
         m_gameObject = gameObject;
+    }
+
+    void Start()
+    {
+        m_gameSaving.SaveData.Add(this);
     }
 
     public override void Save()
@@ -26,7 +26,7 @@ public class GameObjectDataSaving : DataSaving
         _transform = m_transform;
         position = m_transform.position;
         rotation = m_transform.rotation;
-        isActive = m_gameObject.activeInHierarchy;
+        isActive = m_gameObject.activeSelf;
     }
 
     public override void Load()

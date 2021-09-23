@@ -25,11 +25,11 @@ MonoBehaviour:
   clipMaxAmmo: 8
   delayAfterShot: 0.3
   spawnOffset: {x: 0.78, y: -0.519, z: 0.801}
-  bulletSpawnPoint: {x: -0.003282806, y: 0.2457163, z: 0.4906375}
+  bulletSpawnPoint: {x: 0.00185, y: 0.24563, z: 0.4903}
   bulletHolePrefab: {fileID: 5088676403618374141, guid: 3e7fda179aea8d64fa703584d4992b74, type: 3}
   weaponAnimationContoller: {fileID: 9100000, guid: 4b9fd3655a02a4b4ca10361a850a019e, type: 2}
   silencer_SO: {fileID: 0}
-  currentShotSound: {fileID: 0}
+  currentShotSound: {fileID: 8300000, guid: a85360f604e10eb4a866bca985350e23, type: 3}
   shotSoundPrefab: {fileID: 8300000, guid: a85360f604e10eb4a866bca985350e23, type: 3}
   missFireSoundPrefab: {fileID: 8300000, guid: 2e8a703ccb206784eaae2224383870d8, type: 3}
   shotSoundWithSilencerPrefab: {fileID: 8300000, guid: 63b0a0c7679e8c04087f1fd61ac894cf, type: 3}

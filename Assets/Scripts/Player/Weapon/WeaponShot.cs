@@ -30,9 +30,9 @@ public class WeaponShot : MonoBehaviour
 
     }
 
-    void SetWeapon(Weapon_SO weapon)
+    void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weapon = weapon;
+        m_weapon = weaponHandler.Weapon_SO;
     }
 
 

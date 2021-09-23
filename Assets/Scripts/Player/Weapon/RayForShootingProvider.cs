@@ -51,8 +51,8 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
         return ray;
     }
 
-    void SetWeapon(Weapon_SO weapon_SO)
+    void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_bulletSpawnPoint.localPosition = weapon_SO.bulletSpawnPoint;
+        m_bulletSpawnPoint.localPosition = weaponHandler.Weapon_SO.bulletSpawnPoint;
     }
 }

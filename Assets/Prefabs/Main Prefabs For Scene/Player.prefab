@@ -525,13 +525,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039655025}
-  - component: {fileID: 328103092}
+  - component: {fileID: 4748229209733429430}
   - component: {fileID: 1039655026}
   - component: {fileID: 1039655030}
   - component: {fileID: 1039655029}
   - component: {fileID: 1039655028}
   - component: {fileID: 1039655027}
-  - component: {fileID: 650822558}
+  - component: {fileID: 686728870487613127}
+  - component: {fileID: 15702450}
   m_Layer: 0
   m_Name: PlayerSaving
   m_TagString: Untagged
@@ -553,7 +554,7 @@ Transform:
   m_Father: {fileID: 4490448435668429654}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &328103092
+--- !u!114 &4748229209733429430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -562,7 +563,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039655024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80371e8e641663242a11b96f755b988a, type: 3}
+  m_Script: {fileID: 11500000, guid: 52e69f7de6048e24b911bbef9882b92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1039655026
@@ -630,13 +631,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4d3e9fbe67f014b86b8a7169ccbf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savedWeapon: {fileID: 0}
+  savedWeaponHandler: {fileID: 0}
   silencer_SO: {fileID: 0}
   isActive: 0
   weaponName: 
   ammoCount: 0
   "cartridge\u0421lipAmmo": 0
---- !u!114 &650822558
+--- !u!114 &686728870487613127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -645,10 +646,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039655024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 133485735aa49654180c8a34b70d6d9e, type: 3}
+  m_Script: {fileID: 11500000, guid: 502423cb72fca6647b0fd877b5eca4fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   effectTime: 0
+--- !u!114 &15702450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039655024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167f3759fa134074b98f44018f55ccad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_yRotation: 0
+  m_xRotation: 0
 --- !u!1 &1425020528
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +691,7 @@ Transform:
   m_GameObject: {fileID: 1425020528}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.024999999, y: 0.025000006, z: 0.024999999}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 589210397}
   m_RootOrder: 0
@@ -700,7 +715,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.05, y: 0.05, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2466917338735447481
 GameObject:
@@ -777,7 +792,7 @@ GameObject:
   - component: {fileID: 5842301476311961185}
   - component: {fileID: 7631615567846849151}
   - component: {fileID: 1002861546}
-  - component: {fileID: 672516412}
+  - component: {fileID: 785676394}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -816,6 +831,7 @@ MonoBehaviour:
   m_ySensitivity: 1
   m_xSensitivity: 1
   m_verticalLookLimit: 85
+  m_smoothTime: 10
   m_camera: {fileID: 4490448437021268867}
 --- !u!114 &4490448435668429672
 MonoBehaviour:
@@ -1284,10 +1300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a62960b52d3ed469178dd0d7047680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_itemsOffsetForSpawn: {x: 0, y: 0, z: 1}
-  keyCardSlot: {fileID: 0}
-  weaponSlot: {fileID: 0}
-  maskSlot: {fileID: 0}
+  m_keyCardSlot: {fileID: 0}
+  m_weaponSlot: {fileID: 0}
+  m_maskSlot: {fileID: 0}
 --- !u!114 &5842301476311961185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,7 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_transform: {fileID: 4490448437021268867}
---- !u!114 &672516412
+--- !u!114 &785676394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1723,7 +1738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d095cfdc84f6aa4cbe4aef790658045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxInteractionDistance: 20
+  m_maxInteractionDistance: 3
   m_radiousOfSphereInteraction: 1
 --- !u!114 &8505820498695554874
 MonoBehaviour:
@@ -1861,10 +1876,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4490448437100952942}
-  - component: {fileID: 1771761185}
   - component: {fileID: 4490448437100952941}
   - component: {fileID: 4490448437100952936}
-  - component: {fileID: 4490448437100952937}
   - component: {fileID: 1771761190}
   - component: {fileID: 394306453}
   m_Layer: 0
@@ -1889,19 +1902,6 @@ Transform:
   m_Father: {fileID: 4490448435668429654}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1771761185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490448437100952943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7037f1673398e434bb50161d9c76187e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_sneakHeadHeight: 0.4
 --- !u!114 &4490448437100952941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1932,20 +1932,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bobFrequencyWhileAction: 8
   m_bobVerticalAmplitudeWhileAction: 0.05
---- !u!114 &4490448437100952937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490448437100952943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5189b3913597b0e47ad9c786cabe7582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_bobFrequencyWhileAction: 6
-  m_bobVerticalAmplitudeWhileAction: 0.06
 --- !u!95 &1771761190
 Animator:
   serializedVersion: 3

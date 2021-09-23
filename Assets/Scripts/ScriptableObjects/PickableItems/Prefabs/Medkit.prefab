@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 2567010529637525915}
   - component: {fileID: 4080021611125983304}
   - component: {fileID: 4080021611125983311}
-  - component: {fileID: 4080021611125983305}
+  - component: {fileID: 7986787282097314656}
+  - component: {fileID: 1360775698029458614}
+  - component: {fileID: 9135827050869729896}
   m_Layer: 0
   m_Name: Medkit
   m_TagString: Untagged
@@ -113,7 +115,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02, y: 0.025, z: 0.0070000007}
   m_Center: {x: -0.000007686205, y: 0.00011714827, z: -0.0010510536}
---- !u!114 &4080021611125983305
+--- !u!114 &7986787282097314656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +124,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 4080021611125983310}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2cfd64b79d021646aceecd5e141a7e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 1735b34c02b527d4db2ebdb4ceff0635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_item_SO: {fileID: 11400000, guid: 386c1b798ba95864789caa60ab91ba28, type: 2}
+  m_pickableItem_SO: {fileID: 11400000, guid: 386c1b798ba95864789caa60ab91ba28, type: 2}
+--- !u!114 &1360775698029458614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4080021611125983310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b898ca6126fb37b4a8cb5237f4d219b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 0}
+  isActive: 0
+--- !u!114 &9135827050869729896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4080021611125983310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1d8bac3e6918044a0b5d15c70ade55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

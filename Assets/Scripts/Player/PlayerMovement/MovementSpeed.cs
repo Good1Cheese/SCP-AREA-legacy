@@ -14,8 +14,6 @@ public class MovementSpeed : MonoBehaviour
 
     public Action OnPlayerRun { get; set; }
     public Action OnPlayerStoppedRun { get; set; }
-    public Action OnPlayerStoppedSneak { get; set; }
-    public Action OnPlayerSneak { get; set; }
     public Action OnPlayerWalks { get; set; }
 
     public bool IsPlayerRunning { get; set; }
@@ -33,20 +31,7 @@ public class MovementSpeed : MonoBehaviour
             OnPlayerRun?.Invoke();
             IsPlayerRunning = true;
 
-            if (Input.GetButton("Sneak"))
-            {
-                OnPlayerStoppedSneak?.Invoke();
-                IsPlayerRunning = false;
-                return m_sneakSpeed - m_slowDownFactor;
-            }
-
             return m_runSpeed - m_slowDownFactor;
-        }
-        else if (Input.GetButton("Sneak"))
-        {
-            OnPlayerSneak?.Invoke();
-
-            return m_sneakSpeed - m_slowDownFactor;
         }
 
         OnPlayerWalks?.Invoke();
@@ -59,10 +44,6 @@ public class MovementSpeed : MonoBehaviour
         {
             OnPlayerStoppedRun?.Invoke();
             IsPlayerRunning = false;
-        }
-        else if (Input.GetButtonUp("Sneak"))
-        {
-            OnPlayerStoppedSneak.Invoke();
         }
     }
 

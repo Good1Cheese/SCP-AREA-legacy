@@ -4,14 +4,14 @@ using Zenject;
 public class InventoryDataSaving : DataSaving
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
-    public PickableItem_SO[] m_inventory;
+    public PickableItemHandler[] m_inventory;
     public string[] m_itemsName;
 
     public Transform PropsHandler { get; set; }
 
     void Start()
     {
-        m_inventory = new PickableItem_SO[m_playerInventory.Inventory.Length];
+        m_inventory = new PickableItemHandler[m_playerInventory.Inventory.Length];
         m_itemsName = new string[m_playerInventory.Inventory.Length];
     }
 
@@ -33,14 +33,9 @@ public class InventoryDataSaving : DataSaving
         for (int i = 0; i < m_inventory.Length; i++)
         {
             m_playerInventory.Inventory[i] = m_inventory[i];
-            if (m_inventory[i] != null) { DisableItem(m_playerInventory.Inventory[i]); m_playerInventory.CurrentItemIndex = i + 1; }
+            if (m_inventory[i] != null) { m_playerInventory.CurrentItemIndex = i + 1; }
         }
-        m_playerInventory.OnInventoryChanged.Invoke();
-    }
-
-    void DisableItem(Item_SO item_SO)
-    {
-        item_SO.gameObject.SetActive(item_SO.IsInInventory);
+        m_playerInventory.OnInventoryChanged?.Invoke();
     }
 
     public override void LoadDataFromMenu(string json)

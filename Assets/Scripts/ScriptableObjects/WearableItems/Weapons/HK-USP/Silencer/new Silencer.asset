@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: new Silencer
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  gameObject: {fileID: 0}
   description: dasda
-  IsInInventory: 0
-  silencerForPlayer: {fileID: 7268759073226065560, guid: 1bc1771eb2fa0a64d879115f751506cc, type: 3}
+  silencerForPlayerPrefab: {fileID: 7268759073226065560, guid: 1bc1771eb2fa0a64d879115f751506cc, type: 3}
   positionForSilencer: {x: 0, y: 0.0731, z: 0.3312}
   rotationForSilencer: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}

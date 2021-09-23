@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -10,20 +11,21 @@ public class PickableItemsInventory : MonoBehaviour
 
     [Inject] readonly Transform m_playerTransform;
 
-    public PickableItem_SO[] Inventory { get; set; }
+    public PickableItemHandler[] Inventory { get; set; }
     public Action OnInventoryChanged { get; set; }
     public Action OnInventoryRemaded { get; set; }
-    public Action<PickableItemSlot> OnItemRightClicked { get; set; }
-    public Action<PickableItemSlot> OnItemLeftClicked { get; set; } 
+
+    public Action<PickableItemSlot, int> OnItemRightClicked { get; set; }
+    public Action<PickableItemSlot, int> OnItemLeftClicked { get; set; }
 
     public int CurrentItemIndex { get; set; }
 
     void Awake()
     {
-        Inventory = new PickableItem_SO[m_maxSlotsAmount];
+        Inventory = new PickableItemHandler[m_maxSlotsAmount];
     }
 
-    public void AddItem(PickableItem_SO item)
+    public void AddItem(PickableItemHandler item)
     {
         if (CurrentItemIndex >= m_maxSlotsAmount) { return; }
 
@@ -33,28 +35,29 @@ public class PickableItemsInventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-    public void RemoveItem(Item_SO item)
+    public void RemoveItem(int index)
     {
-        int indexOfLastEnterance = 0;
-        for (int i = 0; i < Inventory.Length; i++)
+        Inventory[index] = null;
+
+        bool isIndexItemLast = index > CurrentItemIndex;
+        if (!isIndexItemLast)
         {
-            if (Inventory[i] == item)
+            for (int i = index + 1; Inventory[i] != null; i++)
             {
-                indexOfLastEnterance = i;
+                Inventory[i - 1] = Inventory[i];
+                Inventory[i] = null;
             }
         }
 
-        Inventory[indexOfLastEnterance] = null;
-        CurrentItemIndex = indexOfLastEnterance;
-
+        CurrentItemIndex = !isIndexItemLast ? CurrentItemIndex - 1 : index - 1;
         OnInventoryChanged?.Invoke();
     }
 
     public void SpawnItem(PickableItemSlot slot)
     {
-        GameObject gameobjectOfItem = slot.Item.gameObject;
+        GameObject gameobjectOfItem = slot.ItemHandler.gameObject;
         gameobjectOfItem.SetActive(true);
         gameobjectOfItem.transform.position = m_playerTransform.position + m_playerTransform.forward;
-        RemoveItem(slot.Item);
+        RemoveItem(slot.SlotIndex);
     }
 }

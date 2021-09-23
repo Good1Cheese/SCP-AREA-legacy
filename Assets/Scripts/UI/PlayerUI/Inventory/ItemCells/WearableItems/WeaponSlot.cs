@@ -1,28 +1,38 @@
 ﻿using System;
+using Zenject;
 
 public class WeaponSlot : WearableItemSlot
 {
-    public Action<Weapon_SO> OnWeaponChanged { get; set; }
-    public Action<Weapon_SO> OnAmmoAdded { get; set; }
+    [Inject] readonly WeaponSpawnerAndDestroyer m_weaponSpawnerAndDestroyer;
 
+    public Action<WeaponHandler> OnWeaponChanged { get; set; }
     public Action OnWeaponDropped { get; set; }
+
+    public Action<WeaponHandler> OnAmmoAdded { get; set; }
+
     public Action OnSilencerEquiped { get; set; }
+    public Action OnSilencerUnequiped { get; set; }
 
     public Action<bool> IsWeaponActived { get; set; }
     public bool IsWeaponActionIsGoing { get; set; }
 
     public override void OnItemSet()
     {
-        print("Weapon set");
         base.OnItemSet();
-        OnWeaponChanged.Invoke(Item as Weapon_SO);
+        OnWeaponChanged.Invoke(ItemHandler as WeaponHandler);
     }
 
     public override void OnItemDeleted()
     {
-        print("Weapon deleted");
         base.OnItemDeleted();
-        OnWeaponDropped.Invoke();
+        m_weaponSpawnerAndDestroyer.DespawnWeapon();
+        OnWeaponDropped?.Invoke();
+    }
+
+    public override void ClearSlot()
+    {
+        base.ClearSlot();
+        OnWeaponDropped?.Invoke();
     }
 
 }

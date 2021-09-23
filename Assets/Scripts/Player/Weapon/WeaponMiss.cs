@@ -26,9 +26,9 @@ public class WeaponMiss : MonoBehaviour
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
 
-    void SetWeapon(Weapon_SO weapon_SO)
+    void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_timeoutAfterAction = new WaitForSeconds(weapon_SO.delayAfterShot);
+        m_timeoutAfterAction = new WaitForSeconds(weaponHandler.Weapon_SO.delayAfterShot);
     }
 
 }

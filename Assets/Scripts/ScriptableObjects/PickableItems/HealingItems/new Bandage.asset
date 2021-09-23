@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: new Bandage
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: dff2610e868d3584fb0c347c7ad48c25, type: 3}
-  gameObject: {fileID: 1954986874671301865, guid: 4bf8564b8f0cb8846ac6b41622c8cc48, type: 3}
+  description: 

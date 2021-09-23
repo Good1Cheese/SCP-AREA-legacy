@@ -19,6 +19,6 @@ public abstract class WeaponSoundPlayer : SoundPlayerOnAction
         UnscribeToAction();
     }
 
-    protected abstract void ChangeAudio(Weapon_SO weapon);
+    protected abstract void ChangeAudio(WeaponHandler weapon);
 
 }

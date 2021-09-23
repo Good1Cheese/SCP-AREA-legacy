@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 9427506565883196}
   - component: {fileID: 1954986874671301864}
   - component: {fileID: 1954986874671301867}
-  - component: {fileID: 1954986874671301866}
+  - component: {fileID: 8095619615514905029}
+  - component: {fileID: 7237173080136105117}
+  - component: {fileID: 4893755872016731257}
   m_Layer: 0
   m_Name: Bandage
   m_TagString: Untagged
@@ -113,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1954986874671301866
+--- !u!114 &8095619615514905029
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +124,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954986874671301865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2cfd64b79d021646aceecd5e141a7e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 1735b34c02b527d4db2ebdb4ceff0635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_item_SO: {fileID: 11400000, guid: 098e0dcc0d2133b45a806a6fde235213, type: 2}
+  m_pickableItem_SO: {fileID: 11400000, guid: 098e0dcc0d2133b45a806a6fde235213, type: 2}
+--- !u!114 &7237173080136105117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954986874671301865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b898ca6126fb37b4a8cb5237f4d219b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0, w: 0}
+  isActive: 0
+--- !u!114 &4893755872016731257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954986874671301865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1d8bac3e6918044a0b5d15c70ade55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

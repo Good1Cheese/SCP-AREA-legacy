@@ -15,13 +15,10 @@ public class Medkit_SO : PickableItem_SO
 
     public override void Use()
     {
-        m_playerHealth.Heal();
         m_playerBleeding.StopBleeding();
+        m_playerHealth.Heal();
+        m_playerHealth.Heal();
     }
 
-    public override void OnItemUsed()
-    {
-        if (m_playerHealth.HealthCells.IsCurrentCellLast()) { return; }
-        base.OnItemUsed();
-    }
+    public override bool ShouldItemNotUsed() => m_playerHealth.HealthCells.IsCurrentCellLast();
 }

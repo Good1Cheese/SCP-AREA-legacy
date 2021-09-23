@@ -25,9 +25,9 @@ public class WeaponRecoil : MonoBehaviour
         m_weaponAnimator.SetTrigger("OnPlayerShootedWithoutAim");
     }
 
-    void SetWeapon(Weapon_SO weapon)
+    void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weaponAnimator.runtimeAnimatorController = weapon.weaponAnimationContoller;
+        m_weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 
     void OnDestroy()

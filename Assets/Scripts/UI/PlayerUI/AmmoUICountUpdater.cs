@@ -10,7 +10,7 @@ public class AmmoUICountUpdater : MonoBehaviour
     [Inject] readonly WeaponFire m_weaponFire;
     [Inject] readonly WeaponReload m_weaponReload;
 
-    Weapon_SO m_weapon;
+    WeaponHandler m_weaponHandler;
 
     public TextMeshProUGUI TextMeshProUGUI { get => m_textMeshProUGUI; }
 
@@ -22,19 +22,19 @@ public class AmmoUICountUpdater : MonoBehaviour
         m_weaponReload.OnPlayerReloaded += UpdateUI;
     }
 
-    void SetWeapon(Weapon_SO weapon)
+    void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weapon = weapon;
+        m_weaponHandler = weaponHandler;
     }
 
     public void UpdateUI()
     {
-        TextMeshProUGUI.text = string.Format($"{m_weapon.clipAmmo}/{m_weapon.ammoCount}");
+        TextMeshProUGUI.text = string.Format($"{m_weaponHandler.ClipAmmo}/{m_weaponHandler.AmmoCount}");
     }
 
-    void UpdateUIProperly(Weapon_SO weapon)
+    void UpdateUIProperly(WeaponHandler weaponHandler)
     {
-        TextMeshProUGUI.text = string.Format($"{weapon.clipAmmo}/{weapon.ammoCount}");
+        TextMeshProUGUI.text = string.Format($"{weaponHandler.ClipAmmo}/{weaponHandler.AmmoCount}");
     }
 
     void OnDestroy()

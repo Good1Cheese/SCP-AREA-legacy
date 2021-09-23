@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 704728792488404500}
   - component: {fileID: 4005657293202142556}
   - component: {fileID: 4005657293202142547}
-  - component: {fileID: 200788171}
+  - component: {fileID: 279487251}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -304,10 +304,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab478191cad96d9438a4b079691024a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_timeScaleOnDeath: 0.5
   m_delayAfterDeathAnimation: 0.7
   m_delayDuringBlackout: 0.025
   m_blackoutSpeed: 0.05
---- !u!114 &200788171
+--- !u!114 &279487251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -316,6 +317,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 704728792488404501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313027e34ce5c92489b2949cac3f3e99, type: 3}
+  m_Script: {fileID: 11500000, guid: 1786fe277c4408240bcbfa80c69ae1c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -3,15 +3,21 @@ using UnityEngine;
 
 public class WearableItemsInventory : MonoBehaviour
 {
-    [SerializeField] Vector3 m_itemsOffsetForSpawn;
-    [SerializeField] KeyCardSlot keyCardSlot;
-    [SerializeField] WeaponSlot weaponSlot;
-    [SerializeField] MaskSlot maskSlot;
+    [SerializeField] KeyCardSlot m_keyCardSlot;
+    [SerializeField] WeaponSlot m_weaponSlot;
+    [SerializeField] MaskSlot m_maskSlot;
 
-    public KeyCardSlot KeyCardSlot { get => keyCardSlot; }
-    public WeaponSlot WeaponSlot { get => weaponSlot; }
-    public MaskSlot MaskSlot { get => maskSlot; }
+    public KeyCardSlot KeyCardSlot { get => m_keyCardSlot; }
+    public WeaponSlot WeaponSlot { get => m_weaponSlot; }
+    public MaskSlot MaskSlot { get => m_maskSlot; }
 
     public Action<WearableItemSlot> OnItemClicked { get; set; }
 
+    void Start()
+    {
+        if (m_keyCardSlot == null || m_weaponSlot == null || m_maskSlot == null)
+        {
+            Debug.LogError("Fields aren't serialized", this);
+        }    
+    }
 }

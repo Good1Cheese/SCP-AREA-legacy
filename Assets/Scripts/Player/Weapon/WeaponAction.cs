@@ -7,7 +7,7 @@ public abstract class WeaponAction : MonoBehaviour
     [Inject] protected readonly WearableInventoryActivator m_inventoryAcviteStateSetter;
     [Inject] protected WeaponActivator m_weaponActivator;
 
-    protected Weapon_SO m_weapon_SO;
+    protected WeaponHandler m_weaponHandler;
 
     protected void Start()
     {
@@ -21,7 +21,7 @@ public abstract class WeaponAction : MonoBehaviour
     {
         if (!m_weaponActivator.IsWeaponActive) { return; }
 
-        if (!m_weapon_SO.IsInInventory) { return; }
+        if (!m_weaponHandler.IsInInventory) { return; }
 
         SetActive(!enabled);
     }
@@ -31,9 +31,9 @@ public abstract class WeaponAction : MonoBehaviour
         enabled = activeState;
     }
 
-    protected virtual void SetWeapon(Weapon_SO weapon_SO)
+    protected virtual void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weapon_SO = weapon_SO;
+        m_weaponHandler = weaponHandler; ;
     }
 
     protected void OnDestroy()

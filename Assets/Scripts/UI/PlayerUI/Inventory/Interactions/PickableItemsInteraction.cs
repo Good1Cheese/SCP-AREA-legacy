@@ -11,21 +11,20 @@ public class PickableItemsInteraction : MonoBehaviour
         PickableItemsInventory.OnItemLeftClicked += UseItem;
     }
 
-    public void UseItem(PickableItemSlot pickableItemSlot)
+    public void UseItem(PickableItemSlot pickableItemSlot, int slotIndex)
     {
-        var item = pickableItemSlot.Item as PickableItem_SO;
-        item.Use();
-        item.OnItemUsed();
+        var itemSlot = pickableItemSlot.ItemHandler as PickableItemHandler;
+        itemSlot.OnItemClicked(slotIndex);
     }
 
-    public void DropItem(PickableItemSlot pickableItemSlot)
+    public void DropItem(PickableItemSlot pickableItemSlot, int slotIndex)
     {
         PickableItemsInventory.SpawnItem(pickableItemSlot);
-    }
+    }   
 
     void OnDestroy()
     {
         PickableItemsInventory.OnItemRightClicked -= DropItem;
-        PickableItemsInventory.OnItemLeftClicked += UseItem;
+        PickableItemsInventory.OnItemLeftClicked -= UseItem;
     }
 }

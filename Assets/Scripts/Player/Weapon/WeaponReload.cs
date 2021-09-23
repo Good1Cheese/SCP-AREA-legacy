@@ -13,8 +13,8 @@ public class WeaponReload : WeaponAction
     {
         if (Input.GetButtonDown("Reload"))
         {
-            if (m_weapon_SO.clipAmmo == m_weapon_SO.clipMaxAmmo
-                || m_weapon_SO.ammoCount == 0) { print(m_weapon_SO.clipAmmo == m_weapon_SO.clipMaxAmmo); return; }
+            if (m_weaponHandler.ClipAmmo == m_weaponHandler.Weapon_SO.clipMaxAmmo
+                || m_weaponHandler.AmmoCount == 0) { return; }
 
             if (m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
             StartCoroutine(Reload());
@@ -25,12 +25,12 @@ public class WeaponReload : WeaponAction
     {
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 
-        int ammoToReload = (m_weapon_SO.ammoCount >= m_weapon_SO.clipMaxAmmo)
-            ? m_weapon_SO.clipMaxAmmo
-            : m_weapon_SO.ammoCount;
+        int ammoToReload = (m_weaponHandler.AmmoCount >= m_weaponHandler.Weapon_SO.clipMaxAmmo)
+            ? m_weaponHandler.Weapon_SO.clipMaxAmmo
+            : m_weaponHandler.AmmoCount;
 
-        m_weapon_SO.clipAmmo = ammoToReload;
-        m_weapon_SO.ammoCount -= ammoToReload;
+        m_weaponHandler.ClipAmmo = ammoToReload;
+        m_weaponHandler.AmmoCount -= ammoToReload;
 
         OnPlayerReloaded.Invoke();
 
@@ -40,10 +40,10 @@ public class WeaponReload : WeaponAction
     }
 
 
-    protected override void SetWeapon(Weapon_SO weapon)
+    protected override void SetWeapon(WeaponHandler weaponHandler)
     {
-        base.SetWeapon(weapon);
-        m_timeoutAfterReload = new WaitForSeconds(weapon.reloadSoundPrefab.length);
+        base.SetWeapon(weaponHandler);
+        m_timeoutAfterReload = new WaitForSeconds(weaponHandler.Weapon_SO.reloadSoundPrefab.length);
     }
 
 }
