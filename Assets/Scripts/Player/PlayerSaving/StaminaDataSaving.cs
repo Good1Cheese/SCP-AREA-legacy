@@ -17,7 +17,7 @@ public class StaminaDataSaving : DataSaving
         m_playerStamina.StopRegeneration();
         if (m_playerStamina.StaminaValue < m_playerStamina.MaxStaminaAmount)
         {
-            m_playerStamina.Regenerate();
+            m_playerStamina.RestartRegeneration();
         }
     }
 

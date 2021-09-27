@@ -6,7 +6,7 @@ using Zenject;
 public class PlayerMovement : MonoBehaviour
 {
     [Inject] readonly MovementSpeed m_playerSpeed;
-    [Inject] readonly PauseMenu m_pauseMenu;
+    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
     [Inject] readonly Transform m_playerTransform;
     CharacterController m_characterController;
 

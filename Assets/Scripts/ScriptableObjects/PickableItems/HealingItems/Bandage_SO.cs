@@ -16,5 +16,5 @@ public class Bandage_SO : PickableItem_SO
         m_playerBleeding.StopBleeding();
     }
 
-    public override bool ShouldItemNotUsed() => !m_playerBleeding.IsPlayerBleeding;
+    public override bool ShouldItemNotUsed() => !m_playerBleeding.IsBleeding;
 }

@@ -20,5 +20,5 @@ public class Medkit_SO : PickableItem_SO
         m_playerHealth.Heal();
     }
 
-    public override bool ShouldItemNotUsed() => m_playerHealth.HealthCells.IsCurrentCellLast();
+    public override bool ShouldItemNotUsed() => m_playerHealth.HealthCells.IsCurrentCellLast() && !m_playerBleeding.IsBleeding;
 }

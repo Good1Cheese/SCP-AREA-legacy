@@ -35,7 +35,7 @@ public class GameObjectDataSaving : DataSaving
         m_gameObject.SetActive(isActive);
     }
 
-    public override void LoadDataFromMenu(string json)
+    public override void LoadFromMenu(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
         _transform = m_transform;

@@ -5,6 +5,8 @@ using Zenject;
 
 public class CharacterBleeding : MonoBehaviour
 {
+    [SerializeField] float[] m_bleedTimeValues;
+
     [SerializeField] float m_delayDuringBleeding;
     [SerializeField] float m_increasingTimeForBleeding;
 
@@ -16,40 +18,56 @@ public class CharacterBleeding : MonoBehaviour
     WaitForSeconds m_timeoutDuringBleeding;
     IEnumerator m_bleedCoroutine;
 
-    public bool IsPlayerBleeding { get; set; }
+    public bool IsBleeding { get; set; }
     public Action OnPlayerBleeding { get; set; }
     public Action OnPlayerBleedingStarted { get; set; }
+    public Action OnPlayerBleedingStopped { get; set; }
     public Action OnPlayerBleedingEnded { get; set; }
-    public float DelayDuringBleeding { get => m_delayDuringBleeding; set => m_delayDuringBleeding = value; }
+    public float DelayDuringBleeding { get => m_delayDuringBleeding; }
 
     void Start()
     {
         m_bleedCoroutine = BleedCoroutine();
-        CreateBleedingTimeout(DelayDuringBleeding);
+        CreateBleedingTimeout(m_bleedTimeValues[m_playerHealth.HealthCells.Cells.Count - 1]);
         m_playerHealth.OnPlayerGetsDamage += MoveBleedingCellAway;
     }
 
     void MoveBleedingCellAway()
     {
-        if (!IsPlayerBleeding) { return; }
-        m_playerHealth.HealthCells.GetFirstFilledCell().SetSprite(m_imageForBleedingCell);
+        if (!IsBleeding) { return; }
+
+        HealthCell healthCell = m_playerHealth.HealthCells.GetFirstFilledCell();
+
+        if (healthCell == null) { return; }
+
+        healthCell.SetSprite(m_imageForBleedingCell);
     }
 
     public void Bleed()
     {
-        if (IsPlayerBleeding) { return; }
+        if (IsBleeding) { return; }
 
-        IsPlayerBleeding = true;
+        IsBleeding = true;
         StartCoroutine(m_bleedCoroutine);
     }
 
     public void StopBleeding()
     {
-        IsPlayerBleeding = false;
+        StopBleedingWithoutNotify();
+        OnPlayerBleedingStopped?.Invoke();
+    }
 
+    public void StopBleedingWithoutNotify()
+    {
         StopCoroutine(m_bleedCoroutine);
         m_bleedCoroutine = BleedCoroutine();
-        m_playerHealth.HealthCells.GetFirstFilledCell().SetSprite(m_imageForFullCell);
+
+        for (int i = 0; i < m_playerHealth.HealthCells.Cells.Count; i++)
+        {
+            m_playerHealth.HealthCells[i].SetSprite(m_imageForFullCell);
+        }
+
+        IsBleeding = false;
     }
 
     public void CreateBleedingTimeout(float time)
@@ -61,21 +79,27 @@ public class CharacterBleeding : MonoBehaviour
     {
         OnPlayerBleedingStarted?.Invoke();
 
-        while (m_playerHealth.HealthCells.GetFirstFilledCell().IsFull)
-        {
-            m_playerHealth.HealthCells.GetFirstFilledCell().SetSprite(m_imageForBleedingCell);
+        HealthCell currentCell = m_playerHealth.HealthCells.GetFirstFilledCell();
+        currentCell.SetSprite(m_imageForBleedingCell);
 
+
+        while (m_playerHealth.HealthCells.GetFirstFilledCell() != null)
+        {
             yield return m_timeoutDuringBleeding;
 
-            OnPlayerBleeding?.Invoke();
             m_playerHealth.Damage();
+            OnPlayerBleeding?.Invoke();
 
-            m_delayDuringBleeding -= m_increasingTimeForBleeding;
+            if (m_playerHealth.HealthCells.GetFirstFilledCell() == null) { yield break; }
+            CreateBleedingTimeout(m_bleedTimeValues[m_playerHealth.HealthCells.GetCurrentCellIndex()]);
         }
-
-        IsPlayerBleeding = false;
-        CreateBleedingTimeout(DelayDuringBleeding);
+        IsBleeding = false;
 
         OnPlayerBleedingEnded?.Invoke();
+    }
+
+    void OnDestroy()
+    {
+        m_playerHealth.OnPlayerGetsDamage -= MoveBleedingCellAway;
     }
 }

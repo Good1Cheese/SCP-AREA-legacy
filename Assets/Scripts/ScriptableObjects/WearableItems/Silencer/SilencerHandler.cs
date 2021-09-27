@@ -31,7 +31,7 @@ public class SilencerHandler : WearableItemHandler
         SpawnSilencer(SilencerForPlayerWeapon, weaponHandler.PlayerWeapon);
         SpawnSilencer(SilencerForWorldWeapon, weaponHandler.GameObject);
 
-        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped.Invoke();
+        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped?.Invoke();
         weaponHandler.SilencerHandler = this;
     }
 

@@ -526,9 +526,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1039655025}
   - component: {fileID: 4748229209733429430}
+  - component: {fileID: 1039655029}
   - component: {fileID: 1039655026}
   - component: {fileID: 1039655030}
-  - component: {fileID: 1039655029}
   - component: {fileID: 1039655028}
   - component: {fileID: 1039655027}
   - component: {fileID: 686728870487613127}
@@ -566,6 +566,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e69f7de6048e24b911bbef9882b92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1039655029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039655024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e2285d510fdf64988735bf75879178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellsFullStates: 
 --- !u!114 &1039655026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,19 +605,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stamina: 0
---- !u!114 &1039655029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039655024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0e2285d510fdf64988735bf75879178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fullCellsCount: 0
 --- !u!114 &1039655028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,11 +632,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   savedWeaponHandler: {fileID: 0}
-  silencer_SO: {fileID: 0}
+  savedSilencerHandler: {fileID: 0}
   isActive: 0
-  weaponName: 
   ammoCount: 0
-  "cartridge\u0421lipAmmo": 0
+  clipAmmo: 0
+  weaponName: 
+  silencerName: 
 --- !u!114 &686728870487613127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,6 +872,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d271a8d37299b4db37345b52dff895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bleedTimeValues:
+  - 1
+  - 2
+  - 3
+  - 4
   m_delayDuringBleeding: 5
   m_increasingTimeForBleeding: 1
   m_imageForBleedingCell: {fileID: 21300000, guid: b254a2b99fdabe74c8e3ea6f16e35039, type: 3}

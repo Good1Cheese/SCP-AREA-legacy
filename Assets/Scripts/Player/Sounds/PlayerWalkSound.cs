@@ -4,7 +4,7 @@ public class PlayerWalkSound : SoundPlayerOnAction
 {
     [Inject] readonly MovementSpeed m_playerSpeed;
     [Inject] readonly PlayerMovement m_playerMovement;
-    [Inject] readonly PauseMenu m_pauseMenu;
+    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
 
     protected override void PlaySound()
     {

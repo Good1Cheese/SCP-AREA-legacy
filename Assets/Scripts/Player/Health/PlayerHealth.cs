@@ -28,9 +28,15 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal()
     {
-        if (HealthCells.IsCurrentCellLast()
-            || m_characterBleeding.IsPlayerBleeding) { return; }
+        if (m_characterBleeding.IsBleeding) { return; }
 
+        if (HealthCells.IsCurrentCellLast())
+        {
+            HealthCells[HealthCells.GetCurrentCellIndex()].Fill();
+            OnPlayerHeals?.Invoke();
+
+            return;
+        }
         HealthCells.GetNextCell().Fill();
 
         OnPlayerHeals?.Invoke();
@@ -39,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         OnPlayerDies?.Invoke();
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
 }

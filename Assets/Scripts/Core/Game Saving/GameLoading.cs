@@ -35,7 +35,7 @@ public class GameLoading : MonoBehaviour
         {
             for (int i = 0; (json = reader.ReadLine()) != null; i++)
             {
-                m_gameSaving.SaveData[i].LoadDataFromMenu(json);
+                m_gameSaving.SaveData[i].LoadFromMenu(json);
             }
             WasGameLoadedFromMenu = false;
         }

@@ -15,6 +15,7 @@ public class MainMenuControls : MonoBehaviour
 
     public void LoadGame()
     {
+        m_gameSaving.SaveData.Clear();
         m_sceneTransition.LoadScene((int)SceneTransition.Scenes.ScpScene);
         m_gameLoading.WasGameLoadedFromMenu = true;
     }

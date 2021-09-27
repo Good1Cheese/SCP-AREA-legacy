@@ -5,37 +5,40 @@ public class HealthDataSaving : DataSaving
     [Inject] readonly PlayerHealth m_playerHealth;
     [Inject] readonly InjuryEffectsController m_injuryState;
 
-    public int fullCellsCount;
+    public bool[] cellsFullStates;
+
+    void Start()
+    {
+        cellsFullStates = new bool[m_playerHealth.HealthCells.Cells.Count];
+    }
 
     public override void Save()
     {
-        fullCellsCount = m_playerHealth.HealthCells.GetCurrentCellIndex();
+        for (int i = 0; i < m_playerHealth.HealthCells.Cells.Count; i++)
+        {
+            cellsFullStates[i] = m_playerHealth.HealthCells.Cells[i].IsFull;
+        }
     }
 
     public override void Load()
     {
-        int healthDiffarance = fullCellsCount - m_playerHealth.HealthCells.GetCurrentCellIndex();
-        
-        if (healthDiffarance > 0)
+        for (int i = 0; i < m_playerHealth.HealthCells.Cells.Count; i++)
         {
-            for (; healthDiffarance > 0; healthDiffarance--)
-            {
-                m_playerHealth.HealthCells[m_playerHealth.HealthCells.GetCurrentCellIndex() + healthDiffarance].Fill();
-            }
-        }
-        else
-        {
-            bool isLastCellHealed = m_playerHealth.HealthCells[m_playerHealth.HealthCells.LastCellIndex].Slider.value == 1;
+            bool isCellFull = cellsFullStates[i];
 
-            if (isLastCellHealed) { healthDiffarance--; }
-            if (m_playerHealth.HealthCells.IsCurrentCellLast()) { healthDiffarance++; }
+            if (isCellFull == m_playerHealth.HealthCells[i].IsFull) { continue; }
 
-            for (; healthDiffarance < 0; healthDiffarance++)
+            if (isCellFull)
             {
-                m_playerHealth.HealthCells[m_playerHealth.HealthCells.GetCurrentCellIndex()].Clear();
+                m_playerHealth.HealthCells[i].Fill();
+                continue;
             }
+            m_playerHealth.HealthCells[i].Clear();
+
         }
+
         m_injuryState.ActivateEffects();
+
     }
 
 }

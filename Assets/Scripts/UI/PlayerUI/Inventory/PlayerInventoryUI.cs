@@ -4,6 +4,7 @@ using Zenject;
 public class PlayerInventoryUI : MonoBehaviour
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
+    [Inject] readonly PlayerHealth m_playerHealth;
     GameObject m_gameObject;
 
     public PickableItemSlot[] InventoryCells { get; set; }
@@ -13,6 +14,7 @@ public class PlayerInventoryUI : MonoBehaviour
         m_gameObject = gameObject;
         m_playerInventory.OnInventoryChanged += Renew;
         m_playerInventory.OnInventoryRemaded += Renew;
+        m_playerHealth.OnPlayerDies += ActivateOrCloseOnPlayerDeath;
     }
 
     void Start()
@@ -52,10 +54,19 @@ public class PlayerInventoryUI : MonoBehaviour
         m_gameObject.SetActive(!m_gameObject.activeSelf);
     }
 
+    public void ActivateOrCloseOnPlayerDeath()
+    {
+        if (m_gameObject.activeSelf)
+        {
+            ActivateOrClose();
+        }
+    }
+
     void OnDestroy()
     {
         m_playerInventory.OnInventoryChanged -= Renew;
         m_playerInventory.OnInventoryRemaded -= Renew;
+        m_playerHealth.OnPlayerDies -= ActivateOrCloseOnPlayerDeath;
     }
 
 }

@@ -32,8 +32,6 @@ public class PlayerStamina : MonoBehaviour
             OnStaminaValueChanged?.Invoke();
         }
     }
-    public Action OnStaminaValueChanged { get; set; }
-
     public bool HasPlayerStamina
     {
         get 
@@ -47,10 +45,10 @@ public class PlayerStamina : MonoBehaviour
             return hasPlayerStamina;
         }
     }
-
     public float MaxStaminaAmount { get; set; }
     public Action OnStaminaRanOut { get; set; }
     public float SpendingSpeed { get => m_spendingSpeed; set => m_spendingSpeed = value; }
+    public Action OnStaminaValueChanged { get; set; }
 
     void Awake()
     {
@@ -63,15 +61,9 @@ public class PlayerStamina : MonoBehaviour
     void Start()
     {
         m_playerSpeed.OnPlayerRun += Burn;
-        m_playerSpeed.OnPlayerStoppedRun += Regenerate;
+        m_playerSpeed.OnPlayerStoppedRun += RestartRegeneration;
         m_playerMovement.OnPlayerStoppedMoving += RegenerateAfterPlayerStopped;
-        m_playerHealth.OnPlayerGetsDamage += StopRegeneration;
-    }
-
-    void RegenerateAfterPlayerStopped()
-    {
-        if (StaminaValue == MaxStaminaAmount || !m_playerSpeed.IsPlayerRunning) { return; }
-        Regenerate();
+        m_playerHealth.OnPlayerGetsDamage += RestartRegeneration;
     }
 
     void Burn()
@@ -80,17 +72,21 @@ public class PlayerStamina : MonoBehaviour
         StopRegeneration();
     }
 
-    public void Regenerate()
+    public void RestartRegeneration()
     {
         StopRegeneration();
         StartCoroutine(m_regenerationCoroutine);
     }
 
+    void RegenerateAfterPlayerStopped()
+    {
+        if (StaminaValue == MaxStaminaAmount || !m_playerSpeed.IsPlayerRunning) { return; }
+        RestartRegeneration();
+    }
+
     IEnumerator RegenerateCoroutine()
     {
-        print("Started Regeneration");
         yield return m_timeoutBeforeRegeneration;
-        print("Delay out");
 
         while (m_staminaValue < MaxStaminaAmount)
         {
@@ -108,7 +104,7 @@ public class PlayerStamina : MonoBehaviour
     void OnDestroy()
     {
         m_playerSpeed.OnPlayerRun -= Burn;
-        m_playerSpeed.OnPlayerStoppedRun -= Regenerate;
+        m_playerSpeed.OnPlayerStoppedRun -= RestartRegeneration;
         m_playerMovement.OnPlayerStoppedMoving -= RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }

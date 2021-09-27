@@ -38,7 +38,7 @@ public class InventoryDataSaving : DataSaving
         m_playerInventory.OnInventoryChanged?.Invoke();
     }
 
-    public override void LoadDataFromMenu(string json)
+    public override void LoadFromMenu(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
 

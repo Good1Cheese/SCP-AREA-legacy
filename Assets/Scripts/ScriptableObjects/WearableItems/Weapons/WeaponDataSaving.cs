@@ -1,0 +1,37 @@
+﻿using Zenject;
+
+public class WeaponDataSaving : ItemDataSaving
+{
+    WeaponHandler m_weaponHandler;
+
+    public SilencerHandler silencerHandler;
+    public int ammoCount;
+    public int clipAmmo;
+
+    new void Start()
+    {
+        base.Start();
+        m_weaponHandler = GetComponent<WeaponHandler>();
+    }
+
+    public override void Save()
+    {
+        silencerHandler = m_weaponHandler.SilencerHandler;
+        ammoCount = m_weaponHandler.AmmoCount;
+        clipAmmo = m_weaponHandler.ClipAmmo;
+        base.Save();
+    }
+
+    public override void Load()
+    {
+        base.Load();
+
+        m_weaponHandler.AmmoCount = ammoCount;
+        m_weaponHandler.ClipAmmo = clipAmmo;
+
+        if (silencerHandler == null && m_weaponHandler.SilencerHandler != null)
+        {
+            m_weaponHandler.SilencerHandler.Unequip();
+        }
+    }
+}

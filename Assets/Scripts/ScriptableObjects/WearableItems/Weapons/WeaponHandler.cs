@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(WeaponDataSaving))]
 public class WeaponHandler : WearableItemHandler
 {
     [SerializeField] Weapon_SO m_weapon_SO;

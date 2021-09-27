@@ -9,15 +9,15 @@ public class WeaponShotSound : WeaponSoundPlayer
     protected override void SubscribeToAction()
     {
         m_weaponFire.OnPlayerShooted += PlaySound;
-        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped += ChangeAudioWithSilencer;
-        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped += ChangeAudioWithSilencer;
+        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped += SetSilencerShotSound;
+        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped += SetRegularShotSound;
     }
 
     protected override void UnscribeToAction()
     {
         m_weaponFire.OnPlayerShooted -= PlaySound;
-        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped -= ChangeAudioWithSilencer;
-        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped -= ChangeAudioWithSilencer;
+        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped -= SetSilencerShotSound;
+        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped -= SetRegularShotSound;
     }
 
     protected override void ChangeAudio(WeaponHandler weaponHandler)
@@ -26,15 +26,15 @@ public class WeaponShotSound : WeaponSoundPlayer
         audioSource.clip = weaponHandler.CurrentShotSound;
     }
 
-    void ChangeAudioWithSilencer()
+    void SetSilencerShotSound()
     {
-        AudioClip shotSound = m_weaponHandler.Weapon_SO.shotSoundPrefab;
-        if (m_weaponHandler.SilencerHandler != null)
-        {
-            shotSound = m_weaponHandler.Weapon_SO.shotSoundWithSilencerPrefab;
-        }
+        m_weaponHandler.CurrentShotSound = m_weaponHandler.Weapon_SO.shotSoundWithSilencerPrefab;
+        audioSource.clip = m_weaponHandler.CurrentShotSound;
+    }
 
-        m_weaponHandler.CurrentShotSound = shotSound;
+    void SetRegularShotSound()
+    {
+        m_weaponHandler.CurrentShotSound = m_weaponHandler.Weapon_SO.shotSoundPrefab;
         audioSource.clip = m_weaponHandler.CurrentShotSound;
     }
 }

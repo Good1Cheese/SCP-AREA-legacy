@@ -2,7 +2,7 @@
 
 public class PropsHandlerSetter : MonoBehaviour
 {
-    [SerializeField] WeaponDataSaving m_weaponDataSaving;
+    [SerializeField] PlayerWeaponDataSaving m_weaponDataSaving;
     [SerializeField] InventoryDataSaving m_inventoryDataSaving;
 
     void Awake()

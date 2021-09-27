@@ -3,12 +3,27 @@ using UnityEngine;
 using Zenject;
 
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenuEnablerDisabler : MonoBehaviour
 {
     [Inject] readonly WearableInventoryActivator m_wearableInventoryActivator;
+    [Inject] readonly PlayerHealth m_playerHealth;
 
     public bool IsGamePaused { get; set; }
     public Action OnPauseMenuButtonPressed { get; set; }
+
+    void Start()
+    {
+        m_playerHealth.OnPlayerDies += DisablePauseMenu;
+    }
+
+    void DisablePauseMenu()
+    {
+        if (IsGamePaused)
+        {
+            PauseOrUnpauseGame();
+        }
+        enabled = false;
+    }
 
     void Update()
     {
@@ -18,14 +33,19 @@ public class PauseMenu : MonoBehaviour
             {
                 m_wearableInventoryActivator.ActivateOrDeactivateMenu();
             }
-            PauseGameOrUnpauseGame();
+            PauseOrUnpauseGame();
         }
     }
 
-    public void PauseGameOrUnpauseGame()
+    public void PauseOrUnpauseGame()
     {
         IsGamePaused = !IsGamePaused;
         m_wearableInventoryActivator.OnInventoryButtonPressed?.Invoke();
         OnPauseMenuButtonPressed.Invoke();
+    }
+
+    void OnDestroy()
+    {
+        m_playerHealth.OnPlayerDies += DisablePauseMenu;
     }
 }

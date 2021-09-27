@@ -46,7 +46,6 @@ public class AdrenalinEffectSaving : DataSaving
             m_staminaUseDisabler.Disable(effectTime);
             return;
         }
-        print("Stop");
         m_staminaUseDisabler.StopDisabling();
         
     }

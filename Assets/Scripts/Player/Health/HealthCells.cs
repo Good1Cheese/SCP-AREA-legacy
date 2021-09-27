@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class HealthCells
 {
@@ -23,6 +22,11 @@ public class HealthCells
         return Cells.IndexOf(GetFirstFilledCell());
     }
 
+    public bool IsCurrentCellLast(int cellOffset = 0)
+    {
+        return GetCurrentCellIndex() + cellOffset == LastCellIndex;
+    }
+
     public void AddCells(HealthCell[] healthCells)
     {
         LastCellIndex = healthCells.Length - 1;
@@ -36,8 +40,4 @@ public class HealthCells
         set { Cells[index] = value; }
     }
 
-    public bool IsCurrentCellLast(int cellOffset = 0)
-    {
-        return GetCurrentCellIndex() + cellOffset == LastCellIndex;
-    }
 }

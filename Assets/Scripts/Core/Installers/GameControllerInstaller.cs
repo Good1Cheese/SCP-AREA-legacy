@@ -3,7 +3,7 @@ using Zenject;
 
 public class GameControllerInstaller : MonoInstaller
 {
-    PauseMenu m_pauseMenu;
+    PauseMenuEnablerDisabler m_pauseMenu;
     InjuryEffectsController m_injuryState;
     Volume m_volume;
 
@@ -17,7 +17,7 @@ public class GameControllerInstaller : MonoInstaller
 
     void GetComponents()
     {
-        m_pauseMenu = GetComponent<PauseMenu>();
+        m_pauseMenu = GetComponent<PauseMenuEnablerDisabler>();
         m_injuryState = GetComponent<InjuryEffectsController>();
         m_volume = GetComponent<Volume>();
     }

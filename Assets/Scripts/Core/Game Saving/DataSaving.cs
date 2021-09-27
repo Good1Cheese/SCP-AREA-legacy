@@ -10,7 +10,7 @@ public abstract class DataSaving : MonoBehaviour
         return JsonUtility.ToJson(this);
     }
 
-    public virtual void LoadDataFromMenu(string json)
+    public virtual void LoadFromMenu(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
         Load();

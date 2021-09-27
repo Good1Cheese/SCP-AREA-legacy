@@ -3,7 +3,7 @@ using Zenject;
 
 public class PlayerUIEnablerDisabler : MonoBehaviour
 {
-    [Inject] readonly PauseMenu m_pauseMenu;
+    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
     GameObject m_gameObject;
 
     void Start()

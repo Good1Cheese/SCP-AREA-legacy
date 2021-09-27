@@ -6,7 +6,7 @@ public class PauseMenuControls : MonoBehaviour
     [Inject] readonly SceneTransition sceneTransition;
     [Inject] readonly GameSaving m_gameSaver;
     [Inject] readonly GameLoading m_gameLoader;
-    [Inject] readonly PauseMenu m_pauseMenu;
+    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
 
     GameObject m_gameObject;
 
@@ -25,18 +25,18 @@ public class PauseMenuControls : MonoBehaviour
 
     public void UnpauseGame()
     {
-        m_pauseMenu.PauseGameOrUnpauseGame();
+        m_pauseMenu.PauseOrUnpauseGame();
     }
 
     public void SaveGame()
     {
-        m_pauseMenu.PauseGameOrUnpauseGame();
+        m_pauseMenu.PauseOrUnpauseGame();
         m_gameSaver.Save();
     }
 
     public void LoadGame()
     {
-        m_pauseMenu.PauseGameOrUnpauseGame();
+        m_pauseMenu.PauseOrUnpauseGame();
         m_gameLoader.Load();
     }
 

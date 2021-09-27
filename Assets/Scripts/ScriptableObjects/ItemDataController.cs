@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(ItemDataSaving))]
+[RequireComponent(typeof(DataSaving))]
 public class ItemDataController : MonoBehaviour
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;

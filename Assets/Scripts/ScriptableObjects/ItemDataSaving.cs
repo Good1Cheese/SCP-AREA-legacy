@@ -9,7 +9,7 @@ public class ItemDataSaving : GameObjectDataSaving
 
     public bool IsSubscribed { get; set; } = true;
 
-    void Start()
+    protected void Start()
     {
         m_saveDataItemIndex = FindItemIndex();
     }
@@ -35,7 +35,7 @@ public class ItemDataSaving : GameObjectDataSaving
                 return i;
             }
         }
-        Debug.LogError("Item not Found");
+        Debug.LogError("Item not Found" + name);
         return -1;
     }
 }
