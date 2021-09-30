@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class StaminaDataSaving : DataSaving
+public class StaminaSaving : DataSaving
 {
     [Inject] readonly PlayerStamina m_playerStamina;
 

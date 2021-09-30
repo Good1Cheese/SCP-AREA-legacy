@@ -4,6 +4,7 @@ using Zenject;
 public class WeaponShot : MonoBehaviour
 {
     [Inject] readonly RayForShootingProvider m_rayForShootingProvider;
+    [Inject] readonly GameObject m_playerGameObject;
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
     IDamagable m_damagable;
@@ -18,7 +19,8 @@ public class WeaponShot : MonoBehaviour
     void AttendShot(RaycastHit raycastHit)
     {
         bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_damagable);
-        if (isHitObjectInteractable)
+
+        if (isHitObjectInteractable && raycastHit.collider.gameObject != m_playerGameObject)
         {
             m_damagable.Damage(m_weapon.damagePerShot);
             return;

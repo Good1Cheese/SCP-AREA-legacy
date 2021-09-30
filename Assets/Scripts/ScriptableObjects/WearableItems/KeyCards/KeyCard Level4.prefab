@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6020154334738328818}
   - component: {fileID: 6020154334738328819}
   - component: {fileID: 6020154334738328822}
-  - component: {fileID: 3548009595474171993}
-  - component: {fileID: 129511186848433539}
   - component: {fileID: 8789035780569093459}
+  - component: {fileID: -375687151101373801}
+  - component: {fileID: 129511186848433539}
   m_Layer: 0
   m_Name: KeyCard Level4
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3548009595474171993
+--- !u!114 &8789035780569093459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6020154334738328816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b898ca6126fb37b4a8cb5237f4d219b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_keyCard_SO: {fileID: 11400000, guid: 71f0637627adf0848adb96ec4ffebd8f, type: 2}
+--- !u!114 &-375687151101373801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020154334738328816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dadfca9e22b79e46842e499f5d9221f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}
@@ -144,19 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1d8bac3e6918044a0b5d15c70ade55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8789035780569093459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6020154334738328816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_keyCard_SO: {fileID: 11400000, guid: 71f0637627adf0848adb96ec4ffebd8f, type: 2}
 --- !u!1 &6020154335059724692
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(WeaponReloadSound))]
 public class WeaponReload : WeaponAction
 {
+    [Inject] readonly PickableItemsInventory m_pickableItemsInventory;
     WaitForSeconds m_timeoutAfterReload;
 
     public Action OnPlayerReloaded { get; set; }
+    public Action OnWeaponAmmoChanged { get; set; }
 
     void Update()
     {
@@ -25,18 +29,32 @@ public class WeaponReload : WeaponAction
     {
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 
+        AmmoHandler ammoHandler = (AmmoHandler)m_pickableItemsInventory.Inventory.LastOrDefault(item => item as AmmoHandler != null);
+
+        if (ammoHandler == null) { yield break; }
+
         int ammoToReload = (m_weaponHandler.AmmoCount >= m_weaponHandler.Weapon_SO.clipMaxAmmo)
             ? m_weaponHandler.Weapon_SO.clipMaxAmmo
             : m_weaponHandler.AmmoCount;
 
         m_weaponHandler.ClipAmmo = ammoToReload;
         m_weaponHandler.AmmoCount -= ammoToReload;
+        ammoHandler.AmmoCount -= ammoToReload;
 
-        OnPlayerReloaded.Invoke();
+        OnPlayerReloaded?.Invoke();
+        OnWeaponAmmoChanged?.Invoke();
 
         yield return m_timeoutAfterReload;
 
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
+    }
+
+    public void UpdateWeaponAmmoCount(int droppedAmmoCount)
+    {
+        if (m_weaponHandler == null) { return; }
+
+        m_weaponHandler.AmmoCount -= droppedAmmoCount;
+        OnWeaponAmmoChanged?.Invoke();
     }
 
 

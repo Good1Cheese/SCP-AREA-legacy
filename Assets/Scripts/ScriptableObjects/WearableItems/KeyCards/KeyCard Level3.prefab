@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4814494892807416719}
   - component: {fileID: 4814494892807416714}
   - component: {fileID: 6458915922648080912}
-  - component: {fileID: 5811874304503981047}
+  - component: {fileID: 5127248310440600291}
   - component: {fileID: 8072456192214955555}
   m_Layer: 0
   m_Name: KeyCard Level3
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_keyCard_SO: {fileID: 11400000, guid: d4c6d3422d19a87469170b358e37ac5a, type: 2}
---- !u!114 &5811874304503981047
+--- !u!114 &5127248310440600291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4814494892807416716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b898ca6126fb37b4a8cb5237f4d219b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dadfca9e22b79e46842e499f5d9221f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}

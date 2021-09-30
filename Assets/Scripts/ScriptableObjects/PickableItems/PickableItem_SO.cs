@@ -4,7 +4,7 @@
 
     public virtual void GetDependencies(PlayerInstaller playerInstaller)
     {
-        PickableItemsInventory = playerInstaller.PlayerInventory;
+        PickableItemsInventory = playerInstaller.PickableItemsInventory;
     }
 
     public abstract void Use();

@@ -1,7 +1,7 @@
 ﻿
 using Zenject;
 
-public class PlayerRotatorDataSaving : DataSaving
+public class PlayerRotatorSaving : DataSaving
 {
     [Inject] readonly PlayerRotator m_playerRotator;
 

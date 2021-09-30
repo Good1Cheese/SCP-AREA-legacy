@@ -7,12 +7,12 @@ public class ItemDataController : MonoBehaviour
     [Inject] readonly PickableItemsInventory m_playerInventory;
 
     public ItemHandler ItemHandler { get; set; }
-    public ItemDataSaving ItemDataHandler { get; set; }
+    public ItemSaving ItemDataHandler { get; set; }
 
     void Awake()
     {
         ItemHandler = GetComponent<ItemHandler>();
-        ItemDataHandler = GetComponent<ItemDataSaving>();
+        ItemDataHandler = GetComponent<ItemSaving>();
     }
 
     void Start()

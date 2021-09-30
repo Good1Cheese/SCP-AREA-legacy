@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class ItemDataSaving : GameObjectDataSaving
+public class ItemSaving : GameObjectSaving
 {
     [Inject] readonly EmptyDataSaving m_emptyDataHandler;
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Ammo_SO;
 
 [CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/Weapon")]
 public class Weapon_SO : WearableItem_SO
@@ -6,7 +7,7 @@ public class Weapon_SO : WearableItem_SO
     public GameObject playerWeaponPrefab;
 
     public int damagePerShot;
-    public int caliber;
+    public AmmoType ammoType;
     public int clipMaxAmmo;
 
     public float delayAfterShot;

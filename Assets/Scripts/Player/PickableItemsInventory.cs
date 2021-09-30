@@ -37,6 +37,7 @@ public class PickableItemsInventory : MonoBehaviour
 
     public void RemoveItem(int index)
     {
+        Inventory[index].IsInInventory = false;
         Inventory[index] = null;
 
         bool isIndexItemLast = index > CurrentItemIndex;
@@ -45,6 +46,7 @@ public class PickableItemsInventory : MonoBehaviour
             for (int i = index + 1; Inventory[i] != null; i++)
             {
                 Inventory[i - 1] = Inventory[i];
+                Inventory[i].IsInInventory = false;
                 Inventory[i] = null;
             }
         }

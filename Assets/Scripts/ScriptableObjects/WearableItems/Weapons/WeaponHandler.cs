@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(WeaponDataSaving))]
+[RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
     [SerializeField] Weapon_SO m_weapon_SO;
@@ -24,12 +24,4 @@ public class WeaponHandler : WearableItemHandler
     }
 
     public override Item_SO GetItem() => m_weapon_SO;
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        ClipAmmo = 0;
-        AmmoCount = 0;
-        SilencerHandler = null;
-    }
 }

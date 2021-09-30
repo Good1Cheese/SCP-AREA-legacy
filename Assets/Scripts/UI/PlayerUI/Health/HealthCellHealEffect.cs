@@ -27,7 +27,6 @@ public class HealthCellHealEffect : MonoBehaviour
 
     public void StartHealEffect()
     {
-        print("das");
         IsHealing = true;
         StartCoroutine(m_playAnimationCoroutine);
     }
@@ -43,12 +42,16 @@ public class HealthCellHealEffect : MonoBehaviour
     IEnumerator PlayHealEffectCoroutine()
     {
         yield return m_timeoutBeforeHealing;
-        
+
+        IsHealContinueable = true;
+
         while (Cell.Slider.maxValue > Cell.Slider.value)
         {
             Cell.Slider.value += m_healthIncreasingPerStep;
             yield return m_timeoutWhileHealing;
         }
+
+        IsHealContinueable = false;
 
         m_playerHealth.OnPlayerHeals?.Invoke();
         StopHealEffect();

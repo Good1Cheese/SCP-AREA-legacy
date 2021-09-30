@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 7735998174741333835}
   - component: {fileID: 7735998174741333834}
   - component: {fileID: 2988302173402092939}
-  - component: {fileID: 608634771654528118}
+  - component: {fileID: 2276628281113621667}
   - component: {fileID: 7432298425916697159}
   m_Layer: 6
   m_Name: HK-USP
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_weapon_SO: {fileID: 11400000, guid: f9f15761b8e1c7445beddea0dd3c2e89, type: 2}
---- !u!114 &608634771654528118
+--- !u!114 &2276628281113621667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -416,13 +416,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7735998174741333828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e87616f342f5e5046b0d5ff15420096e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bcfe4bb95690b843b6891ea9927d991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isActive: 0
+  silencerHandler: {fileID: 0}
   ammoCount: 0
   clipAmmo: 0
 --- !u!114 &7432298425916697159

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GameObjectDataSaving : DataSaving
+public class GameObjectSaving : DataSaving
 {
     protected Transform m_transform;
     protected GameObject m_gameObject;

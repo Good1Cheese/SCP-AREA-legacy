@@ -4,7 +4,7 @@ using Zenject;
 public abstract class WeaponAction : MonoBehaviour
 {
     [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] protected readonly WearableInventoryActivator m_inventoryAcviteStateSetter;
+    [Inject] protected readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
     [Inject] protected WeaponActivator m_weaponActivator;
 
     protected WeaponHandler m_weaponHandler;

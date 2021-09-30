@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class InventoryDataSaving : DataSaving
+public class InventorySaving : DataSaving
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
     public PickableItemHandler[] m_inventory;

@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class HealthDataSaving : DataSaving
+public class HealthSaving : DataSaving
 {
     [Inject] readonly PlayerHealth m_playerHealth;
     [Inject] readonly InjuryEffectsController m_injuryState;

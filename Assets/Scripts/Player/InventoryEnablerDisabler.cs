@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-public class WearableInventoryActivator : MonoBehaviour
+public class InventoryEnablerDisabler : MonoBehaviour
 {
     [SerializeField] PlayerInventoryUI m_playerInventoryUI;
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;

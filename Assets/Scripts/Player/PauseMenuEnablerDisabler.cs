@@ -5,7 +5,7 @@ using Zenject;
 
 public class PauseMenuEnablerDisabler : MonoBehaviour
 {
-    [Inject] readonly WearableInventoryActivator m_wearableInventoryActivator;
+    [Inject] readonly InventoryEnablerDisabler m_wearableInventoryActivator;
     [Inject] readonly PlayerHealth m_playerHealth;
 
     public bool IsGamePaused { get; set; }

@@ -1,12 +1,11 @@
-﻿using Zenject;
-
-public class WeaponDataSaving : ItemDataSaving
+﻿public class WeaponSaving : ItemSaving
 {
     WeaponHandler m_weaponHandler;
 
     public SilencerHandler silencerHandler;
     public int ammoCount;
     public int clipAmmo;
+    public bool isAmmoAdded;
 
     new void Start()
     {

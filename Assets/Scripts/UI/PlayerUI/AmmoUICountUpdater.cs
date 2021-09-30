@@ -19,7 +19,7 @@ public class AmmoUICountUpdater : MonoBehaviour
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
         m_wearableItemsInventory.WeaponSlot.OnAmmoAdded += UpdateUIProperly;
         m_weaponFire.OnPlayerShooted += UpdateUI;
-        m_weaponReload.OnPlayerReloaded += UpdateUI;
+        m_weaponReload.OnWeaponAmmoChanged += UpdateUI;
     }
 
     void SetWeapon(WeaponHandler weaponHandler)
@@ -32,7 +32,7 @@ public class AmmoUICountUpdater : MonoBehaviour
         TextMeshProUGUI.text = string.Format($"{m_weaponHandler.ClipAmmo}/{m_weaponHandler.AmmoCount}");
     }
 
-    void UpdateUIProperly(WeaponHandler weaponHandler)
+    public void UpdateUIProperly(WeaponHandler weaponHandler)
     {
         TextMeshProUGUI.text = string.Format($"{weaponHandler.ClipAmmo}/{weaponHandler.AmmoCount}");
     }

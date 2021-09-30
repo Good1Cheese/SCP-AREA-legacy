@@ -12,7 +12,7 @@ public class PlayerRotator : MonoBehaviour
 
     [SerializeField] Transform m_camera;
 
-    [Inject] readonly WearableInventoryActivator m_werableInventoryAcviteStateSetter;
+    [Inject] readonly InventoryEnablerDisabler m_werableInventoryAcviteStateSetter;
     [Inject] readonly Transform m_playerTransform;
 
     float m_yRotation;

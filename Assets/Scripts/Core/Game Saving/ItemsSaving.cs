@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemsDataSaving : DataSaving
+public class ItemsSaving : DataSaving
 {
     ItemDataController[] m_itemDataControllerss;
 

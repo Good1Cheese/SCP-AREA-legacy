@@ -1,10 +1,22 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(ItemDataController))]
 public abstract class ItemHandler : IInteractable
 {
-    public bool IsInInventory { get; set; }
+    bool m_isInInventory;
+
+    public bool IsInInventory 
+    {
+        get => m_isInInventory;
+        set
+        {
+            m_isInInventory = value;
+            OnInventoryStateChanged(m_isInInventory);
+        }
+    }
+
     public GameObject GameObject { get; set; }
 
     void Start()
@@ -19,17 +31,13 @@ public abstract class ItemHandler : IInteractable
         Equip();
     }
 
-    public abstract Item_SO GetItem();
+    public virtual void OnInventoryStateChanged(bool isItemInInventory)
+    {
+
+    }
+
+    public abstract Item_SO GetItem();  
 
     public abstract void Equip();
 
-    protected virtual void OnDestroy()
-    {
-        IsInInventory = false;
-    }
-}
-
-public abstract class WearableItemHandler : ItemHandler
-{
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
 }

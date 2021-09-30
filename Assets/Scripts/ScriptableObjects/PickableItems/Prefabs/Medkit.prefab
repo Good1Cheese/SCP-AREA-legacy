@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4080021611125983304}
   - component: {fileID: 4080021611125983311}
   - component: {fileID: 7986787282097314656}
-  - component: {fileID: 1360775698029458614}
+  - component: {fileID: 7420456277770832586}
   - component: {fileID: 9135827050869729896}
   m_Layer: 0
   m_Name: Medkit
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pickableItem_SO: {fileID: 11400000, guid: 386c1b798ba95864789caa60ab91ba28, type: 2}
---- !u!114 &1360775698029458614
+--- !u!114 &7420456277770832586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4080021611125983310}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b898ca6126fb37b4a8cb5237f4d219b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dadfca9e22b79e46842e499f5d9221f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}

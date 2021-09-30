@@ -15,23 +15,22 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
     bool IsPlayerAiming;
     Ray ray;
 
-    [Inject]
-    void Construct(WeaponAim weaponAim)
-    {
-        weaponAim.OnPlayerAimed += SetPlayerAimState;
-        weaponAim.OnPlayerInTakedAim += SetPlayerAimState;
-    }
-
     void Awake()
     {
         ray = new Ray();
+    }
+
+    void Start()
+    {
+        m_weaponAim.OnPlayerAimed += SetPlayerAimState;
+        m_weaponAim.OnPlayerInTakedAim += SetPlayerAimState;
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
     void SetPlayerAimState()
     {
         IsPlayerAiming = !IsPlayerAiming;
-    }   
+    }
 
     public Ray ProvideRay()
     {
@@ -54,5 +53,12 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
     void SetWeapon(WeaponHandler weaponHandler)
     {
         m_bulletSpawnPoint.localPosition = weaponHandler.Weapon_SO.bulletSpawnPoint;
+    }
+
+    void OnDestroy()
+    {
+        m_weaponAim.OnPlayerAimed -= SetPlayerAimState;
+        m_weaponAim.OnPlayerInTakedAim -= SetPlayerAimState;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

@@ -8,19 +8,19 @@ public class AutoHealableHealthCell : HealthCell
     [Inject] readonly PlayerHealth m_playerHealth;
     [Inject] readonly CharacterBleeding m_characterBleeding;
 
-    HealthCellHealEffect m_healthCellHealEffect;
     HealthCells m_healthCells;
+
+    public HealthCellHealEffect HealthCellHealEffect { get; set; }
 
     void Start()
     {
-        m_healthCellHealEffect = GetComponent<HealthCellHealEffect>();
-        m_healthCellHealEffect.Cell = this;
+        HealthCellHealEffect = GetComponent<HealthCellHealEffect>();
+        HealthCellHealEffect.Cell = this;
         m_healthCells = m_playerHealth.HealthCells;
 
         m_playerHealth.OnPlayerHeals += HealCell;
-        m_characterBleeding.OnPlayerBleedingStarted += m_healthCellHealEffect.StopHealEffect;
-        m_characterBleeding.OnPlayerBleedingStopped += HealCell2;
-        m_gameLoading.OnGameLoaded += m_healthCellHealEffect.StopHealEffect;
+        m_characterBleeding.OnPlayerBleedingStarted += HealthCellHealEffect.StopHealEffect;
+        m_characterBleeding.OnPlayerBleedingStopped += HealCellOnBleedingStopped;
     }
 
     void HealCell()
@@ -28,16 +28,16 @@ public class AutoHealableHealthCell : HealthCell
         if (!m_healthCells.IsCurrentCellLast(1)) { return; }
 
         IsFull = true;
-        m_healthCellHealEffect.StartHealEffect();
+        HealthCellHealEffect.StartHealEffect();
     }
 
-    void HealCell2()
+    void HealCellOnBleedingStopped()
     {
         HealCell();
-        if (!m_healthCellHealEffect.IsHealContinueable) { return; }
+        if (!HealthCellHealEffect.IsHealContinueable) { return; }
 
         IsFull = true;
-        m_healthCellHealEffect.StartHealEffect();
+        HealthCellHealEffect.StartHealEffect();
     }
 
     public override void Clear()
@@ -46,24 +46,25 @@ public class AutoHealableHealthCell : HealthCell
 
         if (m_characterBleeding.IsBleeding) { return; }
 
-        if (m_healthCellHealEffect.IsHealing)
+        if (HealthCellHealEffect.IsHealing)
         {
-            m_healthCellHealEffect.StopHealEffect();
+            HealthCellHealEffect.StopHealEffect();
 
             m_healthCells.GetFirstFilledCell().Clear();
 
             return;
         }
 
-        m_healthCellHealEffect.StartHealEffect();
-        IsFull = true; // Эта строчка ломает сейчас сохранение хп ???
+        HealthCellHealEffect.StartHealEffect();
+        if (!m_playerHealth.HealthCells.IsCurrentCellLast(1)) { return; }
+        IsFull = true;
     }
 
     public override void Fill()
     {
-        if (m_healthCellHealEffect.IsHealing)
+        if (HealthCellHealEffect.IsHealing)
         {
-            m_healthCellHealEffect.StopHealEffect();
+            HealthCellHealEffect.StopHealEffect();
         }
         base.Fill();
     }
@@ -71,8 +72,7 @@ public class AutoHealableHealthCell : HealthCell
     void OnDestroy()
     {
         m_playerHealth.OnPlayerHeals -= HealCell;
-        m_characterBleeding.OnPlayerBleedingStarted -= m_healthCellHealEffect.StopHealEffect;
-        m_characterBleeding.OnPlayerBleedingStopped -= HealCell2;
-        m_gameLoading.OnGameLoaded -= m_healthCellHealEffect.StopHealEffect;
+        m_characterBleeding.OnPlayerBleedingStarted -= HealthCellHealEffect.StopHealEffect;
+        m_characterBleeding.OnPlayerBleedingStopped -= HealCellOnBleedingStopped;
     }
 }

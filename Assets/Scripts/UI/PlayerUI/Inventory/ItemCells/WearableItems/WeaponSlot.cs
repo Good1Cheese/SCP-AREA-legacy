@@ -16,6 +16,17 @@ public class WeaponSlot : WearableItemSlot
     public Action<bool> IsWeaponActived { get; set; }
     public bool IsWeaponActionIsGoing { get; set; }
 
+    public new void SetItem(ItemHandler item)
+    {
+        if (ItemHandler != null)
+        {
+            Clear();
+            IsWeaponActived.Invoke(false);
+        } 
+
+        base.SetItem(item);
+    }
+
     public override void OnItemSet()
     {
         base.OnItemSet();
@@ -29,10 +40,10 @@ public class WeaponSlot : WearableItemSlot
         OnWeaponDropped?.Invoke();
     }
 
-    public override void ClearSlot()
+    public override void ClearWearableSlot()
     {
-        base.ClearSlot();
-        OnWeaponDropped?.Invoke();
+        base.ClearWearableSlot();
+       // OnWeaponDropped?.Invoke();
     }
 
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1409480638150781629}
   - component: {fileID: 7268759073226065574}
   - component: {fileID: 6684741615264197640}
-  - component: {fileID: 2606398886148928782}
+  - component: {fileID: 5402989756890578545}
   - component: {fileID: -1291876342877580260}
   m_Layer: 0
   m_Name: HK-USP Silencer For GameWorld
@@ -128,8 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_silencer_SO: {fileID: 11400000, guid: 4f91abb46f0b1d9488e541b108ae57f9, type: 2}
-  silencerForPlayer: {fileID: 0}
---- !u!114 &2606398886148928782
+--- !u!114 &5402989756890578545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7268759073226065560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b898ca6126fb37b4a8cb5237f4d219b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dadfca9e22b79e46842e499f5d9221f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}

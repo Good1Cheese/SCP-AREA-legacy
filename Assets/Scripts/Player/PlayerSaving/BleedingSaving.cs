@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class BleedingDataSaving : DataSaving
+public class BleedingSaving : DataSaving
 {
     [Inject] readonly CharacterBleeding m_characterBleeding;
 

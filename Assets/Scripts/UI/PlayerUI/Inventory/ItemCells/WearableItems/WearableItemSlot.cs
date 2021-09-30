@@ -4,6 +4,12 @@ public abstract class WearableItemSlot : InventorySlot
 {
     [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
 
+    public new void Clear()
+    {
+        ItemHandler.IsInInventory = false;
+        base.Clear();
+    }
+
     public override void OnItemSet()
     {
         m_image.enabled = true;
@@ -14,7 +20,7 @@ public abstract class WearableItemSlot : InventorySlot
         m_image.enabled = false;
     }
 
-    public virtual void ClearSlot()
+    public virtual void ClearWearableSlot()
     {
         ItemHandler.IsInInventory = false;
         ItemHandler = null;

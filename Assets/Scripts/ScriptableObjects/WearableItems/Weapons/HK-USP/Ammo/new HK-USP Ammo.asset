@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57dc1e9cff076c14c9235b04cf3ad759, type: 3}
   m_Name: new HK-USP Ammo
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  gameObject: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 0aaa4f21f4e48f04eb6d080a77f6942e, type: 3}
   description: 
-  IsInInventory: 0
-  ammoCount: 1000
-  caliber: 1
+  ammoCount: 25
+  caliber: 0

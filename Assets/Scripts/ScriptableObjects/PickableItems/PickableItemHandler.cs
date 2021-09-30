@@ -5,7 +5,7 @@ public class PickableItemHandler : ItemHandler
 {
     [SerializeField] protected PickableItem_SO m_pickableItem_SO;
 
-    PlayerInstaller m_playerInstaller;
+    protected PlayerInstaller m_playerInstaller;
 
     [Inject] 
     void Construct(PlayerInstaller playerInstaller)
@@ -18,13 +18,13 @@ public class PickableItemHandler : ItemHandler
 
     public override void Equip()
     {
-        m_playerInstaller.PlayerInventory.AddItem(this);
+        m_playerInstaller.PickableItemsInventory.AddItem(this);
     }
 
     public virtual void OnItemClicked(int slotIndex)
     {
         if (m_pickableItem_SO.ShouldItemNotUsed()) { return; }
         m_pickableItem_SO.Use();
-        m_playerInstaller.PlayerInventory.RemoveItem(slotIndex);
+        m_playerInstaller.PickableItemsInventory.RemoveItem(slotIndex);
     }
 }
