@@ -17,6 +17,8 @@ public abstract class ItemHandler : IInteractable
         }
     }
 
+    public void SetInInventoryState(bool value) => m_isInInventory = value;
+
     public GameObject GameObject { get; set; }
 
     void Start()

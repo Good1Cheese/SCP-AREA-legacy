@@ -32,9 +32,11 @@ public class PlayerSilencerSaving : DataSaving
 
         savedSilencerHandler = currentWeaponHandler.SilencerHandler;
 
-        if (savedSilencerHandler == null) { return; }
+        if (savedSilencerHandler != null)
+        {
+            silencerName = savedSilencerHandler.name;
+        }
 
-        silencerName = savedSilencerHandler.name;
     }
 
     public override void Load()
@@ -51,14 +53,15 @@ public class PlayerSilencerSaving : DataSaving
 
     public override void LoadFromMenu(string json)
     {
-        if (!string.IsNullOrEmpty(silencerName))
-        {
-            GameObject silencerGameObject = m_playerWeaponDataSaving.PropsHandler.Find(silencerName).gameObject;
-            SilencerHandler silencerHandler = silencerGameObject.GetComponent<ItemHandler>() as SilencerHandler;
+        JsonUtility.FromJsonOverwrite(json, this);
 
-            savedSilencerHandler = silencerHandler;
-            silencerHandler.Interact();
-        }
+        if (string.IsNullOrEmpty(silencerName)) { return; }
+
+        GameObject silencerGameObject = m_playerWeaponDataSaving.PropsHandler.Find(silencerName).gameObject;
+        SilencerHandler silencerHandler = silencerGameObject.GetComponent<ItemHandler>() as SilencerHandler;
+
+        savedSilencerHandler = silencerHandler;
+        silencerHandler.Interact();
     }
 
     void OnDestroy()

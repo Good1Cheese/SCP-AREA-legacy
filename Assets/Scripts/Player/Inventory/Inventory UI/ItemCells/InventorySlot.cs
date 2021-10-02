@@ -28,6 +28,7 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
+            eventData.clickCount = 0;
             OnRightClick();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(WeaponRecoil))]
 public class WeaponShot : MonoBehaviour
 {
     [Inject] readonly RayForShootingProvider m_rayForShootingProvider;

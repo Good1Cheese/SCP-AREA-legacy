@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5924311095379993497}
   - component: {fileID: 5924311095379993494}
   - component: {fileID: 5924311095379993495}
-  - component: {fileID: 5924311095379993499}
+  - component: {fileID: 5924311097252886403}
   m_Layer: 5
   m_Name: PauseMenuUI
   m_TagString: Untagged
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5924311095379993499
+--- !u!114 &5924311097252886403
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5924311095379993492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eb759934a288cd43b863d940a0e5eca, type: 3}
+  m_Script: {fileID: 11500000, guid: 125d7eb4715a66049912b8ff96f3eaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5924311095415310253
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 5924311095415310254}
   - component: {fileID: 5924311095415310255}
   m_Layer: 5
-  m_Name: ExitButton
+  m_Name: Exit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,8 +235,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5924311095379993499}
-        m_TargetAssemblyTypeName: PauseMenuUI, Assembly-CSharp
+      - m_Target: {fileID: 5924311097252886403}
+        m_TargetAssemblyTypeName: PauseMenuControls, Assembly-CSharp
         m_MethodName: Exit
         m_Mode: 1
         m_Arguments:
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 5924311095461395442}
   - component: {fileID: 5924311095461395443}
   m_Layer: 5
-  m_Name: ResumeButton
+  m_Name: Resume Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -368,8 +368,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5924311095379993499}
-        m_TargetAssemblyTypeName: PauseMenuUI, Assembly-CSharp
+      - m_Target: {fileID: 5924311097252886403}
+        m_TargetAssemblyTypeName: PauseMenuControls, Assembly-CSharp
         m_MethodName: UnpauseGame
         m_Mode: 1
         m_Arguments:
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 5924311095491350587}
   - component: {fileID: 5924311095491350584}
   m_Layer: 5
-  m_Name: LoadButton
+  m_Name: Load Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -501,8 +501,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5924311095379993499}
-        m_TargetAssemblyTypeName: PauseMenuUI, Assembly-CSharp
+      - m_Target: {fileID: 5924311097252886403}
+        m_TargetAssemblyTypeName: PauseMenuControls, Assembly-CSharp
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 5924311096337445902}
   - component: {fileID: 5924311096337445903}
   m_Layer: 5
-  m_Name: SaveButton
+  m_Name: Save Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -634,8 +634,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5924311095379993499}
-        m_TargetAssemblyTypeName: PauseMenuUI, Assembly-CSharp
+      - m_Target: {fileID: 5924311097252886403}
+        m_TargetAssemblyTypeName: PauseMenuControls, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:

@@ -4,7 +4,6 @@ using Zenject;
 [RequireComponent(typeof(HealthCellHealEffect))]
 public class AutoHealableHealthCell : HealthCell
 {
-    [Inject] readonly GameLoading m_gameLoading;
     [Inject] readonly PlayerHealth m_playerHealth;
     [Inject] readonly CharacterBleeding m_characterBleeding;
 
@@ -44,7 +43,7 @@ public class AutoHealableHealthCell : HealthCell
     {
         base.Clear();
 
-        if (m_characterBleeding.IsBleeding) { return; }
+        if (m_characterBleeding.IsBleeding || !m_playerHealth.HealthCells.IsCurrentCellLast(1)) { return; }
 
         if (HealthCellHealEffect.IsHealing)
         {

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5019126763319737872}
   - component: {fileID: 3966320840416554622}
   - component: {fileID: 4373359106225255387}
+  - component: {fileID: 1594463683838979028}
   m_Layer: 0
   m_Name: HK-USP Ammo
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pickableItem_SO: {fileID: 11400000, guid: d331c2e0ac5892647ae9017dd5a9954a, type: 2}
+  ammoCount: 0
 --- !u!114 &3966320840416554622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +146,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isActive: 0
+  isItemInInventory: 0
 --- !u!114 &4373359106225255387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +159,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1d8bac3e6918044a0b5d15c70ade55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1594463683838979028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126512978939992523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d24184132b62eb24bb55e63c45368099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAmmoAdded: 0
+  ammoCount: 0

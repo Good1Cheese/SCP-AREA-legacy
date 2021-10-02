@@ -33,7 +33,7 @@ public abstract class WeaponAction : MonoBehaviour
 
     protected virtual void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weaponHandler = weaponHandler; ;
+        m_weaponHandler = weaponHandler;
     }
 
     protected void OnDestroy()

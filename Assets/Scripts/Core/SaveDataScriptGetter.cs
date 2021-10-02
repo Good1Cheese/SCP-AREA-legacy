@@ -9,5 +9,6 @@ public class SaveDataScriptGetter : MonoBehaviour
     {
         DataSaving[] collection = GetComponentsInChildren<DataSaving>();
         m_gameSaver.SaveData.AddRange(collection);
+        m_gameSaver.SaveData.Add(GetComponentInParent<GameObjectSaving>());
     }
 }

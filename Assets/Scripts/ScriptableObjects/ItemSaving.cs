@@ -7,6 +7,9 @@ public class ItemSaving : GameObjectSaving
 
     int m_saveDataItemIndex;
 
+    public bool isItemInInventory;
+
+    public ItemHandler ItemHandler { get; set; }
     public bool IsSubscribed { get; set; } = true;
 
     protected void Start()
@@ -24,6 +27,18 @@ public class ItemSaving : GameObjectSaving
     {
         IsSubscribed = false;
         m_gameSaving.SaveData[m_saveDataItemIndex] = m_emptyDataHandler;
+    }
+
+    public override void Save()
+    {
+        isItemInInventory = ItemHandler.IsInInventory;
+        base.Save();
+    }
+
+    public override void Load()
+    {
+        ItemHandler.SetInInventoryState(isItemInInventory);
+        base.Load();
     }
 
     int FindItemIndex()

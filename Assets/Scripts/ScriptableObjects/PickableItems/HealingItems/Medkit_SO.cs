@@ -6,9 +6,9 @@ public class Medkit_SO : PickableItem_SO
     PlayerHealth m_playerHealth;
     CharacterBleeding m_playerBleeding;
 
-    public override void GetDependencies(PlayerInstaller playerInstaller)
+    public override void GetDependencies(PlayerInstaller playerInstaller, GameControllerInstaller gameControllerInstaller)
     {
-        base.GetDependencies(playerInstaller);
+        base.GetDependencies(playerInstaller, gameControllerInstaller);
         m_playerHealth = playerInstaller.PlayerHealth;
         m_playerBleeding = playerInstaller.CharacterBleeding;
     }

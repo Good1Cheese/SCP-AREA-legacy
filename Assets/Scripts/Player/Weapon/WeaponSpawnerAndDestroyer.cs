@@ -37,7 +37,6 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
         m_weaponHandler.PlayerWeapon.SetActive(false);
     }
 
-
     void OnDestroy()
     {
         m_equipmentInventory.WeaponSlot.OnWeaponChanged -= SpawnWeapon;

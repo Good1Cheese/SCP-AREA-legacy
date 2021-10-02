@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponActivator), typeof(WeaponRecoil), typeof(WeaponSpawnerAndDestroyer))]
+[RequireComponent(typeof(WeaponActivator), typeof(WeaponShot), typeof(WeaponSpawnerAndDestroyer))]
 public class WeaponInstaller : MonoInstaller
 {
     public WeaponActivator WeaponActivator { get; set; }

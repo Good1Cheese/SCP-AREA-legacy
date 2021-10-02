@@ -8,9 +8,9 @@ public class AdrenalinInject_SO : PickableItem_SO
     PlayerHealth m_playerHealth;
     StaminaUseDisabler m_staminaUseDisabler;
 
-    public override void GetDependencies(PlayerInstaller playerInstaller)
+    public override void GetDependencies(PlayerInstaller playerInstaller, GameControllerInstaller gameControllerInstaller)
     {
-        base.GetDependencies(playerInstaller);
+        base.GetDependencies(playerInstaller, gameControllerInstaller);
         m_playerHealth = playerInstaller.PlayerHealth;
         m_staminaUseDisabler = playerInstaller.StaminaUseDisabler;
     }

@@ -669,9 +669,9 @@ GameObject:
   - component: {fileID: 1050156464}
   - component: {fileID: 1050156463}
   - component: {fileID: 1050156462}
-  - component: {fileID: 1050156461}
   - component: {fileID: 1050156467}
   - component: {fileID: 1050156466}
+  - component: {fileID: 1050156461}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -688,7 +688,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1050156460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1901cdfdee471334bae80beb1b6777f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 65823fed6ba4bac49b4bea1ebbfa803e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1050156462
@@ -895,7 +895,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1050156461}
-        m_TargetAssemblyTypeName: SettingsSceneController, Assembly-CSharp
+        m_TargetAssemblyTypeName: SettingsMenuControls, Assembly-CSharp
         m_MethodName: ReturnToMainMenu
         m_Mode: 1
         m_Arguments:

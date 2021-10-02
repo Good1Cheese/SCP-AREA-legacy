@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(InteractionMarkEnablerDisabler))]
 public class InteractionProvider : MonoBehaviour
 {
     [SerializeField] float m_maxInteractionDistance;
@@ -27,25 +28,44 @@ public class InteractionProvider : MonoBehaviour
 
     void Update()
     {
-        if (!Physics.SphereCast(m_rayProvider.ProvideRay(),
+        RaycastHit? raycastHit = GetInteractableObject(Physics.SphereCastAll(m_rayProvider.ProvideRay(),
                                 m_radiousOfSphereInteraction,
-                                out RaycastHit raycastHit,
-                                m_maxInteractionDistance))
+                                m_maxInteractionDistance));
+
+        if (raycastHit == null) 
         {
-            OnPlayerFindUnInteractable();
+            OnPlayerFindUnInteractable.Invoke(); 
             return;
         }
 
-        bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_interactable);
-
-        if (!isHitObjectInteractable) { OnPlayerFindUnInteractable.Invoke(); return; }
-
-        OnPlayerFindInteractable.Invoke(raycastHit.collider);
+        OnPlayerFindInteractable.Invoke(raycastHit?.collider);
 
         if (Input.GetButtonDown("Interaction"))
         {
             m_interactable.Interact();
         }
+    }
+
+
+    public RaycastHit? GetInteractableObject(RaycastHit[] raycastHits)
+    {
+        if (raycastHits == null)
+        {
+            OnPlayerFindUnInteractable();
+            return null;
+        }
+
+        for (int i = 0; i < raycastHits.Length; i++)
+        {
+            bool isHitObjectInteractable = raycastHits[i].collider.gameObject.TryGetComponent(out m_interactable);
+
+            if (isHitObjectInteractable) 
+            {
+                return raycastHits[i];
+            }
+        }
+
+        return null;
     }
 
     void OnDestroy()
@@ -54,4 +74,3 @@ public class InteractionProvider : MonoBehaviour
     }
 
 }
-    

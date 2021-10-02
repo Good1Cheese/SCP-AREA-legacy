@@ -31,4 +31,8 @@ public class WeaponMiss : MonoBehaviour
         m_timeoutAfterAction = new WaitForSeconds(weaponHandler.Weapon_SO.delayAfterShot);
     }
 
+    void OnDestroy()
+    {
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+    }
 }

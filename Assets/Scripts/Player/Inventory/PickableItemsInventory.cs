@@ -1,9 +1,8 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WearableItemsInventory))]
+[RequireComponent(typeof(WearableItemsInventory), typeof(InventoryEnablerDisabler))]
 public class PickableItemsInventory : MonoBehaviour
 {
     [SerializeField, Range(0, 8)] int m_maxSlotsAmount;
@@ -15,8 +14,8 @@ public class PickableItemsInventory : MonoBehaviour
     public Action OnInventoryChanged { get; set; }
     public Action OnInventoryRemaded { get; set; }
 
-    public Action<PickableItemSlot, int> OnItemRightClicked { get; set; }
     public Action<PickableItemSlot, int> OnItemLeftClicked { get; set; }
+    public Action<PickableItemSlot, int> OnItemRightClicked { get; set; }
 
     public int CurrentItemIndex { get; set; }
 

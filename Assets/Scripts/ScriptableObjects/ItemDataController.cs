@@ -13,6 +13,7 @@ public class ItemDataController : MonoBehaviour
     {
         ItemHandler = GetComponent<ItemHandler>();
         ItemDataHandler = GetComponent<ItemSaving>();
+        ItemDataHandler.ItemHandler = ItemHandler;
     }
 
     void Start()

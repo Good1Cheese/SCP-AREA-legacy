@@ -5,9 +5,9 @@ public class Bandage_SO : PickableItem_SO
 {
     CharacterBleeding m_playerBleeding;
 
-    public override void GetDependencies(PlayerInstaller playerInstaller)
+    public override void GetDependencies(PlayerInstaller playerInstaller, GameControllerInstaller gameControllerInstaller)
     {
-        base.GetDependencies(playerInstaller);
+        base.GetDependencies(playerInstaller, gameControllerInstaller);
         m_playerBleeding = playerInstaller.CharacterBleeding;
     }
 

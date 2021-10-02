@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PickableItemsInventory))]
+[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerRotator))]
 public class PlayerInstaller : MonoInstaller
 {
     public PlayerMovement PlayerMovement { get; set; }
@@ -11,9 +11,6 @@ public class PlayerInstaller : MonoInstaller
     public MovementSpeed PlayerSpeed { get; set; }
     public PlayerHealth PlayerHealth { get; set; }
     public RayProvider RayProvider { get; set; }
-    public PickableItemsInventory PickableItemsInventory { get; set; }
-    public WearableItemsInventory WearableItemsInventory { get; set; }
-    public InventoryEnablerDisabler InventoryAcviteStateSetter { get; set; }
     public CharacterBleeding CharacterBleeding { get; set; }
     public Transform PlayerTransform { get; set; }
     public GameObject PlayerGameObject { get; set; }
@@ -28,9 +25,6 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(PlayerSpeed).AsSingle();
         Container.BindInstance(PlayerHealth).AsSingle();
         Container.BindInstance(CharacterBleeding).AsSingle();
-        Container.BindInstance(PickableItemsInventory).AsSingle();
-        Container.BindInstance(WearableItemsInventory).AsSingle();
-        Container.BindInstance(InventoryAcviteStateSetter).AsSingle();
         Container.BindInstance(RayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
         Container.BindInstance(PlayerTransform).AsSingle();
@@ -46,9 +40,6 @@ public class PlayerInstaller : MonoInstaller
         PlayerSpeed = GetComponent<MovementSpeed>();
         PlayerHealth = GetComponent<PlayerHealth>();
         CharacterBleeding = GetComponent<CharacterBleeding>();
-        PickableItemsInventory = GetComponent<PickableItemsInventory>();
-        WearableItemsInventory = GetComponent<WearableItemsInventory>();
-        InventoryAcviteStateSetter = GetComponent<InventoryEnablerDisabler>();
         RayProvider = GetComponent<RayProvider>();
         PlayerTransform = transform;
         PlayerGameObject = gameObject;

@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 public class HealthSaving : DataSaving
 {
@@ -38,7 +39,5 @@ public class HealthSaving : DataSaving
         }
 
         m_injuryState.ActivateEffects();
-
     }
-
 }

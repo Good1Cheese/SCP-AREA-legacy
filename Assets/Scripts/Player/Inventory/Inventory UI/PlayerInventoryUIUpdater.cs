@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class PlayerInventoryUI : MonoBehaviour
+public class PlayerInventoryUIUpdater : MonoBehaviour
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
     [Inject] readonly PlayerHealth m_playerHealth;

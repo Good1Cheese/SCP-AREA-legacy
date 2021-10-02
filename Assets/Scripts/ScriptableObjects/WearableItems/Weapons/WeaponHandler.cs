@@ -5,7 +5,16 @@ public class WeaponHandler : WearableItemHandler
 {
     [SerializeField] Weapon_SO m_weapon_SO;
 
-    public int AmmoCount { get; set; }
+    int m_ammoCount;
+    public int AmmoCount 
+    {
+        get => m_ammoCount;
+        set 
+        {
+            m_ammoCount = value;
+        } 
+    }
+
     public int ClipAmmo { get; set; }
     public AudioClip CurrentShotSound { get; set; }
     public SilencerHandler SilencerHandler { get; set; }

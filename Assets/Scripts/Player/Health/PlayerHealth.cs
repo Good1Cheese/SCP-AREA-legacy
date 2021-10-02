@@ -2,7 +2,7 @@ using System;
 using Zenject;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterBleeding))]
+[RequireComponent(typeof(CharacterBleeding), typeof(PlayerDamageSound))]
 public class PlayerHealth : MonoBehaviour
 {
     [Inject] readonly CharacterBleeding m_characterBleeding;

@@ -75,11 +75,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4504709229982532503}
-  - component: {fileID: 4504709229982532497}
   - component: {fileID: 4504709229982532499}
   - component: {fileID: 4504709229982532498}
   - component: {fileID: 937838527}
   - component: {fileID: 937838528}
+  - component: {fileID: 28724567}
+  - component: {fileID: 28724566}
+  - component: {fileID: 4504709228995589975}
+  - component: {fileID: 9213037342631800206}
   m_Layer: 0
   m_Name: GameController 1
   m_TagString: Untagged
@@ -102,18 +105,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4504709229982532497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504709229982532500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdae0655af0a12c4684a8f2a8dc226ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4504709229982532499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,3 +174,57 @@ MonoBehaviour:
   - -20
   - -15
   - -10
+--- !u!114 &28724567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a62960b52d3ed469178dd0d7047680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_keyCardSlot: {fileID: 0}
+  m_weaponSlot: {fileID: 0}
+  m_maskSlot: {fileID: 0}
+--- !u!114 &28724566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bce1f59341a3d141bf0f7d8cde79a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxSlotsAmount: 8
+  m_itemsOffsetForSpawn: {x: 0, y: 0, z: 0}
+--- !u!114 &4504709228995589975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5027b336f489f5846bd47b739a6b9aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9213037342631800206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ef44aa0d9e8604cbd6a2b2eb10c3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerInventoryUI: {fileID: 0}

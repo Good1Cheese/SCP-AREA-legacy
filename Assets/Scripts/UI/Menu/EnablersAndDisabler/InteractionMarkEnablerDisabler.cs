@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class PlayerMarkEnablerDisabler : MonoBehaviour
+public class InteractionMarkEnablerDisabler : MonoBehaviour
 {
     [SerializeField] RectTransform m_markCanvas;
     [Inject] readonly Transform m_playerTransform;

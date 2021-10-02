@@ -2,6 +2,7 @@
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(PlayerWalkSound), typeof(PlayerRunSound))]
 public class MovementSpeed : MonoBehaviour
 {
     [SerializeField] float m_sneakSpeed;

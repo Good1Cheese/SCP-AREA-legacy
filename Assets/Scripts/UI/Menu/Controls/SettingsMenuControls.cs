@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class SettingsSceneControls : MonoBehaviour
+public class SettingsMenuControls : MonoBehaviour
 {
     [Inject] readonly SceneTransition m_sceneTransition;
 

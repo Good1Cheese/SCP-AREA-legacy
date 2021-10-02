@@ -4,7 +4,7 @@ using Zenject;
 
 public class InventoryEnablerDisabler : MonoBehaviour
 {
-    [SerializeField] PlayerInventoryUI m_playerInventoryUI;
+    [SerializeField] PlayerInventoryUIUpdater m_playerInventoryUI;
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
 
     public bool IsInventoryActivated { get; set; }
@@ -21,6 +21,7 @@ public class InventoryEnablerDisabler : MonoBehaviour
     public void ActivateOrDeactivateMenu()
     {
         if (m_pauseMenu.IsGamePaused) { return; }
+
         IsInventoryActivated = !IsInventoryActivated;
         OnInventoryButtonPressed?.Invoke();
         m_playerInventoryUI.ActivateOrClose();

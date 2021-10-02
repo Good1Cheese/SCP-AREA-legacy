@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(WeaponFire), typeof(WeaponMiss), typeof(WeaponReload))]
+[RequireComponent(typeof(WeaponFire), typeof(WeaponSpawnerAndDestroyer), typeof(WeaponReload))]
 public class WeaponActivator : WeaponAction
 {
     public bool IsWeaponActive { get; set; }
