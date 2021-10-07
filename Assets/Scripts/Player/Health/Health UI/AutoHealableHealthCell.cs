@@ -18,7 +18,7 @@ public class AutoHealableHealthCell : HealthCell
         m_healthCells = m_playerHealth.HealthCells;
 
         m_playerHealth.OnPlayerHeals += HealCell;
-        m_characterBleeding.OnPlayerBleedingStarted += HealthCellHealEffect.StopHealEffect;
+        m_characterBleeding.OnPlayerBleedingStarted += HealthCellHealEffect.StopHeal;
         m_characterBleeding.OnPlayerBleedingStopped += HealCellOnBleedingStopped;
     }
 
@@ -27,7 +27,7 @@ public class AutoHealableHealthCell : HealthCell
         if (!m_healthCells.IsCurrentCellLast(1)) { return; }
 
         IsFull = true;
-        HealthCellHealEffect.StartHealEffect();
+        HealthCellHealEffect.PlayHealWithDelay();
     }
 
     void HealCellOnBleedingStopped()
@@ -36,7 +36,7 @@ public class AutoHealableHealthCell : HealthCell
         if (!HealthCellHealEffect.IsHealContinueable) { return; }
 
         IsFull = true;
-        HealthCellHealEffect.StartHealEffect();
+        HealthCellHealEffect.PlayHealWithDelay();
     }
 
     public override void Clear()
@@ -47,14 +47,14 @@ public class AutoHealableHealthCell : HealthCell
 
         if (HealthCellHealEffect.IsHealing)
         {
-            HealthCellHealEffect.StopHealEffect();
+            HealthCellHealEffect.StopHeal();
 
             m_healthCells.GetFirstFilledCell().Clear();
 
             return;
         }
 
-        HealthCellHealEffect.StartHealEffect();
+        HealthCellHealEffect.PlayHealWithDelay();
         if (!m_playerHealth.HealthCells.IsCurrentCellLast(1)) { return; }
         IsFull = true;
     }
@@ -63,7 +63,7 @@ public class AutoHealableHealthCell : HealthCell
     {
         if (HealthCellHealEffect.IsHealing)
         {
-            HealthCellHealEffect.StopHealEffect();
+            HealthCellHealEffect.StopHeal();
         }
         base.Fill();
     }
@@ -71,7 +71,7 @@ public class AutoHealableHealthCell : HealthCell
     void OnDestroy()
     {
         m_playerHealth.OnPlayerHeals -= HealCell;
-        m_characterBleeding.OnPlayerBleedingStarted -= HealthCellHealEffect.StopHealEffect;
+        m_characterBleeding.OnPlayerBleedingStarted -= HealthCellHealEffect.StopHeal;
         m_characterBleeding.OnPlayerBleedingStopped -= HealCellOnBleedingStopped;
     }
 }

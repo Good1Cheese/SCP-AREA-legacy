@@ -6,12 +6,15 @@ public abstract class DataSaving : MonoBehaviour
     [Inject] protected readonly GameSaving m_gameSaving;
 
     public abstract void Save();
-    public abstract void Load();
+    public virtual void LoadData()
+    {
+        
+    }
 
-    public virtual void LoadFromMenu(string json)
+    public virtual void Load(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
-        Load();
+        LoadData();
     }
 
     public virtual string ToJson() => JsonUtility.ToJson(this);

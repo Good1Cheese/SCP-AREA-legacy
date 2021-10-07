@@ -4,7 +4,8 @@ using Zenject;
 public class InteractionMarkEnablerDisabler : MonoBehaviour
 {
     [SerializeField] RectTransform m_markCanvas;
-    [Inject] readonly Transform m_playerTransform;
+
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     InteractionProvider m_interactionProvider;
     GameObject m_canvasGameObject;

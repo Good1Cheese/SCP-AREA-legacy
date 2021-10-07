@@ -1,69 +1,44 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(PlayerWeaponSaverLoader))]
-public class PlayerWeaponSaving : DataSaving
+public class PlayerWeaponSaving : WearableItemSaving
 {
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly WeaponActivator m_weaponActivator;
 
-    public Transform PropsHandler { get; set; }
-    public PlayerWeaponSaverLoader WeaponData { get; set; }
-    public WeaponHandler CurrentWeaponHandler { get; set ; }
+    public bool isActive;
+    public int ammoCount;
+    public int clipAmmo;
 
-    void Start()
-    {
-        WeaponData = GetComponent<PlayerWeaponSaverLoader>();
-    }
+    WeaponHandler WeaponHandler { get => itemHandler as WeaponHandler; }
 
     public override void Save()
     {
-        WeaponData.Save();
+        isActive = m_weaponActivator.IsWeaponActive;
+
+        itemHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler;
+
+        if (itemHandler == null) { return; }
+
+        ammoCount = WeaponHandler.AmmoCount;
+        clipAmmo = WeaponHandler.ClipAmmo;
+
+        itemName = itemHandler.name;
     }
 
-    public override void Load()
+    public override void Load(string json)
     {
-        CurrentWeaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler;
+        base.Load(json);
 
-        if (CurrentWeaponHandler == null && WeaponData.savedWeaponHandler == null) { return; }
+        if (itemHandler == null) { return; }
 
-        if (CurrentWeaponHandler == WeaponData.savedWeaponHandler)
-        {
-            WeaponData.LoadWeaponData();
-            return;
-        }
-
-        if (WeaponData.isActive != m_weaponActivator.IsWeaponActive)
-        {
-            m_weaponActivator.SetWeaponActiveState(WeaponData.isActive);
-        }
-
-        if (CurrentWeaponHandler == null && WeaponData.savedWeaponHandler != null)
-        {
-            m_wearableItemsInventory.WeaponSlot.SetItem(WeaponData.savedWeaponHandler);
-            WeaponData.LoadWeaponData();
-
-            return;
-        }
-
-        m_wearableItemsInventory.WeaponSlot.ClearWearableSlot();
+        LoadWeaponData();
     }
 
-    public override void LoadFromMenu(string json)
+    public void LoadWeaponData()
     {
-        JsonUtility.FromJsonOverwrite(json, WeaponData);
-
-        if (string.IsNullOrEmpty(WeaponData.weaponName)) { return; }
-
-        GameObject weaponGameObject = PropsHandler.Find(WeaponData.weaponName).gameObject;
-        WeaponHandler weaponHandler = weaponGameObject.GetComponent<ItemHandler>() as WeaponHandler;
-
-        WeaponData.savedWeaponHandler = weaponHandler;
-        weaponHandler.Interact();
-
-        WeaponData.LoadWeaponData();
+        WeaponHandler.AmmoCount = ammoCount;
+        WeaponHandler.ClipAmmo = clipAmmo;
+        m_weaponActivator.SetWeaponActiveState(isActive);
     }
-
-    public override string ToJson() => JsonUtility.ToJson(WeaponData);
 }

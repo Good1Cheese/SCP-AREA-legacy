@@ -4,7 +4,6 @@ using Zenject;
 public class WeaponSpawnerAndDestroyer : MonoBehaviour
 {
     [Inject] readonly WearableItemsInventory m_equipmentInventory;
-    [Inject] readonly Transform m_playerTransform;
 
     WeaponHandler m_weaponHandler;
 
@@ -24,12 +23,6 @@ public class WeaponSpawnerAndDestroyer : MonoBehaviour
         }
 
         m_weaponHandler.PlayerWeapon.SetActive(false);
-    }
-
-    public void DespawnWeapon()
-    {
-        m_weaponHandler.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
-        m_weaponHandler.gameObject.SetActive(true);
     }
 
     public void HideGun()

@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public class SilencerHandler : WearableItemHandler
+public class SilencerHandler : ItemHandler
 {
     [SerializeField] Silencer_SO m_silencer_SO;
+
+    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
 
     public Silencer_SO Silencer_SO { get => m_silencer_SO; }
     public GameObject SilencerForPlayerWeapon { get; set; }
     public GameObject SilencerForWorldWeapon { get; set; }
-
 
     void Awake()
     {
@@ -22,7 +24,7 @@ public class SilencerHandler : WearableItemHandler
     {
         WeaponHandler weaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler;
 
-        if (weaponHandler == null)
+        if (weaponHandler == null || weaponHandler.SilencerHandler != null)
         {
             GameObject.SetActive(true);
             return;

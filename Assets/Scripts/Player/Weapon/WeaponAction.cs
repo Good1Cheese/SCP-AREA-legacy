@@ -12,7 +12,7 @@ public abstract class WeaponAction : MonoBehaviour
     protected void Start()
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += SetActive;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += SetScriptActiveState;
         m_inventoryAcviteStateSetter.OnInventoryButtonPressed += SetActiveState; 
         enabled = false;
     }
@@ -23,10 +23,10 @@ public abstract class WeaponAction : MonoBehaviour
 
         if (!m_weaponHandler.IsInInventory) { return; }
 
-        SetActive(!enabled);
+        SetScriptActiveState(!enabled);
     }
 
-    void SetActive(bool activeState)
+    void SetScriptActiveState(bool activeState)
     {
         enabled = activeState;
     }
@@ -39,7 +39,7 @@ public abstract class WeaponAction : MonoBehaviour
     protected void OnDestroy()
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetActive;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetScriptActiveState;
         m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= SetActiveState;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
+    public LoadingSceneUIController LoadingSceneUIController { get; set; }
+
     public enum Scenes
     {
         StartScene = 0,
@@ -17,7 +19,12 @@ public class SceneTransition : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public void LoadSceneAsynchronously(int index) => StartCoroutine(LoadSceneAsynchronouslyCoroutine(index));
+    public void LoadSceneAsynchronously(int index)
+    {
+        LoadingSceneUIController.SetActiveState(true);
+
+        StartCoroutine(LoadSceneAsynchronouslyCoroutine(index));
+    }
 
     public IEnumerator LoadSceneAsynchronouslyCoroutine(int index)
     {
@@ -26,10 +33,11 @@ public class SceneTransition : MonoBehaviour
         while (!loadingSceneProcess.isDone)
         {
             float progress = Mathf.Clamp01(loadingSceneProcess.progress / .9f);
-            print(progress);
+            LoadingSceneUIController.UpdateUI(progress);
 
             yield return null;
         }
-    }
 
+        LoadingSceneUIController.SetActiveState(false);
+    }
 }

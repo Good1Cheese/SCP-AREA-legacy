@@ -43,7 +43,7 @@ public class BleedingSaving : DataSaving
         m_isBleedingGoing = false;
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         if (bleedTime > 0) 
         {

@@ -7,13 +7,15 @@ public class PauseMenuEnablerDisabler : MonoBehaviour
 {
     [Inject] readonly InventoryEnablerDisabler m_wearableInventoryActivator;
     [Inject] readonly PlayerHealth m_playerHealth;
+    [Inject] readonly GameLoader m_gameLoader;
 
     public bool IsGamePaused { get; set; }
     public Action OnPauseMenuButtonPressed { get; set; }
 
-    void Start()
+    void Awake()
     {
         m_playerHealth.OnPlayerDies += DisablePauseMenu;
+        m_gameLoader.OnGameLoading += SetScriptActiveState;
     }
 
     void DisablePauseMenu()
@@ -44,8 +46,14 @@ public class PauseMenuEnablerDisabler : MonoBehaviour
         OnPauseMenuButtonPressed.Invoke();
     }
 
+    public void SetScriptActiveState(bool activeState)
+    {
+        enabled = activeState;
+    }
+
     void OnDestroy()
     {
-        m_playerHealth.OnPlayerDies += DisablePauseMenu;
+        m_playerHealth.OnPlayerDies -= DisablePauseMenu;
+        m_gameLoader.OnGameLoading -= SetScriptActiveState;
     }
 }

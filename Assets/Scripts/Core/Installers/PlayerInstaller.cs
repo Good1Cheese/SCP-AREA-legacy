@@ -27,7 +27,7 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(CharacterBleeding).AsSingle();
         Container.BindInstance(RayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
-        Container.BindInstance(PlayerTransform).AsSingle();
+        Container.BindInstance(PlayerTransform).WithId("Player").AsCached();
         Container.BindInstance(PlayerGameObject).AsSingle();
     }
 

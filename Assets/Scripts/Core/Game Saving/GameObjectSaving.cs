@@ -29,16 +29,16 @@ public class GameObjectSaving : DataSaving
         isActive = m_gameObject.activeSelf;
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         _transform.SetPositionAndRotation(position, rotation);
         m_gameObject.SetActive(isActive);
     }
 
-    public override void LoadFromMenu(string json)
+    public override void Load(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
         _transform = m_transform;
-        Load();
+        LoadData();
     }
 }

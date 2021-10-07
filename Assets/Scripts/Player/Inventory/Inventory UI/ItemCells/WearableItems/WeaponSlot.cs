@@ -36,14 +36,7 @@ public class WeaponSlot : WearableItemSlot
     public override void OnItemDeleted()
     {
         base.OnItemDeleted();
-        m_weaponSpawnerAndDestroyer.DespawnWeapon();
         OnWeaponDropped?.Invoke();
-    }
-
-    public override void ClearWearableSlot()
-    {
-        base.ClearWearableSlot();
-       // OnWeaponDropped?.Invoke();
     }
 
 }

@@ -21,7 +21,7 @@ public class HealthSaving : DataSaving
         }
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         for (int i = 0; i < m_playerHealth.HealthCells.Cells.Count; i++)
         {

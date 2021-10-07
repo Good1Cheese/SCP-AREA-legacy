@@ -5,15 +5,18 @@ public class CrosshairEnablerDisabler : MonoBehaviour
 {
     [Inject] readonly WeaponAim m_weaponAim;
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly GameLoader m_gameLoader;
 
     GameObject m_gameObject;
 
-    void Start()
+    void Awake()
     {
         m_gameObject = gameObject;
+
         m_weaponAim.OnPlayerAimed += Deactivate;
         m_weaponAim.OnPlayerInTakedAim += Activate;
         m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += Activate;
+        m_gameLoader.OnGameLoading += SetActiveState;
     }
 
     void Activate() => SetActiveState(true);
@@ -29,5 +32,6 @@ public class CrosshairEnablerDisabler : MonoBehaviour
         m_weaponAim.OnPlayerAimed -= Deactivate;
         m_weaponAim.OnPlayerInTakedAim -= Activate;
         m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= Activate;
+        m_gameLoader.OnGameLoading -= SetActiveState;
     }
 }

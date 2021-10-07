@@ -6,6 +6,7 @@ using Zenject;
 public class WeaponAim : WeaponAction
 {
     [Inject] readonly Animator m_weaponAnimator;
+    [Inject] readonly WeaponReload m_weaponReload;
 
     public Action OnPlayerShootedWithAim { get; set; }
     public Action OnPlayerShootedWithoutAim { get; set; }
@@ -15,6 +16,8 @@ public class WeaponAim : WeaponAction
 
     void Update()
     {
+        if (m_weaponReload.IsPlayerReloading) { return; }
+
         if (Input.GetMouseButtonDown(1))
         {
             OnPlayerAimed?.Invoke();
@@ -23,6 +26,8 @@ public class WeaponAim : WeaponAction
 
         if (Input.GetMouseButtonUp(1))
         {
+            if (!m_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
+
             OnPlayerInTakedAim?.Invoke();
             m_weaponAnimator.SetBool("IsPlayerTakedAim", false);
         }

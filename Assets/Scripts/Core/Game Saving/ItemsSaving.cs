@@ -22,7 +22,7 @@ public class ItemsSaving : DataSaving
         }
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         for (int i = 0; i < m_itemDataControllerss.Length; i++)
         {
@@ -32,11 +32,11 @@ public class ItemsSaving : DataSaving
         }
     }
 
-    public override void LoadFromMenu(string json)
+    public override void Load(string json)
     {
         ItemDataController[] itemDataHandlers = m_itemDataControllerss;
         JsonUtility.FromJsonOverwrite(json, this);
         m_itemDataControllerss = itemDataHandlers;
-        Load();
+        LoadData();
     }
 }

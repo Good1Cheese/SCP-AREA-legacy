@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(WeaponSaving))]
-public class WeaponHandler : WearableItemHandler
+public class WeaponHandler : ItemHandler
 {
     [SerializeField] Weapon_SO m_weapon_SO;
+    
+    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
 
     int m_ammoCount;
     public int AmmoCount 

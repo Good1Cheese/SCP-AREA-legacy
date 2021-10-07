@@ -5,6 +5,8 @@ using Zenject;
 [RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler), typeof(InjuryEffectsController))]
 public class GameControllerInstaller : MonoInstaller
 {
+    [SerializeField] Transform m_propsHandler;
+    GameLoader m_gameLoader;
     PauseMenuEnablerDisabler m_pauseMenuEnablerDisabler;
     InventoryEnablerDisabler m_inventoryEnablerDisabler;
     InjuryEffectsController m_injuryState;
@@ -16,8 +18,10 @@ public class GameControllerInstaller : MonoInstaller
     public override void InstallBindings()
     {
         GetComponents();
+        Container.BindInstance(m_propsHandler).WithId("PropsHandler").AsCached();
         Container.BindInstance(WearableItemsInventory).AsSingle();
         Container.BindInstance(PickableItemsInventory).AsSingle();
+        Container.BindInstance(m_gameLoader).AsSingle();
         Container.BindInstance(m_pauseMenuEnablerDisabler).AsSingle();
         Container.BindInstance(m_inventoryEnablerDisabler).AsSingle();
         Container.BindInstance(m_injuryState).AsSingle();
@@ -29,6 +33,7 @@ public class GameControllerInstaller : MonoInstaller
     {
         WearableItemsInventory = GetComponent<WearableItemsInventory>();
         PickableItemsInventory = GetComponent<PickableItemsInventory>();
+        m_gameLoader = GetComponent<GameLoader>();
         m_pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();
         m_inventoryEnablerDisabler = GetComponent<InventoryEnablerDisabler>();
         m_injuryState = GetComponent<InjuryEffectsController>();

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObjectSaver : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         DontDestroyOnLoad(gameObject);    
     }

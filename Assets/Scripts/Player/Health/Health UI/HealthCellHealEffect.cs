@@ -12,7 +12,8 @@ public class HealthCellHealEffect : MonoBehaviour
 
     WaitForSeconds m_timeoutWhileHealing;
     WaitForSeconds m_timeoutBeforeHealing;
-    IEnumerator m_playAnimationCoroutine;
+    IEnumerator m_healDelayCoroutine;
+    IEnumerator m_healCoroutine;
 
     public bool IsHealContinueable { get; set; }
     public bool IsHealing { get; set; }
@@ -20,29 +21,45 @@ public class HealthCellHealEffect : MonoBehaviour
 
     void Start()
     {
-        m_playAnimationCoroutine = PlayHealEffectCoroutine();
+        m_healDelayCoroutine = PlayHealWithDelayCoroutine();
+        m_healCoroutine = PlayHealCoroutine();
+
         m_timeoutWhileHealing = new WaitForSeconds(m_delayWhileHealing);
         m_timeoutBeforeHealing = new WaitForSeconds(m_delayBeforeHealing);
     }
 
-    public void StartHealEffect()
+    public void PlayHealWithDelay()
     {
         IsHealing = true;
-        StartCoroutine(m_playAnimationCoroutine);
+        StartCoroutine(m_healDelayCoroutine);
     }
 
-    public void StopHealEffect()
+    public void PlayHeal()
+    {
+        IsHealing = true;
+        StartCoroutine(m_healCoroutine);
+    }
+
+    public void StopHeal()
     {
         IsHealing = false;
         IsHealContinueable = Cell.Slider.value > 0 && Cell.Slider.value != 1;
-        StopCoroutine(m_playAnimationCoroutine);
-        m_playAnimationCoroutine = PlayHealEffectCoroutine();
+
+        StopCoroutine(m_healDelayCoroutine);
+        StopCoroutine(m_healCoroutine);
+
+        m_healDelayCoroutine = PlayHealWithDelayCoroutine();
+        m_healCoroutine = PlayHealCoroutine();
     }
 
-    IEnumerator PlayHealEffectCoroutine()
+    IEnumerator PlayHealWithDelayCoroutine()
     {
         yield return m_timeoutBeforeHealing;
+        StartCoroutine(m_healCoroutine);
+    }
 
+    public IEnumerator PlayHealCoroutine()
+    {
         IsHealContinueable = true;
 
         while (Cell.Slider.maxValue > Cell.Slider.value)
@@ -54,6 +71,6 @@ public class HealthCellHealEffect : MonoBehaviour
         IsHealContinueable = false;
 
         m_playerHealth.OnPlayerHeals?.Invoke();
-        StopHealEffect();
+        StopHeal();
     }
 }

@@ -6,47 +6,43 @@ using Zenject;
 public class GameLoading : MonoBehaviour
 {
     [Inject] readonly GameSaving m_gameSaving;
+    [Inject] readonly SceneTransition m_sceneTransition;
 
-    public Action OnGameLoaded { get; set; }
     public bool WasGameLoadedFromMenu { get; set; } = false;
 
     public void Load()
     {
         string path = m_gameSaving.GetSaveFilePath();
 
-        if (!File.Exists(path)) 
+        if (!File.Exists(path))
         {
-            Debug.LogWarning("File not found"); 
+            Debug.LogWarning("File not found");
             return;
         }
 
-        StreamReader reader = new StreamReader(path);
-        LoadSavedData(reader);
-
-        reader.Close();
-        OnGameLoaded?.Invoke();
+        PreLoadGame();
     }
 
-    void LoadSavedData(StreamReader reader)
+    public void PreLoadGame()
     {
+        m_gameSaving.SaveData.Clear();
+        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
+        WasGameLoadedFromMenu = true;
+    }
+
+    public void LoadGame()
+    {
+        StreamReader reader = new StreamReader(m_gameSaving.GetSaveFilePath());
+
         string json;
-
-        if (WasGameLoadedFromMenu)
-        {
-            for (int i = 0; (json = reader.ReadLine()) != null; i++)
-            {
-                m_gameSaving.SaveData[i].LoadFromMenu(json);
-            }
-            WasGameLoadedFromMenu = false;
-        }
-
         for (int i = 0; (json = reader.ReadLine()) != null; i++)
         {
             if (json.Length <= 2) { continue; }
 
-            JsonUtility.FromJsonOverwrite(json, m_gameSaving.SaveData[i]);
-            m_gameSaving.SaveData[i].Load();
+            m_gameSaving.SaveData[i].Load(json);
         }
-    }
 
+        reader.Close();
+    }
 }
+

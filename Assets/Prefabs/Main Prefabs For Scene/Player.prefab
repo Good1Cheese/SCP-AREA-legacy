@@ -533,8 +533,8 @@ GameObject:
   - component: {fileID: 686728870487613127}
   - component: {fileID: 15702450}
   - component: {fileID: 1039655028}
-  - component: {fileID: 278279002312280002}
-  - component: {fileID: 3847699743189054100}
+  - component: {fileID: 383227328218039775}
+  - component: {fileID: 227271351}
   - component: {fileID: 4942385127646654073}
   m_Layer: 0
   m_Name: PlayerSaving
@@ -663,7 +663,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_inventory: []
   m_itemsName: []
---- !u!114 &278279002312280002
+--- !u!114 &383227328218039775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039655024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa4ed3fb6d5a014daf6aa64573a6a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: 
+  itemHandler: {fileID: 0}
+  isInInventory: 0
+--- !u!114 &227271351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -675,24 +690,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2479d6c57dcef41a385cfa742a8fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3847699743189054100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039655024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001c47cf6910a624cacd234184dfb9ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  savedWeaponHandler: {fileID: 0}
+  itemName: 
+  itemHandler: {fileID: 0}
   isActive: 0
   ammoCount: 0
   clipAmmo: 0
-  isInInventory: 0
-  weaponName: 
 --- !u!114 &4942385127646654073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,8 +707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833d4a24b22379a4383f6ceb32283979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savedSilencerHandler: {fileID: 0}
-  silencerName: 
+  itemName: 
+  itemHandler: {fileID: 0}
 --- !u!1 &1425020528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,7 +1744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxInteractionDistance: 3
-  m_radiousOfSphereInteraction: 1.25
+  m_radiousOfSphereInteraction: 0.5
 --- !u!114 &122316324
 MonoBehaviour:
   m_ObjectHideFlags: 0

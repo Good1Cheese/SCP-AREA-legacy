@@ -11,7 +11,7 @@ public class StaminaSaving : DataSaving
         stamina = m_playerStamina.StaminaValue;
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         m_playerStamina.StaminaValue = stamina;
         m_playerStamina.StopRegeneration();

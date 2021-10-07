@@ -35,10 +35,10 @@ public class ItemSaving : GameObjectSaving
         base.Save();
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         ItemHandler.SetInInventoryState(isItemInInventory);
-        base.Load();
+        base.LoadData();
     }
 
     int FindItemIndex()

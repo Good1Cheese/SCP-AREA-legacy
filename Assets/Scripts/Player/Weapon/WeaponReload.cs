@@ -10,6 +10,8 @@ public class WeaponReload : WeaponAction
     [Inject] readonly PickableItemsInventory m_pickableItemsInventory;
     WaitForSeconds m_timeoutAfterReload;
 
+
+    public bool IsPlayerReloading { get; set; }
     public Action OnPlayerReloaded { get; set; }
     public Action OnWeaponAmmoChanged { get; set; }
 
@@ -21,6 +23,7 @@ public class WeaponReload : WeaponAction
                 || m_weaponHandler.AmmoCount <= 0) { return; }
 
             if (m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing) { return; }
+            IsPlayerReloading = true;
             StartCoroutine(Reload());
         }
     }
@@ -48,6 +51,7 @@ public class WeaponReload : WeaponAction
 
         yield return m_timeoutAfterReload;
 
+        IsPlayerReloading = false;
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
 

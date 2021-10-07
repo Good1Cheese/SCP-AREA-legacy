@@ -43,8 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers:
-  - {fileID: 11400000, guid: b4c0f2ef9375cee43a807f2b2198225d, type: 2}
+  _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 0}
   - {fileID: 0}
@@ -117,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df87091997339ef478155d725ceb52e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_propsHandler: {fileID: 0}
 --- !u!114 &4504709229982532498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,15 +165,15 @@ MonoBehaviour:
   - 0.6
   - 0.3
   m_lensDistortionValues:
-  - -0.4
+  - -0.45
   - -0.3
   - -0.2
   - -0.1
   m_saturationValues:
-  - -25
-  - -20
-  - -15
-  - -10
+  - -70
+  - -65
+  - -50
+  - -30
 --- !u!114 &28724567
 MonoBehaviour:
   m_ObjectHideFlags: 0

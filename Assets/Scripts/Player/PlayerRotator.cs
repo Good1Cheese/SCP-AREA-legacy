@@ -13,7 +13,7 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] Transform m_camera;
 
     [Inject] readonly InventoryEnablerDisabler m_werableInventoryAcviteStateSetter;
-    [Inject] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     float m_yRotation;
     float m_xRotation;

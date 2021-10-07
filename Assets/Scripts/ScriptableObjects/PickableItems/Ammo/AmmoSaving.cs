@@ -17,7 +17,7 @@ public class AmmoSaving : DataSaving
         ammoCount = m_ammoHandler.AmmoCount;
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         m_ammoHandler.IsAmmoAdded = isAmmoAdded;
         m_ammoHandler.AmmoCount = ammoCount;

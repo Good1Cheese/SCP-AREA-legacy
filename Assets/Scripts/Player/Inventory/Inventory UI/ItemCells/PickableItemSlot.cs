@@ -40,13 +40,11 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     public void OnLeftClick()
     {
-        print(name + "Left");
         playerInventory.OnItemLeftClicked.Invoke(this, SlotIndex);
     }
 
     public override void OnRightClick()
     {
-        print(name + "Right");
         playerInventory.OnItemRightClicked.Invoke(this, SlotIndex);
     }
 

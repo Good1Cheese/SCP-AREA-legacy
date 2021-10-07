@@ -8,7 +8,7 @@ public class PickableItemsInventory : MonoBehaviour
     [SerializeField, Range(0, 8)] int m_maxSlotsAmount;
     [SerializeField] Vector3 m_itemsOffsetForSpawn;
 
-    [Inject] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     public PickableItemHandler[] Inventory { get; set; }
     public Action OnInventoryChanged { get; set; }

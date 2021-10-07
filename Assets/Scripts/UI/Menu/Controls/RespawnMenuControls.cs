@@ -4,7 +4,6 @@ using Zenject;
 public class RespawnMenuControls : MonoBehaviour
 {
     [Inject] readonly SceneTransition m_sceneTransition;
-    [Inject] readonly GameSaving m_gameSaver;
 
     void Start()
     {
@@ -13,14 +12,8 @@ public class RespawnMenuControls : MonoBehaviour
         Cursor.visible = true;    
     }
 
-    public void PlayAgain()
-    {
-        m_gameSaver.SaveData.Clear();
-        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.ScpScene);
-    }
-
     public void ReturnToMainMenu()
     {
-        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.StartScene);
+        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
     }
 }

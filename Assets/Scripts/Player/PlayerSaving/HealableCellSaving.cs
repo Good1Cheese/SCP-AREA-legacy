@@ -1,4 +1,3 @@
-using UnityEngine;
 using Zenject;
 
 public class HealableCellSaving : DataSaving
@@ -21,13 +20,12 @@ public class HealableCellSaving : DataSaving
         healProgress = m_autoHealableHealthCell.Slider.value;
     }
 
-    public override void Load()
+    public override void LoadData()
     {
         if (m_playerHealth.HealthCells.IsCurrentCellLast() && ishealContinueable)
         {
             m_autoHealableHealthCell.Slider.value = healProgress;
-            m_autoHealableHealthCell.HealthCellHealEffect.StopHealEffect();
-            m_autoHealableHealthCell.HealthCellHealEffect.StartHealEffect();
+            m_autoHealableHealthCell.HealthCellHealEffect.PlayHeal();
         }
     }
 

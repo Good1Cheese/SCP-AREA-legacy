@@ -4,7 +4,7 @@ using Zenject;
 public class PlayerDeathCloneActivator : MonoBehaviour
 {
     [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     DeathAnimationPlayer m_playerDeathAnimation;
     GameObject m_gameObject;

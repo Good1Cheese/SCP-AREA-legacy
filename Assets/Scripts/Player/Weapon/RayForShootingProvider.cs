@@ -7,7 +7,7 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
     [SerializeField] Transform m_bulletSpawnPoint;
 
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
     [Inject] readonly WeaponAim m_weaponAim;
 
     public System.Action<RaycastHit> OnRayLaunched { get; set; }

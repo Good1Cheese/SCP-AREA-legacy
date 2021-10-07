@@ -4,10 +4,10 @@ using Zenject;
 public class InventorySaving : DataSaving
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
+    [Inject(Id = "PropsHandler")] readonly Transform PropsHandler;
+
     public PickableItemHandler[] m_inventory;
     public string[] m_itemsName;
-
-    public Transform PropsHandler { get; set; }
 
     void Start()
     {
@@ -27,18 +27,7 @@ public class InventorySaving : DataSaving
         }
     }
 
-    public override void Load()
-    {
-        m_playerInventory.CurrentItemIndex = 0;
-        for (int i = 0; i < m_inventory.Length; i++)
-        {
-            m_playerInventory.Inventory[i] = m_inventory[i];
-            if (m_inventory[i] != null) { m_playerInventory.CurrentItemIndex = i + 1; }
-        }
-        m_playerInventory.OnInventoryChanged?.Invoke();
-    }
-
-    public override void LoadFromMenu(string json)
+    public override void Load(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
 

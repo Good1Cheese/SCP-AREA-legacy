@@ -42,7 +42,7 @@ public class PauseMenuControls : MonoBehaviour
 
     public void Exit()
     {
-        sceneTransition.LoadScene((int)SceneTransition.Scenes.StartScene);
+        sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
         Time.timeScale = 1;
     }
 

@@ -1,11 +1,14 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 public abstract class WearableItemSlot : InventorySlot
 {
     [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     public new void Clear()
     {
+        DespawnWeapon();
         ItemHandler.IsInInventory = false;
         base.Clear();
     }
@@ -31,6 +34,12 @@ public abstract class WearableItemSlot : InventorySlot
     public override void OnRightClick()
     {
         m_wearableItemsInventory.OnItemClicked.Invoke(this);
+    }
+
+    public void DespawnWeapon()
+    {
+        ItemHandler.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
+        ItemHandler.gameObject.SetActive(true);
     }
 
 

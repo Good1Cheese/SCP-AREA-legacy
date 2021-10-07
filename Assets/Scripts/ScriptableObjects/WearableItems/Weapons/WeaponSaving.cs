@@ -21,9 +21,9 @@
         base.Save();
     }
 
-    public override void Load()
+    public override void LoadData()
     {
-        base.Load();
+        base.LoadData();
 
         m_weaponHandler.AmmoCount = ammoCount;
         m_weaponHandler.ClipAmmo = clipAmmo;
