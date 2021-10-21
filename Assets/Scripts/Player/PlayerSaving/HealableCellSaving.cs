@@ -22,11 +22,10 @@ public class HealableCellSaving : DataSaving
 
     public override void LoadData()
     {
-        if (m_playerHealth.HealthCells.IsCurrentCellLast() && ishealContinueable)
-        {
-            m_autoHealableHealthCell.Slider.value = healProgress;
-            m_autoHealableHealthCell.HealthCellHealEffect.PlayHeal();
-        }
+        if (!m_playerHealth.HealthCells.IsCurrentCellLast() || !ishealContinueable) { return; }
+
+        m_autoHealableHealthCell.Slider.value = healProgress;
+        m_autoHealableHealthCell.HealthCellHealEffect.PlayHeal();
     }
 
 

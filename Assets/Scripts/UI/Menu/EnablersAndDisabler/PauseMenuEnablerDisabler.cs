@@ -3,57 +3,29 @@ using UnityEngine;
 using Zenject;
 
 
-public class PauseMenuEnablerDisabler : MonoBehaviour
+public class PauseMenuEnablerDisabler : UIEnablerDisabler
 {
+    const KeyCode PAUSE_KEY = KeyCode.Escape;
     [Inject] readonly InventoryEnablerDisabler m_wearableInventoryActivator;
-    [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject] readonly GameLoader m_gameLoader;
 
-    public bool IsGamePaused { get; set; }
     public Action OnPauseMenuButtonPressed { get; set; }
-
-    void Awake()
-    {
-        m_playerHealth.OnPlayerDies += DisablePauseMenu;
-        m_gameLoader.OnGameLoading += SetScriptActiveState;
-    }
-
-    void DisablePauseMenu()
-    {
-        if (IsGamePaused)
-        {
-            PauseOrUnpauseGame();
-        }
-        enabled = false;
-    }
 
     void Update()
     {
-        if (Input.GetButtonDown("PauseMenu"))
+        if (Input.GetKeyDown(PAUSE_KEY))
         {
-            if (m_wearableInventoryActivator.IsInventoryActivated)
+            if (m_wearableInventoryActivator.IsUIActivated)
             {
-                m_wearableInventoryActivator.ActivateOrDeactivateMenu();
+                m_wearableInventoryActivator.EnableDisableUI();
             }
-            PauseOrUnpauseGame();
+            EnableDisableUI();
         }
     }
 
-    public void PauseOrUnpauseGame()
+    public override void EnableDisableUI()
     {
-        IsGamePaused = !IsGamePaused;
+        IsUIActivated = !IsUIActivated;
         m_wearableInventoryActivator.OnInventoryButtonPressed?.Invoke();
         OnPauseMenuButtonPressed.Invoke();
-    }
-
-    public void SetScriptActiveState(bool activeState)
-    {
-        enabled = activeState;
-    }
-
-    void OnDestroy()
-    {
-        m_playerHealth.OnPlayerDies -= DisablePauseMenu;
-        m_gameLoader.OnGameLoading -= SetScriptActiveState;
     }
 }

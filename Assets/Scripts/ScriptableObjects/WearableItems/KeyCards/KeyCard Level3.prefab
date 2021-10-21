@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_keyCard_SO: {fileID: 11400000, guid: d4c6d3422d19a87469170b358e37ac5a, type: 2}
+  m_keyCard_SO: {fileID: 11400000, guid: 7e3d6df162cff4a4a9b976dee66ff6e3, type: 2}
 --- !u!114 &5127248310440600291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isActive: 0
+  isItemInInventory: 0
 --- !u!114 &8072456192214955555
 MonoBehaviour:
   m_ObjectHideFlags: 0

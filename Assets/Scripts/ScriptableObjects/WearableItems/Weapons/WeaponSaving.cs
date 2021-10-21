@@ -1,8 +1,13 @@
-﻿public class WeaponSaving : ItemSaving
+﻿using UnityEngine;
+using Zenject;
+
+public class WeaponSaving : ItemSaving
 {
+    [Inject(Id = "PropsHandler")] readonly protected Transform PropsHandler;
+
     WeaponHandler m_weaponHandler;
 
-    public SilencerHandler silencerHandler;
+    public string silencerName;
     public int ammoCount;
     public int clipAmmo;
     public bool isAmmoAdded;
@@ -15,10 +20,13 @@
 
     public override void Save()
     {
-        silencerHandler = m_weaponHandler.SilencerHandler;
         ammoCount = m_weaponHandler.AmmoCount;
         clipAmmo = m_weaponHandler.ClipAmmo;
         base.Save();
+
+        if (m_weaponHandler.SilencerHandler == null) { return; }
+
+        silencerName = m_weaponHandler.SilencerHandler.GameObject.name;
     }
 
     public override void LoadData()
@@ -28,9 +36,11 @@
         m_weaponHandler.AmmoCount = ammoCount;
         m_weaponHandler.ClipAmmo = clipAmmo;
 
-        if (silencerHandler == null && m_weaponHandler.SilencerHandler != null)
-        {
-            m_weaponHandler.SilencerHandler.Unequip();
-        }
+        if (string.IsNullOrEmpty(silencerName)) { return; }
+
+        GameObject itemGameObject = PropsHandler.Find(silencerName).gameObject;
+        SilencerHandler silencerHandler = itemGameObject.GetComponent<ItemHandler>() as SilencerHandler;
+
+        silencerHandler.EquipOnWeapon(m_weaponHandler);
     }
 }

@@ -5,6 +5,7 @@ using Zenject;
 
 public class GameLoading : MonoBehaviour
 {
+    private const int EMPTY_JSON_LENGHT = 2;
     [Inject] readonly GameSaving m_gameSaving;
     [Inject] readonly SceneTransition m_sceneTransition;
 
@@ -37,7 +38,7 @@ public class GameLoading : MonoBehaviour
         string json;
         for (int i = 0; (json = reader.ReadLine()) != null; i++)
         {
-            if (json.Length <= 2) { continue; }
+            if (json.Length <= EMPTY_JSON_LENGHT) { continue; }
 
             m_gameSaving.SaveData[i].Load(json);
         }

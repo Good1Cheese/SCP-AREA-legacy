@@ -5,60 +5,46 @@ public class SilencerHandler : ItemHandler
 {
     [SerializeField] Silencer_SO m_silencer_SO;
 
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
-    public Silencer_SO Silencer_SO { get => m_silencer_SO; }
-    public GameObject SilencerForPlayerWeapon { get; set; }
-    public GameObject SilencerForWorldWeapon { get; set; }
+    GameObject m_silencerForPlayerWeapon;
+    GameObject m_silencerForWorldWeapon;
 
     void Awake()
     {
-        SilencerForPlayerWeapon = Instantiate(Silencer_SO.silencerForPlayerPrefab);
-        SilencerForPlayerWeapon.SetActive(false);
+        m_silencerForPlayerWeapon = Instantiate(m_silencer_SO.silencerForPlayerPrefab);
+        m_silencerForPlayerWeapon.SetActive(false);
 
-        SilencerForWorldWeapon = Instantiate(SilencerForPlayerWeapon);
-        SilencerForWorldWeapon.SetActive(false);
+        m_silencerForWorldWeapon = Instantiate(m_silencerForPlayerWeapon);
+        m_silencerForWorldWeapon.SetActive(false);
     }
 
     public override void Equip()
     {
-        WeaponHandler weaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler;
+        EquipOnWeapon(m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler);
+        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped?.Invoke();
+    }
 
-        if (weaponHandler == null || weaponHandler.SilencerHandler != null)
+    public void EquipOnWeapon(WeaponHandler weaponForEquiping)
+    {
+        if (weaponForEquiping == null || weaponForEquiping.SilencerHandler != null)
         {
+            print("Bug moment");
             GameObject.SetActive(true);
             return;
         }
 
-        SpawnSilencer(SilencerForPlayerWeapon, weaponHandler.PlayerWeapon);
-        SpawnSilencer(SilencerForWorldWeapon, weaponHandler.GameObject);
+        SpawnSilencer(m_silencerForPlayerWeapon, weaponForEquiping.WearableItemForPlayer);
+        SpawnSilencer(m_silencerForWorldWeapon, weaponForEquiping.GameObject);
 
-        weaponHandler.SilencerHandler = this;
-        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped?.Invoke();
-    }
-
-    public void Unequip()
-    {
-        WeaponHandler weaponHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler;
-
-        DespawnSilencer(SilencerForPlayerWeapon);
-        DespawnSilencer(SilencerForWorldWeapon);
-
-        m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped.Invoke();
-        weaponHandler.SilencerHandler = null;
+        weaponForEquiping.SilencerHandler = this;
     }
 
     void SpawnSilencer(GameObject silencer, GameObject spawnObject)
     {
         silencer.transform.SetParent(spawnObject.transform, false);
-        silencer.transform.localPosition = Silencer_SO.positionForSilencer;
+        silencer.transform.localPosition = m_silencer_SO.positionForSilencer;
         silencer.SetActive(true);
-    }
-
-    void DespawnSilencer(GameObject silencer)
-    {
-        silencer.transform.SetParent(null, false);
-        silencer.SetActive(false);
     }
 
     public override Item_SO GetItem() => m_silencer_SO;

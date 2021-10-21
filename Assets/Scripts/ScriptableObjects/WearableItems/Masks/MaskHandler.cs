@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class MaskHandler : ItemHandler
+public class MaskHandler : WearableItemHandler
 {
     [SerializeField] Mask_SO m_mask_SO;
 

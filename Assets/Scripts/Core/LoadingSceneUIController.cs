@@ -13,13 +13,6 @@ public class LoadingSceneUIController : MonoBehaviour
 
     public bool IsActiveStateConstant { get; set; }
 
-    void Awake()
-    {
-        if (m_sceneTransition.LoadingSceneUIController == null) { return; }
-
-        Destroy(m_sceneTransition.LoadingSceneUIController.gameObject);
-    }
-
     void Start()
     {
         m_sceneTransition.LoadingSceneUIController = this;
@@ -33,8 +26,6 @@ public class LoadingSceneUIController : MonoBehaviour
 
         m_gameObject.SetActive(activeState);
     }
-
-
 
     public void UpdateUI(float progress)
     {

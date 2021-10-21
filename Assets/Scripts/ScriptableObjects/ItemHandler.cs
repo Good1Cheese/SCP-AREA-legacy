@@ -1,13 +1,11 @@
-using System;
 using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(ItemDataController))]
 public abstract class ItemHandler : IInteractable
 {
     bool m_isInInventory;
 
-    public bool IsInInventory 
+    public bool IsInInventory
     {
         get => m_isInInventory;
         set
@@ -17,14 +15,14 @@ public abstract class ItemHandler : IInteractable
         }
     }
 
-    public void SetInInventoryState(bool value) => m_isInInventory = value;
-
-    public GameObject GameObject { get; set; }
-
     void Start()
     {
         GameObject = gameObject;
     }
+
+    public virtual GameObject GameObject { get; set; }
+
+    public void SetInInventoryState(bool value) => m_isInInventory = value;
 
     public override void Interact()
     {
@@ -33,13 +31,8 @@ public abstract class ItemHandler : IInteractable
         Equip();
     }
 
-    public virtual void OnInventoryStateChanged(bool isItemInInventory)
-    {
+    public virtual void OnInventoryStateChanged(bool isItemInInventory) { }
 
-    }
-
-    public abstract Item_SO GetItem();  
-
+    public abstract Item_SO GetItem();
     public abstract void Equip();
-
 }

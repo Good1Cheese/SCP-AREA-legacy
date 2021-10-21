@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 public class PlayerWeaponSaving : WearableItemSaving
 {
@@ -10,27 +9,26 @@ public class PlayerWeaponSaving : WearableItemSaving
     public int ammoCount;
     public int clipAmmo;
 
-    WeaponHandler WeaponHandler { get => itemHandler as WeaponHandler; }
+    public WeaponHandler WeaponHandler { get => ItemHandler as WeaponHandler; }
 
     public override void Save()
     {
-        isActive = m_weaponActivator.IsWeaponActive;
+        ItemHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler;
 
-        itemHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler;
-
-        if (itemHandler == null) { return; }
+        if (ItemHandler == null) { return; }
 
         ammoCount = WeaponHandler.AmmoCount;
+        isActive = WeaponHandler.WearableItemForPlayer.activeSelf;
         clipAmmo = WeaponHandler.ClipAmmo;
 
-        itemName = itemHandler.name;
+        itemName = ItemHandler.name;
     }
 
     public override void Load(string json)
     {
         base.Load(json);
 
-        if (itemHandler == null) { return; }
+        if (ItemHandler == null) { return; }
 
         LoadWeaponData();
     }
@@ -39,6 +37,6 @@ public class PlayerWeaponSaving : WearableItemSaving
     {
         WeaponHandler.AmmoCount = ammoCount;
         WeaponHandler.ClipAmmo = clipAmmo;
-        m_weaponActivator.SetWeaponActiveState(isActive);
+        m_weaponActivator.SetItemActiveState(isActive);
     }
 }

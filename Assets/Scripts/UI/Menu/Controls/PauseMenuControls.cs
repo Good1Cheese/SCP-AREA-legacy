@@ -25,18 +25,18 @@ public class PauseMenuControls : MonoBehaviour
 
     public void UnpauseGame()
     {
-        m_pauseMenu.PauseOrUnpauseGame();
+        m_pauseMenu.EnableDisableUI();
     }
 
     public void SaveGame()
     {
-        m_pauseMenu.PauseOrUnpauseGame();
+        m_pauseMenu.EnableDisableUI();
         m_gameSaver.Save();
     }
 
     public void LoadGame()
     {
-        m_pauseMenu.PauseOrUnpauseGame();
+        m_pauseMenu.EnableDisableUI();
         m_gameLoader.Load();
     }
 

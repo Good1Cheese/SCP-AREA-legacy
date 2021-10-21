@@ -13,6 +13,6 @@
 
     public abstract void Use();
 
-    public virtual bool ShouldItemNotUsed() => false;
+    public virtual bool ShouldItemNotBeUsed() => false;
 }
 

@@ -15,5 +15,7 @@ public class RespawnMenuControls : MonoBehaviour
     public void ReturnToMainMenu()
     {
         m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
+
+        Destroy(m_sceneTransition.LoadingSceneUIController.gameObject);
     }
 }

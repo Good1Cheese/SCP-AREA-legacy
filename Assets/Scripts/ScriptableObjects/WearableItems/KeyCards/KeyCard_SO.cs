@@ -1,18 +1,11 @@
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "new KeyCard", menuName = "ScriptableObjects/WearableItems/KeyCard")]
-public class KeyCard_SO : Item_SO
+public abstract class KeyCard_SO : Item_SO
 {
-    [SerializeField] KeyCardLevels m_keyCardLevel;
+    public abstract KeyCardType GetKeyCardType();
+    public abstract int KeyCardLevel { get; }
 
-    public int GetKeyCardLevel() => (int)m_keyCardLevel + 1;
-
-    public enum KeyCardLevels
+    public enum KeyCardType
     {
-        First, 
-        Second,
-        Third,
-        Fourth,
-        Fifth
+        SecurityKeyCard,
+        ScienceKeyCard
     }
 }

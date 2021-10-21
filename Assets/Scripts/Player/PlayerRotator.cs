@@ -15,14 +15,11 @@ public class PlayerRotator : MonoBehaviour
     [Inject] readonly InventoryEnablerDisabler m_werableInventoryAcviteStateSetter;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
-    float m_yRotation;
-    float m_xRotation;
-
     float m_mouseY;
     float m_mouseX;
 
-    public float YRotation { get => m_yRotation; set => m_yRotation = value; }
-    public float XRotation { get => m_xRotation; set => m_xRotation = value; }
+    public float YRotation { get; set; }
+    public float XRotation { get; set; }
 
     void Start()
     {
@@ -52,8 +49,8 @@ public class PlayerRotator : MonoBehaviour
         m_mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * m_xSensitivity;
 
         XRotation += m_mouseX;
-        Quaternion playerTargetRotation = Quaternion.Euler(0, XRotation, 0);
 
+        Quaternion playerTargetRotation = Quaternion.Euler(0, XRotation, 0);
         m_playerTransform.localRotation = Quaternion.Slerp(m_playerTransform.localRotation, playerTargetRotation, m_smoothTime * Time.deltaTime);
     }
 

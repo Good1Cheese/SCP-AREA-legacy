@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
-public class DoorInteractable : IInteractable
+public abstract class DoorInteractable : IInteractable
 {
-    [SerializeField] int m_levelForOpen;
+    public abstract int KeyCardType { get; }
+    public abstract int KeyCardLevelToOpen { get; }
 
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
@@ -11,13 +11,11 @@ public class DoorInteractable : IInteractable
     {
         var keycardHandler = m_wearableItemsInventory.KeyCardSlot.ItemHandler as KeyCardHandler;
 
-        if (keycardHandler == null) { return; }
+        if (keycardHandler == null || (int)keycardHandler.KeyCard_SO.GetKeyCardType() != KeyCardType) { return; }
 
-        print(keycardHandler.KeyCard_SO.GetKeyCardLevel());
-        if (keycardHandler.KeyCard_SO.GetKeyCardLevel() >= m_levelForOpen)
+        if (keycardHandler.KeyCard_SO.KeyCardLevel >= KeyCardLevelToOpen)
         {
-            print("dsa");
+            print("Пропуск");
         }
     }
 }
-

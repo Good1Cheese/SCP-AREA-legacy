@@ -25,7 +25,7 @@ public class PickableItemHandler : ItemHandler
 
     public virtual void OnItemClicked(int slotIndex)
     {
-        if (m_pickableItem_SO.ShouldItemNotUsed()) { return; }
+        if (m_pickableItem_SO.ShouldItemNotBeUsed()) { return; }
         m_pickableItem_SO.Use();
         m_gameControllerInstaller.PickableItemsInventory.RemoveItem(slotIndex);
     }

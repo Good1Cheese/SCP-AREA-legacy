@@ -8,9 +8,7 @@ public class KeyCardSaving : WearableItemSaving
 
     public override void Save()
     {
-        itemHandler = m_wearableItemsInventory.KeyCardSlot.ItemHandler;
-
-        if (itemHandler == null) { return; }
+        if (m_wearableItemsInventory.KeyCardSlot.ItemHandler == null) { return; }
 
         itemName = m_wearableItemsInventory.KeyCardSlot.ItemHandler.name;
     }

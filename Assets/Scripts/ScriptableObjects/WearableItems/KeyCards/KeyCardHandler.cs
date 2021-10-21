@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class KeyCardHandler : ItemHandler
+public class KeyCardHandler : WearableItemHandler
 {
     [SerializeField] KeyCard_SO m_keyCard_SO;
 

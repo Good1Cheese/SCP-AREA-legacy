@@ -32,9 +32,13 @@ public class InteractionProvider : MonoBehaviour
                                 m_radiousOfSphereInteraction,
                                 m_maxInteractionDistance));
 
-        if (raycastHit == null) { return; }
+        if (raycastHit == null)
+        {
+            OnPlayerFindUnInteractable?.Invoke();
+            return;
+        }
 
-        OnPlayerFindInteractable.Invoke(raycastHit.Value.collider);
+        OnPlayerFindInteractable?.Invoke(raycastHit.Value.collider);
 
         m_interactable = raycastHit.Value.collider.gameObject.GetComponent<IInteractable>();
 
@@ -44,14 +48,13 @@ public class InteractionProvider : MonoBehaviour
         }
     }
 
-
     public RaycastHit? GetInteractableObject(RaycastHit[] raycastHits)
     {
         RaycastHit? interactableObject = null;
 
         if (raycastHits == null)
         {
-            OnPlayerFindUnInteractable();
+            OnPlayerFindUnInteractable?.Invoke();
             return null;
         }
 
@@ -61,12 +64,7 @@ public class InteractionProvider : MonoBehaviour
 
             if (!isHitObjectInteractable) { continue; }
 
-            if (interactableObject == null) { interactableObject = raycastHits[i]; continue; }
-
-            if (raycastHits[i].distance < interactableObject.Value.distance)
-            {
-                interactableObject = raycastHits[i];
-            }
+            interactableObject = raycastHits[i];
         }
 
         return interactableObject;

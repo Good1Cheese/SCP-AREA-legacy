@@ -23,6 +23,7 @@ public class GameLoader : MonoBehaviour
         m_gameLoading.LoadGame();
 
         OnGameLoading?.Invoke(true);
+
         m_sceneTransition.LoadingSceneUIController.IsActiveStateConstant = false;
         m_sceneTransition.LoadingSceneUIController.SetActiveState(false);
     }

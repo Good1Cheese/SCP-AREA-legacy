@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(DataSaving))]
+[RequireComponent(typeof(ItemSaving))]
 public class ItemDataController : MonoBehaviour
 {
     [Inject] readonly PickableItemsInventory m_playerInventory;
@@ -28,7 +28,9 @@ public class ItemDataController : MonoBehaviour
             ItemDataHandler.BecomeUnsaveable();
             return;
         }
+
         if (ItemDataHandler.IsSubscribed) { return; }
+
         ItemDataHandler.BecomeSaveable();
     }
 

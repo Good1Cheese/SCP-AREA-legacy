@@ -17,6 +17,11 @@ public class GameControllerInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        if (m_propsHandler == null)
+        {
+            Debug.LogError("Props Hadnler Field ist's serialized");
+        }
+
         GetComponents();
         Container.BindInstance(m_propsHandler).WithId("PropsHandler").AsCached();
         Container.BindInstance(WearableItemsInventory).AsSingle();
