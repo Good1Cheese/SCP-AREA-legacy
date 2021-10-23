@@ -4,10 +4,6 @@ using Zenject;
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
-    [SerializeField] Weapon_SO m_weapon_SO;
-
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
-
     int m_ammoCount;
     SilencerHandler m_silencerHandler;
 
@@ -27,17 +23,16 @@ public class WeaponHandler : WearableItemHandler
         get => m_silencerHandler;
         set
         {
-            CurrentShotSound = m_weapon_SO.shotSoundWithSilencer;
+            CurrentShotSound = Weapon_SO.shotSoundWithSilencer;
             m_silencerHandler = value;
         }
     }
 
-    public Weapon_SO Weapon_SO { get => m_weapon_SO; }
+    public Weapon_SO Weapon_SO { get => (Weapon_SO)m_wearableItem_SO; }
 
-    void Awake()
+    new void Awake()
     {
-        WearableItemForPlayer = Instantiate(m_weapon_SO.playerWeaponPrefab);
-        WearableItemForPlayer.SetActive(false);
+        base.Awake();
 
         Weapon_SO.timeoutAfterShot = new WaitForSeconds(Weapon_SO.delayAfterShot);
         CurrentShotSound = Weapon_SO.shotSound;
@@ -47,6 +42,4 @@ public class WeaponHandler : WearableItemHandler
     {
         m_wearableItemsInventory.WeaponSlot.SetItem(this);
     }
-
-    public override Item_SO GetItem() => m_weapon_SO;
 }

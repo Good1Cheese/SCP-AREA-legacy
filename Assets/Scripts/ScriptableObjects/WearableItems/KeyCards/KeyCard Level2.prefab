@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnOffset: {x: 0.706, y: 0, z: 0.679}
   m_keyCard_SO: {fileID: 11400000, guid: dfad692e2d46bd64cb7e184066b619fe, type: 2}
 --- !u!114 &2151668397409083113
 MonoBehaviour:

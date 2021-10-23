@@ -17,9 +17,9 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void Clear()
     {
+        OnItemDeleted();
         ItemHandler = null;
         m_image.sprite = null;
-        OnItemDeleted();
     }
 
     public void OnPointerClick(PointerEventData eventData)

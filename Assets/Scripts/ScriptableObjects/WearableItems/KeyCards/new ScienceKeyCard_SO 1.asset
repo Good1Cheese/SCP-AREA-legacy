@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: 
-  KeyCardType: 1
-  KeyCardLevel: 0
+  playerGameObjectspawnOffset: {x: 0.555, y: -0.15, z: 0.467}
+  playerGameObjectPrefab: {fileID: 277353614761163988, guid: e5753bef0f12e9a41a61c24e0408d09c, type: 3}
+  m_scienceKeyCardLevel: 0

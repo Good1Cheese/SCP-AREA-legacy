@@ -6,7 +6,9 @@ using TMPro;
 public class PickableItemSlot : InventorySlot, IPointerClickHandler
 {
     const int CLICK_COUNT_TO_USE = 2;
+
     [SerializeField] TextMeshProUGUI m_itemDescription;
+
     [Inject] readonly PickableItemsInventory playerInventory;
     GameObject m_gameObject;
 
@@ -27,7 +29,6 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
     {
         m_gameObject.SetActive(false);
     }
-
 
     public new void OnPointerClick(PointerEventData eventData)
     {

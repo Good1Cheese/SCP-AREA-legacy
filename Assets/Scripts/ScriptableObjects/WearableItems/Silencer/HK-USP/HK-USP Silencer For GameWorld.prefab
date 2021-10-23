@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948996cda290614a9e101d040093d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_silencer_SO: {fileID: 11400000, guid: 4f91abb46f0b1d9488e541b108ae57f9, type: 2}
+  m_wearableItem_SO: {fileID: 11400000, guid: 4f91abb46f0b1d9488e541b108ae57f9, type: 2}
 --- !u!114 &5402989756890578545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +144,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isActive: 0
+  isItemInInventory: 0
 --- !u!114 &-1291876342877580260
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,21 +1,14 @@
 ﻿using UnityEngine;
-using Zenject;
 
-public class SilencerHandler : ItemHandler
+public class SilencerHandler : WearableItemHandler
 {
-    [SerializeField] Silencer_SO m_silencer_SO;
-
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-
-    GameObject m_silencerForPlayerWeapon;
     GameObject m_silencerForWorldWeapon;
 
-    void Awake()
+    new void Awake()
     {
-        m_silencerForPlayerWeapon = Instantiate(m_silencer_SO.silencerForPlayerPrefab);
-        m_silencerForPlayerWeapon.SetActive(false);
+        base.Awake();
 
-        m_silencerForWorldWeapon = Instantiate(m_silencerForPlayerWeapon);
+        m_silencerForWorldWeapon = Instantiate(m_wearableItem_SO.playerGameObjectPrefab);
         m_silencerForWorldWeapon.SetActive(false);
     }
 
@@ -29,12 +22,11 @@ public class SilencerHandler : ItemHandler
     {
         if (weaponForEquiping == null || weaponForEquiping.SilencerHandler != null)
         {
-            print("Bug moment");
             GameObject.SetActive(true);
             return;
         }
 
-        SpawnSilencer(m_silencerForPlayerWeapon, weaponForEquiping.WearableItemForPlayer);
+        SpawnSilencer(GameObjectForPlayer, weaponForEquiping.GameObjectForPlayer);
         SpawnSilencer(m_silencerForWorldWeapon, weaponForEquiping.GameObject);
 
         weaponForEquiping.SilencerHandler = this;
@@ -43,9 +35,7 @@ public class SilencerHandler : ItemHandler
     void SpawnSilencer(GameObject silencer, GameObject spawnObject)
     {
         silencer.transform.SetParent(spawnObject.transform, false);
-        silencer.transform.localPosition = m_silencer_SO.positionForSilencer;
+        silencer.transform.localPosition = m_wearableItem_SO.playerGameObjectspawnOffset;
         silencer.SetActive(true);
     }
-
-    public override Item_SO GetItem() => m_silencer_SO;
 }

@@ -18,7 +18,7 @@ public class InteractionProvider : MonoBehaviour
 
     void Start()
     {
-        m_inventoryEnablerDisabler.OnInventoryButtonPressed += SetActiveState;
+        m_inventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActiveState;
     }
 
     void SetActiveState()
@@ -72,7 +72,7 @@ public class InteractionProvider : MonoBehaviour
 
     void OnDestroy()
     {
-        m_inventoryEnablerDisabler.OnInventoryButtonPressed -= SetActiveState;
+        m_inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;
     }
 
 }

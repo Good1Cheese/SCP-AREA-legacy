@@ -24,7 +24,7 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
     {
         m_weaponAim.OnPlayerAimed += SetPlayerAimState;
         m_weaponAim.OnPlayerInTakedAim += SetPlayerAimState;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
     }
 
     void SetPlayerAimState()
@@ -50,7 +50,7 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
         return ray;
     }
 
-    void SetWeapon(WeaponHandler weaponHandler)
+    void SetWeaponBulletSpawnPoint(WeaponHandler weaponHandler)
     {
         m_bulletSpawnPoint.localPosition = weaponHandler.Weapon_SO.bulletSpawnPoint;
     }
@@ -59,6 +59,6 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
     {
         m_weaponAim.OnPlayerAimed -= SetPlayerAimState;
         m_weaponAim.OnPlayerInTakedAim -= SetPlayerAimState;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
     }
 }

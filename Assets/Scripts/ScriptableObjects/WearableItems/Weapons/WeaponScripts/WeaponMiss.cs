@@ -7,13 +7,13 @@ using Zenject;
 public class WeaponMiss : MonoBehaviour
 {
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    WaitForSeconds m_timeoutAfterAction;
+    WaitForSeconds m_timeoutAfterShot;
 
     public Action OnAmmoRunOut { get; set; }
 
     void Start()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponTimeoutAfterShot;
     }
 
     public IEnumerator ActivateMissSound()
@@ -21,18 +21,18 @@ public class WeaponMiss : MonoBehaviour
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = true;
 
         OnAmmoRunOut.Invoke();
-        yield return m_timeoutAfterAction;
+        yield return m_timeoutAfterShot;
 
         m_wearableItemsInventory.WeaponSlot.IsWeaponActionIsGoing = false;
     }
 
-    void SetWeapon(WeaponHandler weaponHandler)
+    void SetWeaponTimeoutAfterShot(WeaponHandler weaponHandler)
     {
-        m_timeoutAfterAction = new WaitForSeconds(weaponHandler.Weapon_SO.delayAfterShot);
+        m_timeoutAfterShot = new WaitForSeconds(weaponHandler.Weapon_SO.delayAfterShot);
     }
 
     void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponTimeoutAfterShot;
     }
 }

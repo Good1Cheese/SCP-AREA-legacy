@@ -9,7 +9,7 @@ public class InventoryEnablerDisabler : UIEnablerDisabler
 
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
 
-    public Action OnInventoryButtonPressed { get; set; }
+    public Action OnInventoryEnabledDisabled { get; set; }
 
     void Update()
     {
@@ -24,7 +24,7 @@ public class InventoryEnablerDisabler : UIEnablerDisabler
         if (m_pauseMenu.IsUIActivated) { return; }
 
         IsUIActivated = !IsUIActivated;
-        OnInventoryButtonPressed?.Invoke();
+        OnInventoryEnabledDisabled?.Invoke();
         m_playerInventoryUI.ActivateOrClose();
     }
 }

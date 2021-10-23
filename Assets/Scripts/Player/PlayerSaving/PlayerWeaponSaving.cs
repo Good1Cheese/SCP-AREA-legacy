@@ -18,7 +18,7 @@ public class PlayerWeaponSaving : WearableItemSaving
         if (ItemHandler == null) { return; }
 
         ammoCount = WeaponHandler.AmmoCount;
-        isActive = WeaponHandler.WearableItemForPlayer.activeSelf;
+        isActive = WeaponHandler.GameObjectForPlayer.activeSelf;
         clipAmmo = WeaponHandler.ClipAmmo;
 
         itemName = ItemHandler.name;

@@ -10,7 +10,7 @@ public class WeaponRecoil : MonoBehaviour
 
     void Awake()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponAnimator;
         m_weaponAim.OnPlayerShootedWithAim += ActivateRecoilInAim;
         m_weaponAim.OnPlayerShootedWithoutAim += ActivateRecoilWithoutAim;
     }
@@ -25,14 +25,14 @@ public class WeaponRecoil : MonoBehaviour
         m_weaponAnimator.SetTrigger("OnPlayerShootedWithoutAim");
     }
 
-    void SetWeapon(WeaponHandler weaponHandler)
+    void SetWeaponAnimator(WeaponHandler weaponHandler)
     {
         m_weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 
     void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponAnimator;
         m_weaponAim.OnPlayerShootedWithAim -= ActivateRecoilInAim;
         m_weaponAim.OnPlayerShootedWithoutAim -= ActivateRecoilWithoutAim;
     }

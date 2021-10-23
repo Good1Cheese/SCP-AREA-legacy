@@ -25,7 +25,7 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
     public override void EnableDisableUI()
     {
         IsUIActivated = !IsUIActivated;
-        m_wearableInventoryActivator.OnInventoryButtonPressed?.Invoke();
+        m_wearableInventoryActivator.OnInventoryEnabledDisabled?.Invoke();
         OnPauseMenuButtonPressed.Invoke();
     }
 }

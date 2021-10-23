@@ -8,6 +8,7 @@ public class WearableItemSlot : InventorySlot
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     public Action<WearableItemHandler> OnItemChanged { get; set; }
+    public Action OnItemRemoved  { get; set; }
 
     public new void SetItem(ItemHandler item)
     {
@@ -23,7 +24,6 @@ public class WearableItemSlot : InventorySlot
 
     public new void Clear()
     {
-        DespawnItem();
         ItemHandler.IsInInventory = false;
         base.Clear();
     }
@@ -37,6 +37,8 @@ public class WearableItemSlot : InventorySlot
 
     public override void OnItemDeleted()
     {
+        DespawnItem();
+        OnItemRemoved?.Invoke();
         m_image.enabled = false;
     }
 

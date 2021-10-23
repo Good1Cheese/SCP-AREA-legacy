@@ -24,7 +24,7 @@ public class PlayerRotator : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        m_werableInventoryAcviteStateSetter.OnInventoryButtonPressed += DisableRotation;
+        m_werableInventoryAcviteStateSetter.OnInventoryEnabledDisabled += DisableRotation;
     }
 
     void Update()
@@ -63,6 +63,6 @@ public class PlayerRotator : MonoBehaviour
 
     void OnDestroy()
     {
-        m_werableInventoryAcviteStateSetter.OnInventoryButtonPressed -= DisableRotation;
+        m_werableInventoryAcviteStateSetter.OnInventoryEnabledDisabled -= DisableRotation;
     }
 }

@@ -11,21 +11,21 @@ public abstract class WeaponAction : MonoBehaviour
     protected void Start()
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += SetScriptActiveState;
-        m_inventoryAcviteStateSetter.OnInventoryButtonPressed += SetActiveState; 
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += SetActiveState;
+        m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled += ChangeActiveStateOnInventoryEnabledDisabled; 
         enabled = false;
     }
 
-    void SetActiveState()
+    void ChangeActiveStateOnInventoryEnabledDisabled()
     {
         if (m_weaponHandler == null
-            || !m_weaponHandler.WearableItemForPlayer.activeSelf
+            || !m_weaponHandler.GameObjectForPlayer.activeSelf
             || !m_weaponHandler.IsInInventory) { return; }
 
-        SetScriptActiveState(!enabled);
+        SetActiveState(!enabled);
     }
 
-    void SetScriptActiveState(bool activeState)
+    void SetActiveState(bool activeState)
     {
         enabled = activeState;
     }
@@ -38,7 +38,7 @@ public abstract class WeaponAction : MonoBehaviour
     protected void OnDestroy()
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetScriptActiveState;
-        m_inventoryAcviteStateSetter.OnInventoryButtonPressed -= SetActiveState;
+        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetActiveState;
+        m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= ChangeActiveStateOnInventoryEnabledDisabled;
     }
 }
