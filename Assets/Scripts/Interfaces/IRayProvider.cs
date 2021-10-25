@@ -2,5 +2,5 @@
 
 public interface IRayProvider
 {
-    Ray ProvideRay();
+    public Ray ProvideRay();
 }

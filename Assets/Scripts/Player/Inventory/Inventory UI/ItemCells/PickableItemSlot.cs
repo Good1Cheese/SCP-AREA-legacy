@@ -9,7 +9,8 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     [SerializeField] TextMeshProUGUI m_itemDescription;
 
-    [Inject] readonly PickableItemsInventory playerInventory;
+    [Inject] readonly PickableItemsInteraction m_pickableItemsInteraction;
+
     GameObject m_gameObject;
 
     public int SlotIndex { get; set; }
@@ -17,6 +18,26 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
     void Awake()
     {
         m_gameObject = gameObject;
+    }
+
+    public new void OnPointerClick(PointerEventData eventData)
+    {
+        base.OnPointerClick(eventData);
+
+        if (eventData.clickCount == CLICK_COUNT_TO_USE)
+        {
+            OnDoubleLeftClick();
+        }
+    }
+
+    public void OnDoubleLeftClick()
+    {
+        m_pickableItemsInteraction.UseItem(this);
+    }
+
+    public override void OnRightClick()
+    {
+        m_pickableItemsInteraction.DropItem(this);
     }
 
     public override void OnItemSet()
@@ -29,25 +50,4 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
     {
         m_gameObject.SetActive(false);
     }
-
-    public new void OnPointerClick(PointerEventData eventData)
-    {
-        base.OnPointerClick(eventData);
-        if (eventData.clickCount == CLICK_COUNT_TO_USE)
-        {
-            OnLeftClick();
-        }
-    }
-
-    public void OnLeftClick()
-    {
-        playerInventory.OnItemLeftClicked.Invoke(this, SlotIndex);
-    }
-
-    public override void OnRightClick()
-    {
-        playerInventory.OnItemRightClicked.Invoke(this, SlotIndex);
-    }
-
-
 }

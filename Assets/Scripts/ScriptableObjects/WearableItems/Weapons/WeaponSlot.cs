@@ -13,15 +13,11 @@ public class WeaponSlot : WearableItemSlot
     public Action<bool> IsWeaponActived { get; set; }
     public bool IsWeaponActionIsGoing { get; set; }
 
-    public override void OnItemReplaced()
-    {
-        IsWeaponActived.Invoke(false);
-    }
-
     public override void OnItemSet()
     {
         base.OnItemSet();
         OnWeaponChanged.Invoke(ItemHandler as WeaponHandler);
+        IsWeaponActived.Invoke(false);
     }
 
     public override void OnItemDeleted()

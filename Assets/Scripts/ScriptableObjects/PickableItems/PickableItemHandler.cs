@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class PickableItemHandler : ItemHandler
+public class PickableItemHandler : ItemHandler, IClickable
 {
     [SerializeField] protected PickableItem_SO m_pickableItem_SO;
 
-    protected PlayerInstaller m_playerInstaller;
-    protected GameControllerInstaller m_gameControllerInstaller;
+    [Inject] protected readonly GameControllerInstaller m_gameControllerInstaller;
 
     [Inject] 
-    void Construct(PlayerInstaller playerInstaller, GameControllerInstaller gameControllerInstaller)
+    void Construct(PlayerInstaller playerInstaller)
     {
-        m_playerInstaller = playerInstaller;
-        m_gameControllerInstaller = gameControllerInstaller;
-        m_pickableItem_SO.GetDependencies(playerInstaller, gameControllerInstaller);
+        m_pickableItem_SO.GetDependencies(playerInstaller);
+    }
+
+    public void Clicked(int slotIndex)
+    {
+        if (m_pickableItem_SO.ShouldItemNotBeUsed()) { return; }
+        m_pickableItem_SO.Use();
+        m_gameControllerInstaller.PickableItemsInventory.RemoveItem(slotIndex);
     }
 
     public override Item_SO GetItem() => m_pickableItem_SO;
@@ -23,10 +27,4 @@ public class PickableItemHandler : ItemHandler
         m_gameControllerInstaller.PickableItemsInventory.AddItem(this);
     }
 
-    public virtual void OnItemClicked(int slotIndex)
-    {
-        if (m_pickableItem_SO.ShouldItemNotBeUsed()) { return; }
-        m_pickableItem_SO.Use();
-        m_gameControllerInstaller.PickableItemsInventory.RemoveItem(slotIndex);
-    }
 }

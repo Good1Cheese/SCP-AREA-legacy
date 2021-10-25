@@ -6,12 +6,12 @@ public class InventorySaving : DataSaving
     [Inject] readonly PickableItemsInventory m_playerInventory;
     [Inject(Id = "PropsHandler")] readonly Transform PropsHandler;
 
-    public PickableItemHandler[] m_inventory;
+    public ItemHandler[] m_inventory;
     public string[] m_itemsName;
 
     void Start()
     {
-        m_inventory = new PickableItemHandler[m_playerInventory.Inventory.Length];
+        m_inventory = new ItemHandler[m_playerInventory.Inventory.Length];
         m_itemsName = new string[m_playerInventory.Inventory.Length];
     }
 

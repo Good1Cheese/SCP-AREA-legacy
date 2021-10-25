@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Medkit", menuName = "ScriptableObjects/Medkit")]
-public class Medkit_SO : PickableItem_SO
+[CreateAssetMenu(fileName = "new Medkit", menuName = "ScriptableObjects/PickableItems/Medkit")]
+public class Medkit_SO : PickableItem_SO, IHealthInjectable
 {
     PlayerHealth m_playerHealth;
     CharacterBleeding m_playerBleeding;
 
-    public override void GetDependencies(PlayerInstaller playerInstaller, GameControllerInstaller gameControllerInstaller)
+    public override void GetDependencies(PlayerInstaller playerInstaller)
     {
-        base.GetDependencies(playerInstaller, gameControllerInstaller);
+        base.GetDependencies(playerInstaller);
         m_playerHealth = playerInstaller.PlayerHealth;
         m_playerBleeding = playerInstaller.CharacterBleeding;
     }
@@ -20,5 +20,13 @@ public class Medkit_SO : PickableItem_SO
         m_playerHealth.Heal();
     }
 
-    public override bool ShouldItemNotBeUsed() => m_playerHealth.HealthCells.IsCurrentCellLast() && !m_playerBleeding.IsBleeding;
+    public override bool ShouldItemNotBeUsed()
+    {
+        return m_playerHealth.HealthCells.IsCurrentCellLast() && !m_playerBleeding.IsBleeding;
+    }
+
+    public void Inject()
+    {
+        throw new System.NotImplementedException();
+    }
 }

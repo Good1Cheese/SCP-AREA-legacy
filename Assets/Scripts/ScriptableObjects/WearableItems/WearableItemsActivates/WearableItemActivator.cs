@@ -11,7 +11,7 @@ public class WearableItemActivator : MonoBehaviour
     protected WearableItemHandler m_wearableItemHandler;
     protected WearableItemSlot m_wearableItemSlot;
 
-    void Start()
+    protected void Start()
     {
         m_wearableItemSlot.OnItemChanged += SetItem;
         m_wearableItemSlot.OnItemRemoved += DeactivateWeapon;

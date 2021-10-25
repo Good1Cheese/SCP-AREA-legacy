@@ -1,11 +1,9 @@
 ﻿using System;
-using UnityEngine;
 using Zenject;
 
 public class WearableItemSlot : InventorySlot
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    [Inject] readonly WearableItemsInteraction m_wearableItemsInteraction;
 
     public Action<WearableItemHandler> OnItemChanged { get; set; }
     public Action OnItemRemoved  { get; set; }
@@ -14,21 +12,19 @@ public class WearableItemSlot : InventorySlot
     {
         if (ItemHandler != null)
         {
-            OnItemReplaced();
-            Clear();
+            m_wearableItemsInteraction.DropItem(this);
         }
 
         OnItemChanged?.Invoke((WearableItemHandler)item);
         base.SetItem(item);
     }
 
-    public new void Clear()
+    public void ClearWearableSlot()
     {
-        ItemHandler.IsInInventory = false;
-        base.Clear();
+        OnItemDeleted();
+        ItemHandler = null;
+        m_image.sprite = null;
     }
-
-    public virtual void OnItemReplaced() { }
 
     public override void OnItemSet()
     {
@@ -37,19 +33,12 @@ public class WearableItemSlot : InventorySlot
 
     public override void OnItemDeleted()
     {
-        DespawnItem();
         OnItemRemoved?.Invoke();
         m_image.enabled = false;
     }
 
     public override void OnRightClick()
     {
-        m_wearableItemsInventory.OnItemClicked.Invoke(this);
-    }
-
-    public void DespawnItem()
-    {
-        ItemHandler.gameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
-        ItemHandler.gameObject.SetActive(true);
+        m_wearableItemsInteraction.DropItem(this);
     }
 }

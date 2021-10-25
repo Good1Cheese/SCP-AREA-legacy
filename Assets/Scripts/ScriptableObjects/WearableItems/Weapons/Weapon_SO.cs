@@ -2,7 +2,7 @@
 using UnityEngine;
 using static Ammo_SO;
 
-[CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/WearableItems/Weapon")]
+[CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/WearableItems/Weapons/HK-USP")]
 public class Weapon_SO : WearableItem_SO
 {
     public int damagePerShot;

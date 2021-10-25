@@ -35,7 +35,7 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
         int inventoryLength = m_playerInventory.Inventory.Length;
         for (int i = 0; i < inventoryLength; i++)
         {
-            PickableItemHandler item = m_playerInventory.Inventory[i];
+            var item = m_playerInventory.Inventory[i];
             if (item != null)
             {
                 InventoryCells[i].SetItem(item);

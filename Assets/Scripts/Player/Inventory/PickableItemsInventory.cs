@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -10,21 +12,18 @@ public class PickableItemsInventory : MonoBehaviour
 
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
-    public PickableItemHandler[] Inventory { get; set; }
+    public ItemHandler[] Inventory { get; set; }
     public Action OnInventoryChanged { get; set; }
     public Action OnInventoryRemaded { get; set; }
-
-    public Action<PickableItemSlot, int> OnItemLeftClicked { get; set; }
-    public Action<PickableItemSlot, int> OnItemRightClicked { get; set; }
 
     public int CurrentItemIndex { get; set; }
 
     void Awake()
     {
-        Inventory = new PickableItemHandler[m_maxSlotsAmount];
+        Inventory = new ItemHandler[m_maxSlotsAmount];
     }
 
-    public void AddItem(PickableItemHandler item)
+    public void AddItem(ItemHandler item)
     {
         if (CurrentItemIndex >= m_maxSlotsAmount) { return; }
 
@@ -54,11 +53,10 @@ public class PickableItemsInventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-    public void SpawnItem(PickableItemSlot slot)
+    public List<ItemHandler> GetItems(Predicate<ItemHandler> condition)
     {
-        GameObject gameobjectOfItem = slot.ItemHandler.gameObject;
-        gameobjectOfItem.SetActive(true);
-        gameobjectOfItem.transform.position = m_playerTransform.position + m_playerTransform.forward;
-        RemoveItem(slot.SlotIndex);
+        return Inventory.TakeWhile(item => item != null)
+            .Where(item => condition.Invoke(item))
+            .ToList();
     }
 }

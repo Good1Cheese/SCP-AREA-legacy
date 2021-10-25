@@ -3,28 +3,22 @@ using Zenject;
 
 public class PickableItemsInteraction : MonoBehaviour
 {
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+
     [Inject] public PickableItemsInventory PickableItemsInventory { get; }
 
-    void Start()
+    public void UseItem(PickableItemSlot pickableItemSlot)
     {
-        PickableItemsInventory.OnItemRightClicked += DropItem;
-        PickableItemsInventory.OnItemLeftClicked += UseItem;
+        var itemSlot = pickableItemSlot.ItemHandler as IClickable;
+        itemSlot.Clicked(pickableItemSlot.SlotIndex);
     }
 
-    public void UseItem(PickableItemSlot pickableItemSlot, int slotIndex)
+    public void DropItem(PickableItemSlot pickableItemSlot)
     {
-        var itemSlot = pickableItemSlot.ItemHandler as PickableItemHandler;
-        itemSlot.OnItemClicked(slotIndex);
-    }
+        GameObject gameobjectOfItem = pickableItemSlot.ItemHandler.gameObject;
+        gameobjectOfItem.SetActive(true);
+        gameobjectOfItem.transform.position = m_playerTransform.position + m_playerTransform.forward;
 
-    public void DropItem(PickableItemSlot pickableItemSlot, int slotIndex)
-    {
-        PickableItemsInventory.SpawnItem(pickableItemSlot);
-    }   
-
-    void OnDestroy()
-    {
-        PickableItemsInventory.OnItemRightClicked -= DropItem;
-        PickableItemsInventory.OnItemLeftClicked -= UseItem;
+        PickableItemsInventory.RemoveItem(pickableItemSlot.SlotIndex);
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f542942ef190cb84a946255a34155102, type: 3}
-  m_Name: FlashLight
+  m_Name: Injector_SO
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: 
   playerGameObjectspawnOffset: {x: 0.435, y: -0.129, z: 0.573}
-  playerGameObjectPrefab: {fileID: 7399709133284153405, guid: b1ec7dc0a50bf0044b67d645e301539d, type: 3}
+  playerGameObjectPrefab: {fileID: 7399709133284153405, guid: 3d9201c8ffbc83f45a335f3824e6868c, type: 3}

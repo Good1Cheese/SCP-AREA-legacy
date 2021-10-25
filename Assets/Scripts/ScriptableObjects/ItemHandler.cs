@@ -1,28 +1,28 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(ItemDataController))]
+[RequireComponent(typeof(ItemSaveableStateChanger))]
 public abstract class ItemHandler : IInteractable
 {
-    bool m_isInInventory;
+    private bool isInInventory;
 
     public bool IsInInventory
     {
-        get => m_isInInventory;
+        get => isInInventory;
         set
         {
-            m_isInInventory = value;
-            OnInventoryStateChanged(m_isInInventory);
+            isInInventory = value;
+            OnIsInventoryChanged?.Invoke(isInInventory);
         }
     }
+
+    public Action<bool> OnIsInventoryChanged { get; set; }
+    public GameObject GameObject { get; set; }
 
     void Start()
     {
         GameObject = gameObject;
     }
-
-    public virtual GameObject GameObject { get; set; }
-
-    public void SetInInventoryState(bool value) => m_isInInventory = value;
 
     public override void Interact()
     {
@@ -31,7 +31,7 @@ public abstract class ItemHandler : IInteractable
         Equip();
     }
 
-    public virtual void OnInventoryStateChanged(bool isItemInInventory) { }
+    public virtual void OnItemDropped() { }
 
     public abstract Item_SO GetItem();
     public abstract void Equip();

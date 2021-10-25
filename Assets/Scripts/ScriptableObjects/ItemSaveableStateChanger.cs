@@ -1,11 +1,8 @@
 using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(ItemSaving))]
-public class ItemDataController : MonoBehaviour
+public class ItemSaveableStateChanger : MonoBehaviour
 {
-    [Inject] readonly PickableItemsInventory m_playerInventory;
-
     public ItemHandler ItemHandler { get; set; }
     public ItemSaving ItemDataHandler { get; set; }
 
@@ -18,12 +15,12 @@ public class ItemDataController : MonoBehaviour
 
     void Start()
     {
-        m_playerInventory.OnInventoryChanged += SetSavableState;
+        ItemHandler.OnIsInventoryChanged += SetSaveableState;
     }
 
-    void SetSavableState()
+    public void SetSaveableState(bool isInventory)
     {
-        if (ItemHandler.IsInInventory)
+        if (isInventory)
         {
             ItemDataHandler.BecomeUnsaveable();
             return;
@@ -34,18 +31,8 @@ public class ItemDataController : MonoBehaviour
         ItemDataHandler.BecomeSaveable();
     }
 
-    public void SetSavableState(bool isSaveable)
-    {
-        if (isSaveable)
-        {
-            ItemDataHandler.BecomeSaveable();
-            return;
-        }
-        ItemDataHandler.BecomeUnsaveable();
-    }
-
     void OnDestroy()
     {
-        m_playerInventory.OnInventoryChanged -= SetSavableState;
+        ItemHandler.OnIsInventoryChanged -= SetSaveableState;
     }
 }

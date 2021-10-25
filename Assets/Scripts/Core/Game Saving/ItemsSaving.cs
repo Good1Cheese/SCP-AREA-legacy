@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemsSaving : DataSaving
 {
-    ItemDataController[] m_itemDataControllerss;
+    ItemSaveableStateChanger[] m_itemDataControllerss;
 
     public bool[] itemsSaveableStates;
 
@@ -10,7 +10,7 @@ public class ItemsSaving : DataSaving
     {
         m_gameSaving.SaveData.AddRange(gameObject.GetComponentsInChildren<DataSaving>());
 
-        m_itemDataControllerss = gameObject.GetComponentsInChildren<ItemDataController>();
+        m_itemDataControllerss = gameObject.GetComponentsInChildren<ItemSaveableStateChanger>();
         itemsSaveableStates = new bool[m_itemDataControllerss.Length];
     }
 
@@ -27,14 +27,14 @@ public class ItemsSaving : DataSaving
         for (int i = 0; i < m_itemDataControllerss.Length; i++)
         {
             bool isItemSaveable = itemsSaveableStates[i];
-            m_itemDataControllerss[i].SetSavableState(isItemSaveable);
+            m_itemDataControllerss[i].SetSaveableState(isItemSaveable);
             m_itemDataControllerss[i].ItemHandler.GameObject.SetActive(isItemSaveable);
         }
     }
 
     public override void Load(string json)
     {
-        ItemDataController[] itemDataHandlers = m_itemDataControllerss;
+        ItemSaveableStateChanger[] itemDataHandlers = m_itemDataControllerss;
         JsonUtility.FromJsonOverwrite(json, this);
         m_itemDataControllerss = itemDataHandlers;
         LoadData();

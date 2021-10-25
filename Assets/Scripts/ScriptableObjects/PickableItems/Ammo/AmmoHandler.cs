@@ -6,20 +6,20 @@ using Zenject;
 public class AmmoHandler : PickableItemHandler
 {
     const int MAX_SLOT_AMMO = 50;
+
     [SerializeField] int ammoCount;
 
     [Inject] readonly WeaponReload m_weaponReload;
 
     WeaponHandler m_weaponHandler;
 
-    public Ammo_SO Ammo_SO { get; set; }
+    public Ammo_SO Ammo_SO => (Ammo_SO)m_pickableItem_SO;
     public bool IsAmmoAdded { get; set; }
     public bool WasAmmoMixed { get; set; }
     public int AmmoCount { get => ammoCount; set => ammoCount = value; }
 
     void Awake()
     {
-        Ammo_SO = m_pickableItem_SO as Ammo_SO;
         m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnWeaponChanged += AddAmmo;
         m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnWeaponDropped += TakeAmmoFromGun;
     }
@@ -31,6 +31,12 @@ public class AmmoHandler : PickableItemHandler
         if (m_weaponHandler == null) { return; }
 
         AddAmmo(m_weaponHandler);
+    }
+
+    public override void OnItemDropped()
+    {
+        m_weaponReload.UpdateWeaponAmmoCount(AmmoCount);
+        IsAmmoAdded = false;
     }
 
     void EquipAmmo()
@@ -73,14 +79,6 @@ public class AmmoHandler : PickableItemHandler
 
             IsAmmoAdded = true;
         }
-    }
-
-    public override void OnInventoryStateChanged(bool isItemInInventory)
-    {
-        if (isItemInInventory) { return; }
-
-        m_weaponReload.UpdateWeaponAmmoCount(AmmoCount);
-        IsAmmoAdded = false;
     }
 
     void OnDestroy()

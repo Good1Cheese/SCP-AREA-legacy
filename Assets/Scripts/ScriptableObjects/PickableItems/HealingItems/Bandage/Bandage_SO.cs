@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Bandage", menuName = "ScriptableObjects/Bandage")]
+[CreateAssetMenu(fileName = "new Bandage", menuName = "ScriptableObjects/PickableItems/Bandage")]
 public class Bandage_SO : PickableItem_SO
 {
     CharacterBleeding m_playerBleeding;
 
-    public override void GetDependencies(PlayerInstaller playerInstaller, GameControllerInstaller gameControllerInstaller)
+    public override void GetDependencies(PlayerInstaller playerInstaller)
     {
-        base.GetDependencies(playerInstaller, gameControllerInstaller);
+        base.GetDependencies(playerInstaller);
         m_playerBleeding = playerInstaller.CharacterBleeding;
     }
 

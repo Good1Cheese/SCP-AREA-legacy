@@ -14,7 +14,12 @@ public class ItemSaving : GameObjectSaving
 
     protected void Start()
     {
-        m_saveDataItemIndex = FindItemIndex();
+        m_saveDataItemIndex = m_gameSaving.SaveData.IndexOf(this);
+
+        if (m_saveDataItemIndex == -1)
+        {
+            Debug.LogError("Item not Found " + name);
+        }
     }
 
     public void BecomeSaveable()
@@ -37,20 +42,7 @@ public class ItemSaving : GameObjectSaving
 
     public override void LoadData()
     {
-        ItemHandler.SetInInventoryState(isItemInInventory);
+        ItemHandler.IsInInventory = isItemInInventory;
         base.LoadData();
-    }
-
-    int FindItemIndex()
-    {
-        for (int i = 0; i < m_gameSaving.SaveData.Count; i++)
-        {
-            if (this == m_gameSaving.SaveData[i])
-            {
-                return i;
-            }
-        }
-        Debug.LogError("Item not Found" + name);
-        return -1;
     }
 }
