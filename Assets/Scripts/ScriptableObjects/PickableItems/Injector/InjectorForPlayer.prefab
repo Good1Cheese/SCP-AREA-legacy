@@ -104,9 +104,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7399709133284153393}
-  - component: {fileID: -6057886452760919274}
   - component: {fileID: 6885681479941680425}
   - component: {fileID: 9101338991919334747}
+  - component: {fileID: 494647746894575436}
   m_Layer: 0
   m_Name: InjectorForPlayer
   m_TagString: Untagged
@@ -129,18 +129,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6057886452760919274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7399709133284153405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4952b71d03ccc724c91534b732648e76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6885681479941680425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,3 +155,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_key: 324
+--- !u!114 &494647746894575436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7399709133284153405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc3735ea65a13345a56290077426038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: 323

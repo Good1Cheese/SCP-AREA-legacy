@@ -3,6 +3,8 @@
 [CreateAssetMenu(fileName = "new Medkit", menuName = "ScriptableObjects/PickableItems/Medkit")]
 public class Medkit_SO : PickableItem_SO, IHealthInjectable
 {
+    [SerializeField] int m_maxNumOfUses;
+
     PlayerHealth m_playerHealth;
     CharacterBleeding m_playerBleeding;
 
@@ -17,16 +19,14 @@ public class Medkit_SO : PickableItem_SO, IHealthInjectable
     {
         m_playerBleeding.StopBleeding();
         m_playerHealth.Heal();
-        m_playerHealth.Heal();
     }
 
-    public override bool ShouldItemNotBeUsed()
-    {
-        return m_playerHealth.HealthCells.IsCurrentCellLast() && !m_playerBleeding.IsBleeding;
-    }
+    public override bool ShouldItemNotBeUsed => m_playerHealth.HealthCells.IsCurrentCellLast() && !m_playerBleeding.IsBleeding;
 
     public void Inject()
     {
-        throw new System.NotImplementedException();
+        Use();
     }
+
+    public int NumOfUses => m_maxNumOfUses;
 }

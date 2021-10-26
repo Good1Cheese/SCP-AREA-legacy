@@ -1,4 +1,16 @@
-﻿public interface IInjectable
+﻿using UnityEngine;
+
+public interface IInjectable
 {
-    public void Inject();
+    public int NumOfUses { get; }
+
+    public abstract void Inject();
+}
+
+public interface IAdrenalinInjectable : IInjectable
+{
+}
+
+public interface IHealthInjectable : IInjectable
+{
 }

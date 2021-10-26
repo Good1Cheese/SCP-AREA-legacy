@@ -53,10 +53,20 @@ public class PickableItemsInventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-    public List<ItemHandler> GetItems(Predicate<ItemHandler> condition)
+    public void RemoveItem(ItemHandler itemHandler)
     {
-        return Inventory.TakeWhile(item => item != null)
-            .Where(item => condition.Invoke(item))
-            .ToList();
+        int index = Array.IndexOf(Inventory, itemHandler);
+
+        if (index == -1) 
+        {
+            Debug.LogError("Item is null!");
+        }
+        
+        RemoveItem(index);
+    }
+
+    public ItemHandler GetIem(Predicate<ItemHandler> condition)
+    {
+        return Inventory.TakeWhile(item => item != null).LastOrDefault(item => condition.Invoke(item));
     }
 }

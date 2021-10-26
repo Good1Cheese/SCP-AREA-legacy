@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: -604935404087113089}
   - component: {fileID: 2932223936868646599}
   - component: {fileID: 2932223936868646598}
-  - component: {fileID: 965577940786361265}
+  - component: {fileID: 8990135658821145739}
   - component: {fileID: 8655259736875659554}
   - component: {fileID: 1310625299429248211}
   m_Layer: 0
@@ -192,7 +192,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &965577940786361265
+--- !u!114 &8990135658821145739
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2625655703322149780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1735b34c02b527d4db2ebdb4ceff0635, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e73a1ee05238c149bbb70efb2ba4cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_pickableItem_SO: {fileID: 11400000, guid: 8a324cc2f4a4d204f863e12be1db284d, type: 2}
@@ -221,6 +221,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isActive: 0
+  isItemInInventory: 0
 --- !u!114 &1310625299429248211
 MonoBehaviour:
   m_ObjectHideFlags: 0

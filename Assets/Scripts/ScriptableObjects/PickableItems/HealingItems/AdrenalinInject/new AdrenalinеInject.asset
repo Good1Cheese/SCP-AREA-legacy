@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3352a7c9472005a4485d494d9f62c9a6, type: 3}
   m_Name: "new Adrenalin\u0435Inject"
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 84f46d3bac3ff724593e2bb2ee696701, type: 3}
   description: 
+  m_maxNumOfUses: 1
   m_adrenalineTime: 10

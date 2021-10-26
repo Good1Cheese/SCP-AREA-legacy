@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 91a2042ee7bc91342ad10f1374a6ad8c, type: 3}
   description: 
+  m_maxNumOfUses: 2

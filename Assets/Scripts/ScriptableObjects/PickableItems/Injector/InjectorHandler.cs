@@ -9,9 +9,9 @@ public class InjectorHandler : WearableItemHandler, IClickable
     new void Awake()
     {
         base.Awake();
-        InjectorReloader injectorReloader = GameObjectForPlayer.GetComponent<InjectorReloader>();
+        InjectorReload injectorReloader = GameObjectForPlayer.GetComponent<InjectorReload>();
         injectorReloader.PickableItemsInventory = m_pickableItemsInventory;
-        injectorReloader.InjectorHadnler = this;
+        injectorReloader.InjectorHandler = this;
     }
 
     public override void Equip()

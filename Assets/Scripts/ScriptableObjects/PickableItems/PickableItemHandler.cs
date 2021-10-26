@@ -13,9 +13,9 @@ public class PickableItemHandler : ItemHandler, IClickable
         m_pickableItem_SO.GetDependencies(playerInstaller);
     }
 
-    public void Clicked(int slotIndex)
+    public virtual void Clicked(int slotIndex)
     {
-        if (m_pickableItem_SO.ShouldItemNotBeUsed()) { return; }
+        if (m_pickableItem_SO.ShouldItemNotBeUsed) { return; }
         m_pickableItem_SO.Use();
         m_gameControllerInstaller.PickableItemsInventory.RemoveItem(slotIndex);
     }
@@ -26,5 +26,4 @@ public class PickableItemHandler : ItemHandler, IClickable
     {
         m_gameControllerInstaller.PickableItemsInventory.AddItem(this);
     }
-
 }
