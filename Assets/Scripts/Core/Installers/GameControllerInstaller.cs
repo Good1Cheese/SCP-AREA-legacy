@@ -13,7 +13,7 @@ public class GameControllerInstaller : MonoInstaller
     Volume m_volume;
 
     public PickableItemsInventory PickableItemsInventory { get; set; }
-    public WearableItemsInventory WearableItemsInventory { get; set; }
+    public m_wearableItemsInventory WearableItemsInventory { get; set; }
 
     public override void InstallBindings()
     {
@@ -36,7 +36,7 @@ public class GameControllerInstaller : MonoInstaller
 
     void GetComponents()
     {
-        WearableItemsInventory = GetComponent<WearableItemsInventory>();
+        WearableItemsInventory = GetComponent<m_wearableItemsInventory>();
         PickableItemsInventory = GetComponent<PickableItemsInventory>();
         m_gameLoader = GetComponent<GameLoader>();
         m_pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();

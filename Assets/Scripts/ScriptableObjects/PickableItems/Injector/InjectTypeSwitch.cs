@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-public class InjectTypeSwitch : MonoBehaviour
+public class InjectTypeSwitch : InjectorScriptBase
 {
-    [SerializeField] KeyCode m_key;
     private Type type = typeof(IHealthInjectable);
 
     public Type Type
@@ -18,7 +17,7 @@ public class InjectTypeSwitch : MonoBehaviour
 
     void Update()
     {
-        if (!Input.GetKeyDown(m_key) || transform.parent == null) { return; }
+        if (!Input.GetKeyDown(m_key)) { return; }
 
         SwitchInjectType();
     }

@@ -15,6 +15,11 @@ public class LoadingSceneUIController : MonoBehaviour
 
     void Start()
     {
+        if (m_sceneTransition.LoadingSceneUIController != null) 
+        {
+            Destroy(m_sceneTransition.LoadingSceneUIController.gameObject);
+        }
+
         m_sceneTransition.LoadingSceneUIController = this;
 
         m_gameObject.SetActive(false);

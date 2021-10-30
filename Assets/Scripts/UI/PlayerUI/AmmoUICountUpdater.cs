@@ -6,7 +6,7 @@ using System;
 public class AmmoUICountUpdater : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_textMeshProUGUI;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly WeaponFire m_weaponFire;
     [Inject] readonly WeaponReload m_weaponReload;
 

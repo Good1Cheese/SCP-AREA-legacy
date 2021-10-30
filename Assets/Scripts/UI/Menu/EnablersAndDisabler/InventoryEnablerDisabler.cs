@@ -5,6 +5,7 @@ using Zenject;
 public class InventoryEnablerDisabler : UIEnablerDisabler
 {
     const KeyCode INVENTORY_KEY = KeyCode.Tab;
+
     [SerializeField] PlayerInventoryUIUpdater m_playerInventoryUI;
 
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;

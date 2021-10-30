@@ -5,7 +5,7 @@ using Zenject;
 [RequireComponent(typeof(AudioSource))]
 public abstract class WeaponSoundPlayer : SoundPlayerOnAction
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly m_wearableItemsInventory m_wearableItemsInventory;
 
     void Awake()
     {

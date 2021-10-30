@@ -10,6 +10,7 @@ public class AmmoHandler : PickableItemHandler
     [SerializeField] int ammoCount;
 
     [Inject] readonly WeaponReload m_weaponReload;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
 
     WeaponHandler m_weaponHandler;
 
@@ -20,8 +21,8 @@ public class AmmoHandler : PickableItemHandler
 
     void Awake()
     {
-        m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnWeaponChanged += AddAmmo;
-        m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnWeaponDropped += TakeAmmoFromGun;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += AddAmmo;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += TakeAmmoFromGun;
     }
 
     public override void Equip()
@@ -41,7 +42,7 @@ public class AmmoHandler : PickableItemHandler
 
     void EquipAmmo()
     {
-        AmmoHandler ammoHandler = (AmmoHandler)m_gameControllerInstaller.PickableItemsInventory.Inventory.LastOrDefault(item => item as AmmoHandler != null);
+        AmmoHandler ammoHandler = (AmmoHandler)m_pickableItemsInventory.Inventory.LastOrDefault(item => item as AmmoHandler != null);
 
         if (ammoHandler == null || ammoHandler.AmmoCount + AmmoCount > MAX_SLOT_AMMO)
         {
@@ -56,7 +57,7 @@ public class AmmoHandler : PickableItemHandler
         if (m_weaponHandler == null) { return; }
 
         m_weaponHandler.AmmoCount = ammoHandler.AmmoCount;
-        m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(m_weaponHandler);
+        m_wearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(m_weaponHandler);
     }
 
     void TakeAmmoFromGun()
@@ -75,7 +76,7 @@ public class AmmoHandler : PickableItemHandler
         if (m_weaponHandler.Weapon_SO.ammoType == Ammo_SO.ammoType)
         {
             weaponHandler.AmmoCount += AmmoCount;
-            m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(m_weaponHandler);
+            m_wearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(m_weaponHandler);
 
             IsAmmoAdded = true;
         }
@@ -83,7 +84,7 @@ public class AmmoHandler : PickableItemHandler
 
     void OnDestroy()
     {
-        m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnWeaponChanged -= AddAmmo;
-        m_gameControllerInstaller.WearableItemsInventory.WeaponSlot.OnWeaponDropped -= TakeAmmoFromGun;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= AddAmmo;
+        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= TakeAmmoFromGun;
     }
 }

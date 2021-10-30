@@ -6,7 +6,7 @@ public class WeaponShot : MonoBehaviour
 {
     [Inject] readonly RayForShootingProvider m_rayForShootingProvider;
     [Inject] readonly GameObject m_playerGameObject;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
 
     IDamagable m_damagable;
     Weapon_SO m_weapon;

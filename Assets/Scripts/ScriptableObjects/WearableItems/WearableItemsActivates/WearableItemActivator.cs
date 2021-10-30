@@ -5,7 +5,7 @@ public class WearableItemActivator : MonoBehaviour
 {
     [SerializeField] KeyCode m_key;
 
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly m_wearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
 
     protected WearableItemHandler m_wearableItemHandler;
@@ -13,6 +13,8 @@ public class WearableItemActivator : MonoBehaviour
 
     protected void Start()
     {
+        m_wearableItemSlot.WearableItemActivator = this;
+
         m_wearableItemSlot.OnItemChanged += SetItem;
         m_wearableItemSlot.OnItemRemoved += DeactivateWeapon;
         m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled += SetActiveState;

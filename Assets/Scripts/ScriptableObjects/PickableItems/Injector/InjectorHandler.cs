@@ -1,17 +1,25 @@
+using System.Linq;
 using Zenject;
 
 public class InjectorHandler : WearableItemHandler, IClickable
 {
     [Inject] readonly PickableItemsInventory m_pickableItemsInventory;
+    [Inject] readonly InventoryEnablerDisabler m_inventoryEnablerDisabler;
 
     public IInjectable ClipInject { get; set; }
 
-    new void Awake()
+    new void Start()
     {
-        base.Awake();
+        GameObject = gameObject;
+
         InjectorReload injectorReloader = GameObjectForPlayer.GetComponent<InjectorReload>();
         injectorReloader.PickableItemsInventory = m_pickableItemsInventory;
         injectorReloader.InjectorHandler = this;
+
+        foreach (var i in GameObjectForPlayer.GetComponents<InjectorScriptBase>())
+        {
+            i.InventoryEnablerDisabler = m_inventoryEnablerDisabler;
+        }
     }
 
     public override void Equip()

@@ -10,7 +10,7 @@ public class ItemSaving : GameObjectSaving
     public bool isItemInInventory;
 
     public ItemHandler ItemHandler { get; set; }
-    public bool IsSubscribed { get; set; } = true;
+    public bool IsSaveable { get; set; } = true;
 
     protected void Start()
     {
@@ -24,13 +24,11 @@ public class ItemSaving : GameObjectSaving
 
     public void BecomeSaveable()
     {
-        IsSubscribed = true;
         m_gameSaving.SaveData[m_saveDataItemIndex] = this;
     }
 
     public void BecomeUnsaveable()
     {
-        IsSubscribed = false;
         m_gameSaving.SaveData[m_saveDataItemIndex] = m_emptyDataHandler;
     }
 
@@ -42,7 +40,7 @@ public class ItemSaving : GameObjectSaving
 
     public override void LoadData()
     {
-        ItemHandler.IsInInventory = isItemInInventory;
+        ItemHandler.SetIsInventoty(isItemInInventory);
         base.LoadData();
     }
 }

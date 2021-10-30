@@ -11,7 +11,7 @@ public class AutoHealableHealthCell : HealthCell
 
     public HealthCellHealEffect HealthCellHealEffect { get; set; }
 
-    void Start()
+    void Awake()
     {
         HealthCellHealEffect = GetComponent<HealthCellHealEffect>();
         HealthCellHealEffect.Cell = this;

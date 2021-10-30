@@ -26,7 +26,7 @@ public class GameObjectSaving : DataSaving
         _transform = m_transform;
         position = m_transform.position;
         rotation = m_transform.rotation;
-        isActive = m_gameObject.activeSelf;
+        isActive = m_gameObject.activeInHierarchy;
     }
 
     public override void LoadData()

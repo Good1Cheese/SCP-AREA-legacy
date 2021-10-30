@@ -18,7 +18,7 @@ public class ItemsSaving : DataSaving
     {
         for (int i = 0; i < m_itemDataControllerss.Length; i++)
         {
-            itemsSaveableStates[i] = m_itemDataControllerss[i].ItemDataHandler.IsSubscribed;
+            itemsSaveableStates[i] = m_itemDataControllerss[i].ItemDataHandler.IsSaveable;
         }
     }
 

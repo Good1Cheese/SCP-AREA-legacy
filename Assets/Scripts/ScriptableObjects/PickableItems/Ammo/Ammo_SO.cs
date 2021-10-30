@@ -11,9 +11,4 @@ public class Ammo_SO : PickableItem_SO
     }
 
     public AmmoType ammoType;
-
-    public override void Use()
-    {
-        
-    }
 }

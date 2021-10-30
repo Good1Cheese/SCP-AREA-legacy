@@ -1,19 +1,18 @@
 ﻿using UnityEngine;
 
-public class InjectShooter : MonoBehaviour
+public class InjectShooter : InjectorScriptBase
 {
-    [SerializeField] KeyCode m_key;
-
     InjectorReload m_injectorReload;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         m_injectorReload = GetComponent<InjectorReload>();
     }
 
     void Update()
     {
-        if (!Input.GetKeyDown(m_key) || transform.parent == null) { return; }
+        if (!Input.GetKeyDown(m_key)) { return; }
 
         Shoot();
     }

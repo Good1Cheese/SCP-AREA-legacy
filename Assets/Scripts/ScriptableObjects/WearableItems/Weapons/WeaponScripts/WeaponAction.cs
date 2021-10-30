@@ -3,7 +3,7 @@ using Zenject;
 
 public abstract class WeaponAction : MonoBehaviour
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly m_wearableItemsInventory m_wearableItemsInventory;
     [Inject] protected readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
 
     protected WeaponHandler m_weaponHandler;

@@ -6,6 +6,7 @@ public class WearableItemSlot : InventorySlot
     [Inject] readonly WearableItemsInteraction m_wearableItemsInteraction;
 
     public Action<WearableItemHandler> OnItemChanged { get; set; }
+    public WearableItemActivator WearableItemActivator { get; set; }
     public Action OnItemRemoved  { get; set; }
 
     public new void SetItem(ItemHandler item)

@@ -3,7 +3,7 @@ using Zenject;
 
 public abstract class WearableItemHandler : ItemHandler
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly m_wearableItemsInventory m_wearableItemsInventory;
 
     [SerializeField] protected WearableItem_SO m_wearableItem_SO;
 

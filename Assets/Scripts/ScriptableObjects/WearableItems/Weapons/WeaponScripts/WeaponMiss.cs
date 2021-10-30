@@ -6,7 +6,7 @@ using Zenject;
 [RequireComponent(typeof(WeaponMissFireSound))]
 public class WeaponMiss : MonoBehaviour
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
     WaitForSeconds m_timeoutAfterShot;
 
     public Action OnAmmoRunOut { get; set; }

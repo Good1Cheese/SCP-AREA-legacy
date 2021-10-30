@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(InjectTypeSwitch), typeof(InjectShooter))]
-public class InjectorReload : MonoBehaviour
+public class InjectorReload : InjectorScriptBase
 {
-    [SerializeField] KeyCode m_key;
-
     InjectTypeSwitch m_injectTypeSwitcher;
 
     public InjectorHandler InjectorHandler { get; set; } 
@@ -24,14 +22,15 @@ public class InjectorReload : MonoBehaviour
         }
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         m_injectTypeSwitcher = GetComponent<InjectTypeSwitch>();
     }
 
     void Update()
     {
-        if (!Input.GetKeyDown(m_key) || transform.parent == null) { return; }
+        if (!Input.GetKeyDown(m_key)) { return; }
 
         Reload();
     }
@@ -40,10 +39,10 @@ public class InjectorReload : MonoBehaviour
     {
         if (m_injectTypeSwitcher.Type == typeof(IHealthInjectable))
         {
-            CurrentInject = PickableItemsInventory.GetIem(item => item.GetItem() as IHealthInjectable != null);
+            CurrentInject = PickableItemsInventory.GetIem(item => item as IHealthInjectable != null);
             return;
         }
 
-        CurrentInject = PickableItemsInventory.GetIem(item => item.GetItem() as IAdrenalinInjectable != null);
+        CurrentInject = PickableItemsInventory.GetIem(item => item as IAdrenalinInjectable != null);
     }
 }

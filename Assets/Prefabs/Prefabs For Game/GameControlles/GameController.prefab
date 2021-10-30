@@ -48,6 +48,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 4504709229982532499}
+  - {fileID: 0}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -187,8 +188,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_keyCardSlot: {fileID: 0}
-  m_weaponSlot: {fileID: 0}
   m_maskSlot: {fileID: 0}
+  m_weaponSlot: {fileID: 0}
+  m_deviceSlot: {fileID: 0}
+  m_injectorSlot: {fileID: 0}
 --- !u!114 &28724566
 MonoBehaviour:
   m_ObjectHideFlags: 0

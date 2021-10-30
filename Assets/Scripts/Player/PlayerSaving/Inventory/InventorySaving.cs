@@ -36,7 +36,8 @@ public class InventorySaving : DataSaving
             if (string.IsNullOrEmpty(m_itemsName[i])) { return; }
 
             GameObject item = PropsHandler.Find(m_itemsName[i]).gameObject;
-            item.GetComponent<ItemHandler>().Interact();
+            ItemHandler itemHandler = item.GetComponent<ItemHandler>();
+            itemHandler.Interact();
         }
     }
 }

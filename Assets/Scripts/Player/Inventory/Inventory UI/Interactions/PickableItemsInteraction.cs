@@ -15,10 +15,10 @@ public class PickableItemsInteraction : MonoBehaviour
 
     public void DropItem(PickableItemSlot pickableItemSlot)
     {
-        GameObject gameobjectOfItem = pickableItemSlot.ItemHandler.gameObject;
-        gameobjectOfItem.SetActive(true);
-        gameobjectOfItem.transform.position = m_playerTransform.position + m_playerTransform.forward;
+        pickableItemSlot.ItemHandler.GameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
+        pickableItemSlot.ItemHandler.GameObject.SetActive(true);
 
+        pickableItemSlot.Clear();
         PickableItemsInventory.RemoveItem(pickableItemSlot.SlotIndex);
     }
 }

@@ -20,13 +20,14 @@ public class ItemSaveableStateChanger : MonoBehaviour
 
     public void SetSaveableState(bool isInventory)
     {
+        ItemDataHandler.IsSaveable = isInventory;
         if (isInventory)
         {
             ItemDataHandler.BecomeUnsaveable();
             return;
         }
 
-        if (ItemDataHandler.IsSubscribed) { return; }
+        if (ItemDataHandler.IsSaveable) { return; }
 
         ItemDataHandler.BecomeSaveable();
     }

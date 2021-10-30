@@ -611,6 +611,8 @@ GameObject:
   - component: {fileID: 1039655028}
   - component: {fileID: 383227328218039775}
   - component: {fileID: 227271351}
+  - component: {fileID: 1380658650591710889}
+  - component: {fileID: 6902427873142466211}
   m_Layer: 0
   m_Name: PlayerSaving
   m_TagString: Untagged
@@ -751,7 +753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: 
-  isInInventory: 0
+  isActive: 0
 --- !u!114 &227271351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,6 +770,34 @@ MonoBehaviour:
   isActive: 0
   ammoCount: 0
   clipAmmo: 0
+--- !u!114 &1380658650591710889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039655024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5a9a8964c174e4e86ad54abbe360e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: 
+  isActive: 0
+--- !u!114 &6902427873142466211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039655024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4346e5d844620624b9befaf43d3ace69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: 
+  isActive: 0
 --- !u!1 &1349847631
 GameObject:
   m_ObjectHideFlags: 0

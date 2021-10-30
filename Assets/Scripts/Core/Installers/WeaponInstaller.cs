@@ -4,7 +4,6 @@ using Zenject;
 [RequireComponent(typeof(WeaponActivator), typeof(WeaponShot))]
 public class WeaponInstaller : MonoInstaller
 {
-    WeaponActivator m_weaponActivator;
     WeaponFire m_weaponFire;
     WeaponReload m_weaponReload;
     WeaponAim m_weaponAiming;
@@ -15,7 +14,6 @@ public class WeaponInstaller : MonoInstaller
     public override void InstallBindings()
     {
         GetComponents();
-        Container.BindInstance(m_weaponActivator).AsSingle();
         Container.BindInstance(m_weaponFire).AsSingle();
         Container.BindInstance(m_weaponReload).AsSingle();
         Container.BindInstance(m_weaponAiming).AsSingle();
@@ -28,7 +26,6 @@ public class WeaponInstaller : MonoInstaller
     {
         m_rayForShootingProvider = GetComponent<RayForShootingProvider>();
         m_weaponAmmoController = GetComponent<WeaponMiss>();
-        m_weaponActivator = GetComponent<WeaponActivator>();
         m_weaponFire = GetComponent<WeaponFire>();
         m_weaponReload = GetComponent<WeaponReload>();
         m_weaponAiming = GetComponent<WeaponAim>();

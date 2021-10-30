@@ -124,7 +124,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4080021611125983310}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e73a1ee05238c149bbb70efb2ba4cb5, type: 3}
+  m_Script: {fileID: 11500000, guid: dcf38c053f59fa84bb459faa6381c1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_pickableItem_SO: {fileID: 11400000, guid: 386c1b798ba95864789caa60ab91ba28, type: 2}

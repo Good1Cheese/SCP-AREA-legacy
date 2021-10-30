@@ -6,7 +6,7 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
     [SerializeField] float m_multyplierOfBulletSpawnPointRadious;
     [SerializeField] Transform m_bulletSpawnPoint;
 
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
     [Inject] readonly WeaponAim m_weaponAim;
 

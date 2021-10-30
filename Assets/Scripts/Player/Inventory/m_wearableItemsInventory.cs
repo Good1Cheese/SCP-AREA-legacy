@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class WearableItemsInventory : MonoBehaviour
+public class m_wearableItemsInventory : MonoBehaviour
 {
     [SerializeField] WearableItemSlot m_keyCardSlot;
     [SerializeField] WearableItemSlot m_maskSlot;

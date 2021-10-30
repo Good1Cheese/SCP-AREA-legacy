@@ -4,7 +4,7 @@ using Zenject;
 [RequireComponent(typeof(Animator))]
 public class WeaponRecoil : MonoBehaviour
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly Animator m_weaponAnimator;
     [Inject] readonly WeaponAim m_weaponAim;
 

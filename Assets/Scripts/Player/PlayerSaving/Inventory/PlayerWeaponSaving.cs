@@ -2,26 +2,19 @@
 
 public class PlayerWeaponSaving : WearableItemSaving
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly WeaponActivator m_weaponActivator;
+    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
 
-    public bool isActive;
     public int ammoCount;
     public int clipAmmo;
 
     public WeaponHandler WeaponHandler { get => ItemHandler as WeaponHandler; }
 
-    public override void Save()
+    protected override WearableItemSlot SlotToSave => m_wearableItemsInventory.WeaponSlot;
+
+    protected override void SaveWearableItem()
     {
-        ItemHandler = m_wearableItemsInventory.WeaponSlot.ItemHandler;
-
-        if (ItemHandler == null) { return; }
-
         ammoCount = WeaponHandler.AmmoCount;
-        isActive = WeaponHandler.GameObjectForPlayer.activeSelf;
         clipAmmo = WeaponHandler.ClipAmmo;
-
-        itemName = ItemHandler.name;
     }
 
     public override void Load(string json)
@@ -37,6 +30,5 @@ public class PlayerWeaponSaving : WearableItemSaving
     {
         WeaponHandler.AmmoCount = ammoCount;
         WeaponHandler.ClipAmmo = clipAmmo;
-        m_weaponActivator.SetItemActiveState(isActive);
     }
 }
