@@ -5,7 +5,7 @@ public abstract class DoorInteractable : IInteractable
     public abstract int KeyCardType { get; }
     public abstract int KeyCardLevelToOpen { get; }
 
-    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
     public override void Interact()
     {

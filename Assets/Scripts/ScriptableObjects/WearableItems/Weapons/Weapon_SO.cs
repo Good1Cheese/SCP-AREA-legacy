@@ -9,8 +9,11 @@ public class Weapon_SO : WearableItem_SO
     public AmmoType ammoType;
     public int clipMaxAmmo;
 
-    public float delayAfterShot;
-    public WaitForSeconds timeoutAfterShot;
+    public float shotDelay;
+    public WaitForSeconds shotTimeout;
+
+    public float reloadDelay;
+    public WaitForSeconds reloadTimeout;
 
     public Vector3 bulletSpawnPoint;
     public GameObject bulletHolePrefab;

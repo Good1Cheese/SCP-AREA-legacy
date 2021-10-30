@@ -18,19 +18,7 @@ public class ItemSaveableStateChanger : MonoBehaviour
         ItemHandler.OnIsInventoryChanged += SetSaveableState;
     }
 
-    public void SetSaveableState(bool isInventory)
-    {
-        ItemDataHandler.IsSaveable = isInventory;
-        if (isInventory)
-        {
-            ItemDataHandler.BecomeUnsaveable();
-            return;
-        }
-
-        if (ItemDataHandler.IsSaveable) { return; }
-
-        ItemDataHandler.BecomeSaveable();
-    }
+    public void SetSaveableState(bool isInventory) => ItemDataHandler.IsSaveable = isInventory;
 
     void OnDestroy()
     {

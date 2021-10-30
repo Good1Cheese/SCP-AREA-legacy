@@ -768,8 +768,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   isActive: 0
-  ammoCount: 0
-  clipAmmo: 0
 --- !u!114 &1380658650591710889
 MonoBehaviour:
   m_ObjectHideFlags: 0

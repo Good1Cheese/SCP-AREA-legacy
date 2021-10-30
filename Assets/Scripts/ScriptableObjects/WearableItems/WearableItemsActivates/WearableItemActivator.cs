@@ -5,7 +5,7 @@ public class WearableItemActivator : MonoBehaviour
 {
     [SerializeField] KeyCode m_key;
 
-    [Inject] protected readonly m_wearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
 
     protected WearableItemHandler m_wearableItemHandler;

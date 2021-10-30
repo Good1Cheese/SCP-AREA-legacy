@@ -10,7 +10,7 @@ public class AmmoHandler : PickableItemHandler
     [SerializeField] int ammoCount;
 
     [Inject] readonly WeaponReload m_weaponReload;
-    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
     WeaponHandler m_weaponHandler;
 

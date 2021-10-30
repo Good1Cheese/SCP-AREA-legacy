@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
@@ -33,9 +32,12 @@ public class WeaponHandler : WearableItemHandler
     new void Awake()
     {
         base.Awake();
-
-        Weapon_SO.timeoutAfterShot = new WaitForSeconds(Weapon_SO.delayAfterShot);
         CurrentShotSound = Weapon_SO.shotSound;
+
+        if (Weapon_SO.reloadTimeout != null) { return; }
+
+        Weapon_SO.reloadTimeout = new WaitForSeconds(Weapon_SO.reloadDelay);
+        Weapon_SO.shotTimeout = new WaitForSeconds(Weapon_SO.shotDelay);
     }
 
     public override void Equip()

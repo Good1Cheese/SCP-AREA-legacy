@@ -19,7 +19,8 @@ MonoBehaviour:
   damagePerShot: 10
   ammoType: 0
   clipMaxAmmo: 8
-  delayAfterShot: 0.3
+  shotDelay: 0.3
+  reloadDelay: 2.74
   bulletSpawnPoint: {x: 0.00185, y: 0.24563, z: 0.4903}
   bulletHolePrefab: {fileID: 5088676403618374141, guid: 3e7fda179aea8d64fa703584d4992b74, type: 3}
   weaponAnimationContoller: {fileID: 9100000, guid: 4b9fd3655a02a4b4ca10361a850a019e, type: 2}

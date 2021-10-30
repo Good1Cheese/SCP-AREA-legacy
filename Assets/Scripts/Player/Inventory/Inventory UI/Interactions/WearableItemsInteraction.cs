@@ -7,6 +7,8 @@ public class WearableItemsInteraction : MonoBehaviour
 
     public void DropItem(WearableItemSlot wearableItemSlot)
     {
+        if (wearableItemSlot.IsItemActionGoing) { return; }
+
         wearableItemSlot.ItemHandler.GameObject.transform.position = m_playerTransform.position + m_playerTransform.forward;
         wearableItemSlot.ItemHandler.GameObject.SetActive(true);
 

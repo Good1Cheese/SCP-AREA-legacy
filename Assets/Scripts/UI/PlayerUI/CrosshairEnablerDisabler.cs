@@ -4,7 +4,7 @@ using Zenject;
 public class CrosshairEnablerDisabler : MonoBehaviour
 {
     [Inject] readonly WeaponAim m_weaponAim;
-    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject] readonly GameLoader m_gameLoader;
 
     GameObject m_gameObject;

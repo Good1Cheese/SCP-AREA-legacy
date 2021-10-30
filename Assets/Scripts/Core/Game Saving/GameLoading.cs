@@ -38,8 +38,6 @@ public class GameLoading : MonoBehaviour
         string json;
         for (int i = 0; (json = reader.ReadLine()) != null; i++)
         {
-            if (json.Length <= EMPTY_JSON_LENGHT) { continue; }
-
             m_gameSaving.SaveData[i].Load(json);
         }
 

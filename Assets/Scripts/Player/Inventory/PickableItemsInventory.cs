@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(m_wearableItemsInventory), typeof(InventoryEnablerDisabler))]
+[RequireComponent(typeof(WearableItemsInventory), typeof(InventoryEnablerDisabler))]
 public class PickableItemsInventory : MonoBehaviour
 {
     [SerializeField, Range(0, 8)] int m_maxSlotsAmount;

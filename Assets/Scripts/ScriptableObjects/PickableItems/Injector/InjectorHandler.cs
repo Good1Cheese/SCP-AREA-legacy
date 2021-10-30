@@ -1,4 +1,4 @@
-using System.Linq;
+using UnityEngine;
 using Zenject;
 
 public class InjectorHandler : WearableItemHandler, IClickable
@@ -7,6 +7,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
     [Inject] readonly InventoryEnablerDisabler m_inventoryEnablerDisabler;
 
     public IInjectable ClipInject { get; set; }
+    public Injector_SO Injector_SO => (Injector_SO)GetItem();
 
     new void Start()
     {
@@ -14,12 +15,24 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
         InjectorReload injectorReloader = GameObjectForPlayer.GetComponent<InjectorReload>();
         injectorReloader.PickableItemsInventory = m_pickableItemsInventory;
-        injectorReloader.InjectorHandler = this;
 
         foreach (var i in GameObjectForPlayer.GetComponents<InjectorScriptBase>())
         {
             i.InventoryEnablerDisabler = m_inventoryEnablerDisabler;
+            i.WearableItemsInventory = m_wearableItemsInventory;
+            i.InjectorHandler = this;
         }
+    }
+
+    new void Awake()
+    {
+        base.Awake();
+
+        if (Injector_SO.reloadTimeout != null) { return; }
+
+        Injector_SO.reloadTimeout = new WaitForSeconds(Injector_SO.reloadDelay);
+        Injector_SO.shotTimeout = new WaitForSeconds(Injector_SO.shotDelay);
+        Injector_SO.injectChangeTimeout = new WaitForSeconds(Injector_SO.injectChangeDelay);
     }
 
     public override void Equip()

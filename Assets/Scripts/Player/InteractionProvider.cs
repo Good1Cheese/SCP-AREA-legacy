@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +9,15 @@ public class InteractionProvider : MonoBehaviour
 {
     [SerializeField] float m_maxInteractionDistance;
     [SerializeField] float m_radiousOfSphereInteraction;
+    [SerializeField] float m_delayAfterInteraction;
 
     [Inject] readonly RayProvider m_rayProvider;
     [Inject] readonly InventoryEnablerDisabler m_inventoryEnablerDisabler;
+    [Inject] readonly GameObject m_playerGameObject;
 
     IInteractable m_interactable;
+    bool m_isDelayGoing;
+    WaitForSeconds m_timeoutAfterInteraction;
 
     public Action OnPlayerFindUnInteractable { get; set; }
     public Action<Collider> OnPlayerFindInteractable { get; set; }
@@ -19,6 +25,7 @@ public class InteractionProvider : MonoBehaviour
     void Start()
     {
         m_inventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActiveState;
+        m_timeoutAfterInteraction = new WaitForSeconds(m_delayAfterInteraction);
     }
 
     void SetActiveState()
@@ -28,48 +35,51 @@ public class InteractionProvider : MonoBehaviour
 
     void Update()
     {
-        RaycastHit? raycastHit = GetInteractableObject(Physics.SphereCastAll(m_rayProvider.ProvideRay(),
-                                m_radiousOfSphereInteraction,
-                                m_maxInteractionDistance));
+        if (m_isDelayGoing) { return; }
 
-        if (raycastHit == null)
+        RaycastHit[] raycastHits = Physics.SphereCastAll(m_rayProvider.ProvideRay(),
+                                        m_radiousOfSphereInteraction,
+                                        m_maxInteractionDistance);
+
+        Collider raycastHit = GetInteractableObject(raycastHits);
+
+        if (raycastHit == null || raycastHit == m_playerGameObject)
         {
             OnPlayerFindUnInteractable?.Invoke();
             return;
         }
 
-        OnPlayerFindInteractable?.Invoke(raycastHit.Value.collider);
+        OnPlayerFindInteractable?.Invoke(raycastHit);
 
-        m_interactable = raycastHit.Value.collider.gameObject.GetComponent<IInteractable>();
+        m_interactable = raycastHit.GetComponent<IInteractable>();
 
         if (Input.GetButtonDown("Interaction"))
         {
+            StartCoroutine(StartDelay());
             m_interactable.Interact();
         }
     }
 
-    public RaycastHit? GetInteractableObject(RaycastHit[] raycastHits)
+    Collider GetInteractableObject(RaycastHit[] raycastHits)
     {
-        RaycastHit? interactableObject = null;
-
         if (raycastHits == null)
         {
-            OnPlayerFindUnInteractable?.Invoke();
             return null;
         }
 
-        for (int i = 0; i < raycastHits.Length; i++)
-        {
-            bool isHitObjectInteractable = raycastHits[i].collider.gameObject.TryGetComponent(out m_interactable);
-
-            if (!isHitObjectInteractable) { continue; }
-
-            interactableObject = raycastHits[i];
-        }
-
-        return interactableObject;
+        return raycastHits.LastOrDefault(hit => hit.collider.gameObject.TryGetComponent(out m_interactable)).collider;
     }
 
+    IEnumerator StartDelay()
+    {
+        OnPlayerFindUnInteractable?.Invoke();
+        m_isDelayGoing = true;
+
+        yield return m_timeoutAfterInteraction;
+
+        m_isDelayGoing = false;
+    }
+    
     void OnDestroy()
     {
         m_inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;

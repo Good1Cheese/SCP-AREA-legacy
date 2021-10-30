@@ -12,9 +12,8 @@ public class WeaponSaving : ItemSaving
     public int clipAmmo;
     public bool isAmmoAdded;
 
-    new void Start()
+    void Start()
     {
-        base.Start();
         m_weaponHandler = GetComponent<WeaponHandler>();
     }
 

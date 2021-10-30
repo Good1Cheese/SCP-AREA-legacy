@@ -4,7 +4,7 @@ using Zenject;
 [RequireComponent(typeof(AmmoUICountUpdater))]
 public class AmmoUIEnablerDisabler : MonoBehaviour
 {
-    [Inject] readonly m_wearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
     AmmoUICountUpdater m_ammoUICountUpdater;
     GameObject m_textMeshProGameObject;

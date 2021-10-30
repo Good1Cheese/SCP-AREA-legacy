@@ -11,7 +11,6 @@ public class WeaponSlot : WearableItemSlot
     public Action OnSilencerUnequiped { get; set; }
 
     public Action<bool> IsWeaponActived { get; set; }
-    public bool IsWeaponActionIsGoing { get; set; }
 
     public override void OnItemSet()
     {
