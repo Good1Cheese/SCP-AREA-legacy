@@ -10,6 +10,8 @@ public class WeaponAim : WeaponAction
     [Inject] readonly Animator m_weaponAnimator;
     [Inject] readonly WeaponReload m_weaponReload;
 
+    public bool IsAiming { get; set; }
+
     public Action OnPlayerShootedWithAim { get; set; }
     public Action OnPlayerShootedWithoutAim { get; set; }
 
@@ -22,30 +24,30 @@ public class WeaponAim : WeaponAction
 
         if (Input.GetKeyDown(AIM_KEY))
         {
-            print("Pressed");
-            Aim();
+            SetAimState(true);
         }
 
         if (Input.GetKeyUp(AIM_KEY))
         {
-            print("Unpressed");
             if (!m_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
 
-            UnAim();
+            SetAimState(false);
         }
     }
 
-    public void Aim()
+    public void SetAimState(bool isAiming)
     {
-        OnPlayerAimed?.Invoke();
-        m_weaponAnimator.SetBool("IsPlayerTakedAim", true);
+        IsAiming = isAiming;
+        m_weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);
+
+        if(IsAiming)
+        {
+            OnPlayerAimed?.Invoke();
+            return;
+        }
+        OnPlayerInTakedAim?.Invoke();
     }
 
-    public void UnAim()
-    {
-        OnPlayerInTakedAim?.Invoke();
-        m_weaponAnimator.SetBool("IsPlayerTakedAim", false);
-    }
 
     protected new void SetWeapon(WeaponHandler weaponHandler)
     {

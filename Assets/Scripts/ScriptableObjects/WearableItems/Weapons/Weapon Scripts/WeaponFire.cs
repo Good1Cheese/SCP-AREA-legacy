@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +8,7 @@ public class WeaponFire : WeaponAction
     const KeyCode FIRE_KEY = KeyCode.Mouse0;
 
     [Inject] readonly RayForShootingProvider m_rayForShootingProvider;
+    [Inject] readonly WeaponAim m_weaponAim;
 
     public Action OnPlayerShooted { get; set; }
 
@@ -37,9 +37,21 @@ public class WeaponFire : WeaponAction
         m_weaponHandler.ClipAmmo--;
         OnPlayerShooted?.Invoke();
 
+        Ray ray;
+        if (m_weaponAim.IsAiming)
+        {
+            m_weaponAim.OnPlayerShootedWithAim?.Invoke();
+            ray = m_rayForShootingProvider.ProvideRayForAimedShot();
+        }
+        else
+        {
+            m_weaponAim.OnPlayerShootedWithoutAim?.Invoke();
+            ray = m_rayForShootingProvider.ProvideRayForShot();
+        }
+
         m_wearableItemsInventory.WeaponSlot.StartItemAction(m_weaponHandler.Weapon_SO.shotTimeout);
 
-        if (!Physics.Raycast(m_rayForShootingProvider.ProvideRay(), out RaycastHit raycastHit)) { return; }
+        if (!Physics.Raycast(ray, out RaycastHit raycastHit)) { return; }
 
         m_rayForShootingProvider.OnRayLaunched.Invoke(raycastHit);
     }

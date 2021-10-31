@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class RayForShootingProvider : MonoBehaviour, IRayProvider
+public class RayForShootingProvider : MonoBehaviour
 {
     [SerializeField] float m_multyplierOfBulletSpawnPointRadious;
     [SerializeField] Transform m_bulletSpawnPoint;
 
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
-    [Inject] readonly WeaponAim m_weaponAim;
 
     public System.Action<RaycastHit> OnRayLaunched { get; set; }
 
-    bool IsPlayerAiming;
     Ray ray;
 
     void Awake()
@@ -22,32 +20,24 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
 
     void Start()
     {
-        m_weaponAim.OnPlayerAimed += SetPlayerAimState;
-        m_weaponAim.OnPlayerInTakedAim += SetPlayerAimState;
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
     }
 
-    void SetPlayerAimState()
+    public Ray ProvideRayForAimedShot()
     {
-        print(IsPlayerAiming);
-        IsPlayerAiming = !IsPlayerAiming;
+        return ProvideRay(m_bulletSpawnPoint.position);
     }
 
-    public Ray ProvideRay()
+    public Ray ProvideRayForShot()
     {
-        if (IsPlayerAiming)
-        {
-            ray.origin = m_bulletSpawnPoint.position;
-            m_weaponAim.OnPlayerShootedWithAim?.Invoke();
-        }
-        else
-        {
-            ray.origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * m_multyplierOfBulletSpawnPointRadious;
-            m_weaponAim.OnPlayerShootedWithoutAim?.Invoke();
-        }
+        Vector3 origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * m_multyplierOfBulletSpawnPointRadious;
+        return ProvideRay(origin);
+    }
 
+    public Ray ProvideRay(Vector3 origin)
+    {
+        ray.origin = origin;
         ray.direction = transform.forward;
-
         return ray;
     }
 
@@ -58,8 +48,6 @@ public class RayForShootingProvider : MonoBehaviour, IRayProvider
 
     void OnDestroy()
     {
-        m_weaponAim.OnPlayerAimed -= SetPlayerAimState;
-        m_weaponAim.OnPlayerInTakedAim -= SetPlayerAimState;
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
     }
 }

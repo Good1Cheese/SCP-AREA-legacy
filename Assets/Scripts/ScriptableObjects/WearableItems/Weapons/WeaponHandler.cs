@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
     int m_ammoCount;
     SilencerHandler m_silencerHandler;
+    [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
     public int AmmoCount
     {
@@ -32,6 +34,8 @@ public class WeaponHandler : WearableItemHandler
     new void Awake()
     {
         base.Awake();
+        GameObjectForPlayer.GetComponentInChildren<ClippingMaker>().PlayerTransform = m_playerTransform;
+
         CurrentShotSound = Weapon_SO.shotSound;
 
         if (Weapon_SO.reloadTimeout != null) { return; }

@@ -19,6 +19,7 @@ MonoBehaviour:
   damagePerShot: 10
   ammoType: 0
   clipMaxAmmo: 8
+  recoilRotation: {x: 0.01745174, y: 0.008725206, z: -0.00015229904, w: 0.9998096}
   shotDelay: 0.3
   reloadDelay: 2.74
   bulletSpawnPoint: {x: 0.00185, y: 0.24563, z: 0.4903}

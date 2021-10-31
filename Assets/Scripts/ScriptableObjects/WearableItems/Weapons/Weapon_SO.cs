@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using static Ammo_SO;
 
 [CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/WearableItems/Weapons/HK-USP")]
@@ -8,6 +7,8 @@ public class Weapon_SO : WearableItem_SO
     public int damagePerShot;
     public AmmoType ammoType;
     public int clipMaxAmmo;
+
+    public Quaternion recoilRotation;
 
     public float shotDelay;
     public WaitForSeconds shotTimeout;

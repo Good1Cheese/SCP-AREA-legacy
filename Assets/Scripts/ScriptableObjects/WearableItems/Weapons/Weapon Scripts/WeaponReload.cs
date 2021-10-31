@@ -32,7 +32,8 @@ public class WeaponReload : WeaponAction
 
     IEnumerator Reload()
     {
-        m_weaponAim.UnAim();
+        m_weaponAim.SetAimState(false);
+
         m_wearableItemsInventory.WeaponSlot.StartItemAction(m_weaponHandler.Weapon_SO.reloadTimeout);
 
         AmmoHandler ammoHandler = (AmmoHandler)m_pickableItemsInventory.Inventory.LastOrDefault(item => item as AmmoHandler != null);
