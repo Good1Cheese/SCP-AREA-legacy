@@ -19,7 +19,7 @@ public class PlayerRunSound : SoundPlayerOnAction
 
     protected override void SubscribeToAction()
     {
-        m_playerSpeed.OnPlayerRun += PlaySound;
+        m_playerSpeed.OnPlayerRunning += PlaySound;
         m_playerSpeed.OnPlayerStoppedRun += StopSound;
         m_playerStamina.OnStaminaRanOut += StopSound;
         m_playerMovement.OnPlayerStoppedMoving += StopSound;
@@ -28,7 +28,7 @@ public class PlayerRunSound : SoundPlayerOnAction
 
     protected override void UnscribeToAction()
     {
-        m_playerSpeed.OnPlayerRun -= PlaySound;
+        m_playerSpeed.OnPlayerRunning -= PlaySound;
         m_playerSpeed.OnPlayerStoppedRun -= StopSound;
         m_playerStamina.OnStaminaRanOut -= StopSound;
         m_playerMovement.OnPlayerStoppedMoving -= StopSound;

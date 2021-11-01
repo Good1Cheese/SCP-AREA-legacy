@@ -15,7 +15,7 @@ public class PlayerWalkSound : SoundPlayerOnAction
     protected override void SubscribeToAction()
     {
         m_playerSpeed.OnPlayerWalks += PlaySound;
-        m_playerSpeed.OnPlayerRun += StopSound;
+        m_playerSpeed.OnPlayerRunning += StopSound;
         m_playerMovement.OnPlayerStoppedMoving += StopSound;
         m_pauseMenu.OnPauseMenuButtonPressed += StopSound;
     }
@@ -23,7 +23,7 @@ public class PlayerWalkSound : SoundPlayerOnAction
     protected override void UnscribeToAction()
     {
         m_playerSpeed.OnPlayerWalks -= PlaySound;
-        m_playerSpeed.OnPlayerRun -= StopSound;
+        m_playerSpeed.OnPlayerRunning -= StopSound;
         m_playerMovement.OnPlayerStoppedMoving -= StopSound;
         m_pauseMenu.OnPauseMenuButtonPressed -= StopSound;
     }

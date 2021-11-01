@@ -19,8 +19,8 @@ MonoBehaviour:
   damagePerShot: 10
   ammoType: 0
   clipMaxAmmo: 8
-  recoilRotation: {x: 0.01745174, y: 0.008725206, z: -0.00015229904, w: 0.9998096}
-  shotDelay: 0.3
+  recoilRotation: {x: 0.087135, y: 0.021731876, z: -0.0019012928, w: 0.9959576}
+  shotDelay: 0.25
   reloadDelay: 2.74
   bulletSpawnPoint: {x: 0.00185, y: 0.24563, z: 0.4903}
   bulletHolePrefab: {fileID: 5088676403618374141, guid: 3e7fda179aea8d64fa703584d4992b74, type: 3}

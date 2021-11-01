@@ -60,7 +60,7 @@ public class PlayerStamina : MonoBehaviour
 
     void Start()
     {
-        m_playerSpeed.OnPlayerRun += Burn;
+        m_playerSpeed.OnPlayerRunning += Burn;
         m_playerSpeed.OnPlayerStoppedRun += RestartRegeneration;
         m_playerMovement.OnPlayerStoppedMoving += RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage += RestartRegeneration;
@@ -103,7 +103,7 @@ public class PlayerStamina : MonoBehaviour
 
     void OnDestroy()
     {
-        m_playerSpeed.OnPlayerRun -= Burn;
+        m_playerSpeed.OnPlayerRunning -= Burn;
         m_playerSpeed.OnPlayerStoppedRun -= RestartRegeneration;
         m_playerMovement.OnPlayerStoppedMoving -= RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;

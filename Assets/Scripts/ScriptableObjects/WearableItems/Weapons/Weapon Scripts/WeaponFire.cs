@@ -35,7 +35,6 @@ public class WeaponFire : WeaponAction
     void Shoot()
     {
         m_weaponHandler.ClipAmmo--;
-        OnPlayerShooted?.Invoke();
 
         Ray ray;
         if (m_weaponAim.IsAiming)
@@ -49,6 +48,7 @@ public class WeaponFire : WeaponAction
             ray = m_rayForShootingProvider.ProvideRayForShot();
         }
 
+        OnPlayerShooted?.Invoke();
         m_wearableItemsInventory.WeaponSlot.StartItemAction(m_weaponHandler.Weapon_SO.shotTimeout);
 
         if (!Physics.Raycast(ray, out RaycastHit raycastHit)) { return; }

@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Inject] readonly MovementSpeed m_playerSpeed;
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
+
     CharacterController m_characterController;
 
     bool IsPlayerMoving;

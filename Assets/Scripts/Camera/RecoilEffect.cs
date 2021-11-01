@@ -23,7 +23,6 @@ public class RecoilEffect : MonoBehaviour
         m_targetRotation.y += m_weapon_SO.recoilRotation.y * GetPositiveOrNegativeOne();
         m_targetRotation.x -= m_weapon_SO.recoilRotation.x;
 
-
         transform.localRotation = Quaternion.Slerp(transform.localRotation, m_targetRotation, m_smooth * Time.deltaTime);
     }
 

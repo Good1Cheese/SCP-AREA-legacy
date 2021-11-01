@@ -991,7 +991,7 @@ MonoBehaviour:
   m_xSensitivity: 1
   m_verticalLookLimit: 85
   m_smoothTime: 10
-  m_camera: {fileID: 4490448437021268867}
+  m_cameraTransform: {fileID: 4490448437021268867}
 --- !u!114 &4490448435668429672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,9 +1092,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc69ee496be88c48aaa0d947af73375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sneakSpeed: 3
+  m_runSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 7
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_walkSpeed: 5
-  m_runSpeed: 8
 --- !u!114 &1022559845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,7 +1518,6 @@ GameObject:
   - component: {fileID: 4490448437021268865}
   - component: {fileID: 122316324}
   - component: {fileID: 4490448437021268878}
-  - component: {fileID: 726736802}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -1577,11 +1598,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a70aff21222dc4d9e3810908d57926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fovIncreasingSpeed: 0.035
+  m_fovForRun:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 50
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.7
+      value: 51.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_startFov: 50
   m_fovRestoreSpeed: 0.15
   m_delayDuringFovChange: 0.01
-  m_fovDuringRun: 51.5
-  m_startFov: 50
 --- !u!81 &4490448437021268869
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1732,18 +1775,6 @@ MonoBehaviour:
       data1: 0
       data2: 0
   defaultFrameSettings: 0
---- !u!114 &726736802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490448437021268870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84e8d07b002f22042b5420daff30ff88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4490448437100952943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1786,7 @@ GameObject:
   - component: {fileID: 4490448437100952942}
   - component: {fileID: 4490448437100952941}
   - component: {fileID: 4490448437100952936}
+  - component: {fileID: 1688691479}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -1769,14 +1801,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4490448437100952943}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.029749027, y: 0.017444722, z: 0.00051927246, w: 0.999405}
   m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4490448437021268867}
   m_Father: {fileID: 4490448435668429654}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -3.41, y: 2, z: 0}
 --- !u!114 &4490448437100952941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1807,3 +1839,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bobFrequencyWhileAction: 8
   m_bobVerticalAmplitudeWhileAction: 0.05
+--- !u!114 &1688691479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448437100952943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e8d07b002f22042b5420daff30ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_smooth: 10
