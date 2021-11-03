@@ -35,23 +35,23 @@ public class PlayerRotator : MonoBehaviour
 
     void RotateVertically()
     {
-        m_mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * m_ySensitivity;
+        m_mouseY = Input.GetAxis("Mouse Y") * Time.fixedDeltaTime * m_ySensitivity;
 
         YRotation -= m_mouseY;
         YRotation = Mathf.Clamp(YRotation, -m_verticalLookLimit, m_verticalLookLimit);
 
         Quaternion cameraTargetRotation = Quaternion.Euler(YRotation, 0, 0);
-        m_cameraTransform.localRotation = Quaternion.Slerp(m_cameraTransform.localRotation, cameraTargetRotation, m_smoothTime * Time.deltaTime);
+        m_cameraTransform.localRotation = Quaternion.Slerp(m_cameraTransform.localRotation, cameraTargetRotation, m_smoothTime * Time.fixedDeltaTime);
     }
 
     void RotateHorizontally()
     {
-        m_mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * m_xSensitivity;
+        m_mouseX = Input.GetAxis("Mouse X") * Time.fixedDeltaTime * m_xSensitivity;
 
         XRotation += m_mouseX;
 
         Quaternion playerTargetRotation = Quaternion.Euler(0, XRotation, 0);
-        m_playerTransform.localRotation = Quaternion.Slerp(m_playerTransform.localRotation, playerTargetRotation, m_smoothTime * Time.deltaTime);
+        m_playerTransform.localRotation = Quaternion.Slerp(m_playerTransform.localRotation, playerTargetRotation, m_smoothTime * Time.fixedDeltaTime);
     }
 
     void DisableRotation()

@@ -1,10 +1,9 @@
 ﻿using Zenject;
 
-public class PlayerRunSound : SoundPlayerOnAction
+public class SlowWalkSound : SoundPlayerOnAction
 {
-    [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly SlowWalkController m_slowWalkController;
     [Inject] readonly PlayerMovement m_playerMovement;
-    [Inject] readonly PlayerStamina m_playerStamina;
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
 
     protected override void PlaySound()
@@ -12,6 +11,7 @@ public class PlayerRunSound : SoundPlayerOnAction
         if (audioSource.isPlaying) { return; }
         audioSource.Play();
     }
+
     protected override void StopSound()
     {
         audioSource.Stop();
@@ -19,20 +19,17 @@ public class PlayerRunSound : SoundPlayerOnAction
 
     protected override void SubscribeToAction()
     {
-        m_playerSpeed.OnPlayerRunning += PlaySound;
-        m_playerSpeed.OnPlayerStoppedRun += StopSound;
-        m_playerStamina.OnStaminaRanOut += StopSound;
+        m_slowWalkController.OnPlayerStartedUseOfMove += PlaySound;
+        m_slowWalkController.OnPlayerStoppedUseOfMove += StopSound;
         m_playerMovement.OnPlayerStoppedMoving += StopSound;
         m_pauseMenu.OnPauseMenuButtonPressed += StopSound;
     }
 
     protected override void UnscribeToAction()
     {
-        m_playerSpeed.OnPlayerRunning -= PlaySound;
-        m_playerSpeed.OnPlayerStoppedRun -= StopSound;
-        m_playerStamina.OnStaminaRanOut -= StopSound;
+        m_slowWalkController.OnPlayerStartedUseOfMove -= PlaySound;
+        m_slowWalkController.OnPlayerStoppedUseOfMove -= StopSound;
         m_playerMovement.OnPlayerStoppedMoving -= StopSound;
         m_pauseMenu.OnPauseMenuButtonPressed -= StopSound;
     }
 }
-

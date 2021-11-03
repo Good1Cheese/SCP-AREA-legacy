@@ -8,14 +8,14 @@ public class WeaponShotSound : WeaponSoundPlayer
 
     protected override void SubscribeToAction()
     {
-        m_weaponFire.OnPlayerShooted += PlaySound;
+        m_weaponFire.OnPlayerFired += PlaySound;
         m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped += SetSilencerShotSound;
         m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped += SetRegularShotSound;
     }
 
     protected override void UnscribeToAction()
     {
-        m_weaponFire.OnPlayerShooted -= PlaySound;
+        m_weaponFire.OnPlayerFired -= PlaySound;
         m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped -= SetSilencerShotSound;
         m_wearableItemsInventory.WeaponSlot.OnSilencerUnequiped -= SetRegularShotSound;
     }

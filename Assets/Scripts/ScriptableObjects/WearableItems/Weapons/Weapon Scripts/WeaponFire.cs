@@ -7,10 +7,11 @@ public class WeaponFire : WeaponAction
 {
     const KeyCode FIRE_KEY = KeyCode.Mouse0;
 
-    [Inject] readonly RayForShootingProvider m_rayForShootingProvider;
+    [Inject] readonly RayForFireProvider m_rayForFireProvider;
     [Inject] readonly WeaponAim m_weaponAim;
+    [Inject] readonly WeaponShot m_weaponShot;
 
-    public Action OnPlayerShooted { get; set; }
+    public Action OnPlayerFired { get; set; }
 
     WeaponMiss m_weaponMiss;
 
@@ -23,9 +24,9 @@ public class WeaponFire : WeaponAction
     {
         if (!Input.GetKeyDown(FIRE_KEY) || m_wearableItemsInventory.WeaponSlot.IsItemActionGoing) { return; }
 
-        if (m_weaponHandler.ClipAmmo == 0) 
+        if (m_weaponHandler.ClipAmmo == 0)
         {
-           m_weaponMiss.ActivateMissSound();
+            m_weaponMiss.ActivateMissSound();
             return;
         }
 
@@ -34,25 +35,20 @@ public class WeaponFire : WeaponAction
 
     void Shoot()
     {
+        m_wearableItemsInventory.WeaponSlot.StartItemAction(m_weaponHandler.Weapon_SO.shotTimeout);
         m_weaponHandler.ClipAmmo--;
 
-        Ray ray;
+        OnPlayerFired?.Invoke();
+
+
+        Physics.Raycast(m_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
+        m_weaponShot.AttendShot(raycastHit);
+
         if (m_weaponAim.IsAiming)
         {
-            m_weaponAim.OnPlayerShootedWithAim?.Invoke();
-            ray = m_rayForShootingProvider.ProvideRayForAimedShot();
+            m_weaponAim.OnPlayerFiredWithAim?.Invoke();
+            return;
         }
-        else
-        {
-            m_weaponAim.OnPlayerShootedWithoutAim?.Invoke();
-            ray = m_rayForShootingProvider.ProvideRayForShot();
-        }
-
-        OnPlayerShooted?.Invoke();
-        m_wearableItemsInventory.WeaponSlot.StartItemAction(m_weaponHandler.Weapon_SO.shotTimeout);
-
-        if (!Physics.Raycast(ray, out RaycastHit raycastHit)) { return; }
-
-        m_rayForShootingProvider.OnRayLaunched.Invoke(raycastHit);
+        m_weaponAim.OnPlayerFiredWithoutAim?.Invoke();
     }
 }

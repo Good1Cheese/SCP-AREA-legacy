@@ -8,7 +8,11 @@ public class Weapon_SO : WearableItem_SO
     public AmmoType ammoType;
     public int clipMaxAmmo;
 
-    public Quaternion recoilRotation;
+    public Vector3 recoil;
+    public Vector3 aimRecoil;
+
+    public float recoilReturnSpeed;
+    public float snappiness;
 
     public float shotDelay;
     public WaitForSeconds shotTimeout;

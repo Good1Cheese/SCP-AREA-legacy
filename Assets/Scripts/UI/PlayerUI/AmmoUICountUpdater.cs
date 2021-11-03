@@ -18,7 +18,7 @@ public class AmmoUICountUpdater : MonoBehaviour
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
         m_wearableItemsInventory.WeaponSlot.OnAmmoAdded += UpdateUIProperly;
-        m_weaponFire.OnPlayerShooted += UpdateUI;
+        m_weaponFire.OnPlayerFired += UpdateUI;
         m_weaponReload.OnWeaponAmmoChanged += UpdateUI;
     }
 
@@ -41,7 +41,7 @@ public class AmmoUICountUpdater : MonoBehaviour
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
         m_wearableItemsInventory.WeaponSlot.OnAmmoAdded -= UpdateUIProperly;
-        m_weaponFire.OnPlayerShooted -= UpdateUI;
+        m_weaponFire.OnPlayerFired -= UpdateUI;
         m_weaponReload.OnPlayerReloaded -= UpdateUI;
     }
 

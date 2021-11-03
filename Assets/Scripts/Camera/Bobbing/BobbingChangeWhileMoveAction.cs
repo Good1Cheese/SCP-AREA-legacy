@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
-abstract class BobbingChangeWhileAction : MonoBehaviour
+public abstract class BobbingChangeWhileMoveAction : MonoBehaviour
 {
     [SerializeField] float m_bobFrequencyWhileAction;
     [SerializeField] float m_bobVerticalAmplitudeWhileAction;
 
     protected CameraBobbing m_cameraBobbing;
-
-    protected abstract void Subscribe();
-    protected abstract void Unsubscribe();
+    protected MoveController m_moveController;
 
     void Start()
     {
         m_cameraBobbing = GetComponent<CameraBobbing>();
-        Subscribe();
+
+        m_moveController.OnPlayerStartedUseOfMove += ChangeBobbingDuringRun;
+        m_moveController.OnPlayerStoppedUseOfMove += m_cameraBobbing.ResetBobbingValues;
     }
 
     protected void ChangeBobbingDuringRun()
@@ -24,8 +24,8 @@ abstract class BobbingChangeWhileAction : MonoBehaviour
 
     void OnDestroy()
     {
-        Unsubscribe();
+        m_moveController.OnPlayerStartedUseOfMove -= ChangeBobbingDuringRun;
+        m_moveController.OnPlayerStoppedUseOfMove -= m_cameraBobbing.ResetBobbingValues;
     }
-
 }
 

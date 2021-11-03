@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(CharacterController), typeof(MovementSpeed), typeof(PlayerStamina))]
+[RequireComponent(typeof(CharacterController), typeof(MovementController), typeof(PlayerStamina))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly MovementController m_movementController;
     [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
@@ -40,8 +40,9 @@ public class PlayerMovement : MonoBehaviour
             IsPlayerMoving = false;
             return;
         }
+
         IsPlayerMoving = true;
-        float moveSpeed = m_playerSpeed.GetPlayerSpeed();
+        float moveSpeed = m_movementController.GetPlayerSpeed();
 
         Vector3 move = m_playerTransform.right * horizontalMove + m_playerTransform.forward * verticalMove;
         move = Vector3.ClampMagnitude(move, 1f) * Time.deltaTime;

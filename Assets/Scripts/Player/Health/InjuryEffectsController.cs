@@ -12,7 +12,7 @@ public class InjuryEffectsController : MonoBehaviour
     [SerializeField] float[] m_lensDistortionValues;
     [SerializeField] float[] m_saturationValues;
 
-    [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly MovementController m_movementController;
     [Inject] readonly PlayerHealth m_playerHealth;
 
     ColorAdjustments m_colorAdjustments;
@@ -57,14 +57,14 @@ public class InjuryEffectsController : MonoBehaviour
     {
         m_colorAdjustments.saturation.value = m_saturationValues[m_currentCellIndex];
         m_lensDistortion.intensity.value = m_lensDistortionValues[m_currentCellIndex];
-        m_playerSpeed.SlowDownSpeed(m_slowDownValues[m_currentCellIndex]);
+        m_movementController.SlowDownFactor = m_slowDownValues[m_currentCellIndex];
     }
 
     void DisableEffects()
     {
         m_colorAdjustments.saturation.value = 0;
         m_lensDistortion.intensity.value = 0;
-        m_playerSpeed.SlowDownSpeed(0);
+        m_movementController.SlowDownFactor = 0;
     }
 
     void OnDestroy()

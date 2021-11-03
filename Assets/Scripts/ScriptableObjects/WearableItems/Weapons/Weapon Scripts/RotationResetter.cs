@@ -22,7 +22,8 @@ public class RotationResetter : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        print(other.name);
+        if (other.CompareTag("Player")) { return; }
+
         m_exitedFromTrigger = true;
         transform.localPosition = Vector3.zero;
     }

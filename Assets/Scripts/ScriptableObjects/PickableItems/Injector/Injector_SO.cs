@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Injector", menuName = "ScriptableObjects/WearableItems/Injector")]
-public class Injector_SO : Device_SO
+public class Injector_SO : Utility_SO
 {
     public float shotDelay;
     public WaitForSeconds shotTimeout;

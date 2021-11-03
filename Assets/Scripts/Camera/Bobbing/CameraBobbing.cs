@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(BobbingWhileRun))]
-class CameraBobbing : MonoBehaviour
+public class CameraBobbing : MonoBehaviour
 {
     [SerializeField] float m_bobFrequency;
     [SerializeField] float m_bobHorizontalAmplitude;
@@ -35,11 +35,6 @@ class CameraBobbing : MonoBehaviour
         m_cameraTransform.position = Vector3.Lerp(m_cameraTransform.position, targetCameraPosition, m_headBobSmoothing);
 
         if ((m_cameraTransform.position - targetCameraPosition).magnitude <= 0.001) m_cameraTransform.position = targetCameraPosition;
-    }
-
-    void ResetTime()
-    {
-        m_walkingTime = 0;
     }
 
     Vector3 CalculateHeadBobbingOffset(float time)

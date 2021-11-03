@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponRecoil))]
+[RequireComponent(typeof(WeaponRecoilAnimation))]
 public class WeaponShot : MonoBehaviour
 {
-    [Inject] readonly RayForShootingProvider m_rayForShootingProvider;
     [Inject] readonly GameObject m_playerGameObject;
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 
@@ -13,11 +12,10 @@ public class WeaponShot : MonoBehaviour
 
     void Start()
     {
-        m_rayForShootingProvider.OnRayLaunched += AttendShot;
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
-    void AttendShot(RaycastHit raycastHit)
+    public void AttendShot(RaycastHit raycastHit)
     {
         bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_damagable);
 
@@ -30,7 +28,6 @@ public class WeaponShot : MonoBehaviour
         Vector3 highestPointOfCollider = raycastHit.point + raycastHit.normal * 0.001f;
         GameObject bulletHole = Instantiate(m_weapon.bulletHolePrefab, highestPointOfCollider, Quaternion.identity);
         bulletHole.transform.LookAt(raycastHit.point + raycastHit.normal);
-
     }
 
     void SetWeapon(WeaponHandler weaponHandler)
@@ -41,7 +38,6 @@ public class WeaponShot : MonoBehaviour
 
     void OnDestroy()
     {
-        m_rayForShootingProvider.OnRayLaunched -= AttendShot;
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

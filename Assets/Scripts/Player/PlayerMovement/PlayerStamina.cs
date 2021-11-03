@@ -14,7 +14,7 @@ public class PlayerStamina : MonoBehaviour
 
     [SerializeField] float m_staminaValue;
 
-    [Inject] readonly MovementSpeed m_playerSpeed;
+    [Inject] readonly RunController m_runController;
     [Inject] readonly PlayerMovement m_playerMovement;
     [Inject] readonly PlayerHealth m_playerHealth;
 
@@ -60,8 +60,8 @@ public class PlayerStamina : MonoBehaviour
 
     void Start()
     {
-        m_playerSpeed.OnPlayerRunning += Burn;
-        m_playerSpeed.OnPlayerStoppedRun += RestartRegeneration;
+        m_runController.OnPlayerUsingMove += Burn;
+        m_runController.OnPlayerStoppedUseOfMove += RestartRegeneration;
         m_playerMovement.OnPlayerStoppedMoving += RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage += RestartRegeneration;
     }
@@ -80,7 +80,7 @@ public class PlayerStamina : MonoBehaviour
 
     void RegenerateAfterPlayerStopped()
     {
-        if (StaminaValue == MaxStaminaAmount || !m_playerSpeed.IsPlayerRunning) { return; }
+        if (StaminaValue == MaxStaminaAmount) /* || !m_runController.IsPlayerRunning)*/ { return; }
         RestartRegeneration();
     }
 
@@ -103,8 +103,8 @@ public class PlayerStamina : MonoBehaviour
 
     void OnDestroy()
     {
-        m_playerSpeed.OnPlayerRunning -= Burn;
-        m_playerSpeed.OnPlayerStoppedRun -= RestartRegeneration;
+        m_runController.OnPlayerUsingMove -= Burn;
+        m_runController.OnPlayerStoppedUseOfMove -= RestartRegeneration;
         m_playerMovement.OnPlayerStoppedMoving -= RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }

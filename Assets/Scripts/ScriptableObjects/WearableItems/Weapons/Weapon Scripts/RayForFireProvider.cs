@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class RayForShootingProvider : MonoBehaviour
+public class RayForFireProvider : MonoBehaviour, IRayProvider
 {
     [SerializeField] float m_multyplierOfBulletSpawnPointRadious;
     [SerializeField] Transform m_bulletSpawnPoint;
 
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] readonly WeaponAim m_weaponAim;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
-
-    public System.Action<RaycastHit> OnRayLaunched { get; set; }
 
     Ray ray;
 
@@ -21,6 +20,18 @@ public class RayForShootingProvider : MonoBehaviour
     void Start()
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
+    }
+
+    public Ray ProvideRay()
+    {
+        if (m_weaponAim.IsAiming)
+        {
+            return ray = ProvideRayForAimedShot();
+        }
+        else
+        {
+            return ray = ProvideRayForShot();
+        }
     }
 
     public Ray ProvideRayForAimedShot()
@@ -50,4 +61,5 @@ public class RayForShootingProvider : MonoBehaviour
     {
         m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
     }
+
 }

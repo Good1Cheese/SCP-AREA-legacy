@@ -12,8 +12,8 @@ public class WeaponAim : WeaponAction
 
     public bool IsAiming { get; set; }
 
-    public Action OnPlayerShootedWithAim { get; set; }
-    public Action OnPlayerShootedWithoutAim { get; set; }
+    public Action OnPlayerFiredWithAim { get; set; }
+    public Action OnPlayerFiredWithoutAim { get; set; }
 
     public Action OnPlayerAimed { get; set; }
     public Action OnPlayerInTakedAim { get; set; }

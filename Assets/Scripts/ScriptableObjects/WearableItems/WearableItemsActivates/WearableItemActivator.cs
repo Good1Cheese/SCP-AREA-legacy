@@ -9,14 +9,22 @@ public class WearableItemActivator : MonoBehaviour
     [Inject] readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
 
     protected WearableItemHandler m_wearableItemHandler;
-    protected WearableItemSlot m_wearableItemSlot;
+
+    protected Transform m_itemParent;
+
+    protected virtual WearableItemSlot WearableItemSlot { get; }
+
+    protected void Awake()
+    {
+        m_itemParent = transform;
+    }
 
     protected void Start()
     {
-        m_wearableItemSlot.WearableItemActivator = this;
+        WearableItemSlot.WearableItemActivator = this;
 
-        m_wearableItemSlot.OnItemChanged += SetItem;
-        m_wearableItemSlot.OnItemRemoved += DeactivateWeapon;
+        WearableItemSlot.OnItemChanged += SetItem;
+        WearableItemSlot.OnItemRemoved += DeactivateWeapon;
         m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled += SetActiveState;
     }
 
@@ -35,9 +43,9 @@ public class WearableItemActivator : MonoBehaviour
     protected void SetItem(WearableItemHandler wearableItemHandler)
     {
         m_wearableItemHandler = wearableItemHandler;
-        var item_SO = (WearableItem_SO)m_wearableItemHandler.GetItem(); 
+        var item_SO = (WearableItem_SO)m_wearableItemHandler.GetItem();
 
-        m_wearableItemHandler.GameObjectForPlayer.transform.SetParent(transform);
+        m_wearableItemHandler.GameObjectForPlayer.transform.SetParent(m_itemParent);
         m_wearableItemHandler.GameObjectForPlayer.transform.localPosition = item_SO.playerGameObjectspawnOffset;
         m_wearableItemHandler.GameObjectForPlayer.transform.localRotation = Quaternion.identity;
 
@@ -57,8 +65,8 @@ public class WearableItemActivator : MonoBehaviour
 
     protected void OnDestroy()
     {
-        m_wearableItemSlot.OnItemChanged -= SetItem;
-        m_wearableItemSlot.OnItemRemoved -= DeactivateWeapon;
+        WearableItemSlot.OnItemChanged -= SetItem;
+        WearableItemSlot.OnItemRemoved -= DeactivateWeapon;
         m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= SetActiveState;
     }
 }

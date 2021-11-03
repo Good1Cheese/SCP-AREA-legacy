@@ -1,9 +1,6 @@
 ﻿public class InjectorActivator : WearableItemActivator
 {
-    void Awake()
-    {
-        m_wearableItemSlot = m_wearableItemsInventory.InjectorSlot;
-    }
+    protected override WearableItemSlot WearableItemSlot => m_wearableItemsInventory.InjectorSlot;
 
     new void Start()
     {

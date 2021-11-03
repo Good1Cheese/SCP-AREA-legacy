@@ -35,6 +35,6 @@ public class LoadingSceneUIController : MonoBehaviour
     public void UpdateUI(float progress)
     {
         m_loadSlider.value = progress;
-        m_progressText.text = string.Format($"{progress * 100} %");
+        m_progressText.text = string.Format($"{Mathf.Round(progress * 100)} %");
     }
 }

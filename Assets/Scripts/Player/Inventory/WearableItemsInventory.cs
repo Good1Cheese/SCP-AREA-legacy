@@ -11,7 +11,7 @@ public class WearableItemsInventory : MonoBehaviour
     public WearableItemSlot KeyCardSlot { get => m_keyCardSlot; }
     public WearableItemSlot MaskSlot { get => m_maskSlot; }
     public WeaponSlot WeaponSlot { get => m_weaponSlot; }
-    public WearableItemSlot DeviceSlot { get => m_deviceSlot; }
+    public WearableItemSlot UtilitySlot { get => m_deviceSlot; }
     public InjectorSlot InjectorSlot { get => m_injectorSlot;  }
 
     void Start()

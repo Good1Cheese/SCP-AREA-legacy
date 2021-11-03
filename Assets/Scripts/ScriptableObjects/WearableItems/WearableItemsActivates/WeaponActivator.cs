@@ -3,9 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(WeaponFire), typeof(WeaponReload))]
 public class WeaponActivator : WearableItemActivator
 {
-    void Awake()
+    [SerializeField] Transform m_weaponParent;
+    protected override WearableItemSlot WearableItemSlot => m_wearableItemsInventory.WeaponSlot;
+
+    new void Start()
     {
-        m_wearableItemSlot = m_wearableItemsInventory.WeaponSlot;
+        base.Start();
+        m_itemParent = m_weaponParent;
     }
 
     public override void SetItemActiveState(bool itemActiveState)

@@ -2,8 +2,5 @@
 
 public class KeyCardActivator : WearableItemActivator
 {
-    void Awake()
-    {
-        m_wearableItemSlot = m_wearableItemsInventory.KeyCardSlot;
-    }
+    protected override WearableItemSlot WearableItemSlot => m_wearableItemsInventory.KeyCardSlot;
 }

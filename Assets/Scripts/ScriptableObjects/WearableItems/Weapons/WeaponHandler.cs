@@ -34,8 +34,8 @@ public class WeaponHandler : WearableItemHandler
     new void Awake()
     {
         base.Awake();
-        GameObjectForPlayer.GetComponentInChildren<ClippingMaker>().PlayerTransform = m_playerTransform;
 
+        GameObjectForPlayer.GetComponentInChildren<ClippingMaker>().PlayerTransform = m_playerTransform;
         CurrentShotSound = Weapon_SO.shotSound;
 
         if (Weapon_SO.reloadTimeout != null) { return; }

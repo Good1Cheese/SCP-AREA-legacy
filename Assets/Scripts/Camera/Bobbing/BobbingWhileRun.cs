@@ -1,18 +1,10 @@
 ﻿using Zenject;
 
-class BobbingWhileRun : BobbingChangeWhileAction
+class BobbingWhileRun : BobbingChangeWhileMoveAction
 {
-    [Inject] readonly MovementSpeed m_playerSpeed;
-
-    protected override void Subscribe()
+    [Inject]
+    void Construct(RunController runController)
     {
-        m_playerSpeed.OnPlayerRunning += ChangeBobbingDuringRun;
-        m_playerSpeed.OnPlayerStoppedRun += m_cameraBobbing.ResetBobbingValues;
-    }
-
-    protected override void Unsubscribe()
-    {
-        m_playerSpeed.OnPlayerRunning -= ChangeBobbingDuringRun;
-        m_playerSpeed.OnPlayerStoppedRun -= m_cameraBobbing.ResetBobbingValues;
+        m_moveController = runController;
     }
 }
