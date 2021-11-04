@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponShotSound), typeof(WeaponMiss), typeof(WeaponAim))]
+[RequireComponent(typeof(WeaponFireSound), typeof(WeaponMiss), typeof(WeaponAim))]
 public class WeaponFire : WeaponAction
 {
     const KeyCode FIRE_KEY = KeyCode.Mouse0;

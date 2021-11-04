@@ -1,8 +1,11 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
 public class WeaponReloadSound : WeaponSoundPlayer
 {
     [Inject] readonly WeaponReload m_weaponReload;
+
+    protected override AudioClip Sound => m_weaponHandler.Weapon_SO.reloadSound;
 
     protected override void SubscribeToAction()
     {
@@ -13,10 +16,4 @@ public class WeaponReloadSound : WeaponSoundPlayer
     {
         m_weaponReload.OnPlayerReloaded -= PlaySound;
     }
-
-    protected override void ChangeAudio(WeaponHandler weaponHandler)
-    {
-        audioSource.clip = weaponHandler.Weapon_SO.reloadSound;
-    }
-
 }

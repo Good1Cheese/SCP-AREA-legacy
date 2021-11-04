@@ -10,7 +10,7 @@ public class DynamicFov : MonoBehaviour
     [SerializeField] float m_fovRestoreSpeed;
     [SerializeField] float m_delayDuringFovChange;
         
-    [Inject] readonly MovementController m_movementController;
+    [Inject] readonly WalkController m_walkController;
     [Inject] readonly RunController m_runController;
     [Inject] readonly SlowWalkController m_slowWalkController;
 
@@ -25,7 +25,7 @@ public class DynamicFov : MonoBehaviour
 
     void Start()
     {
-        m_movementController.OnPlayerWalking += ChangeFovWhileWalk;
+        m_walkController.OnPlayerUsingMove += ChangeFovWhileWalk;
         m_runController.OnPlayerUsingMove += ChangeFovWhileRun;
         m_slowWalkController.OnPlayerUsingMove += ChangeFovWhileSlowWalk;
     }
@@ -54,7 +54,7 @@ public class DynamicFov : MonoBehaviour
 
     void OnDestroy()
     {
-        m_movementController.OnPlayerWalking -= ChangeFovWhileWalk;
+        m_walkController.OnPlayerUsingMove -= ChangeFovWhileWalk;
         m_runController.OnPlayerUsingMove -= ChangeFovWhileRun;
         m_slowWalkController.OnPlayerUsingMove -= ChangeFovWhileSlowWalk;
         

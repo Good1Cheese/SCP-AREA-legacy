@@ -1,8 +1,8 @@
 ﻿using Zenject;
 
-public class PlayerBleedingSound : SoundPlayerOnAction
+public class PlayerBleedingSound : SoundOnAction
 {
-    [Inject] CharacterBleeding m_playerBleeding;
+    [Inject] readonly CharacterBleeding m_playerBleeding;
 
     protected override void SubscribeToAction()
     {

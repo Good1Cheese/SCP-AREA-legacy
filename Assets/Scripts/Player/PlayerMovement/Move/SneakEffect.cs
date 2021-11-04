@@ -31,6 +31,6 @@ public class SneakEffect : MonoBehaviour
     void OnDestroy()
     {
         m_slowWalkController.OnPlayerStartedUseOfMove -= ActivateEffect;
-        m_slowWalkController.OnPlayerStoppedUseOfMove -= DeactivateEffect;
+        m_slowWalkController.OnPlayerNotUsingMove -= DeactivateEffect;
     }
 }

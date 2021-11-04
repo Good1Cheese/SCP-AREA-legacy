@@ -15,7 +15,7 @@ public class PlayerStamina : MonoBehaviour
     [SerializeField] float m_staminaValue;
 
     [Inject] readonly RunController m_runController;
-    [Inject] readonly PlayerMovement m_playerMovement;
+    [Inject] readonly WalkController m_walkController;
     [Inject] readonly PlayerHealth m_playerHealth;
 
     WaitForSeconds m_timeoutBeforeRegeneration;
@@ -62,7 +62,7 @@ public class PlayerStamina : MonoBehaviour
     {
         m_runController.OnPlayerUsingMove += Burn;
         m_runController.OnPlayerStoppedUseOfMove += RestartRegeneration;
-        m_playerMovement.OnPlayerStoppedMoving += RegenerateAfterPlayerStopped;
+        m_walkController.OnPlayerStoppedUseOfMove += RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage += RestartRegeneration;
     }
 
@@ -105,7 +105,7 @@ public class PlayerStamina : MonoBehaviour
     {
         m_runController.OnPlayerUsingMove -= Burn;
         m_runController.OnPlayerStoppedUseOfMove -= RestartRegeneration;
-        m_playerMovement.OnPlayerStoppedMoving -= RegenerateAfterPlayerStopped;
+        m_walkController.OnPlayerStoppedUseOfMove -= RegenerateAfterPlayerStopped;
         m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
     }
 }

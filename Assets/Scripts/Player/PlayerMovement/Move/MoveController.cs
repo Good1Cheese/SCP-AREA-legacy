@@ -7,6 +7,7 @@ public abstract class MoveController : MonoBehaviour
     [SerializeField] protected AnimationCurve m_moveSpeed;
 
     public float MoveTime { get; set; }
+    public bool IsMoving { get; set; }
 
     public Action OnPlayerUsingMove { get; set; }
     public Action OnPlayerNotUsingMove { get; set; }
@@ -17,6 +18,7 @@ public abstract class MoveController : MonoBehaviour
     {
         if (Input.GetKeyDown(m_key))
         {
+            IsMoving = true;
             OnPlayerStartedUseOfMove?.Invoke();
         }
 
@@ -45,15 +47,20 @@ public abstract class MoveController : MonoBehaviour
     {
         if (Input.GetKeyUp(m_key))
         {
-            Keyframe lastKeyframe = m_moveSpeed.keys[m_moveSpeed.keys.Length - 1];
+            ResetMoveTime();
+        }
+    }
 
-            if (MoveTime > lastKeyframe.time)
-            {
-                MoveTime = lastKeyframe.time;
-            }
+    protected void ResetMoveTime()
+    {
+        IsMoving = false;
+        Keyframe lastKeyframe = m_moveSpeed.keys[m_moveSpeed.keys.Length - 1];
 
-            OnPlayerStoppedUseOfMove?.Invoke();
+        if (MoveTime > lastKeyframe.time)
+        {
+            MoveTime = lastKeyframe.time;
         }
 
+        OnPlayerStoppedUseOfMove?.Invoke();
     }
 }

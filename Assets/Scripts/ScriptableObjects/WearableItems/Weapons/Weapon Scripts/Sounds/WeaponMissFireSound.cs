@@ -5,6 +5,8 @@ public class WeaponMissFireSound : WeaponSoundPlayer
 {
     [Inject] readonly WeaponMiss m_weaponAmmoController;
 
+    protected override AudioClip Sound => m_weaponHandler.Weapon_SO.missFireSound;
+
     protected override void SubscribeToAction()
     {
         m_weaponAmmoController.OnAmmoRunOut += PlaySound;
@@ -13,10 +15,5 @@ public class WeaponMissFireSound : WeaponSoundPlayer
     protected override void UnscribeToAction()
     {
         m_weaponAmmoController.OnAmmoRunOut -= PlaySound;
-    }
-
-    protected override void ChangeAudio(WeaponHandler weaponHandler)
-    {
-        audioSource.clip = weaponHandler.Weapon_SO.missFireSound;
     }
 }

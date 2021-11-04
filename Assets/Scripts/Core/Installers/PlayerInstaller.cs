@@ -4,50 +4,53 @@ using Zenject;
 [RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerRotator))]
 public class PlayerInstaller : MonoInstaller
 {
-    public PlayerMovement PlayerMovement { get; set; }
-    public PlayerRotator PlayerRotator { get; set; }
-    public PlayerStamina PlayerStamina { get; set; }
-    public StaminaUseDisabler StaminaUseDisabler { get; set; }
-    public MovementController MovementController { get; set; }
-    public RunController RunController { get; set; }
-    public SlowWalkController SlowWalkController { get; set; }
-    public PlayerHealth PlayerHealth { get; set; }
-    public RayProvider RayProvider { get; set; }
-    public CharacterBleeding CharacterBleeding { get; set; }
-    public Transform PlayerTransform { get; set; }
-    public GameObject PlayerGameObject { get; set; }
+    PlayerMovement m_playerMovement;
+    PlayerRotator m_playerRotator;
+    PlayerStamina m_playerStamina;
+    StaminaUseDisabler m_staminaUseDisabler;
+    MovementController m_movementController;
+    RunController m_runController;
+    SlowWalkController m_slowWalkController;
+    WalkController m_walkController;
+    PlayerHealth m_playerHealth;
+    RayProvider m_rayProvider;
+    CharacterBleeding CharacterBleeding;
+    Transform m_playerTransform;
+    GameObject m_playerGameObject;
 
     public override void InstallBindings()
     {
         GetComponents();
-        Container.BindInstance(PlayerMovement).AsSingle();
-        Container.BindInstance(PlayerRotator).AsSingle();
-        Container.BindInstance(PlayerStamina).AsSingle();
-        Container.BindInstance(StaminaUseDisabler).AsSingle();
-        Container.BindInstance(MovementController).AsSingle();
-        Container.BindInstance(RunController).AsSingle();
-        Container.BindInstance(SlowWalkController).AsSingle();
-        Container.BindInstance(PlayerHealth).AsSingle();
+        Container.BindInstance(m_playerMovement).AsSingle();
+        Container.BindInstance(m_playerRotator).AsSingle();
+        Container.BindInstance(m_playerStamina).AsSingle();
+        Container.BindInstance(m_staminaUseDisabler).AsSingle();
+        Container.BindInstance(m_movementController).AsSingle();
+        Container.BindInstance(m_runController).AsSingle();
+        Container.BindInstance(m_slowWalkController).AsSingle();
+        Container.BindInstance(m_walkController).AsSingle();
+        Container.BindInstance(m_playerHealth).AsSingle();
         Container.BindInstance(CharacterBleeding).AsSingle();
-        Container.BindInstance(RayProvider).AsSingle();
+        Container.BindInstance(m_rayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
-        Container.BindInstance(PlayerTransform).WithId("Player").AsCached();
-        Container.BindInstance(PlayerGameObject).AsSingle();
+        Container.BindInstance(m_playerTransform).WithId("Player").AsCached();
+        Container.BindInstance(m_playerGameObject).AsSingle();
     }
 
     void GetComponents()
     {
-        PlayerMovement = GetComponent<PlayerMovement>();
-        PlayerRotator = GetComponent<PlayerRotator>();
-        PlayerStamina = GetComponent<PlayerStamina>();
-        StaminaUseDisabler = GetComponent<StaminaUseDisabler>();
-        MovementController = GetComponent<MovementController>();
-        RunController = GetComponent<RunController>();
-        SlowWalkController = GetComponent<SlowWalkController>();
-        PlayerHealth = GetComponent<PlayerHealth>();
+        m_playerMovement = GetComponent<PlayerMovement>();
+        m_playerRotator = GetComponent<PlayerRotator>();
+        m_playerStamina = GetComponent<PlayerStamina>();
+        m_staminaUseDisabler = GetComponent<StaminaUseDisabler>();
+        m_movementController = GetComponent<MovementController>();
+        m_runController = GetComponent<RunController>();
+        m_slowWalkController = GetComponent<SlowWalkController>();
+        m_walkController = GetComponent<WalkController>();
+        m_playerHealth = GetComponent<PlayerHealth>();
         CharacterBleeding = GetComponent<CharacterBleeding>();
-        RayProvider = GetComponent<RayProvider>();
-        PlayerTransform = transform;
-        PlayerGameObject = gameObject;
+        m_rayProvider = GetComponent<RayProvider>();
+        m_playerTransform = transform;
+        m_playerGameObject = gameObject;
     }
 }

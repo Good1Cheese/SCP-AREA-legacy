@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public abstract class SoundPlayerOnAction : MonoBehaviour
+public abstract class SoundOnAction : MonoBehaviour
 {
-    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected AudioSource m_audioSource;
 
     void Awake()
     {
@@ -12,12 +12,12 @@ public abstract class SoundPlayerOnAction : MonoBehaviour
 
     protected virtual void PlaySound()
     {
-        audioSource.Play();
+        m_audioSource.Play();
     }
 
     protected virtual void StopSound()
     {
-        audioSource.Stop();
+        m_audioSource.Stop();
     }
 
     void OnDestroy()

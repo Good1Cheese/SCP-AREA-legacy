@@ -1,7 +1,6 @@
-using UnityEngine;
 using Zenject;
 
-public class PlayerDamageSound : SoundPlayerOnAction
+public class PlayerDamageSound : SoundOnAction
 {
     [Inject] readonly PlayerHealth m_playerHealth;
 
