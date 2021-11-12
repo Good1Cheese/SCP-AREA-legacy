@@ -1,21 +1,21 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 public class DynamicFov : MonoBehaviour
 {
-    [SerializeField] AnimationCurve m_fovForRun;
-    [SerializeField] AnimationCurve m_fovForSlowWalk;
+    [SerializeField] AnimationCurve m_fovForMovement;
 
     [SerializeField] float m_startFov;
-    [SerializeField] float m_fovRestoreSpeed;
-    [SerializeField] float m_delayDuringFovChange;
-        
+
+    [Inject] readonly PlayerMovement m_playerMovement;
+    [Inject] readonly MovementController m_movementController;
     [Inject] readonly WalkController m_walkController;
     [Inject] readonly RunController m_runController;
     [Inject] readonly SlowWalkController m_slowWalkController;
 
     Camera m_mainCamera;
-    bool m_wasRunLastMove;
+    public float MoveTimeAfterStop { get; set; }
 
     void Awake()
     {
@@ -25,38 +25,32 @@ public class DynamicFov : MonoBehaviour
 
     void Start()
     {
-        m_walkController.OnPlayerUsingMove += ChangeFovWhileWalk;
-        m_runController.OnPlayerUsingMove += ChangeFovWhileRun;
-        m_slowWalkController.OnPlayerUsingMove += ChangeFovWhileSlowWalk;
+        m_playerMovement.OnPlayerNotMoving += ResetFovAfterMoving;
+        m_walkController.OnPlayerUsingMove += SetFovForMove;
+        m_runController.OnPlayerUsingMove += SetFovForMove;
+        m_slowWalkController.OnPlayerUsingMove += SetFovForMove;
     }
 
-    public void ChangeFovWhileWalk()
+    void SetFovForMove()
     {
-        if (m_wasRunLastMove)
+        m_mainCamera.fieldOfView = m_fovForMovement.Evaluate(m_movementController.MoveTime);
+    }
+    void ResetFovAfterMoving()
+    {
+        if (m_movementController.MoveTime != 0)
         {
-            ChangeFovWhileRun();
-            return;
+            MoveTimeAfterStop = m_movementController.MoveTime;
         }
-        ChangeFovWhileSlowWalk();
-    }
 
-    public void ChangeFovWhileRun()
-    {
-        m_wasRunLastMove = true;
-        m_mainCamera.fieldOfView = m_fovForRun.Evaluate(m_runController.MoveTime);
-    }
-
-    public void ChangeFovWhileSlowWalk()
-    {
-        m_wasRunLastMove = false;
-        m_mainCamera.fieldOfView = m_fovForSlowWalk.Evaluate(m_slowWalkController.MoveTime);
+        MoveTimeAfterStop -= Time.deltaTime;
+        m_mainCamera.fieldOfView = m_fovForMovement.Evaluate(MoveTimeAfterStop);
     }
 
     void OnDestroy()
     {
-        m_walkController.OnPlayerUsingMove -= ChangeFovWhileWalk;
-        m_runController.OnPlayerUsingMove -= ChangeFovWhileRun;
-        m_slowWalkController.OnPlayerUsingMove -= ChangeFovWhileSlowWalk;
-        
+        m_playerMovement.OnPlayerNotMoving -= ResetFovAfterMoving;
+        m_walkController.OnPlayerUsingMove -= SetFovForMove;
+        m_runController.OnPlayerUsingMove -= SetFovForMove;
+        m_slowWalkController.OnPlayerUsingMove -= SetFovForMove;
     }
 }

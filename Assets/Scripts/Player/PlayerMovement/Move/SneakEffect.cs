@@ -16,16 +16,16 @@ public class SneakEffect : MonoBehaviour
 
     void ActivateEffect()
     {
-        if (m_slowWalkController.MoveTime >= 1) { return; }
+        //if (m_slowWalkController.MoveTime >= 1) { return; }
 
-        m_characterController.height = m_slowWalkYChange.Evaluate(m_slowWalkController.MoveTime);
+        //m_characterController.height = m_slowWalkYChange.Evaluate(m_slowWalkController.MoveTime);
     }
 
     void DeactivateEffect()
     {
-        if (m_slowWalkController.MoveTime <= 0) { return; }
+        //if (m_slowWalkController.MoveTime <= 0) { return; }
 
-        m_characterController.height = m_slowWalkYChange.Evaluate(m_slowWalkController.MoveTime);
+        //m_characterController.height = m_slowWalkYChange.Evaluate(m_slowWalkController.MoveTime);
     }
 
     void OnDestroy()

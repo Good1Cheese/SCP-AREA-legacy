@@ -1,13 +1,16 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 public abstract class MoveController : MonoBehaviour
 {
-    [SerializeField] KeyCode m_key;
-    [SerializeField] protected AnimationCurve m_moveSpeed;
+    [SerializeField] protected KeyCode m_key;
+    [SerializeField] float m_maxMoveTime;
 
-    public float MoveTime { get; set; }
+    [Inject] protected readonly MovementController m_movementController;
+
     public bool IsMoving { get; set; }
+    public float MaxMoveTime { get => m_maxMoveTime; }
 
     public Action OnPlayerUsingMove { get; set; }
     public Action OnPlayerNotUsingMove { get; set; }
@@ -18,49 +21,37 @@ public abstract class MoveController : MonoBehaviour
     {
         if (Input.GetKeyDown(m_key))
         {
-            IsMoving = true;
             OnPlayerStartedUseOfMove?.Invoke();
         }
 
         if (Input.GetKey(m_key))
         {
-            MoveTime += Time.deltaTime;
-
-            OnPlayerUsingMove?.Invoke();
-
-            return m_moveSpeed.Evaluate(MoveTime);
-        }
-        else
-        {
-            if (MoveTime > 0)
-            {
-                MoveTime -= Time.deltaTime;
-            }
-
-            OnPlayerNotUsingMove?.Invoke();
+            return Move();
         }
 
+        OnPlayerNotUsingMove?.Invoke();
         return 0;
+    }
+
+    protected float Move()
+    {
+        IsMoving = true;
+        OnPlayerUsingMove?.Invoke();
+
+        if (m_movementController.MoveTime < MaxMoveTime)
+        {
+            m_movementController.MoveTime += Time.deltaTime;
+        }
+
+        return m_movementController.MovementSpeed.Evaluate(m_movementController.MoveTime);
     }
 
     public virtual void StopMove()
     {
         if (Input.GetKeyUp(m_key))
         {
-            ResetMoveTime();
+            IsMoving = false;
+            OnPlayerStoppedUseOfMove?.Invoke();
         }
-    }
-
-    protected void ResetMoveTime()
-    {
-        IsMoving = false;
-        Keyframe lastKeyframe = m_moveSpeed.keys[m_moveSpeed.keys.Length - 1];
-
-        if (MoveTime > lastKeyframe.time)
-        {
-            MoveTime = lastKeyframe.time;
-        }
-
-        OnPlayerStoppedUseOfMove?.Invoke();
     }
 }

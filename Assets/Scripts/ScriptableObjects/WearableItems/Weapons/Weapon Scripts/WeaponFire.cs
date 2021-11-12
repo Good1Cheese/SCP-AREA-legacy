@@ -40,7 +40,6 @@ public class WeaponFire : WeaponAction
 
         OnPlayerFired?.Invoke();
 
-
         Physics.Raycast(m_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
         m_weaponShot.AttendShot(raycastHit);
 

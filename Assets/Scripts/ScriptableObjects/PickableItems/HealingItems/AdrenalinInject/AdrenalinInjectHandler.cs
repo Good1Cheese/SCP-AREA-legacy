@@ -13,5 +13,5 @@ public class AdrenalinInjectHandler : InjectableItemHandler, IAdrenalinInjectabl
         m_playerHealth.Heal();
     }
 
-    public override bool ShouldItemNotBeUsed => true;
+    public override bool ShouldItemNotBeUsed => false;
 }

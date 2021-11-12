@@ -5,7 +5,6 @@ public class WeaponRecoilEffect : MonoBehaviour
 {
     [SerializeField] float m_smooth;
 
-    [Inject] readonly WeaponFire m_weaponFire;
     [Inject] readonly WeaponAim m_weaponAim;
     [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
 

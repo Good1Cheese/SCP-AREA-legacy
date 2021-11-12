@@ -10,5 +10,5 @@ public class Injector_SO : Utility_SO
     public WaitForSeconds reloadTimeout;
 
     public float injectChangeDelay;
-    internal WaitForSeconds injectChangeTimeout;
+    public WaitForSeconds injectChangeTimeout;
 }

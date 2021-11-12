@@ -14,9 +14,11 @@ public class PlayerMovement : MonoBehaviour
 
     CharacterController m_characterController;
 
-    bool IsPlayerMoving;
+    bool m_isPlayerMoving;
     float m_horizontalMove;
     float m_verticalMove;
+
+    public Action OnPlayerNotMoving { get; set; }
 
     void Start()
     {
@@ -31,19 +33,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        IsPlayerMoving = true;
+        m_isPlayerMoving = true;
 
         m_horizontalMove = Input.GetAxis("Horizontal");
         m_verticalMove = Input.GetAxis("Vertical");
 
         if (m_horizontalMove == 0 && m_verticalMove == 0)
         {
-            if (IsPlayerMoving)
+            OnPlayerNotMoving.Invoke();
+            m_movementController.MoveTime = 0;
+
+            if (m_isPlayerMoving)
             {
                 m_walkController.StopMove();
+                m_isPlayerMoving = false;
             }
 
-            IsPlayerMoving = false;
             return;
         }
 
