@@ -8,7 +8,8 @@ public class GameLoader : MonoBehaviour
     [Inject] readonly GameLoading m_gameLoading;
     [Inject] readonly SceneTransition m_sceneTransition;
 
-    public Action<bool> OnGameLoading { get; set; }
+    public Action<bool> OnGameLoadingUI { get; set; }
+    public Action OnGameLoaded { get; set; }
 
     IEnumerator Start()
     {
@@ -16,15 +17,17 @@ public class GameLoader : MonoBehaviour
 
         m_sceneTransition.LoadingSceneUIController.IsActiveStateConstant = true;
 
-        OnGameLoading?.Invoke(false);
+        OnGameLoadingUI?.Invoke(false);
 
         yield return new WaitForSeconds(1);
 
         m_gameLoading.LoadGame();
 
-        OnGameLoading?.Invoke(true);
+        OnGameLoadingUI?.Invoke(true);
 
         m_sceneTransition.LoadingSceneUIController.IsActiveStateConstant = false;
         m_sceneTransition.LoadingSceneUIController.SetActiveState(false);
+
+        OnGameLoaded?.Invoke();
     }
 }

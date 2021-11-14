@@ -2,14 +2,14 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler), typeof(InjuryEffectsController))]
+[RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler), typeof(InjuryLensDistortionEffect))]
 public class GameControllerInstaller : MonoInstaller
 {
     [SerializeField] Transform m_propsHandler;
     GameLoader m_gameLoader;
     PauseMenuEnablerDisabler m_pauseMenuEnablerDisabler;
     InventoryEnablerDisabler m_inventoryEnablerDisabler;
-    InjuryEffectsController m_injuryState;
+    InjuryLensDistortionEffect m_injuryState;
     Volume m_volume;
 
     public PickableItemsInventory PickableItemsInventory { get; set; }
@@ -41,7 +41,7 @@ public class GameControllerInstaller : MonoInstaller
         m_gameLoader = GetComponent<GameLoader>();
         m_pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();
         m_inventoryEnablerDisabler = GetComponent<InventoryEnablerDisabler>();
-        m_injuryState = GetComponent<InjuryEffectsController>();
+        m_injuryState = GetComponent<InjuryLensDistortionEffect>();
         m_volume = GetComponent<Volume>();
     }
 }

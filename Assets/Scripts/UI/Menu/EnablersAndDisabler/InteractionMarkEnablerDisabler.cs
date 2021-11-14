@@ -29,8 +29,14 @@ public class InteractionMarkEnablerDisabler : MonoBehaviour
         m_markCanvas.position = collider.ClosestPoint(m_playerTransform.position);
     }
 
-    private void DisableMark()
+    void DisableMark()
     {
         m_canvasGameObject.SetActive(false);
+    }
+
+    void OnDestroy()
+    {
+        m_interactionProvider.OnPlayerFindInteractable -= ActivateMark;
+        m_interactionProvider.OnPlayerFindUnInteractable -= DisableMark;
     }
 }

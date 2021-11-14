@@ -20,5 +20,4 @@ public class StaminaSaving : DataSaving
             m_playerStamina.RestartRegeneration();
         }
     }
-
 }

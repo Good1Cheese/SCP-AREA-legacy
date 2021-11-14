@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6968808273311658327}
   - component: {fileID: 8256743322405980991}
   - component: {fileID: 2460750081874783841}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 5639773022803243956}
   - component: {fileID: 8254544562234161979}
   - component: {fileID: 2490102637810791416}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: bullet_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 9116523703204814}
   - component: {fileID: 7932126838205312171}
   - component: {fileID: 7590189416745692015}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 6544032704026628603}
   - component: {fileID: 684561166945560293}
   - component: {fileID: 2659659491982799623}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 2988302173402092939}
   - component: {fileID: 2276628281113621667}
   - component: {fileID: 7432298425916697159}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: HK-USP
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 9180726092949173864}
   - component: {fileID: 2174830863980450301}
   - component: {fileID: 7168929464002171075}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: lower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 3147026405895823950}
   - component: {fileID: 6409160130217655834}
   - component: {fileID: 5972612663634436536}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

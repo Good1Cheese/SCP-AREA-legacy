@@ -11,7 +11,7 @@ public abstract class UIEnablerDisabler : MonoBehaviour
     void Awake()
     {
         m_playerHealth.OnPlayerDies += DisableUI;
-        m_gameLoader.OnGameLoading += SetScriptActiveState;
+        m_gameLoader.OnGameLoadingUI += SetScriptActiveState;
     }
 
     void DisableUI()
@@ -33,6 +33,6 @@ public abstract class UIEnablerDisabler : MonoBehaviour
     void OnDestroy()
     {
         m_playerHealth.OnPlayerDies -= DisableUI;
-        m_gameLoader.OnGameLoading -= SetScriptActiveState;
+        m_gameLoader.OnGameLoadingUI -= SetScriptActiveState;
     }
 }

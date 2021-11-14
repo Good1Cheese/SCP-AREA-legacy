@@ -12,14 +12,13 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
 
     void Update()
     {
-        if (Input.GetKeyDown(PAUSE_KEY))
+        if (!Input.GetKeyDown(PAUSE_KEY)) { return; }
+
+        if (m_wearableInventoryActivator.IsUIActivated)
         {
-            if (m_wearableInventoryActivator.IsUIActivated)
-            {
-                m_wearableInventoryActivator.EnableDisableUI();
-            }
-            EnableDisableUI();
+            m_wearableInventoryActivator.EnableDisableUI();
         }
+        EnableDisableUI();
     }
 
     public override void EnableDisableUI()

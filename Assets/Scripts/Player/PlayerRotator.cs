@@ -10,8 +10,7 @@ public class PlayerRotator : MonoBehaviour
 
     [SerializeField] float m_smoothTime;
 
-    [SerializeField] Transform m_cameraTransform;
-
+    [Inject] readonly Camera m_mainCamera;
     [Inject] readonly InventoryEnablerDisabler m_werableInventoryAcviteStateSetter;
     [Inject(Id = "Player")] readonly Transform m_playerTransform;
 
@@ -41,7 +40,7 @@ public class PlayerRotator : MonoBehaviour
         YRotation = Mathf.Clamp(YRotation, -m_verticalLookLimit, m_verticalLookLimit);
 
         Quaternion cameraTargetRotation = Quaternion.Euler(YRotation, 0, 0);
-        m_cameraTransform.localRotation = Quaternion.Slerp(m_cameraTransform.localRotation, cameraTargetRotation, m_smoothTime * Time.fixedDeltaTime);
+        m_mainCamera.transform.localRotation = Quaternion.Slerp(m_mainCamera.transform.localRotation, cameraTargetRotation, m_smoothTime * Time.fixedDeltaTime);
     }
 
     void RotateHorizontally()

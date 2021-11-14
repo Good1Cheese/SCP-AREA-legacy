@@ -6,15 +6,6 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
     [Inject] readonly CharacterBleeding m_playerBleeding;
 
     bool m_isInjectUsed;
-    HealthCellHealEffect m_healthCellHealEffect;
-
-    new void Start()
-    {
-        base.Start();
-
-        AutoHealableHealthCell autoHealableHealthCell = (AutoHealableHealthCell)m_playerHealth.HealthCells.Cells[m_playerHealth.HealthCells.Cells.Count - 1];
-        m_healthCellHealEffect = autoHealableHealthCell.HealthCellHealEffect;
-    }
 
     public new void Inject()
     {
@@ -25,7 +16,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
     public override void Use()
     {
         m_playerBleeding.StopBleeding();
-        m_playerHealth.Heal();
+        m_playerHealth.Heal(((Medkit_SO)GetItem()).healthToHeal);
     }
 
     public override void Clicked(int slotIndex)
@@ -34,15 +25,5 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 
         base.Clicked(slotIndex);
         m_numOfUses -= m_numOfUses;
-    }
-
-    public override bool ShouldItemNotBeUsed
-    {
-        get
-        {
-            print(!m_playerHealth.HealthCells.IsCurrentCellLast());
-            print(m_healthCellHealEffect.IsHealing);
-            return !m_playerHealth.HealthCells.IsCurrentCellLast() || m_healthCellHealEffect.IsHealing;
-        }
     }
 }

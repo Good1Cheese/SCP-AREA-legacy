@@ -25,7 +25,6 @@ public class MovementController : MonoBehaviour
             MoveTime -= Time.deltaTime;
         }
 
-        print(m_speed);
         return m_speed - SlowDownFactor;
     }
 

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6458915922648080912}
   - component: {fileID: 5127248310440600291}
   - component: {fileID: 8072456192214955555}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: KeyCard Level3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,8 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnOffset: {x: 0.706, y: 0, z: 0.679}
-  m_keyCard_SO: {fileID: 11400000, guid: 7e3d6df162cff4a4a9b976dee66ff6e3, type: 2}
+  m_wearableItem_SO: {fileID: 0}
 --- !u!114 &5127248310440600291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +169,7 @@ GameObject:
   - component: {fileID: 4814494893297602283}
   - component: {fileID: 4814494893297602276}
   - component: {fileID: 4814494893297602277}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

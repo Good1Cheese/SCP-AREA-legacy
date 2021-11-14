@@ -5,7 +5,6 @@ using Zenject;
 
 public class GameLoading : MonoBehaviour
 {
-    private const int EMPTY_JSON_LENGHT = 2;
     [Inject] readonly GameSaving m_gameSaving;
     [Inject] readonly SceneTransition m_sceneTransition;
 

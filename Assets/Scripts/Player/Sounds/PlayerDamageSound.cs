@@ -6,11 +6,11 @@ public class PlayerDamageSound : SoundOnAction
 
     protected override void SubscribeToAction()
     {
-        m_playerHealth.OnPlayerGetsDamage += PlaySound;
+        m_playerHealth.OnPlayerGetsNonBleedDamage += PlaySound;
     }
 
     protected override void UnscribeToAction()
     {
-        m_playerHealth.OnPlayerGetsDamage -= PlaySound;
+        m_playerHealth.OnPlayerGetsNonBleedDamage -= PlaySound;
     }
 }

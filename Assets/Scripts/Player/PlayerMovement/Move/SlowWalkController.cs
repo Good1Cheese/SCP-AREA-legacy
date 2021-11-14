@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SneakEffect))]
+[RequireComponent(typeof(SlowWalkEffect))]
 public class SlowWalkController : MoveController
 {
 }

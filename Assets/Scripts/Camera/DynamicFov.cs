@@ -8,18 +8,17 @@ public class DynamicFov : MonoBehaviour
 
     [SerializeField] float m_startFov;
 
+    [Inject] readonly Camera m_mainCamera;
     [Inject] readonly PlayerMovement m_playerMovement;
     [Inject] readonly MovementController m_movementController;
     [Inject] readonly WalkController m_walkController;
     [Inject] readonly RunController m_runController;
     [Inject] readonly SlowWalkController m_slowWalkController;
 
-    Camera m_mainCamera;
     public float MoveTimeAfterStop { get; set; }
 
     void Awake()
     {
-        m_mainCamera = Camera.main;
         m_mainCamera.fieldOfView = m_startFov;
     }
 

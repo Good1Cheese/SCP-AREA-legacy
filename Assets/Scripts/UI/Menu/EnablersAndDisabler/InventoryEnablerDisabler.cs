@@ -14,10 +14,9 @@ public class InventoryEnablerDisabler : UIEnablerDisabler
 
     void Update()
     {
-        if (Input.GetKeyDown(INVENTORY_KEY))
-        {
-            EnableDisableUI();
-        }
+        if (!Input.GetKeyDown(INVENTORY_KEY)) { return; }
+
+        EnableDisableUI();
     }
 
     public override void EnableDisableUI()

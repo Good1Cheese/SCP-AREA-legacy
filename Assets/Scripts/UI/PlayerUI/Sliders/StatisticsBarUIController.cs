@@ -1,10 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 [RequireComponent(typeof(Slider))]
 public abstract class StatisticsBarUIController : MonoBehaviour
 {
+    [Inject] readonly GameLoader m_gameLoader;
+
     Slider m_slider;
 
     void Start()
@@ -14,6 +16,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
         m_slider.maxValue = startBarValue;
         m_slider.value = startBarValue;
 
+        m_gameLoader.OnGameLoadingUI += gameObject.SetActive;
         Subscribe();
     }
 
@@ -28,6 +31,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
 
     void OnDestroy()
     {
+        m_gameLoader.OnGameLoadingUI -= gameObject.SetActive;
         Unsubscribe();
     }
 

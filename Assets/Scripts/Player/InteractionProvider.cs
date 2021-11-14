@@ -7,6 +7,7 @@ using Zenject;
 [RequireComponent(typeof(InteractionMarkEnablerDisabler))]
 public class InteractionProvider : MonoBehaviour
 {
+    [SerializeField] LayerMask m_itemsLayerMask;
     [SerializeField] float m_maxInteractionDistance;
     [SerializeField] float m_radiousOfSphereInteraction;
     [SerializeField] float m_delayAfterInteraction;
@@ -38,12 +39,13 @@ public class InteractionProvider : MonoBehaviour
         if (m_isDelayGoing) { return; }
 
         RaycastHit[] raycastHits = Physics.SphereCastAll(m_rayProvider.ProvideRay(),
-                                        m_radiousOfSphereInteraction,
-                                        m_maxInteractionDistance);
+                                                         m_radiousOfSphereInteraction,
+                                                         m_maxInteractionDistance,
+                                                         m_itemsLayerMask);
 
         Collider raycastHit = GetInteractableObject(raycastHits);
 
-        if (raycastHit == null || raycastHit == m_playerGameObject)
+        if (raycastHit == null)
         {
             OnPlayerFindUnInteractable?.Invoke();
             return;
@@ -51,13 +53,10 @@ public class InteractionProvider : MonoBehaviour
 
         OnPlayerFindInteractable?.Invoke(raycastHit);
 
-        m_interactable = raycastHit.GetComponent<IInteractable>();
+        if (!Input.GetButtonDown("Interaction")) { return; }
 
-        if (Input.GetButtonDown("Interaction"))
-        {
-            StartCoroutine(StartDelay());
-            m_interactable.Interact();
-        }
+        StartCoroutine(StartInteractionDelay());
+        m_interactable.Interact();
     }
 
     Collider GetInteractableObject(RaycastHit[] raycastHits)
@@ -70,7 +69,7 @@ public class InteractionProvider : MonoBehaviour
         return raycastHits.LastOrDefault(hit => hit.collider.gameObject.TryGetComponent(out m_interactable)).collider;
     }
 
-    IEnumerator StartDelay()
+    IEnumerator StartInteractionDelay()
     {
         OnPlayerFindUnInteractable?.Invoke();
         m_isDelayGoing = true;
@@ -79,7 +78,7 @@ public class InteractionProvider : MonoBehaviour
 
         m_isDelayGoing = false;
     }
-    
+
     void OnDestroy()
     {
         m_inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;

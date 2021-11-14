@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(BobbingWhileRun))]
 public class CameraBobbing : MonoBehaviour
@@ -8,8 +9,9 @@ public class CameraBobbing : MonoBehaviour
     [SerializeField] float m_bobVerticalAmplitude;
     [SerializeField] [Range(0, 1)] float m_headBobSmoothing;
 
+    [Inject] readonly Camera m_mainCamera;
+
     float m_walkingTime;
-    Transform m_cameraTransform;
     (float, float) m_startValuesOfChangableFields;
 
     public float BobFrequency { get => m_bobFrequency; set => m_bobFrequency = value; }
@@ -18,7 +20,6 @@ public class CameraBobbing : MonoBehaviour
     void Start()
     {
         m_startValuesOfChangableFields = (m_bobFrequency, m_bobVerticalAmplitude);
-        m_cameraTransform = Camera.main.transform;
     }
 
     void Update()
@@ -32,9 +33,12 @@ public class CameraBobbing : MonoBehaviour
         m_walkingTime += Time.deltaTime;
 
         Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(m_walkingTime);
-        m_cameraTransform.position = Vector3.Lerp(m_cameraTransform.position, targetCameraPosition, m_headBobSmoothing);
+        m_mainCamera.transform.position = Vector3.Lerp(m_mainCamera.transform.position, targetCameraPosition, m_headBobSmoothing);
 
-        if ((m_cameraTransform.position - targetCameraPosition).magnitude <= 0.001) m_cameraTransform.position = targetCameraPosition;
+        if ((m_mainCamera.transform.position - targetCameraPosition).magnitude <= 0.001)
+        { 
+            m_mainCamera.transform.position = targetCameraPosition;
+        }
     }
 
     Vector3 CalculateHeadBobbingOffset(float time)

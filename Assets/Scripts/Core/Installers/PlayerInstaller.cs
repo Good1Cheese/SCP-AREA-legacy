@@ -4,6 +4,7 @@ using Zenject;
 [RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerRotator))]
 public class PlayerInstaller : MonoInstaller
 {
+    InjuryEffectsController m_injuryEffectsController;
     PlayerMovement m_playerMovement;
     PlayerRotator m_playerRotator;
     PlayerStamina m_playerStamina;
@@ -21,6 +22,7 @@ public class PlayerInstaller : MonoInstaller
     public override void InstallBindings()
     {
         GetComponents();
+        Container.BindInstance(m_injuryEffectsController).AsSingle();
         Container.BindInstance(m_playerMovement).AsSingle();
         Container.BindInstance(m_playerRotator).AsSingle();
         Container.BindInstance(m_playerStamina).AsSingle();
@@ -33,12 +35,14 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(CharacterBleeding).AsSingle();
         Container.BindInstance(m_rayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
+        Container.BindInstance(Camera.main).AsCached();
         Container.BindInstance(m_playerTransform).WithId("Player").AsCached();
         Container.BindInstance(m_playerGameObject).AsSingle();
     }
 
     void GetComponents()
     {
+        m_injuryEffectsController = GetComponent<InjuryEffectsController>();
         m_playerMovement = GetComponent<PlayerMovement>();
         m_playerRotator = GetComponent<PlayerRotator>();
         m_playerStamina = GetComponent<PlayerStamina>();

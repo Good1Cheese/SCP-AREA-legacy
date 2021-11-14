@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6684741615264197640}
   - component: {fileID: 5402989756890578545}
   - component: {fileID: -1291876342877580260}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HK-USP Silencer For GameWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
