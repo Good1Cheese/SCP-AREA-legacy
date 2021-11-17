@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameSaving : MonoBehaviour
 {
-    [SerializeField] string m_fileName;
+    [SerializeField] private string _fileName;
     public List<DataSaving> SaveData { get; set; } = new List<DataSaving>();
     public Action OnGameSaving { get; set; }
 
@@ -21,9 +21,9 @@ public class GameSaving : MonoBehaviour
         writer.Close();
     }
 
-    void WriteSaveData(StreamWriter writer)
+    private void WriteSaveData(StreamWriter writer)
     {
-        foreach (var dataHandler in SaveData)
+        foreach (DataSaving dataHandler in SaveData)
         {
             dataHandler.Save();
             writer.WriteLine(dataHandler.ToJson());
@@ -32,6 +32,6 @@ public class GameSaving : MonoBehaviour
 
     public string GetSaveFilePath()
     {
-        return Application.persistentDataPath + "/" + m_fileName;
+        return Application.persistentDataPath + "/" + _fileName;
     }
 }

@@ -4,38 +4,35 @@ using Zenject;
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
-    int m_ammoCount;
-    SilencerHandler m_silencerHandler;
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    private int _ammoCount;
+    private SilencerHandler _silencerHandler;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
 
     public int AmmoCount
     {
-        get => m_ammoCount;
-        set
-        {
-            m_ammoCount = value;
-        }
+        get => _ammoCount;
+        set => _ammoCount = value;
     }
 
     public int ClipAmmo { get; set; }
     public AudioClip CurrentShotSound { get; set; }
     public SilencerHandler SilencerHandler
     {
-        get => m_silencerHandler;
+        get => _silencerHandler;
         set
         {
             CurrentShotSound = Weapon_SO.shotSoundWithSilencer;
-            m_silencerHandler = value;
+            _silencerHandler = value;
         }
     }
 
-    public Weapon_SO Weapon_SO { get => (Weapon_SO)m_wearableItem_SO; }
+    public Weapon_SO Weapon_SO => (Weapon_SO)_wearableIte_SO;
 
-    new void Awake()
+    private new void Awake()
     {
         base.Awake();
 
-        GameObjectForPlayer.GetComponentInChildren<ClippingMaker>().PlayerTransform = m_playerTransform;
+        GameObjectForPlayer.GetComponentInChildren<ClippingMaker>().PlayerTransform = _playerTransform;
         CurrentShotSound = Weapon_SO.shotSound;
 
         if (Weapon_SO.reloadTimeout != null) { return; }
@@ -46,6 +43,6 @@ public class WeaponHandler : WearableItemHandler
 
     public override void Equip()
     {
-        m_wearableItemsInventory.WeaponSlot.SetItem(this);
+        _wearableItemsInventory.WeaponSlot.SetItem(this);
     }
 }

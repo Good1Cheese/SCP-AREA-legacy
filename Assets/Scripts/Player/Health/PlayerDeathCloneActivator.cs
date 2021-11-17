@@ -3,34 +3,33 @@ using Zenject;
 
 public class PlayerDeathCloneActivator : MonoBehaviour
 {
-    [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private DeathAnimationPlayer _playerDeathAnimation;
+    private GameObject _gameObject;
 
-    DeathAnimationPlayer m_playerDeathAnimation;
-    GameObject m_gameObject;
-
-    void Awake()
+    private void Awake()
     {
-        m_gameObject = transform.parent.gameObject;
-        m_playerDeathAnimation = GetComponent<DeathAnimationPlayer>();
+        _gameObject = transform.parent.gameObject;
+        _playerDeathAnimation = GetComponent<DeathAnimationPlayer>();
     }
 
-    void Start()
+    private void Start()
     {
-        m_playerHealth.OnPlayerDies += ActivateDeathAnimation;
-        m_gameObject.SetActive(false);
+        _playerHealth.OnPlayerDies += ActivateDeathAnimation;
+        _gameObject.SetActive(false);
     }
 
-    void ActivateDeathAnimation()
+    private void ActivateDeathAnimation()
     {
-        m_gameObject.transform.SetPositionAndRotation(m_playerTransform.position, m_playerTransform.rotation);
-        m_gameObject.SetActive(true);
+        _gameObject.transform.SetPositionAndRotation(_playerTransform.position, _playerTransform.rotation);
+        _gameObject.SetActive(true);
 
-        m_playerDeathAnimation.PlayDeathAnimation();
+        _playerDeathAnimation.PlayDeathAnimation();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_playerHealth.OnPlayerDies -= ActivateDeathAnimation;
+        _playerHealth.OnPlayerDies -= ActivateDeathAnimation;
     }
 }

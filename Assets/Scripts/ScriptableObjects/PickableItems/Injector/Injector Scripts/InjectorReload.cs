@@ -3,7 +3,7 @@
 [RequireComponent(typeof(InjectTypeSwitch), typeof(InjectShooter))]
 public class InjectorReload : InjectorScriptBase
 {
-    InjectTypeSwitch m_injectTypeSwitcher;
+    private InjectTypeSwitch _injectTypeSwitcher;
 
     public PickableItemsInventory PickableItemsInventory { get; set; }
 
@@ -21,17 +21,17 @@ public class InjectorReload : InjectorScriptBase
         }
     }
 
-    new void Start()
+    private new void Start()
     {
         base.Start();
-        m_injectTypeSwitcher = GetComponent<InjectTypeSwitch>();
+        _injectTypeSwitcher = GetComponent<InjectTypeSwitch>();
     }
 
     protected override void DoScriptAction()
     {
         WearableItemsInventory.InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.reloadTimeout);
 
-        if (m_injectTypeSwitcher.Type == typeof(IHealthInjectable))
+        if (_injectTypeSwitcher.Type == typeof(IHealthInjectable))
         {
             CurrentInject = PickableItemsInventory.GetIem(item => item as IHealthInjectable != null);
             return;

@@ -5,49 +5,49 @@ using Zenject;
 [RequireComponent(typeof(WeaponFireSound), typeof(WeaponMiss), typeof(WeaponAim))]
 public class WeaponFire : WeaponAction
 {
-    const KeyCode FIRE_KEY = KeyCode.Mouse0;
+    private const KeyCode FIRE_KEY = KeyCode.Mouse0;
 
-    [Inject] readonly RayForFireProvider m_rayForFireProvider;
-    [Inject] readonly WeaponAim m_weaponAim;
-    [Inject] readonly WeaponShot m_weaponShot;
+    [Inject] private readonly RayForFireProvider _rayForFireProvider;
+    [Inject] private readonly WeaponAim _weaponAim;
+    [Inject] private readonly WeaponShot _weaponShot;
 
     public Action OnPlayerFired { get; set; }
 
-    WeaponMiss m_weaponMiss;
+    private WeaponMiss _weaponMiss;
 
-    void Awake()
+    private void Awake()
     {
-        m_weaponMiss = GetComponent<WeaponMiss>();
+        _weaponMiss = GetComponent<WeaponMiss>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (!Input.GetKeyDown(FIRE_KEY) || m_wearableItemsInventory.WeaponSlot.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(FIRE_KEY) || _wearableItemsInventory.WeaponSlot.IsItemActionGoing) { return; }
 
-        if (m_weaponHandler.ClipAmmo == 0)
+        if (_weaponHandler.ClipAmmo == 0)
         {
-            m_weaponMiss.ActivateMissSound();
+            _weaponMiss.ActivateMissSound();
             return;
         }
 
         Shoot();
     }
 
-    void Shoot()
+    private void Shoot()
     {
-        m_wearableItemsInventory.WeaponSlot.StartItemAction(m_weaponHandler.Weapon_SO.shotTimeout);
-        m_weaponHandler.ClipAmmo--;
+        _wearableItemsInventory.WeaponSlot.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout);
+        _weaponHandler.ClipAmmo--;
 
         OnPlayerFired?.Invoke();
 
-        Physics.Raycast(m_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
-        m_weaponShot.AttendShot(raycastHit);
+        Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
+        _weaponShot.AttendShot(raycastHit);
 
-        if (m_weaponAim.IsAiming)
+        if (_weaponAim.IsAiming)
         {
-            m_weaponAim.OnPlayerFiredWithAim?.Invoke();
+            _weaponAim.OnPlayerFiredWithAim?.Invoke();
             return;
         }
-        m_weaponAim.OnPlayerFiredWithoutAim?.Invoke();
+        _weaponAim.OnPlayerFiredWithoutAim?.Invoke();
     }
 }

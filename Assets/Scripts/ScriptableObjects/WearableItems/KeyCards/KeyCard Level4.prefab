@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_wearableItem_SO: {fileID: 0}
+  _wearableIte_SO: {fileID: 11400000, guid: e6ef3700ba2e1404b84a665470ad1c5a, type: 2}
 --- !u!114 &-375687151101373801
 MonoBehaviour:
   m_ObjectHideFlags: 0

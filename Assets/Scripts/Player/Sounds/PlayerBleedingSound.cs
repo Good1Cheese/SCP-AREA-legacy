@@ -2,16 +2,16 @@
 
 public class PlayerBleedingSound : SoundOnAction
 {
-    [Inject] readonly CharacterBleeding m_playerBleeding;
+    [Inject] private readonly CharacterBleeding _playerBleeding;
 
     protected override void SubscribeToAction()
     {
-        m_playerBleeding.OnPlayerBleeding += PlaySound;
+        _playerBleeding.OnPlayerBleeding += PlaySound;
     }
 
     protected override void UnscribeToAction()
     {
-        m_playerBleeding.OnPlayerBleeding -= PlaySound;
+        _playerBleeding.OnPlayerBleeding -= PlaySound;
     }
 
 }

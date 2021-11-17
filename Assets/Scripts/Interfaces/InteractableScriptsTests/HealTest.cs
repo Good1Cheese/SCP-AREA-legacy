@@ -3,11 +3,11 @@ using Zenject;
 
 public class HealTest : IInteractable
 {
-    [Inject] readonly PlayerHealth m_playerHealth;
-    [SerializeField] int m_healthToHeal;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    [SerializeField] private int _healthToHeal;
 
     public override void Interact()
     {
-        m_playerHealth.Heal(m_healthToHeal);
+        _playerHealth.Heal(_healthToHeal);
     }
 }

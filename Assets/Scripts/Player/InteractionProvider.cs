@@ -7,41 +7,40 @@ using Zenject;
 [RequireComponent(typeof(InteractionMarkEnablerDisabler))]
 public class InteractionProvider : MonoBehaviour
 {
-    [SerializeField] LayerMask m_itemsLayerMask;
-    [SerializeField] float m_maxInteractionDistance;
-    [SerializeField] float m_radiousOfSphereInteraction;
-    [SerializeField] float m_delayAfterInteraction;
+    [SerializeField] private LayerMask _itemsLayerMask;
+    [SerializeField] private float _maxInteractionDistance;
+    [SerializeField] private float _radiousOfSphereInteraction;
+    [SerializeField] private float _delayAfterInteraction;
 
-    [Inject] readonly RayProvider m_rayProvider;
-    [Inject] readonly InventoryEnablerDisabler m_inventoryEnablerDisabler;
-    [Inject] readonly GameObject m_playerGameObject;
-
-    IInteractable m_interactable;
-    bool m_isDelayGoing;
-    WaitForSeconds m_timeoutAfterInteraction;
+    [Inject] private readonly RayProvider _rayProvider;
+    [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
+    [Inject] private readonly GameObject _playerGameObject;
+    private IInteractable _interactable;
+    private bool _isDelayGoing;
+    private WaitForSeconds _timeoutAfterInteraction;
 
     public Action OnPlayerFindUnInteractable { get; set; }
     public Action<Collider> OnPlayerFindInteractable { get; set; }
 
-    void Start()
+    private void Start()
     {
-        m_inventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActiveState;
-        m_timeoutAfterInteraction = new WaitForSeconds(m_delayAfterInteraction);
+        _inventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActiveState;
+        _timeoutAfterInteraction = new WaitForSeconds(_delayAfterInteraction);
     }
 
-    void SetActiveState()
+    private void SetActiveState()
     {
         enabled = !enabled;
     }
 
-    void Update()
+    private void Update()
     {
-        if (m_isDelayGoing) { return; }
+        if (_isDelayGoing) { return; }
 
-        RaycastHit[] raycastHits = Physics.SphereCastAll(m_rayProvider.ProvideRay(),
-                                                         m_radiousOfSphereInteraction,
-                                                         m_maxInteractionDistance,
-                                                         m_itemsLayerMask);
+        RaycastHit[] raycastHits = Physics.SphereCastAll(_rayProvider.ProvideRay(),
+                                                         _radiousOfSphereInteraction,
+                                                         _maxInteractionDistance,
+                                                         _itemsLayerMask);
 
         Collider raycastHit = GetInteractableObject(raycastHits);
 
@@ -56,32 +55,32 @@ public class InteractionProvider : MonoBehaviour
         if (!Input.GetButtonDown("Interaction")) { return; }
 
         StartCoroutine(StartInteractionDelay());
-        m_interactable.Interact();
+        _interactable.Interact();
     }
 
-    Collider GetInteractableObject(RaycastHit[] raycastHits)
+    private Collider GetInteractableObject(RaycastHit[] raycastHits)
     {
         if (raycastHits == null)
         {
             return null;
         }
 
-        return raycastHits.LastOrDefault(hit => hit.collider.gameObject.TryGetComponent(out m_interactable)).collider;
+        return raycastHits.LastOrDefault(hit => hit.collider.gameObject.TryGetComponent(out _interactable)).collider;
     }
 
-    IEnumerator StartInteractionDelay()
+    private IEnumerator StartInteractionDelay()
     {
         OnPlayerFindUnInteractable?.Invoke();
-        m_isDelayGoing = true;
+        _isDelayGoing = true;
 
-        yield return m_timeoutAfterInteraction;
+        yield return _timeoutAfterInteraction;
 
-        m_isDelayGoing = false;
+        _isDelayGoing = false;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;
+        _inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;
     }
 
 }

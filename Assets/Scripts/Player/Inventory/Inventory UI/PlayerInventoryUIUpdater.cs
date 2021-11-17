@@ -3,21 +3,21 @@ using Zenject;
 
 public class PlayerInventoryUIUpdater : MonoBehaviour
 {
-    [Inject] readonly PickableItemsInventory m_playerInventory;
-    [Inject] readonly PlayerHealth m_playerHealth;
-    GameObject m_gameObject;
+    [Inject] private readonly PickableItemsInventory _playerInventory;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    private GameObject _gameObject;
 
     public PickableItemSlot[] InventoryCells { get; set; }
 
-    void Awake()
+    private void Awake()
     {
-        m_gameObject = gameObject;
-        m_playerInventory.OnInventoryChanged += Renew;
-        m_playerInventory.OnInventoryRemaded += Renew;
-        m_playerHealth.OnPlayerDies += ActivateOrCloseOnPlayerDeath;
+        _gameObject = gameObject;
+        _playerInventory.OnInventoryChanged += Renew;
+        _playerInventory.OnInventoryRemaded += Renew;
+        _playerHealth.OnPlayerDies += ActivateOrCloseOnPlayerDeath;
     }
 
-    void Start()
+    private void Start()
     {
         InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
 
@@ -27,15 +27,15 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
             InventoryCells[i].gameObject.SetActive(false);
         }
 
-        m_gameObject.SetActive(false);
+        _gameObject.SetActive(false);
     }
 
-    void Renew()
+    private void Renew()
     {
-        int inventoryLength = m_playerInventory.Inventory.Length;
+        int inventoryLength = _playerInventory.Inventory.Length;
         for (int i = 0; i < inventoryLength; i++)
         {
-            var item = m_playerInventory.Inventory[i];
+            ItemHandler item = _playerInventory.Inventory[i];
             if (item != null)
             {
                 InventoryCells[i].SetItem(item);
@@ -51,22 +51,22 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
 
     public void ActivateOrClose()
     {
-        m_gameObject.SetActive(!m_gameObject.activeSelf);
+        _gameObject.SetActive(!_gameObject.activeSelf);
     }
 
     public void ActivateOrCloseOnPlayerDeath()
     {
-        if (m_gameObject.activeSelf)
+        if (_gameObject.activeSelf)
         {
             ActivateOrClose();
         }
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_playerInventory.OnInventoryChanged -= Renew;
-        m_playerInventory.OnInventoryRemaded -= Renew;
-        m_playerHealth.OnPlayerDies -= ActivateOrCloseOnPlayerDeath;
+        _playerInventory.OnInventoryChanged -= Renew;
+        _playerInventory.OnInventoryRemaded -= Renew;
+        _playerHealth.OnPlayerDies -= ActivateOrCloseOnPlayerDeath;
     }
 
 }

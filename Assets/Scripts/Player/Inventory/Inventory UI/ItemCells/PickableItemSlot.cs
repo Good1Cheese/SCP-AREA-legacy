@@ -1,23 +1,22 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using TMPro;
+using Zenject;
 
 public class PickableItemSlot : InventorySlot, IPointerClickHandler
 {
-    const int CLICK_COUNT_TO_USE = 2;
+    private const int CLICK_COUNT_TO_USE = 2;
 
-    [SerializeField] TextMeshProUGUI m_itemDescription;
+    [SerializeField] private TextMeshProUGUI _itemDescription;
 
-    [Inject] readonly PickableItemsInteraction m_pickableItemsInteraction;
-
-    GameObject m_gameObject;
+    [Inject] private readonly PickableItemsInteraction _pickableItemsInteraction;
+    private GameObject _gameObject;
 
     public int SlotIndex { get; set; }
 
-    void Awake()
+    private void Awake()
     {
-        m_gameObject = gameObject;
+        _gameObject = gameObject;
     }
 
     public new void OnPointerClick(PointerEventData eventData)
@@ -32,22 +31,22 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     public void OnDoubleLeftClick()
     {
-        m_pickableItemsInteraction.UseItem(this);
+        _pickableItemsInteraction.UseItem(this);
     }
 
     public override void OnRightClick()
     {
-        m_pickableItemsInteraction.DropItem(this);
+        _pickableItemsInteraction.DropItem(this);
     }
 
     public override void OnItemSet()
     {
-        m_itemDescription.text = ItemHandler.GetItem().description;
-        m_gameObject.SetActive(true);
+        _itemDescription.text = ItemHandler.GetItem().description;
+        _gameObject.SetActive(true);
     }
 
     public override void OnItemDeleted()
     {
-        m_gameObject.SetActive(false);
+        _gameObject.SetActive(false);
     }
 }

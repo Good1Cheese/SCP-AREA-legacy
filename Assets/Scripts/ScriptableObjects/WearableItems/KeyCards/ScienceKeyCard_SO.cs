@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "new ScienceKeyCard_SO", menuName = "ScriptableObjects/WearableItems/KeyCards/ScienceKeyCard_SO")]
 public class ScienceKeyCard_SO : KeyCard_SO
 {
-    [SerializeField] ScienceKeyCardLevel m_scienceKeyCardLevel;
+    [SerializeField] private ScienceKeyCardLevel _scienceKeyCardLevel;
 
     public enum ScienceKeyCardLevel
     {
@@ -11,7 +11,10 @@ public class ScienceKeyCard_SO : KeyCard_SO
         Second,
     }
 
-    public override int KeyCardLevel => (int)m_scienceKeyCardLevel;
-    public override KeyCardType GetKeyCardType() => KeyCardType.ScienceKeyCard;
+    public override int KeyCardLevel => (int)_scienceKeyCardLevel;
+    public override KeyCardType GetKeyCardType()
+    {
+        return KeyCardType.ScienceKeyCard;
+    }
 }
 

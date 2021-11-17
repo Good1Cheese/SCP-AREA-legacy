@@ -2,23 +2,23 @@
 
 public class RayProvider : MonoBehaviour, IRayProvider
 {
-    [SerializeField] Transform m_transform;
-    Ray m_ray;
+    [SerializeField] private Transform _transform;
+    private Ray _ray;
 
-    void Start()
+    private void Start()
     {
-        m_ray = new Ray();
+        _ray = new Ray();
     }
 
     public Ray ProvideRay()
     {
-        m_ray.origin = m_transform.position;
-        m_ray.direction = m_transform.forward;
-        return m_ray;
+        _ray.origin = _transform.position;
+        _ray.direction = _transform.forward;
+        return _ray;
     }
 
-    void Update()
+    private void Update()
     {
-        ProvideRay();    
+        ProvideRay();
     }
 }

@@ -3,19 +3,19 @@ using Zenject;
 
 public class RespawnMenuControls : MonoBehaviour
 {
-    [Inject] readonly SceneTransition m_sceneTransition;
+    [Inject] private readonly SceneTransition _sceneTransition;
 
-    void Start()
+    private void Start()
     {
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;    
+        Cursor.visible = true;
     }
 
     public void ReturnToMainMenu()
     {
-        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
+        _sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
 
-        Destroy(m_sceneTransition.LoadingSceneUIController.gameObject);
+        Destroy(_sceneTransition.LoadingSceneUIController.gameObject);
     }
 }

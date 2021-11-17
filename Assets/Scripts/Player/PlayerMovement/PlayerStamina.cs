@@ -6,108 +6,100 @@ using Zenject;
 [RequireComponent(typeof(StaminaUseDisabler))]
 public class PlayerStamina : MonoBehaviour
 {
-    [SerializeField] float m_regenerationSpeed;
-    [SerializeField] float m_spendingSpeed;
+    [SerializeField] private int _burnSpeedMultipliyer;
+    [SerializeField] private AnimationCurve _staminaCurve;
+    [SerializeField] private float _delayBeforeRegenerationStart;
+    [SerializeField] private float _staminaValue;
+    [SerializeField] private float _staminaTime;
 
-    [SerializeField] float m_delayDuringRegeneration;
-    [SerializeField] float m_delayBeforeRegenerationStart;
+    [Inject] private readonly RunController _runController;
+    [Inject] private readonly PlayerMovement _playerMovement;
+    private WaitForSeconds _timeoutBeforeRegeneration;
+    private IEnumerator _regenerationCoroutine;
+    private bool _isRegenerating;
+    private float _maxStaminaTime;
 
-    [SerializeField] float m_staminaValue;
-
-    [Inject] readonly RunController m_runController;
-    [Inject] readonly WalkController m_walkController;
-    [Inject] readonly PlayerHealth m_playerHealth;
-
-    WaitForSeconds m_timeoutBeforeRegeneration;
-    WaitForSeconds m_timeoutDuringRegeneration;
-    IEnumerator m_regenerationCoroutine;
-
-    bool hadPlayerStamina;
-    public float StaminaValue
+    public float Stamina
     {
-        get => m_staminaValue;
+        get => _staminaValue;
         set
         {
-            m_staminaValue = value;
+            _staminaValue = value;
             OnStaminaValueChanged?.Invoke();
         }
     }
-    public bool HasPlayerStamina
+
+    public float StaminaTime
     {
-        get 
+        get => _staminaTime;
+        set
         {
-            bool hasPlayerStamina = StaminaValue > 0;
-            if (!hasPlayerStamina && hadPlayerStamina)
-            {
-                OnStaminaRanOut?.Invoke();
-            }
-            hadPlayerStamina = hasPlayerStamina;
-            return hasPlayerStamina;
+            _staminaTime = value;
+            Stamina = _staminaCurve.Evaluate(_staminaTime);
         }
     }
-    public float MaxStaminaAmount { get; set; }
-    public Action OnStaminaRanOut { get; set; }
-    public float SpendingSpeed { get => m_spendingSpeed; set => m_spendingSpeed = value; }
+
     public Action OnStaminaValueChanged { get; set; }
+    public Action OnStaminaRunningOut { get; set; }
+    public bool HasTimeoutPassed { get; set; }
 
-    void Awake()
+    private void Awake()
     {
-        m_regenerationCoroutine = RegenerateCoroutine();
-        m_timeoutBeforeRegeneration = new WaitForSeconds(m_delayBeforeRegenerationStart);
-        m_timeoutDuringRegeneration = new WaitForSeconds(m_delayDuringRegeneration); 
-        MaxStaminaAmount = m_staminaValue;
+        _maxStaminaTime = _staminaTime;
+        _regenerationCoroutine = RegenerateCoroutine();
+        _timeoutBeforeRegeneration = new WaitForSeconds(_delayBeforeRegenerationStart);
     }
 
-    void Start()
+    private void Start()
     {
-        m_runController.OnPlayerUsingMove += Burn;
-        m_runController.OnPlayerStoppedUseOfMove += RestartRegeneration;
-        m_walkController.OnPlayerStoppedUseOfMove += RegenerateAfterPlayerStopped;
-        m_playerHealth.OnPlayerGetsDamage += RestartRegeneration;
+        _runController.OnPlayerUsingMove += Burn;
+        _runController.OnPlayerStartedUseOfMove += StopRegeneration;
+        _runController.OnPlayerStoppedUseOfMove += StartRegeneration;
+        _playerMovement.OnPlayerStoppedMoving += StartRegeneration;
     }
 
-    void Burn()
+    private void Burn()
     {
-        StaminaValue -= SpendingSpeed * Time.deltaTime;
-        StopRegeneration();
+        StaminaTime -= Time.deltaTime * _burnSpeedMultipliyer;
     }
 
-    public void RestartRegeneration()
+    public void StartRegeneration()
     {
-        StopRegeneration();
-        StartCoroutine(m_regenerationCoroutine);
-    }
+        if (_isRegenerating) { return; }
 
-    void RegenerateAfterPlayerStopped()
-    {
-        if (StaminaValue == MaxStaminaAmount) /* || !m_runController.IsPlayerRunning)*/ { return; }
-        RestartRegeneration();
-    }
-
-    IEnumerator RegenerateCoroutine()
-    {
-        yield return m_timeoutBeforeRegeneration;
-
-        while (m_staminaValue < MaxStaminaAmount)
-        {
-            StaminaValue += m_regenerationSpeed * Time.deltaTime;
-            yield return m_timeoutDuringRegeneration;
-        }
+        StartCoroutine(_regenerationCoroutine);
     }
 
     public void StopRegeneration()
     {
-        StopCoroutine(m_regenerationCoroutine);
-        m_regenerationCoroutine = RegenerateCoroutine();
+        _staminaTime = (_staminaTime > _maxStaminaTime) ? _maxStaminaTime : _staminaTime;
+        HasTimeoutPassed = false;
+        _isRegenerating = false;
+
+        StopCoroutine(_regenerationCoroutine);
+        _regenerationCoroutine = RegenerateCoroutine();
     }
 
-    void OnDestroy()
+    private void Update()
     {
-        m_runController.OnPlayerUsingMove -= Burn;
-        m_runController.OnPlayerStoppedUseOfMove -= RestartRegeneration;
-        m_walkController.OnPlayerStoppedUseOfMove -= RegenerateAfterPlayerStopped;
-        m_playerHealth.OnPlayerGetsDamage -= StopRegeneration;
+        if (!HasTimeoutPassed) { return; }
+
+        StaminaTime += Time.deltaTime;
+    }
+
+    private IEnumerator RegenerateCoroutine()
+    {
+        _isRegenerating = true;
+
+        yield return _timeoutBeforeRegeneration;
+        HasTimeoutPassed = true;
+    }
+
+    private void OnDestroy()
+    {
+        _runController.OnPlayerUsingMove -= Burn;
+        _runController.OnPlayerStartedUseOfMove -= StopRegeneration;
+        _runController.OnPlayerStoppedUseOfMove -= StartRegeneration;
+        _playerMovement.OnPlayerStoppedMoving -= StartRegeneration;
     }
 }
-
-

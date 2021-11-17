@@ -3,24 +3,24 @@
 [RequireComponent(typeof(AudioSource))]
 public abstract class SoundOnAction : MonoBehaviour
 {
-    [SerializeField] protected AudioSource m_audioSource;
+    [SerializeField] protected AudioSource _audioSource;
 
-    void Awake()
+    private void Awake()
     {
         SubscribeToAction();
     }
 
     protected virtual void PlaySound()
     {
-        m_audioSource.Play();
+        _audioSource.Play();
     }
 
     protected virtual void StopSound()
     {
-        m_audioSource.Stop();
+        _audioSource.Stop();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         UnscribeToAction();
     }

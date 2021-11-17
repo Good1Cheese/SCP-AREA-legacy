@@ -3,10 +3,10 @@ using Zenject;
 
 public class SettingsMenuControls : MonoBehaviour
 {
-    [Inject] readonly SceneTransition m_sceneTransition;
+    [Inject] private readonly SceneTransition _sceneTransition;
 
     public void ReturnToMainMenu()
     {
-        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.StartScene);
+        _sceneTransition.LoadScene((int)SceneTransition.Scenes.StartScene);
     }
 }

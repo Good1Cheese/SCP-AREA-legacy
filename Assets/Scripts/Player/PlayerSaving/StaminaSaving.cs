@@ -2,22 +2,20 @@
 
 public class StaminaSaving : DataSaving
 {
-    [Inject] readonly PlayerStamina m_playerStamina;
+    [Inject] private readonly PlayerStamina _playerStamina;
 
-    public float stamina;
+    public float staminaTime;
+    public bool hasTimeoutPassed;
 
     public override void Save()
     {
-        stamina = m_playerStamina.StaminaValue;
+        staminaTime = _playerStamina.StaminaTime;
+        hasTimeoutPassed = _playerStamina.HasTimeoutPassed;
     }
 
     public override void LoadData()
     {
-        m_playerStamina.StaminaValue = stamina;
-        m_playerStamina.StopRegeneration();
-        if (m_playerStamina.StaminaValue < m_playerStamina.MaxStaminaAmount)
-        {
-            m_playerStamina.RestartRegeneration();
-        }
+        _playerStamina.StaminaTime = staminaTime;
+        _playerStamina.HasTimeoutPassed = hasTimeoutPassed;
     }
 }

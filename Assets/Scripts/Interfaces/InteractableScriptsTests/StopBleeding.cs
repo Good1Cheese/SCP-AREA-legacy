@@ -1,12 +1,11 @@
-using UnityEngine;
 using Zenject;
 
 public class StopBleeding : IInteractable
 {
-    [Inject] readonly CharacterBleeding m_characterBleeding;
+    [Inject] private readonly CharacterBleeding _characterBleeding;
 
     public override void Interact()
     {
-        m_characterBleeding.StopBleeding();
+        _characterBleeding.StopBleeding();
     }
 }

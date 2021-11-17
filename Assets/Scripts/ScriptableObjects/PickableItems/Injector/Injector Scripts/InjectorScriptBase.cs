@@ -2,7 +2,7 @@
 
 public abstract class InjectorScriptBase : MonoBehaviour
 {
-    [SerializeField] protected KeyCode m_key;
+    [SerializeField] protected KeyCode _key;
 
     public InventoryEnablerDisabler InventoryEnablerDisabler { get; set; }
     public WearableItemsInventory WearableItemsInventory { get; set; }
@@ -10,19 +10,19 @@ public abstract class InjectorScriptBase : MonoBehaviour
 
     protected void Start()
     {
-        InventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActive;   
+        InventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActive;
     }
 
-    void Update()
+    private void Update()
     {
-        if (!Input.GetKeyDown(m_key) || WearableItemsInventory.InjectorSlot.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(_key) || WearableItemsInventory.InjectorSlot.IsItemActionGoing) { return; }
 
         DoScriptAction();
     }
 
     protected abstract void DoScriptAction();
 
-    void SetActive()
+    private void SetActive()
     {
         enabled = !enabled;
     }

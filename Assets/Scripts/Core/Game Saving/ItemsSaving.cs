@@ -2,41 +2,41 @@ using UnityEngine;
 
 public class ItemsSaving : DataSaving
 {
-    ItemSaveableStateChanger[] m_itemDataControllerss;
+    private ItemSaveableStateChanger[] _itemDataControllerss;
 
     public bool[] itemsSaveableStates;
 
-    void Awake()
+    private void Awake()
     {
-        m_gameSaving.SaveData.AddRange(gameObject.GetComponentsInChildren<DataSaving>());
+        _gameSaving.SaveData.AddRange(gameObject.GetComponentsInChildren<DataSaving>());
 
-        m_itemDataControllerss = gameObject.GetComponentsInChildren<ItemSaveableStateChanger>();
-        itemsSaveableStates = new bool[m_itemDataControllerss.Length];
+        _itemDataControllerss = gameObject.GetComponentsInChildren<ItemSaveableStateChanger>();
+        itemsSaveableStates = new bool[_itemDataControllerss.Length];
     }
 
     public override void Save()
     {
-        for (int i = 0; i < m_itemDataControllerss.Length; i++)
+        for (int i = 0; i < _itemDataControllerss.Length; i++)
         {
-            itemsSaveableStates[i] = m_itemDataControllerss[i].ItemDataHandler.IsSaveable;
+            itemsSaveableStates[i] = _itemDataControllerss[i].ItemDataHandler.IsSaveable;
         }
     }
 
     public override void LoadData()
     {
-        for (int i = 0; i < m_itemDataControllerss.Length; i++)
+        for (int i = 0; i < _itemDataControllerss.Length; i++)
         {
             bool isItemSaveable = itemsSaveableStates[i];
-            m_itemDataControllerss[i].SetSaveableState(isItemSaveable);
-            m_itemDataControllerss[i].ItemHandler.GameObject.SetActive(isItemSaveable);
+            _itemDataControllerss[i].SetSaveableState(isItemSaveable);
+            _itemDataControllerss[i].ItemHandler.GameObject.SetActive(isItemSaveable);
         }
     }
 
     public override void Load(string json)
     {
-        ItemSaveableStateChanger[] itemDataHandlers = m_itemDataControllerss;
+        ItemSaveableStateChanger[] itemDataHandlers = _itemDataControllerss;
         JsonUtility.FromJsonOverwrite(json, this);
-        m_itemDataControllerss = itemDataHandlers;
+        _itemDataControllerss = itemDataHandlers;
         LoadData();
     }
 }

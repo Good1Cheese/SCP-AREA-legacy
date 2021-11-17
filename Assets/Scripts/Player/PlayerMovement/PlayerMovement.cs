@@ -5,65 +5,64 @@ using Zenject;
 [RequireComponent(typeof(CharacterController), typeof(MovementController), typeof(PlayerStamina))]
 public class PlayerMovement : MonoBehaviour
 {
-    const float MOVE_MAGNUTUDE_MAX_LENGHT = 1f;
+    private const float MOVE_MAGNUTUDE_MAX_LENGHT = 1f;
 
-    [Inject] readonly MovementController m_movementController;
-    [Inject] readonly WalkController m_walkController;
-    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
-
-    CharacterController m_characterController;
-
-    bool m_isPlayerMoving;
-    float m_horizontalMove;
-    float m_verticalMove;
+    [Inject] private readonly MovementController _movementController;
+    [Inject] private readonly WalkController _walkController;
+    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private CharacterController _characterController;
+    private bool _isPlayerMoving;
+    private float _horizontalMove;
+    private float _verticalMove;
 
     public Action OnPlayerNotMoving { get; set; }
+    public Action OnPlayerStoppedMoving { get; set; }
 
-    void Start()
+    private void Start()
     {
-        m_characterController = GetComponent<CharacterController>();
-        m_pauseMenu.OnPauseMenuButtonPressed += ReverseEnableState;
+        _characterController = GetComponent<CharacterController>();
+        _pauseMenu.OnPauseMenuButtonPressed += ReverseEnableState;
     }
 
-    void ReverseEnableState()
+    private void ReverseEnableState()
     {
         enabled = !enabled;
     }
 
-    void Update()
+    private void Update()
     {
-        m_isPlayerMoving = true;
+        _horizontalMove = Input.GetAxis("Horizontal");
+        _verticalMove = Input.GetAxis("Vertical");
 
-        m_horizontalMove = Input.GetAxis("Horizontal");
-        m_verticalMove = Input.GetAxis("Vertical");
-
-        if (m_horizontalMove == 0 && m_verticalMove == 0)
+        if (_horizontalMove == 0 && _verticalMove == 0)
         {
             OnPlayerNotMoving.Invoke();
-            m_movementController.MoveTime = 0;
+            _movementController.MoveTime = 0;
 
-            if (m_isPlayerMoving)
+            if (_isPlayerMoving)
             {
-                m_walkController.StopMove();
-                m_isPlayerMoving = false;
+                OnPlayerStoppedMoving?.Invoke();
+                _walkController.StopMove();
+                _isPlayerMoving = false;
             }
 
             return;
         }
 
-        MovePlayer(m_movementController.GetPlayerSpeed());
+        _isPlayerMoving = true;
+        MovePlayer(_movementController.GetPlayerSpeed());
     }
 
-    void MovePlayer(float moveSpeed)
+    private void MovePlayer(float moveSpeed)
     {
-        Vector3 move = m_playerTransform.right * m_horizontalMove + m_playerTransform.forward * m_verticalMove;
+        Vector3 move = _playerTransform.right * _horizontalMove + _playerTransform.forward * _verticalMove;
         move = Vector3.ClampMagnitude(move, MOVE_MAGNUTUDE_MAX_LENGHT) * Time.deltaTime;
-        m_characterController.Move(move * moveSpeed);
+        _characterController.Move(move * moveSpeed);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_pauseMenu.OnPauseMenuButtonPressed -= ReverseEnableState;
+        _pauseMenu.OnPauseMenuButtonPressed -= ReverseEnableState;
     }
 }

@@ -2,43 +2,43 @@
 
 public class GameObjectSaving : DataSaving
 {
-    protected Transform m_transform;
-    protected GameObject m_gameObject;
+    protected Transform _cachedTransform;
+    protected GameObject _gameObject;
 
     public Transform _transform;
     public Vector3 position;
     public Quaternion rotation;
     public bool isActive;
 
-    void Awake()
+    private void Awake()
     {
-        m_transform = transform;
-        m_gameObject = gameObject;
+        _cachedTransform = transform;
+        _gameObject = gameObject;
     }
 
-    void Start()
+    private void Start()
     {
-        m_gameSaving.SaveData.Add(this);
+        _gameSaving.SaveData.Add(this);
     }
 
     public override void Save()
     {
-        _transform = m_transform;
-        position = m_transform.position;
-        rotation = m_transform.rotation;
-        isActive = m_gameObject.activeInHierarchy;
+        _transform = _cachedTransform;
+        position = _transform.position;
+        rotation = _transform.rotation;
+        isActive = _gameObject.activeInHierarchy;
     }
 
     public override void LoadData()
     {
         _transform.SetPositionAndRotation(position, rotation);
-        m_gameObject.SetActive(isActive);
+        _gameObject.SetActive(isActive);
     }
 
     public override void Load(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
-        _transform = m_transform;
+        _transform = _cachedTransform;
         LoadData();
     }
 }

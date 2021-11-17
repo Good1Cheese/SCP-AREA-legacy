@@ -2,19 +2,19 @@
 
 public class BleedingSaving : DataSaving
 {
-    [Inject] readonly CharacterBleeding m_characterBleeding;
+    [Inject] private readonly CharacterBleeding _characterBleeding;
 
     public bool wasBleeding;
 
     public override void Save()
     {
-        wasBleeding = m_characterBleeding.IsBleeding;
+        wasBleeding = _characterBleeding.IsBleeding;
     }
 
     public override void LoadData()
     {
         if (!wasBleeding) { return; }
 
-        m_characterBleeding.Bleed();
+        _characterBleeding.Bleed();
     }
 }

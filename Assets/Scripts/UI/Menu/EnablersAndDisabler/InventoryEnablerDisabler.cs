@@ -4,15 +4,15 @@ using Zenject;
 
 public class InventoryEnablerDisabler : UIEnablerDisabler
 {
-    const KeyCode INVENTORY_KEY = KeyCode.Tab;
+    private const KeyCode INVENTORY_KEY = KeyCode.Tab;
 
-    [SerializeField] PlayerInventoryUIUpdater m_playerInventoryUI;
+    [SerializeField] private PlayerInventoryUIUpdater _playerInventoryUI;
 
-    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
+    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
 
     public Action OnInventoryEnabledDisabled { get; set; }
 
-    void Update()
+    private void Update()
     {
         if (!Input.GetKeyDown(INVENTORY_KEY)) { return; }
 
@@ -21,10 +21,10 @@ public class InventoryEnablerDisabler : UIEnablerDisabler
 
     public override void EnableDisableUI()
     {
-        if (m_pauseMenu.IsUIActivated) { return; }
+        if (_pauseMenu.IsUIActivated) { return; }
 
         IsUIActivated = !IsUIActivated;
         OnInventoryEnabledDisabled?.Invoke();
-        m_playerInventoryUI.ActivateOrClose();
+        _playerInventoryUI.ActivateOrClose();
     }
 }

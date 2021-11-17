@@ -2,20 +2,20 @@
 
 public class SilencerHandler : WearableItemHandler
 {
-    GameObject m_silencerForWorldWeapon;
+    private GameObject _silencerForWorldWeapon;
 
-    new void Awake()
+    private new void Awake()
     {
         base.Awake();
 
-        m_silencerForWorldWeapon = Instantiate(m_wearableItem_SO.playerGameObjectPrefab);
-        m_silencerForWorldWeapon.SetActive(false);
+        _silencerForWorldWeapon = Instantiate(_wearableIte_SO.playerGameObjectPrefab);
+        _silencerForWorldWeapon.SetActive(false);
     }
 
     public override void Equip()
     {
-        EquipOnWeapon(m_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler);
-        m_wearableItemsInventory.WeaponSlot.OnSilencerEquiped?.Invoke();
+        EquipOnWeapon(_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler);
+        _wearableItemsInventory.WeaponSlot.OnSilencerEquiped?.Invoke();
     }
 
     public void EquipOnWeapon(WeaponHandler weaponForEquiping)
@@ -27,15 +27,15 @@ public class SilencerHandler : WearableItemHandler
         }
 
         SpawnSilencer(GameObjectForPlayer, weaponForEquiping.GameObjectForPlayer);
-        SpawnSilencer(m_silencerForWorldWeapon, weaponForEquiping.GameObject);
+        SpawnSilencer(_silencerForWorldWeapon, weaponForEquiping.GameObject);
 
         weaponForEquiping.SilencerHandler = this;
     }
 
-    void SpawnSilencer(GameObject silencer, GameObject spawnObject)
+    private void SpawnSilencer(GameObject silencer, GameObject spawnObject)
     {
         silencer.transform.SetParent(spawnObject.transform, false);
-        silencer.transform.localPosition = m_wearableItem_SO.playerGameObjectspawnOffset;
+        silencer.transform.localPosition = _wearableIte_SO.playerGameObjectspawnOffset;
         silencer.SetActive(true);
     }
 }

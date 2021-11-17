@@ -2,29 +2,28 @@ using UnityEngine;
 
 public class RotationResetter : MonoBehaviour
 {
-    [SerializeField] float m_smoothTime;
+    [SerializeField] private float _smoothTime;
+    private bool _exitedFromTrigger;
 
-    bool m_exitedFromTrigger;
-
-    void Update()
+    private void Update()
     {
-        if (m_exitedFromTrigger)
+        if (_exitedFromTrigger)
         {
             if (transform.localRotation == Quaternion.identity)
             {
-                m_exitedFromTrigger = false;
+                _exitedFromTrigger = false;
                 return;
             }
 
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, m_smoothTime * Time.deltaTime);
-        }    
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, _smoothTime * Time.deltaTime);
+        }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player")) { return; }
 
-        m_exitedFromTrigger = true;
+        _exitedFromTrigger = true;
         transform.localPosition = Vector3.zero;
     }
 }

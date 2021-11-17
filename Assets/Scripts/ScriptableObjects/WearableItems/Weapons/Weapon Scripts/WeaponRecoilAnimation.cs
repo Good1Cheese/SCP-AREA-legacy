@@ -4,36 +4,36 @@ using Zenject;
 [RequireComponent(typeof(Animator))]
 public class WeaponRecoilAnimation : MonoBehaviour
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly Animator m_weaponAnimator;
-    [Inject] readonly WeaponAim m_weaponAim;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly Animator _weaponAnimator;
+    [Inject] private readonly WeaponAim _weaponAim;
 
-    void Awake()
+    private void Awake()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponAnimator;
-        m_weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
-        m_weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponAnimator;
+        _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
+        _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
     }
 
-    void ActivateRecoilInAim()
+    private void ActivateRecoilInAim()
     {
-        //m_weaponAnimator.SetTrigger("OnPlayerFiredWithAim");
+        //_weaponAnimator.SetTrigger("OnPlayerFiredWithAim");
     }
 
-    void ActivateRecoilWithoutAim()
+    private void ActivateRecoilWithoutAim()
     {
-        //m_weaponAnimator.SetTrigger("OnPlayerFiredWithoutAim");
+        //_weaponAnimator.SetTrigger("OnPlayerFiredWithoutAim");
     }
 
-    void SetWeaponAnimator(WeaponHandler weaponHandler)
+    private void SetWeaponAnimator(WeaponHandler weaponHandler)
     {
-        m_weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
+        _weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponAnimator;
-        m_weaponAim.OnPlayerFiredWithAim -= ActivateRecoilInAim;
-        m_weaponAim.OnPlayerFiredWithoutAim -= ActivateRecoilWithoutAim;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponAnimator;
+        _weaponAim.OnPlayerFiredWithAim -= ActivateRecoilInAim;
+        _weaponAim.OnPlayerFiredWithoutAim -= ActivateRecoilWithoutAim;
     }
 }

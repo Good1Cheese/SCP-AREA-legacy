@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class WalkController : MoveController
+﻿public class WalkController : MoveController
 {
     public override float GetMove()
     {

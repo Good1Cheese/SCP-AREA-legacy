@@ -2,13 +2,15 @@
 
 public class AdrenalinInjectHandler : InjectableItemHandler, IAdrenalinInjectable
 {
-    [Inject] readonly StaminaUseDisabler m_staminaUseDisabler;
+    [Inject] private readonly StaminaUseDisabler _staminaUseDisabler;
+    [Inject] private readonly PlayerHealth _playerHealth;
 
-    public AdrenalinInject_SO AdrenalinInject_SO => m_pickableItem_SO as AdrenalinInject_SO;
+    public AdrenalinInject_SO AdrenalinInject_SO => _pickableIte_SO as AdrenalinInject_SO;
 
     public new void Inject()
     {
-        m_staminaUseDisabler.Disable(AdrenalinInject_SO.m_adrenalineTime);
+        _staminaUseDisabler.Disable(AdrenalinInject_SO.adrenalineTime);
+        _playerHealth.AddAdrenalineHealth(AdrenalinInject_SO.adrenalineHealthAmount);
     }
 
     public override bool ShouldItemNotBeUsed => false;

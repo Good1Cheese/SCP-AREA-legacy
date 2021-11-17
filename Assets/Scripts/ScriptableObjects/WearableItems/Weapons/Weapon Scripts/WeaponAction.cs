@@ -3,42 +3,42 @@ using Zenject;
 
 public abstract class WeaponAction : MonoBehaviour
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] protected readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
+    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] protected readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
-    protected WeaponHandler m_weaponHandler;
+    protected WeaponHandler _weaponHandler;
 
     protected void Start()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += SetActiveState;
-        m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled += ChangeActiveStateOnInventoryEnabledDisabled; 
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        _wearableItemsInventory.WeaponSlot.IsWeaponActived += SetActiveState;
+        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += ChangeActiveStateOnInventoryEnabledDisabled;
         enabled = false;
     }
 
-    void ChangeActiveStateOnInventoryEnabledDisabled()
+    private void ChangeActiveStateOnInventoryEnabledDisabled()
     {
-        if (m_weaponHandler == null
-            || !m_weaponHandler.GameObjectForPlayer.activeSelf
-            || !m_weaponHandler.IsInInventory) { return; }
+        if (_weaponHandler == null
+            || !_weaponHandler.GameObjectForPlayer.activeSelf
+            || !_weaponHandler.IsInInventory) { return; }
 
         SetActiveState(!enabled);
     }
 
-    void SetActiveState(bool activeState)
+    private void SetActiveState(bool activeState)
     {
         enabled = activeState;
     }
 
     protected virtual void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weaponHandler = weaponHandler;
+        _weaponHandler = weaponHandler;
     }
 
     protected void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetActiveState;
-        m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= ChangeActiveStateOnInventoryEnabledDisabled;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        _wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetActiveState;
+        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= ChangeActiveStateOnInventoryEnabledDisabled;
     }
 }

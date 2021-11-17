@@ -3,32 +3,30 @@ using Zenject;
 
 public class SentryRotator : MonoBehaviour
 {
-    [SerializeField] Transform m_sentryGun;
-    [SerializeField] float m_smoothTime;
+    [SerializeField] private Transform _sentryGun;
+    [SerializeField] private float _smoothTime;
 
-    [Inject] readonly GameObject m_playerGameobject;
+    [Inject] private readonly GameObject _playerGameobject;
+    private bool _isPlayerComedInTrigger;
 
-    bool m_isPlayerComedInTrigger;
-
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        m_isPlayerComedInTrigger = other.gameObject == m_playerGameobject;
+        _isPlayerComedInTrigger = other.gameObject == _playerGameobject;
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (!m_isPlayerComedInTrigger) { return; }
+        if (!_isPlayerComedInTrigger) { return; }
 
         Rotate();
     }
 
-
-    void Rotate()
+    private void Rotate()
     {
-        Vector3 relativePos = m_sentryGun.position - m_playerGameobject.transform.position;
+        Vector3 relativePos = _sentryGun.position - _playerGameobject.transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(relativePos, Vector3.up);
 
-        m_sentryGun.rotation = Quaternion.Slerp(m_sentryGun.rotation, targetRotation, m_smoothTime * Time.deltaTime);
+        _sentryGun.rotation = Quaternion.Slerp(_sentryGun.rotation, targetRotation, _smoothTime * Time.deltaTime);
     }
 
 }

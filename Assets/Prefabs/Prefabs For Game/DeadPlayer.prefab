@@ -304,10 +304,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab478191cad96d9438a4b079691024a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_timeScaleOnDeath: 0.5
-  m_delayAfterDeathAnimation: 0.7
-  m_delayDuringBlackout: 0.025
-  m_blackoutSpeed: 0.05
+  _timeScaleOnDeath: 0.5
+  _delayAfterDeathAnimation: 0.7
+  _delayDuringBlackout: 0.025
+  _blackoutSpeed: 0.05
 --- !u!114 &279487251
 MonoBehaviour:
   m_ObjectHideFlags: 0

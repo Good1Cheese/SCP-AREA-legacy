@@ -5,31 +5,27 @@ using Zenject;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyManager : MonoBehaviour
 {
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private NavMeshAgent _navMeshAgent;
 
-    NavMeshAgent m_navMeshAgent;
-
-    public bool WasPlayerDetected 
-    { 
-        set 
-        {
-            enabled = value;
-        }
+    public bool WasPlayerDetected
+    {
+        set => enabled = value;
     }
 
-    void Start()
+    private void Start()
     {
-        m_navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         enabled = false;
     }
 
-    void Update()
+    private void Update()
     {
         FollowPlayer();
     }
 
-    void FollowPlayer()
+    private void FollowPlayer()
     {
-        m_navMeshAgent.SetDestination(m_playerTransform.position);
+        _navMeshAgent.SetDestination(_playerTransform.position);
     }
 }

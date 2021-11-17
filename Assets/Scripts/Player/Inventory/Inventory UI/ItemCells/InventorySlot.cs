@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] protected Image m_image;
+    [SerializeField] protected Image _image;
 
     public ItemHandler ItemHandler { get; set; }
 
     public void SetItem(ItemHandler item)
     {
         ItemHandler = item;
-        m_image.sprite = item.GetItem().sprite;
+        _image.sprite = item.GetItem().sprite;
         OnItemSet();
     }
 
@@ -20,7 +20,7 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
         ItemHandler.OnItemDropped();
         OnItemDeleted();
         ItemHandler = null;
-        m_image.sprite = null;
+        _image.sprite = null;
     }
 
     public void OnPointerClick(PointerEventData eventData)

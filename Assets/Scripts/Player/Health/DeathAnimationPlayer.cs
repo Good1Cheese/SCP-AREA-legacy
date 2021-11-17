@@ -6,64 +6,62 @@ using Zenject;
 
 public class DeathAnimationPlayer : MonoBehaviour
 {
-    [SerializeField] float m_timeScaleOnDeath;
-    [SerializeField] float m_delayAfterDeathAnimation;
-    [SerializeField] float m_delayDuringBlackout;
-    [SerializeField] float m_blackoutSpeed;
+    [SerializeField] private float _timeScaleOnDeath;
+    [SerializeField] private float _delayAfterDeathAnimation;
+    [SerializeField] private float _delayDuringBlackout;
+    [SerializeField] private float _blackoutSpeed;
 
-    [Inject] readonly SceneTransition m_sceneTransition;
-
-    Animator m_playerDeathAnimator;
-    ColorAdjustments m_colorAdjustments;
-    Vignette m_vignette;
-
-    WaitForSeconds m_timeoutDuringBlackout;
-    WaitForSeconds m_timeoutAfterDeathAnimation;
+    [Inject] private readonly SceneTransition _sceneTransition;
+    private Animator _playerDeathAnimator;
+    private ColorAdjustments _colorAdjustments;
+    private Vignette _vignette;
+    private WaitForSeconds _timeoutDuringBlackout;
+    private WaitForSeconds _timeoutAfterDeathAnimation;
 
     [Inject]
-    void Construct(Volume volume)
+    private void Construct(Volume volume)
     {
-        volume.profile.TryGet(out m_colorAdjustments);
-        volume.profile.TryGet(out m_vignette);
+        volume.profile.TryGet(out _colorAdjustments);
+        volume.profile.TryGet(out _vignette);
     }
 
-    void Awake()
+    private void Awake()
     {
-        m_playerDeathAnimator = GetComponent<Animator>();
-        m_timeoutAfterDeathAnimation = new WaitForSeconds(m_delayAfterDeathAnimation);
-        m_timeoutDuringBlackout = new WaitForSeconds(m_delayDuringBlackout);
+        _playerDeathAnimator = GetComponent<Animator>();
+        _timeoutAfterDeathAnimation = new WaitForSeconds(_delayAfterDeathAnimation);
+        _timeoutDuringBlackout = new WaitForSeconds(_delayDuringBlackout);
     }
 
     public void PlayDeathAnimation()
     {
-        Time.timeScale = m_timeScaleOnDeath;
-        m_colorAdjustments.saturation.value = m_colorAdjustments.saturation.min;
+        Time.timeScale = _timeScaleOnDeath;
+        _colorAdjustments.saturation.value = _colorAdjustments.saturation.min;
 
-        m_playerDeathAnimator.SetTrigger("OnPlayerDeath");
+        _playerDeathAnimator.SetTrigger("OnPlayerDeath");
         StartCoroutine(PlayDeathAnimationCoroutine());
     }
 
-    IEnumerator PlayDeathAnimationCoroutine()
+    private IEnumerator PlayDeathAnimationCoroutine()
     {
-        yield return m_timeoutAfterDeathAnimation;
+        yield return _timeoutAfterDeathAnimation;
 
         do
         {
-            m_vignette.intensity.value += m_blackoutSpeed;
-            yield return m_timeoutDuringBlackout;
+            _vignette.intensity.value += _blackoutSpeed;
+            yield return _timeoutDuringBlackout;
 
             if (IsVingetteIntensityFull())
             {
-                m_colorAdjustments.colorFilter.value = Color.black;
+                _colorAdjustments.colorFilter.value = Color.black;
             }
         }
         while (!IsVingetteIntensityFull());
 
-        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.RespawnScene);
+        _sceneTransition.LoadScene((int)SceneTransition.Scenes.RespawnScene);
     }
 
-    bool IsVingetteIntensityFull()
+    private bool IsVingetteIntensityFull()
     {
-        return !(m_vignette.intensity.value < m_vignette.intensity.max);
+        return !(_vignette.intensity.value < _vignette.intensity.max);
     }
 }

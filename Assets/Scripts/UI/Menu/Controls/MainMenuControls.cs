@@ -3,25 +3,28 @@ using Zenject;
 
 public class MainMenuControls : MonoBehaviour
 {
-    [Inject] readonly SceneTransition m_sceneTransition;
-    [Inject] readonly GameLoading m_gameLoading;
-    [Inject] readonly GameSaving m_gameSaving;
+    [Inject] private readonly SceneTransition _sceneTransition;
+    [Inject] private readonly GameLoading _gameLoading;
+    [Inject] private readonly GameSaving _gameSaving;
 
     public void Play()
     {
-        m_gameSaving.SaveData.Clear();
-        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
+        _gameSaving.SaveData.Clear();
+        _sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
     }
 
     public void LoadGame()
     {
-        m_gameLoading.PreLoadGame();
+        _gameLoading.PreLoadGame();
     }
 
     public void EnterSettings()
     {
-        m_sceneTransition.LoadScene((int)SceneTransition.Scenes.SettingsScene);
+        _sceneTransition.LoadScene((int)SceneTransition.Scenes.SettingsScene);
     }
 
-    public void Exit() => Application.Quit();
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }

@@ -3,28 +3,27 @@ using Zenject;
 
 public class RayForFireProvider : MonoBehaviour, IRayProvider
 {
-    [SerializeField] float m_multyplierOfBulletSpawnPointRadious;
-    [SerializeField] Transform m_bulletSpawnPoint;
+    [SerializeField] private float _multyplierOfBulletSpawnPointRadious;
+    [SerializeField] private Transform _bulletSpawnPoint;
 
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly WeaponAim m_weaponAim;
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponAim _weaponAim;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private Ray ray;
 
-    Ray ray;
-
-    void Awake()
+    private void Awake()
     {
         ray = new Ray();
     }
 
-    void Start()
+    private void Start()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
     }
 
     public Ray ProvideRay()
     {
-        if (m_weaponAim.IsAiming)
+        if (_weaponAim.IsAiming)
         {
             return ray = ProvideRayForAimedShot();
         }
@@ -36,12 +35,12 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
 
     public Ray ProvideRayForAimedShot()
     {
-        return ProvideRay(m_bulletSpawnPoint.position);
+        return ProvideRay(_bulletSpawnPoint.position);
     }
 
     public Ray ProvideRayForShot()
     {
-        Vector3 origin = m_playerTransform.position + m_playerTransform.up + (Vector3)Random.insideUnitCircle * m_multyplierOfBulletSpawnPointRadious;
+        Vector3 origin = _playerTransform.position + _playerTransform.up + (Vector3)Random.insideUnitCircle * _multyplierOfBulletSpawnPointRadious;
         return ProvideRay(origin);
     }
 
@@ -52,14 +51,14 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
         return ray;
     }
 
-    void SetWeaponBulletSpawnPoint(WeaponHandler weaponHandler)
+    private void SetWeaponBulletSpawnPoint(WeaponHandler weaponHandler)
     {
-        m_bulletSpawnPoint.localPosition = weaponHandler.Weapon_SO.bulletSpawnPoint;
+        _bulletSpawnPoint.localPosition = weaponHandler.Weapon_SO.bulletSpawnPoint;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
     }
 
 }

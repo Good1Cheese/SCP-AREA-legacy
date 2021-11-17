@@ -5,33 +5,32 @@ using Zenject;
 [RequireComponent(typeof(Slider))]
 public abstract class StatisticsBarUIController : MonoBehaviour
 {
-    [Inject] readonly GameLoader m_gameLoader;
+    [Inject] private readonly GameLoader _gameLoader;
+    private Slider _slider;
 
-    Slider m_slider;
-
-    void Start()
+    private void Start()
     {
-        m_slider = GetComponent<Slider>();
+        _slider = GetComponent<Slider>();
         float startBarValue = GetValue();
-        m_slider.maxValue = startBarValue;
-        m_slider.value = startBarValue;
+        _slider.maxValue = startBarValue;
+        _slider.value = startBarValue;
 
-        m_gameLoader.OnGameLoadingUI += gameObject.SetActive;
+        _gameLoader.OnGameLoadingUI += gameObject.SetActive;
         Subscribe();
     }
 
-    protected void UpdateUI()
+    public void UpdateUI()
     {
-        m_slider.value = GetValue();
+        _slider.value = GetValue();
     }
 
     protected abstract float GetValue();
     protected abstract void Subscribe();
     protected abstract void Unsubscribe();
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_gameLoader.OnGameLoadingUI -= gameObject.SetActive;
+        _gameLoader.OnGameLoadingUI -= gameObject.SetActive;
         Unsubscribe();
     }
 

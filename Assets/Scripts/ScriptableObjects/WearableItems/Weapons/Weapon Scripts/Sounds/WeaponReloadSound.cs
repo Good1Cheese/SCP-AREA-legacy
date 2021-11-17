@@ -3,17 +3,17 @@ using Zenject;
 
 public class WeaponReloadSound : WeaponSoundPlayer
 {
-    [Inject] readonly WeaponReload m_weaponReload;
+    [Inject] private readonly WeaponReload _weaponReload;
 
-    protected override AudioClip Sound => m_weaponHandler.Weapon_SO.reloadSound;
+    protected override AudioClip Sound => _weaponHandler.Weapon_SO.reloadSound;
 
     protected override void SubscribeToAction()
     {
-        m_weaponReload.OnPlayerReloaded += PlaySound;
+        _weaponReload.OnPlayerReloaded += PlaySound;
     }
 
     protected override void UnscribeToAction()
     {
-        m_weaponReload.OnPlayerReloaded -= PlaySound;
+        _weaponReload.OnPlayerReloaded -= PlaySound;
     }
 }

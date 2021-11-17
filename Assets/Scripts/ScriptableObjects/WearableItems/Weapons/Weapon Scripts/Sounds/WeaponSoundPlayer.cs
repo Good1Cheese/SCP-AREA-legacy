@@ -5,32 +5,32 @@ using Zenject;
 [RequireComponent(typeof(AudioSource))]
 public abstract class WeaponSoundPlayer : SoundOnAction
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
 
-    protected WeaponHandler m_weaponHandler;
+    protected WeaponHandler _weaponHandler;
 
     protected abstract AudioClip Sound { get; }
 
-    void Awake()
+    private void Awake()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += GetWeaponHandler;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += GetWeaponHandler;
         SubscribeToAction();
     }
 
     protected virtual void GetWeaponHandler(WeaponHandler weaponHandler)
     {
-        m_weaponHandler = weaponHandler;
+        _weaponHandler = weaponHandler;
     }
 
     protected override void PlaySound()
     {
-        m_audioSource.clip = Sound;
-        m_audioSource.Play();
+        _audioSource.clip = Sound;
+        _audioSource.Play();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= GetWeaponHandler;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= GetWeaponHandler;
         UnscribeToAction();
     }
 

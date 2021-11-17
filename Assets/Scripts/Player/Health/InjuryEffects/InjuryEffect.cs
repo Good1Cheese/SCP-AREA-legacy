@@ -3,24 +3,24 @@ using Zenject;
 
 public abstract class InjuryEffect : MonoBehaviour
 {
-    [SerializeField] AnimationCurve m_effectCurve;
+    [SerializeField] private AnimationCurve _effectIntensityCurve;
 
-    [Inject] readonly InjuryEffectsController m_injuryEffectsController;
+    [Inject] private readonly InjuryEffectsController _injuryEffectsController;
 
     protected abstract float EffectIntensity { set; }
 
-    void Start()
+    private void Start()
     {
-        m_injuryEffectsController.OnEffectTimeChanging += SetEffectValue;
+        _injuryEffectsController.OnEffectTimeChanging += SetEffectValue;
     }
 
-    void SetEffectValue(float time)
+    private void SetEffectValue(float time)
     {
-        EffectIntensity = m_effectCurve.Evaluate(time);
+        EffectIntensity = _effectIntensityCurve.Evaluate(time);
     }
 
     private void OnDestroy()
     {
-        m_injuryEffectsController.OnEffectTimeChanging -= SetEffectValue;
+        _injuryEffectsController.OnEffectTimeChanging -= SetEffectValue;
     }
 }

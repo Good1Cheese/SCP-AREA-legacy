@@ -2,11 +2,15 @@
 
 public class RunController : MoveController
 {
-    [Inject] readonly PlayerStamina m_playerStamina;
+    [Inject] private readonly PlayerStamina _playerStamina;
 
     public override float GetMove()
     {
-        if (!m_playerStamina.HasPlayerStamina) { return 0; }
+        if (_playerStamina.Stamina <= 0)
+        {
+            _playerStamina.OnStaminaRunningOut?.Invoke();
+            return 0;
+        }
 
         return base.GetMove();
     }

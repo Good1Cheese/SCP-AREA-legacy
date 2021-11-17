@@ -4,13 +4,13 @@ using Zenject;
 
 public abstract class MoveController : MonoBehaviour
 {
-    [SerializeField] protected KeyCode m_key;
-    [SerializeField] float m_maxMoveTime;
+    [SerializeField] protected KeyCode _key;
+    [SerializeField] private float _maxMoveTime;
 
-    [Inject] protected readonly MovementController m_movementController;
+    [Inject] protected readonly MovementController _movementController;
 
     public bool IsMoving { get; set; }
-    public float MaxMoveTime { get => m_maxMoveTime; }
+    public float MaxMoveTime => _maxMoveTime;
 
     public Action OnPlayerUsingMove { get; set; }
     public Action OnPlayerNotUsingMove { get; set; }
@@ -19,12 +19,12 @@ public abstract class MoveController : MonoBehaviour
 
     public virtual float GetMove()
     {
-        if (Input.GetKeyDown(m_key))
+        if (Input.GetKeyDown(_key))
         {
             OnPlayerStartedUseOfMove?.Invoke();
         }
 
-        if (Input.GetKey(m_key))
+        if (Input.GetKey(_key))
         {
             return Move();
         }
@@ -38,17 +38,17 @@ public abstract class MoveController : MonoBehaviour
         IsMoving = true;
         OnPlayerUsingMove?.Invoke();
 
-        if (m_movementController.MoveTime < MaxMoveTime)
+        if (_movementController.MoveTime < MaxMoveTime)
         {
-            m_movementController.MoveTime += Time.deltaTime;
+            _movementController.MoveTime += Time.deltaTime;
         }
 
-        return m_movementController.MovementSpeed.Evaluate(m_movementController.MoveTime);
+        return _movementController.MovementSpeed.Evaluate(_movementController.MoveTime);
     }
 
     public virtual void StopMove()
     {
-        if (Input.GetKeyUp(m_key))
+        if (Input.GetKeyUp(_key))
         {
             IsMoving = false;
             OnPlayerStoppedUseOfMove?.Invoke();

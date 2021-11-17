@@ -4,40 +4,38 @@ using Zenject;
 [RequireComponent(typeof(WeaponRecoilAnimation))]
 public class WeaponShot : MonoBehaviour
 {
-    [Inject] readonly GameObject m_playerGameObject;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] private readonly GameObject _playerGameObject;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    private IDamagable _damagable;
+    private Weapon_SO _weapon;
 
-    IDamagable m_damagable;
-    Weapon_SO m_weapon;
-
-    void Start()
+    private void Start()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
     public void AttendShot(RaycastHit raycastHit)
     {
-        bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out m_damagable);
+        bool isHitObjectInteractable = raycastHit.collider.gameObject.TryGetComponent(out _damagable);
 
-        if (isHitObjectInteractable && raycastHit.collider.gameObject != m_playerGameObject)
+        if (isHitObjectInteractable && raycastHit.collider.gameObject != _playerGameObject)
         {
-            m_damagable.Damage(m_weapon.damagePerShot);
+            _damagable.Damage(_weapon.damagePerShot);
             return;
         }
 
         Vector3 highestPointOfCollider = raycastHit.point + raycastHit.normal * 0.001f;
-        GameObject bulletHole = Instantiate(m_weapon.bulletHolePrefab, highestPointOfCollider, Quaternion.identity);
+        GameObject bulletHole = Instantiate(_weapon.bulletHolePrefab, highestPointOfCollider, Quaternion.identity);
         bulletHole.transform.LookAt(raycastHit.point + raycastHit.normal);
     }
 
-    void SetWeapon(WeaponHandler weaponHandler)
+    private void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weapon = weaponHandler.Weapon_SO;
+        _weapon = weaponHandler.Weapon_SO;
     }
 
-
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

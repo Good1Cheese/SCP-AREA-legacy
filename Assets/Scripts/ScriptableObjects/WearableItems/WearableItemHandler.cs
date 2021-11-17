@@ -3,17 +3,20 @@ using Zenject;
 
 public abstract class WearableItemHandler : ItemHandler
 {
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
 
-    [SerializeField] protected WearableItem_SO m_wearableItem_SO;
+    [SerializeField] protected WearableIte_SO _wearableIte_SO;
 
     public GameObject GameObjectForPlayer { get; set; }
 
     protected void Awake()
     {
-        GameObjectForPlayer = Instantiate(m_wearableItem_SO.playerGameObjectPrefab);
+        GameObjectForPlayer = Instantiate(_wearableIte_SO.playerGameObjectPrefab);
         GameObjectForPlayer.SetActive(false);
     }
 
-    public override Item_SO GetItem() => m_wearableItem_SO;
+    public override Ite_SO GetItem()
+    {
+        return _wearableIte_SO;
+    }
 }

@@ -4,38 +4,37 @@ using Zenject;
 [RequireComponent(typeof(AmmoUICountUpdater))]
 public class AmmoUIEnablerDisabler : MonoBehaviour
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    private AmmoUICountUpdater _ammoUICountUpdater;
+    private GameObject _textMeshProGameObject;
 
-    AmmoUICountUpdater m_ammoUICountUpdater;
-    GameObject m_textMeshProGameObject;
-
-    void Awake()
+    private void Awake()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += DeactivateWeaponUI;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived += ActiveOrDisableUI;
+        _wearableItemsInventory.WeaponSlot.OnWeaponDropped += DeactivateWeaponUI;
+        _wearableItemsInventory.WeaponSlot.IsWeaponActived += ActiveOrDisableUI;
     }
 
-    void Start()
+    private void Start()
     {
-        m_ammoUICountUpdater = GetComponent<AmmoUICountUpdater>();
-        m_textMeshProGameObject = m_ammoUICountUpdater.TextMeshProUGUI.gameObject;
+        _ammoUICountUpdater = GetComponent<AmmoUICountUpdater>();
+        _textMeshProGameObject = _ammoUICountUpdater.TextMeshProUGUI.gameObject;
         DeactivateWeaponUI();
     }
 
-    void DeactivateWeaponUI()
+    private void DeactivateWeaponUI()
     {
-        m_textMeshProGameObject.SetActive(false);
+        _textMeshProGameObject.SetActive(false);
     }
 
-    void ActiveOrDisableUI(bool activeState)
+    private void ActiveOrDisableUI(bool activeState)
     {
-        m_ammoUICountUpdater.UpdateUI();
-        m_textMeshProGameObject.SetActive(activeState);
+        _ammoUICountUpdater.UpdateUI();
+        _textMeshProGameObject.SetActive(activeState);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= DeactivateWeaponUI;
-        m_wearableItemsInventory.WeaponSlot.IsWeaponActived -= ActiveOrDisableUI;
+        _wearableItemsInventory.WeaponSlot.OnWeaponDropped -= DeactivateWeaponUI;
+        _wearableItemsInventory.WeaponSlot.IsWeaponActived -= ActiveOrDisableUI;
     }
 }

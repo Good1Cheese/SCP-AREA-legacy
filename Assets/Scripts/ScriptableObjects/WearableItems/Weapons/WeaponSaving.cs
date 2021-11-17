@@ -3,43 +3,42 @@ using Zenject;
 
 public class WeaponSaving : ItemSaving
 {
-    [Inject(Id = "PropsHandler")] readonly protected Transform PropsHandler;
-
-    WeaponHandler m_weaponHandler;
+    [Inject(Id = "PropsHandler")] protected readonly Transform PropsHandler;
+    private WeaponHandler _weaponHandler;
 
     public string silencerName;
     public int ammoCount;
     public int clipAmmo;
     public bool isAmmoAdded;
 
-    void Start()
+    private void Start()
     {
-        m_weaponHandler = GetComponent<WeaponHandler>();
+        _weaponHandler = GetComponent<WeaponHandler>();
     }
 
     public override void Save()
     {
-        ammoCount = m_weaponHandler.AmmoCount;
-        clipAmmo = m_weaponHandler.ClipAmmo;
+        ammoCount = _weaponHandler.AmmoCount;
+        clipAmmo = _weaponHandler.ClipAmmo;
         base.Save();
 
-        if (m_weaponHandler.SilencerHandler == null) { return; }
+        if (_weaponHandler.SilencerHandler == null) { return; }
 
-        silencerName = m_weaponHandler.SilencerHandler.GameObject.name;
+        silencerName = _weaponHandler.SilencerHandler.GameObject.name;
     }
 
     public override void LoadData()
     {
         base.LoadData();
 
-        m_weaponHandler.AmmoCount = ammoCount;
-        m_weaponHandler.ClipAmmo = clipAmmo;
+        _weaponHandler.AmmoCount = ammoCount;
+        _weaponHandler.ClipAmmo = clipAmmo;
 
         if (string.IsNullOrEmpty(silencerName)) { return; }
 
         GameObject itemGameObject = PropsHandler.Find(silencerName).gameObject;
         SilencerHandler silencerHandler = itemGameObject.GetComponent<ItemHandler>() as SilencerHandler;
 
-        silencerHandler.EquipOnWeapon(m_weaponHandler);
+        silencerHandler.EquipOnWeapon(_weaponHandler);
     }
 }

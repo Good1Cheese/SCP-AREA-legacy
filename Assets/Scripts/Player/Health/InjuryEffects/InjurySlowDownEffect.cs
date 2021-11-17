@@ -2,10 +2,10 @@
 
 public class InjurySlowDownEffect : InjuryEffect
 {
-    [Inject] readonly MovementController m_movementController;
+    [Inject] private readonly MovementController _movementController;
 
-    protected override float EffectIntensity 
+    protected override float EffectIntensity
     {
-        set => m_movementController.SlowDownFactor = value;
+        set => _movementController.SlowDownFactor = value;
     }
 }

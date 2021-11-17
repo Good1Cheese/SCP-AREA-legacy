@@ -2,30 +2,30 @@
 
 public abstract class BobbingChangeWhileMoveAction : MonoBehaviour
 {
-    [SerializeField] float m_bobFrequencyWhileAction;
-    [SerializeField] float m_bobVerticalAmplitudeWhileAction;
+    [SerializeField] private float _bobFrequencyWhileAction;
+    [SerializeField] private float _bobVerticalAmplitudeWhileAction;
 
-    protected CameraBobbing m_cameraBobbing;
-    protected MoveController m_moveController;
+    protected CameraBobbing _cameraBobbing;
+    protected MoveController _moveController;
 
-    void Start()
+    private void Start()
     {
-        m_cameraBobbing = GetComponent<CameraBobbing>();
+        _cameraBobbing = GetComponent<CameraBobbing>();
 
-        m_moveController.OnPlayerStartedUseOfMove += ChangeBobbingDuringRun;
-        m_moveController.OnPlayerStoppedUseOfMove += m_cameraBobbing.ResetBobbingValues;
+        _moveController.OnPlayerStartedUseOfMove += ChangeBobbingDuringRun;
+        _moveController.OnPlayerStoppedUseOfMove += _cameraBobbing.ResetBobbingValues;
     }
 
     protected void ChangeBobbingDuringRun()
     {
-        m_cameraBobbing.BobFrequency = m_bobFrequencyWhileAction;
-        m_cameraBobbing.BobVerticalAmplitude = m_bobVerticalAmplitudeWhileAction;
+        _cameraBobbing.BobFrequency = _bobFrequencyWhileAction;
+        _cameraBobbing.BobVerticalAmplitude = _bobVerticalAmplitudeWhileAction;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_moveController.OnPlayerStartedUseOfMove -= ChangeBobbingDuringRun;
-        m_moveController.OnPlayerStoppedUseOfMove -= m_cameraBobbing.ResetBobbingValues;
+        _moveController.OnPlayerStartedUseOfMove -= ChangeBobbingDuringRun;
+        _moveController.OnPlayerStoppedUseOfMove -= _cameraBobbing.ResetBobbingValues;
     }
 }
 

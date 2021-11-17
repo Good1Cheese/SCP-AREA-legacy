@@ -16,4 +16,4 @@ MonoBehaviour:
   description: 
   playerGameObjectspawnOffset: {x: 0.435, y: -0.129, z: 0.573}
   playerGameObjectPrefab: {fileID: 277353614761163988, guid: 91616b0a69a9d494ba1ee17b19db701b, type: 3}
-  m_securityKeyCardLevel: 0
+  _securityKeyCardLevel: 2

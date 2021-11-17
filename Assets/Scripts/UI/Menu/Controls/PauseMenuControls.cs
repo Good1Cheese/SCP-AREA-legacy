@@ -3,41 +3,40 @@ using Zenject;
 
 public class PauseMenuControls : MonoBehaviour
 {
-    [Inject] readonly SceneTransition sceneTransition;
-    [Inject] readonly GameSaving m_gameSaver;
-    [Inject] readonly GameLoading m_gameLoader;
-    [Inject] readonly PauseMenuEnablerDisabler m_pauseMenu;
+    [Inject] private readonly SceneTransition sceneTransition;
+    [Inject] private readonly GameSaving _gameSaver;
+    [Inject] private readonly GameLoading _gameLoader;
+    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
+    private GameObject _gameObject;
 
-    GameObject m_gameObject;
-
-    void Start()
+    private void Start()
     {
-        m_gameObject = gameObject;
-        m_gameObject.SetActive(false);
-        m_pauseMenu.OnPauseMenuButtonPressed += ActivateOrDeacrivateUI;
+        _gameObject = gameObject;
+        _gameObject.SetActive(false);
+        _pauseMenu.OnPauseMenuButtonPressed += ActivateOrDeacrivateUI;
     }
 
     public void ActivateOrDeacrivateUI()
     {
-        Time.timeScale = (m_gameObject.activeSelf) ? 1 : 0;
-        m_gameObject.SetActive(!m_gameObject.activeSelf);
+        Time.timeScale = (_gameObject.activeSelf) ? 1 : 0;
+        _gameObject.SetActive(!_gameObject.activeSelf);
     }
 
     public void UnpauseGame()
     {
-        m_pauseMenu.EnableDisableUI();
+        _pauseMenu.EnableDisableUI();
     }
 
     public void SaveGame()
     {
-        m_pauseMenu.EnableDisableUI();
-        m_gameSaver.Save();
+        _pauseMenu.EnableDisableUI();
+        _gameSaver.Save();
     }
 
     public void LoadGame()
     {
-        m_pauseMenu.EnableDisableUI();
-        m_gameLoader.Load();
+        _pauseMenu.EnableDisableUI();
+        _gameLoader.Load();
     }
 
     public void Exit()
@@ -46,8 +45,8 @@ public class PauseMenuControls : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_pauseMenu.OnPauseMenuButtonPressed -= ActivateOrDeacrivateUI;
+        _pauseMenu.OnPauseMenuButtonPressed -= ActivateOrDeacrivateUI;
     }
 }

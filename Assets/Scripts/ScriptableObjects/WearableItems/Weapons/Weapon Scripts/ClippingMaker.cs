@@ -2,37 +2,37 @@ using UnityEngine;
 
 public class ClippingMaker : MonoBehaviour
 {
-    [SerializeField] float m_clippingRayMaxDistance;
-    [SerializeField] float m_riseForce;
-    [SerializeField] float m_climpForce;
-    bool m_isTriggerStaying;
+    [SerializeField] private float _clippingRayMaxDistance;
+    [SerializeField] private float _riseForce;
+    [SerializeField] private float _climpForce;
+    private bool _isTriggerStaying;
 
-    Transform ParentTransform => transform.parent.transform;
+    private Transform ParentTransform => transform.parent.transform;
 
     public Transform PlayerTransform { get; set; }
 
-    void Update()
+    private void Update()
     {
-        if (!m_isTriggerStaying) { return; }
+        if (!_isTriggerStaying) { return; }
 
         Quaternion rotation = ParentTransform.rotation;
-        rotation.x -= m_riseForce * Time.deltaTime;
+        rotation.x -= _riseForce * Time.deltaTime;
         rotation.x = Mathf.Clamp(rotation.x, -90, 0);
 
         ParentTransform.rotation = rotation;
 
-        ParentTransform.Translate(m_climpForce * -PlayerTransform.forward * Time.deltaTime);
+        ParentTransform.Translate(_climpForce * -PlayerTransform.forward * Time.deltaTime);
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (m_isTriggerStaying || other.transform == PlayerTransform) { return; }
+        if (_isTriggerStaying || other.transform == PlayerTransform) { return; }
 
-        m_isTriggerStaying = true;
+        _isTriggerStaying = true;
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        m_isTriggerStaying = false;
+        _isTriggerStaying = false;
     }
 }

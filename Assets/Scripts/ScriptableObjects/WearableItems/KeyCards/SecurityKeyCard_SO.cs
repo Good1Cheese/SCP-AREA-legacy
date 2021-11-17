@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "new SecurityKeyCard_SO", menuName = "ScriptableObjects/WearableItems/KeyCards/SecurityKeyCard_SO")]
 public class SecurityKeyCard_SO : KeyCard_SO
 {
-    [SerializeField] SecurityKeyCardLevel m_securityKeyCardLevel;
+    [SerializeField] private SecurityKeyCardLevel _securityKeyCardLevel;
 
     public enum SecurityKeyCardLevel
     {
@@ -12,7 +12,10 @@ public class SecurityKeyCard_SO : KeyCard_SO
         Third,
     }
 
-    public override int KeyCardLevel => (int)m_securityKeyCardLevel;
-    public override KeyCardType GetKeyCardType() => KeyCardType.SecurityKeyCard;
+    public override int KeyCardLevel => (int)_securityKeyCardLevel;
+    public override KeyCardType GetKeyCardType()
+    {
+        return KeyCardType.SecurityKeyCard;
+    }
 }
 

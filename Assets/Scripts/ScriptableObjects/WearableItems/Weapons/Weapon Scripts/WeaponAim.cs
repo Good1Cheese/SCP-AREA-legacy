@@ -5,10 +5,10 @@ using Zenject;
 [RequireComponent(typeof(IRayProvider))]
 public class WeaponAim : WeaponAction
 {
-    const KeyCode AIM_KEY = KeyCode.Mouse1;
+    private const KeyCode AI_KEY = KeyCode.Mouse1;
 
-    [Inject] readonly Animator m_weaponAnimator;
-    [Inject] readonly WeaponReload m_weaponReload;
+    [Inject] private readonly Animator _weaponAnimator;
+    [Inject] private readonly WeaponReload _weaponReload;
 
     public bool IsAiming { get; set; }
 
@@ -18,18 +18,18 @@ public class WeaponAim : WeaponAction
     public Action OnPlayerAimed { get; set; }
     public Action OnPlayerInTakedAim { get; set; }
 
-    void Update()
+    private void Update()
     {
-        if (m_weaponReload.IsPlayerReloading) { return; }
+        if (_weaponReload.IsPlayerReloading) { return; }
 
-        if (Input.GetKeyDown(AIM_KEY))
+        if (Input.GetKeyDown(AI_KEY))
         {
             SetAimState(true);
         }
 
-        if (Input.GetKeyUp(AIM_KEY))
+        if (Input.GetKeyUp(AI_KEY))
         {
-            if (!m_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
+            if (!_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
 
             SetAimState(false);
         }
@@ -38,9 +38,9 @@ public class WeaponAim : WeaponAction
     public void SetAimState(bool isAiming)
     {
         IsAiming = isAiming;
-        m_weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);
+        _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);
 
-        if(IsAiming)
+        if (IsAiming)
         {
             OnPlayerAimed?.Invoke();
             return;
@@ -51,6 +51,6 @@ public class WeaponAim : WeaponAction
 
     protected new void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
+        _weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 }

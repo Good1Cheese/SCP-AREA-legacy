@@ -3,28 +3,28 @@ using Zenject;
 
 public class InjectorHandler : WearableItemHandler, IClickable
 {
-    [Inject] readonly PickableItemsInventory m_pickableItemsInventory;
-    [Inject] readonly InventoryEnablerDisabler m_inventoryEnablerDisabler;
+    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
+    [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
 
     public IInjectable ClipInject { get; set; }
     public Injector_SO Injector_SO => (Injector_SO)GetItem();
 
-    new void Start()
+    private new void Start()
     {
         GameObject = gameObject;
 
         InjectorReload injectorReloader = GameObjectForPlayer.GetComponent<InjectorReload>();
-        injectorReloader.PickableItemsInventory = m_pickableItemsInventory;
+        injectorReloader.PickableItemsInventory = _pickableItemsInventory;
 
-        foreach (var i in GameObjectForPlayer.GetComponents<InjectorScriptBase>())
+        foreach (InjectorScriptBase i in GameObjectForPlayer.GetComponents<InjectorScriptBase>())
         {
-            i.InventoryEnablerDisabler = m_inventoryEnablerDisabler;
-            i.WearableItemsInventory = m_wearableItemsInventory;
+            i.InventoryEnablerDisabler = _inventoryEnablerDisabler;
+            i.WearableItemsInventory = _wearableItemsInventory;
             i.InjectorHandler = this;
         }
     }
 
-    new void Awake()
+    private new void Awake()
     {
         base.Awake();
 
@@ -37,17 +37,17 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
     public override void Equip()
     {
-        m_wearableItemsInventory.InjectorSlot.SetItem(this);
-        m_pickableItemsInventory.AddItem(this);
+        _wearableItemsInventory.InjectorSlot.SetItem(this);
+        _pickableItemsInventory.AddItem(this);
     }
 
     public void Clicked(int slotIndex)
     {
-        m_wearableItemsInventory.InjectorSlot.OnSlotUsed?.Invoke();
+        _wearableItemsInventory.InjectorSlot.OnSlotUsed?.Invoke();
     }
 
     public override void OnItemDropped()
     {
-        m_wearableItemsInventory.InjectorSlot.ClearWearableSlot();
+        _wearableItemsInventory.InjectorSlot.ClearWearableSlot();
     }
 }

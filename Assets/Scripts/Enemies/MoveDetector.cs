@@ -1,24 +1,24 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class MoveDetector : MonoBehaviour
 {
-    [Inject] readonly GameObject m_playerGameObject;
+    [Inject] private readonly GameObject _playerGameObject;
 
-    protected MoveController m_moveController;
-    EnemyManager m_enemyManager;
+    protected MoveController _moveController;
+    private EnemyManager _enemyManager;
 
-    void Start()
+    private void Start()
     {
-        m_enemyManager = GetComponentInParent<EnemyManager>();
+        _enemyManager = GetComponentInParent<EnemyManager>();
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject == m_playerGameObject && m_moveController.IsMoving)
+        if (other.gameObject == _playerGameObject && _moveController.IsMoving)
         {
-/*            m_enemyManager.WasPlayerDetected = true*/;
+            /*            _enemyManager.WasPlayerDetected = true*/
+            ;
         }
     }
 }

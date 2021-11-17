@@ -3,63 +3,59 @@ using Zenject;
 
 public class WeaponRecoilEffect : MonoBehaviour
 {
-    [SerializeField] float m_smooth;
+    [Inject] private readonly WeaponAim _weaponAim;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
 
-    [Inject] readonly WeaponAim m_weaponAim;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    private Weapon_SO _weapon_SO;
+    private Vector3 _currentRotation;
+    private Vector3 _targetRotation;
+    private Vector3 _recoilRotation = new Vector3();
 
-    Weapon_SO m_weapon_SO;
-
-    Vector3 m_currentRotation;
-    Vector3 m_targetRotation;
-
-    Vector3 m_recoilRotation = new Vector3();
-
-    void Start()
+    private void Start()
     {
-        m_weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
-        m_weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
+        _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
     }
 
-    void Update()
+    private void Update()
     {
-        if (m_weapon_SO == null) { return; }
+        if (_weapon_SO == null) { return; }
 
-        m_targetRotation = Vector3.Lerp(m_targetRotation, Vector3.zero, m_weapon_SO.recoilReturnSpeed * Time.deltaTime);
-        m_currentRotation = Vector3.Slerp(m_targetRotation, m_targetRotation, m_weapon_SO.snappiness * Time.fixedDeltaTime);
+        _targetRotation = Vector3.Lerp(_targetRotation, Vector3.zero, _weapon_SO.recoilReturnSpeed * Time.deltaTime);
+        _currentRotation = Vector3.Slerp(_targetRotation, _targetRotation, _weapon_SO.snappiness * Time.fixedDeltaTime);
 
-        transform.localRotation = Quaternion.Euler(m_currentRotation);
+        transform.localRotation = Quaternion.Euler(_currentRotation);
     }
 
-    void ActivateRecoilInAim()
+    private void ActivateRecoilInAim()
     {
-        SetRecoil(m_weapon_SO.recoil);
+        SetRecoil(_weapon_SO.recoil);
     }
 
-    void ActivateRecoilWithoutAim()
+    private void ActivateRecoilWithoutAim()
     {
-        SetRecoil(m_weapon_SO.aimRecoil);
+        SetRecoil(_weapon_SO.aimRecoil);
     }
 
-    void SetRecoil(Vector3 recoilRotation)
+    private void SetRecoil(Vector3 recoilRotation)
     {
-        m_recoilRotation.x = recoilRotation.x;
-        m_recoilRotation.y = Random.Range(-recoilRotation.y, recoilRotation.y);
-        m_recoilRotation.z = Random.Range(-recoilRotation.z, recoilRotation.z);
+        _recoilRotation.x = recoilRotation.x;
+        _recoilRotation.y = Random.Range(-recoilRotation.y, recoilRotation.y);
+        _recoilRotation.z = Random.Range(-recoilRotation.z, recoilRotation.z);
 
-        m_targetRotation += m_recoilRotation;
+        _targetRotation += _recoilRotation;
     }
 
-    void SetWeapon(WeaponHandler weaponHandler)
+    private void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weapon_SO = weaponHandler.Weapon_SO;
+        _weapon_SO = weaponHandler.Weapon_SO;
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
-        m_weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
+        _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

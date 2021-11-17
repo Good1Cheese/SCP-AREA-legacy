@@ -4,53 +4,52 @@ using Zenject;
 [RequireComponent(typeof(BobbingWhileRun))]
 public class CameraBobbing : MonoBehaviour
 {
-    [SerializeField] float m_bobFrequency;
-    [SerializeField] float m_bobHorizontalAmplitude;
-    [SerializeField] float m_bobVerticalAmplitude;
-    [SerializeField] [Range(0, 1)] float m_headBobSmoothing;
+    [SerializeField] private float _bobFrequency;
+    [SerializeField] private float _bobHorizontalAmplitude;
+    [SerializeField] private float _bobVerticalAmplitude;
+    [SerializeField] [Range(0, 1)] private float _headBobSmoothing;
 
-    [Inject] readonly Camera m_mainCamera;
+    [Inject] private readonly Camera _mainCamera;
+    private float _walkingTime;
+    private (float, float) _startValuesOfChangableFields;
 
-    float m_walkingTime;
-    (float, float) m_startValuesOfChangableFields;
+    public float BobFrequency { get => _bobFrequency; set => _bobFrequency = value; }
+    public float BobVerticalAmplitude { get => _bobVerticalAmplitude; set => _bobVerticalAmplitude = value; }
 
-    public float BobFrequency { get => m_bobFrequency; set => m_bobFrequency = value; }
-    public float BobVerticalAmplitude { get => m_bobVerticalAmplitude; set => m_bobVerticalAmplitude = value; }
-
-    void Start()
+    private void Start()
     {
-        m_startValuesOfChangableFields = (m_bobFrequency, m_bobVerticalAmplitude);
+        _startValuesOfChangableFields = (_bobFrequency, _bobVerticalAmplitude);
     }
 
-    void Update()
+    private void Update()
     {
         if (!IsPlayerMoving())
         {
-            m_walkingTime = 0;
+            _walkingTime = 0;
             return;
         }
 
-        m_walkingTime += Time.deltaTime;
+        _walkingTime += Time.deltaTime;
 
-        Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(m_walkingTime);
-        m_mainCamera.transform.position = Vector3.Lerp(m_mainCamera.transform.position, targetCameraPosition, m_headBobSmoothing);
+        Vector3 targetCameraPosition = transform.position + CalculateHeadBobbingOffset(_walkingTime);
+        _mainCamera.transform.position = Vector3.Lerp(_mainCamera.transform.position, targetCameraPosition, _headBobSmoothing);
 
-        if ((m_mainCamera.transform.position - targetCameraPosition).magnitude <= 0.001)
-        { 
-            m_mainCamera.transform.position = targetCameraPosition;
+        if ((_mainCamera.transform.position - targetCameraPosition).magnitude <= 0.001)
+        {
+            _mainCamera.transform.position = targetCameraPosition;
         }
     }
 
-    Vector3 CalculateHeadBobbingOffset(float time)
+    private Vector3 CalculateHeadBobbingOffset(float time)
     {
-        float horizontalOffset = Mathf.Sin(time * m_bobFrequency) * m_bobHorizontalAmplitude;
-        float verticalOffset = Mathf.Cos(time * m_bobFrequency * 2) * m_bobVerticalAmplitude;
+        float horizontalOffset = Mathf.Sin(time * _bobFrequency) * _bobHorizontalAmplitude;
+        float verticalOffset = Mathf.Cos(time * _bobFrequency * 2) * _bobVerticalAmplitude;
         Vector3 offset = transform.right * horizontalOffset + transform.up * verticalOffset;
 
         return offset;
     }
 
-    bool IsPlayerMoving()
+    private bool IsPlayerMoving()
     {
         float horizontalMove = Input.GetAxis("Horizontal");
         float verticalMove = Input.GetAxis("Vertical");
@@ -60,8 +59,8 @@ public class CameraBobbing : MonoBehaviour
 
     public void ResetBobbingValues()
     {
-        m_bobFrequency = m_startValuesOfChangableFields.Item1;
-        m_bobVerticalAmplitude = m_startValuesOfChangableFields.Item2;
+        _bobFrequency = _startValuesOfChangableFields.Item1;
+        _bobVerticalAmplitude = _startValuesOfChangableFields.Item2;
     }
 }
 

@@ -5,28 +5,28 @@ using Zenject;
 
 public class GameLoader : MonoBehaviour
 {
-    [Inject] readonly GameLoading m_gameLoading;
-    [Inject] readonly SceneTransition m_sceneTransition;
+    [Inject] private readonly GameLoading _gameLoading;
+    [Inject] private readonly SceneTransition _sceneTransition;
 
     public Action<bool> OnGameLoadingUI { get; set; }
     public Action OnGameLoaded { get; set; }
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
-        if (!m_gameLoading.WasGameLoadedFromMenu) { yield break; }
+        if (!_gameLoading.WasGameLoadedFromMenu) { yield break; }
 
-        m_sceneTransition.LoadingSceneUIController.IsActiveStateConstant = true;
+        _sceneTransition.LoadingSceneUIController.IsActiveStateConstant = true;
 
         OnGameLoadingUI?.Invoke(false);
 
         yield return new WaitForSeconds(1);
 
-        m_gameLoading.LoadGame();
+        _gameLoading.LoadGame();
 
         OnGameLoadingUI?.Invoke(true);
 
-        m_sceneTransition.LoadingSceneUIController.IsActiveStateConstant = false;
-        m_sceneTransition.LoadingSceneUIController.SetActiveState(false);
+        _sceneTransition.LoadingSceneUIController.IsActiveStateConstant = false;
+        _sceneTransition.LoadingSceneUIController.SetActiveState(false);
 
         OnGameLoaded?.Invoke();
     }

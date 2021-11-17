@@ -1,7 +1,7 @@
 public class PlayerGameObjectSaving : GameObjectSaving
 {
-    void Start()
+    private void Start()
     {
-        
+
     }
 }

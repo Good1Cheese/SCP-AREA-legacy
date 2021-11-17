@@ -1,59 +1,63 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Zenject;
 
 public class InjuryEffectsController : MonoBehaviour
 {
     protected const float MAX_EFFECT_CURVE_TIME = 1.6f;
 
-    [Inject] protected readonly PlayerHealth m_playerHealth;
-
-    float m_curveTargetTime;
-    float m_curveCurrentTime;
-    sbyte m_curveTimeMultiplayer;
-    Func<bool> m_timeChangeCondition;
+    [Inject] protected readonly PlayerHealth _playerHealth;
+    private sbyte _curveTimeMultiplayer;
+    private Func<bool> _timeChangeCondition;
 
     public Action<float> OnEffectTimeChanging { get; set; }
+    public float CurveTargetTime { get; set; }
+    public float CurveCurrentTime { get; set; }
 
-    void Start()
+    private void Start()
     {
         SetCurveTimeDataAfterDamage();
 
-        m_playerHealth.OnPlayerGetsDamage += SetCurveTimeDataAfterDamage;
-        m_playerHealth.OnPlayerHeals += SetCurveTimeDataAfterBleedDamage;
-        m_playerHealth.OnPlayerDies += OnDestroy;
+        _playerHealth.OnPlayerGetsDamage += SetCurveTimeDataAfterDamage;
+        _playerHealth.OnPlayerHeals += SetCurveTimeDataAfterBleedDamage;
+        _playerHealth.OnPlayerDies += OnDestroy;
     }
 
-    void Update()
+    private void Update()
     {
-        if (m_timeChangeCondition.Invoke())
+        if (_timeChangeCondition.Invoke())
         {
-            m_curveCurrentTime += Time.deltaTime * m_curveTimeMultiplayer;
-            OnEffectTimeChanging?.Invoke(m_curveCurrentTime);
+            CurveCurrentTime += Time.deltaTime * _curveTimeMultiplayer;
+            OnEffectTimeChanging?.Invoke(CurveCurrentTime);
         }
     }
 
-    public void SetCurveTimeDataAfterDamage() => SetCurveTimeData(() => m_curveCurrentTime < m_curveTargetTime, 1);
-
-    public void SetCurveTimeDataAfterBleedDamage() => SetCurveTimeData(() => m_curveCurrentTime > m_curveTargetTime, -1);
-
-    void SetCurveTimeData(Func<bool> func, sbyte value)
+    public void SetCurveTimeDataAfterDamage()
     {
-        m_curveTargetTime = GetEffectTargetTime();
-        m_timeChangeCondition = func;
-        m_curveTimeMultiplayer = value;
+        SetCurveTimeData(() => CurveCurrentTime < CurveTargetTime, 1);
     }
 
-    float GetEffectTargetTime()
+    public void SetCurveTimeDataAfterBleedDamage()
     {
-        return MAX_EFFECT_CURVE_TIME * (m_playerHealth.MaxAmount - m_playerHealth.Amount) / 100;
+        SetCurveTimeData(() => CurveCurrentTime > CurveTargetTime, -1);
     }
 
-    void OnDestroy()
+    private void SetCurveTimeData(Func<bool> func, sbyte value)
     {
-        m_playerHealth.OnPlayerGetsDamage -= SetCurveTimeDataAfterDamage;
-        m_playerHealth.OnPlayerHeals -= SetCurveTimeDataAfterBleedDamage;
-        m_playerHealth.OnPlayerDies -= OnDestroy;
+        CurveTargetTime = GetEffectTargetTime();
+        _timeChangeCondition = func;
+        _curveTimeMultiplayer = value;
+    }
+
+    private float GetEffectTargetTime()
+    {
+        return MAX_EFFECT_CURVE_TIME * (_playerHealth.MaxAmount - _playerHealth.Amount) / 100;
+    }
+
+    private void OnDestroy()
+    {
+        _playerHealth.OnPlayerGetsDamage -= SetCurveTimeDataAfterDamage;
+        _playerHealth.OnPlayerHeals -= SetCurveTimeDataAfterBleedDamage;
+        _playerHealth.OnPlayerDies -= OnDestroy;
     }
 }

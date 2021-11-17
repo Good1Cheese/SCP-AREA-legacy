@@ -1,10 +1,10 @@
 ﻿using Zenject;
 
-class BobbingWhileRun : BobbingChangeWhileMoveAction
+internal class BobbingWhileRun : BobbingChangeWhileMoveAction
 {
     [Inject]
-    void Construct(RunController runController)
+    private void Construct(RunController runController)
     {
-        m_moveController = runController;
+        _moveController = runController;
     }
 }

@@ -3,40 +3,39 @@ using Zenject;
 
 public class InteractionMarkEnablerDisabler : MonoBehaviour
 {
-    [SerializeField] RectTransform m_markCanvas;
+    [SerializeField] private RectTransform _markCanvas;
 
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private InteractionProvider _interactionProvider;
+    private GameObject _canvasGameObject;
 
-    InteractionProvider m_interactionProvider;
-    GameObject m_canvasGameObject;
-
-    void Awake()
+    private void Awake()
     {
-        m_interactionProvider = GetComponent<InteractionProvider>();
-        m_canvasGameObject = m_markCanvas.gameObject;
+        _interactionProvider = GetComponent<InteractionProvider>();
+        _canvasGameObject = _markCanvas.gameObject;
     }
 
-    void Start()
+    private void Start()
     {
-        m_interactionProvider.OnPlayerFindInteractable += ActivateMark;
-        m_interactionProvider.OnPlayerFindUnInteractable += DisableMark;
+        _interactionProvider.OnPlayerFindInteractable += ActivateMark;
+        _interactionProvider.OnPlayerFindUnInteractable += DisableMark;
     }
 
     public void ActivateMark(Collider collider)
     {
-        m_canvasGameObject.SetActive(true);
-        m_markCanvas.rotation = Quaternion.LookRotation(m_playerTransform.position - m_markCanvas.position);
-        m_markCanvas.position = collider.ClosestPoint(m_playerTransform.position);
+        _canvasGameObject.SetActive(true);
+        _markCanvas.rotation = Quaternion.LookRotation(_playerTransform.position - _markCanvas.position);
+        _markCanvas.position = collider.ClosestPoint(_playerTransform.position);
     }
 
-    void DisableMark()
+    private void DisableMark()
     {
-        m_canvasGameObject.SetActive(false);
+        _canvasGameObject.SetActive(false);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_interactionProvider.OnPlayerFindInteractable -= ActivateMark;
-        m_interactionProvider.OnPlayerFindUnInteractable -= DisableMark;
+        _interactionProvider.OnPlayerFindInteractable -= ActivateMark;
+        _interactionProvider.OnPlayerFindUnInteractable -= DisableMark;
     }
 }

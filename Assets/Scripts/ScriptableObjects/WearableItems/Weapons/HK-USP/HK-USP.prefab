@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cfc8a275a8660d469ea8cea2d734179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_wearableItem_SO: {fileID: 11400000, guid: f9f15761b8e1c7445beddea0dd3c2e89, type: 2}
+  _wearableIte_SO: {fileID: 11400000, guid: f9f15761b8e1c7445beddea0dd3c2e89, type: 2}
 --- !u!114 &2276628281113621667
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,18 +5,18 @@ using Zenject;
 
 public class PauseMenuEnablerDisabler : UIEnablerDisabler
 {
-    const KeyCode PAUSE_KEY = KeyCode.Escape;
-    [Inject] readonly InventoryEnablerDisabler m_wearableInventoryActivator;
+    private const KeyCode PAUSE_KEY = KeyCode.Escape;
+    [Inject] private readonly InventoryEnablerDisabler _wearableInventoryActivator;
 
     public Action OnPauseMenuButtonPressed { get; set; }
 
-    void Update()
+    private void Update()
     {
         if (!Input.GetKeyDown(PAUSE_KEY)) { return; }
 
-        if (m_wearableInventoryActivator.IsUIActivated)
+        if (_wearableInventoryActivator.IsUIActivated)
         {
-            m_wearableInventoryActivator.EnableDisableUI();
+            _wearableInventoryActivator.EnableDisableUI();
         }
         EnableDisableUI();
     }
@@ -24,7 +24,7 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
     public override void EnableDisableUI()
     {
         IsUIActivated = !IsUIActivated;
-        m_wearableInventoryActivator.OnInventoryEnabledDisabled?.Invoke();
+        _wearableInventoryActivator.OnInventoryEnabledDisabled?.Invoke();
         OnPauseMenuButtonPressed.Invoke();
     }
 }

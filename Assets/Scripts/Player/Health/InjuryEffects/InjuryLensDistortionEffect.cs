@@ -4,16 +4,16 @@ using Zenject;
 
 public class InjuryLensDistortionEffect : InjuryEffect
 {
-    LensDistortion m_lensDistortion;
+    private LensDistortion _lensDistortion;
 
     [Inject]
-    void Construct(Volume volume)
+    private void Construct(Volume volume)
     {
-        volume.profile.TryGet(out m_lensDistortion);
+        volume.profile.TryGet(out _lensDistortion);
     }
 
     protected override float EffectIntensity
     {
-        set => m_lensDistortion.intensity.value = value;
+        set => _lensDistortion.intensity.value = value;
     }
 }

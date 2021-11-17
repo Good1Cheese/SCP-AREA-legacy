@@ -5,30 +5,30 @@ using Zenject;
 [RequireComponent(typeof(WeaponMissFireSound))]
 public class WeaponMiss : MonoBehaviour
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    WaitForSeconds m_timeoutAfterShot;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    private WaitForSeconds _timeoutAfterShot;
 
     public Action OnAmmoRunOut { get; set; }
 
-    void Start()
+    private void Start()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponTimeoutAfterShot;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponTimeoutAfterShot;
     }
 
     public void ActivateMissSound()
     {
-        m_wearableItemsInventory.WeaponSlot.StartItemAction(m_timeoutAfterShot);
+        _wearableItemsInventory.WeaponSlot.StartItemAction(_timeoutAfterShot);
 
         OnAmmoRunOut.Invoke();
     }
 
-    void SetWeaponTimeoutAfterShot(WeaponHandler weaponHandler)
+    private void SetWeaponTimeoutAfterShot(WeaponHandler weaponHandler)
     {
-        m_timeoutAfterShot = new WaitForSeconds(weaponHandler.Weapon_SO.shotDelay);
+        _timeoutAfterShot = new WaitForSeconds(weaponHandler.Weapon_SO.shotDelay);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponTimeoutAfterShot;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponTimeoutAfterShot;
     }
 }

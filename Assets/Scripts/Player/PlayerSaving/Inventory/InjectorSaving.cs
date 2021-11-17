@@ -3,9 +3,9 @@ using Zenject;
 
 public class InjectorSaving : WearableItemSaving
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
 
-    protected override WearableItemSlot SlotToSave => m_wearableItemsInventory.InjectorSlot;
+    protected override WearableItemSlot SlotToSave => _wearableItemsInventory.InjectorSlot;
 
     public override void Load(string json)
     {

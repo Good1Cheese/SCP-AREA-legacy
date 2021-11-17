@@ -4,57 +4,66 @@ using Zenject;
 [RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerRotator))]
 public class PlayerInstaller : MonoInstaller
 {
-    InjuryEffectsController m_injuryEffectsController;
-    PlayerMovement m_playerMovement;
-    PlayerRotator m_playerRotator;
-    PlayerStamina m_playerStamina;
-    StaminaUseDisabler m_staminaUseDisabler;
-    MovementController m_movementController;
-    RunController m_runController;
-    SlowWalkController m_slowWalkController;
-    WalkController m_walkController;
-    PlayerHealth m_playerHealth;
-    RayProvider m_rayProvider;
-    CharacterBleeding CharacterBleeding;
-    Transform m_playerTransform;
-    GameObject m_playerGameObject;
+    private SlowWalkEffect _slowWalkEffect;
+    private DynamicFov _dynamicFov;
+    private InjuryEffectsController _injuryEffectsController;
+    private PlayerMovement _playerMovement;
+    private PlayerRotator _playerRotator;
+    private PlayerStamina _playerStamina;
+    private StaminaUseDisabler _staminaUseDisabler;
+    private MovementController _movementController;
+    private RunController _runController;
+    private SlowWalkController _slowWalkController;
+    private WalkController _walkController;
+    private PlayerHealth _playerHealth;
+    private HealableHealth _healableHealth;
+    private RayProvider _rayProvider;
+    private CharacterBleeding CharacterBleeding;
+    private Transform _playerTransform;
+    private GameObject _playerGameObject;
 
     public override void InstallBindings()
     {
         GetComponents();
-        Container.BindInstance(m_injuryEffectsController).AsSingle();
-        Container.BindInstance(m_playerMovement).AsSingle();
-        Container.BindInstance(m_playerRotator).AsSingle();
-        Container.BindInstance(m_playerStamina).AsSingle();
-        Container.BindInstance(m_staminaUseDisabler).AsSingle();
-        Container.BindInstance(m_movementController).AsSingle();
-        Container.BindInstance(m_runController).AsSingle();
-        Container.BindInstance(m_slowWalkController).AsSingle();
-        Container.BindInstance(m_walkController).AsSingle();
-        Container.BindInstance(m_playerHealth).AsSingle();
+        Container.BindInstance(_slowWalkEffect).AsSingle();
+        Container.BindInstance(_dynamicFov).AsSingle();
+        Container.BindInstance(_injuryEffectsController).AsSingle();
+        Container.BindInstance(_playerMovement).AsSingle();
+        Container.BindInstance(_playerRotator).AsSingle();
+        Container.BindInstance(_playerStamina).AsSingle();
+        Container.BindInstance(_staminaUseDisabler).AsSingle();
+        Container.BindInstance(_movementController).AsSingle();
+        Container.BindInstance(_runController).AsSingle();
+        Container.BindInstance(_slowWalkController).AsSingle();
+        Container.BindInstance(_walkController).AsSingle();
+        Container.BindInstance(_playerHealth).AsSingle();
+        Container.BindInstance(_healableHealth).AsSingle();
         Container.BindInstance(CharacterBleeding).AsSingle();
-        Container.BindInstance(m_rayProvider).AsSingle();
+        Container.BindInstance(_rayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
         Container.BindInstance(Camera.main).AsCached();
-        Container.BindInstance(m_playerTransform).WithId("Player").AsCached();
-        Container.BindInstance(m_playerGameObject).AsSingle();
+        Container.BindInstance(_playerTransform).WithId("Player").AsCached();
+        Container.BindInstance(_playerGameObject).AsSingle();
     }
 
-    void GetComponents()
+    private void GetComponents()
     {
-        m_injuryEffectsController = GetComponent<InjuryEffectsController>();
-        m_playerMovement = GetComponent<PlayerMovement>();
-        m_playerRotator = GetComponent<PlayerRotator>();
-        m_playerStamina = GetComponent<PlayerStamina>();
-        m_staminaUseDisabler = GetComponent<StaminaUseDisabler>();
-        m_movementController = GetComponent<MovementController>();
-        m_runController = GetComponent<RunController>();
-        m_slowWalkController = GetComponent<SlowWalkController>();
-        m_walkController = GetComponent<WalkController>();
-        m_playerHealth = GetComponent<PlayerHealth>();
+        _slowWalkEffect = GetComponent<SlowWalkEffect>();
+        _dynamicFov = GetComponent<DynamicFov>();
+        _injuryEffectsController = GetComponent<InjuryEffectsController>();
+        _playerMovement = GetComponent<PlayerMovement>();
+        _playerRotator = GetComponent<PlayerRotator>();
+        _playerStamina = GetComponent<PlayerStamina>();
+        _staminaUseDisabler = GetComponent<StaminaUseDisabler>();
+        _movementController = GetComponent<MovementController>();
+        _runController = GetComponent<RunController>();
+        _slowWalkController = GetComponent<SlowWalkController>();
+        _walkController = GetComponent<WalkController>();
+        _playerHealth = GetComponent<PlayerHealth>();
+        _healableHealth = GetComponent<HealableHealth>();
         CharacterBleeding = GetComponent<CharacterBleeding>();
-        m_rayProvider = GetComponent<RayProvider>();
-        m_playerTransform = transform;
-        m_playerGameObject = gameObject;
+        _rayProvider = GetComponent<RayProvider>();
+        _playerTransform = transform;
+        _playerGameObject = gameObject;
     }
 }

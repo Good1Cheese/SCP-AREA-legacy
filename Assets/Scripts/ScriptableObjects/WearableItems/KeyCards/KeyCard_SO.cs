@@ -1,4 +1,4 @@
-public abstract class KeyCard_SO : WearableItem_SO
+public abstract class KeyCard_SO : WearableIte_SO
 {
     public abstract KeyCardType GetKeyCardType();
     public abstract int KeyCardLevel { get; }

@@ -5,25 +5,26 @@ using Zenject;
 [RequireComponent(typeof(Slider))]
 public class HealthBarUIController : StatisticsBarUIController
 {
-    [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject] readonly GameLoader m_gameLoader;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    [Inject] private readonly GameLoader _gameLoader;
 
     protected override float GetValue()
     {
-        return m_playerHealth.Amount;
+        return _playerHealth.Amount;
     }
 
     protected override void Subscribe()
     {
-        m_playerHealth.OnPlayerGetsDamage += UpdateUI;
-        m_playerHealth.OnPlayerHeals += UpdateUI;
-        m_gameLoader.OnGameLoaded += UpdateUI;
+        _playerHealth.OnPlayerGetsDamage += UpdateUI;
+        _playerHealth.OnPlayerHeals += UpdateUI;
+        _gameLoader.OnGameLoaded += UpdateUI;
     }
 
     protected override void Unsubscribe()
     {
-        m_playerHealth.OnPlayerGetsDamage -= UpdateUI;
-        m_playerHealth.OnPlayerHeals -= UpdateUI;
+        _playerHealth.OnPlayerGetsDamage -= UpdateUI;
+        _playerHealth.OnPlayerHeals -= UpdateUI;
+        _gameLoader.OnGameLoaded -= UpdateUI;
     }
 }
 

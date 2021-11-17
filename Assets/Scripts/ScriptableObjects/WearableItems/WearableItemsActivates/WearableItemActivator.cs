@@ -3,20 +3,20 @@ using Zenject;
 
 public class WearableItemActivator : MonoBehaviour
 {
-    [SerializeField] KeyCode m_key;
+    [SerializeField] private KeyCode _key;
 
-    [Inject] protected readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly InventoryEnablerDisabler m_inventoryAcviteStateSetter;
+    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
-    protected WearableItemHandler m_wearableItemHandler;
+    protected WearableItemHandler _wearableItemHandler;
 
-    protected Transform m_itemParent;
+    protected Transform _itemParent;
 
     protected virtual WearableItemSlot WearableItemSlot { get; }
 
     protected void Awake()
     {
-        m_itemParent = transform;
+        _itemParent = transform;
     }
 
     protected void Start()
@@ -25,40 +25,40 @@ public class WearableItemActivator : MonoBehaviour
 
         WearableItemSlot.OnItemChanged += SetItem;
         WearableItemSlot.OnItemRemoved += DeactivateWeapon;
-        m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled += SetActiveState;
+        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += SetActiveState;
     }
 
-    void Update()
+    private void Update()
     {
-        if (!Input.GetKeyDown(m_key) || m_wearableItemHandler == null) { return; }
+        if (!Input.GetKeyDown(_key) || _wearableItemHandler == null) { return; }
 
-        SetItemActiveState(!m_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        SetItemActiveState(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
     }
 
     public virtual void SetItemActiveState(bool itemActiveState)
     {
-        m_wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
+        _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
     }
 
     protected void SetItem(WearableItemHandler wearableItemHandler)
     {
-        m_wearableItemHandler = wearableItemHandler;
-        var item_SO = (WearableItem_SO)m_wearableItemHandler.GetItem();
+        _wearableItemHandler = wearableItemHandler;
+        WearableIte_SO ite_SO = (WearableIte_SO)_wearableItemHandler.GetItem();
 
-        m_wearableItemHandler.GameObjectForPlayer.transform.SetParent(m_itemParent);
-        m_wearableItemHandler.GameObjectForPlayer.transform.localPosition = item_SO.playerGameObjectspawnOffset;
-        m_wearableItemHandler.GameObjectForPlayer.transform.localRotation = Quaternion.identity;
+        _wearableItemHandler.GameObjectForPlayer.transform.SetParent(_itemParent);
+        _wearableItemHandler.GameObjectForPlayer.transform.localPosition = ite_SO.playerGameObjectspawnOffset;
+        _wearableItemHandler.GameObjectForPlayer.transform.localRotation = Quaternion.identity;
 
-        m_wearableItemHandler.GameObjectForPlayer.SetActive(false);
+        _wearableItemHandler.GameObjectForPlayer.SetActive(false);
     }
 
-    void DeactivateWeapon()
+    private void DeactivateWeapon()
     {
-        m_wearableItemHandler.GameObjectForPlayer.SetActive(false);
-        m_wearableItemHandler = null;
+        _wearableItemHandler.GameObjectForPlayer.SetActive(false);
+        _wearableItemHandler = null;
     }
 
-    void SetActiveState()
+    private void SetActiveState()
     {
         enabled = !enabled;
     }
@@ -67,6 +67,6 @@ public class WearableItemActivator : MonoBehaviour
     {
         WearableItemSlot.OnItemChanged -= SetItem;
         WearableItemSlot.OnItemRemoved -= DeactivateWeapon;
-        m_inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= SetActiveState;
+        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= SetActiveState;
     }
 }

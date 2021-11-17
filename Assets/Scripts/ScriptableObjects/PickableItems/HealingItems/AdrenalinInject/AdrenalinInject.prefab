@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 560f95d876c0d3d48a1ac8dc1cd3ea85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_pickableItem_SO: {fileID: 11400000, guid: 8a324cc2f4a4d204f863e12be1db284d, type: 2}
+  _pickableIte_SO: {fileID: 11400000, guid: 8a324cc2f4a4d204f863e12be1db284d, type: 2}
 --- !u!114 &3592801964373404979
 MonoBehaviour:
   m_ObjectHideFlags: 0

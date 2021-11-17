@@ -5,39 +5,38 @@ using Zenject;
 
 public class StaminaUseDisabler : MonoBehaviour
 {
-    [Inject] readonly PlayerStamina m_playerStamina;
-
-    float m_startSpendingValue;
-    IEnumerator m_disableCoroutine;
+    [Inject] private readonly PlayerStamina _playerStamina;
+    private float _startSpendingValue;
+    private IEnumerator _disableCoroutine;
 
     public Action<float> OnUseDisabled { get; set; }
 
-    void Start()
+    private void Start()
     {
-        m_startSpendingValue = m_playerStamina.SpendingSpeed;
-        m_disableCoroutine = DisableCoroutine(0);
+        //_startSpendingValue = _playerStamina.SpendingSpeed;
+        _disableCoroutine = DisableCoroutine(0);
     }
 
     public void Disable(float effectTime)
     {
-        m_disableCoroutine = DisableCoroutine(effectTime);
-        StartCoroutine(m_disableCoroutine);
+        _disableCoroutine = DisableCoroutine(effectTime);
+        StartCoroutine(_disableCoroutine);
     }
 
     public void StopDisabling()
     {
-        StopCoroutine(m_disableCoroutine);
-        m_playerStamina.SpendingSpeed = m_startSpendingValue;
+        StopCoroutine(_disableCoroutine);
+        //_playerStamina.SpendingSpeed = _startSpendingValue;
     }
 
     public IEnumerator DisableCoroutine(float effectTime)
     {
-        OnUseDisabled?.Invoke(effectTime);
-        m_playerStamina.SpendingSpeed = 0;
-        m_playerStamina.StaminaValue = m_playerStamina.MaxStaminaAmount;
+        //OnUseDisabled?.Invoke(effectTime);
+        //_playerStamina.SpendingSpeed = 0;
+        //_playerStamina.StaminaValue = _playerStamina.MaxStaminaAmount;
 
         yield return new WaitForSeconds(effectTime);
 
-        m_playerStamina.SpendingSpeed = m_startSpendingValue;
+        //_playerStamina.SpendingSpeed = _startSpendingValue;
     }
 }

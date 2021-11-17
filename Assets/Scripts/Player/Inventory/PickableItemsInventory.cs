@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -7,10 +6,10 @@ using Zenject;
 [RequireComponent(typeof(WearableItemsInventory), typeof(InventoryEnablerDisabler))]
 public class PickableItemsInventory : MonoBehaviour
 {
-    [SerializeField, Range(0, 8)] int m_maxSlotsAmount;
-    [SerializeField] Vector3 m_itemsOffsetForSpawn;
+    [SerializeField, Range(0, 8)] private int _maxSlotsAmount;
+    [SerializeField] private Vector3 _itemsOffsetForSpawn;
 
-    [Inject(Id = "Player")] readonly Transform m_playerTransform;
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
 
     public ItemHandler[] Inventory { get; set; }
     public Action OnInventoryChanged { get; set; }
@@ -18,14 +17,14 @@ public class PickableItemsInventory : MonoBehaviour
 
     public int CurrentItemIndex { get; set; }
 
-    void Awake()
+    private void Awake()
     {
-        Inventory = new ItemHandler[m_maxSlotsAmount];
+        Inventory = new ItemHandler[_maxSlotsAmount];
     }
 
     public void AddItem(ItemHandler item)
     {
-        if (CurrentItemIndex >= m_maxSlotsAmount) { return; }
+        if (CurrentItemIndex >= _maxSlotsAmount) { return; }
 
         Inventory[CurrentItemIndex] = item;
         CurrentItemIndex++;
@@ -57,11 +56,11 @@ public class PickableItemsInventory : MonoBehaviour
     {
         int index = Array.IndexOf(Inventory, itemHandler);
 
-        if (index == -1) 
+        if (index == -1)
         {
             Debug.LogError("Item is null!");
         }
-        
+
         RemoveItem(index);
     }
 

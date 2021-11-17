@@ -4,48 +4,47 @@ using Zenject;
 [RequireComponent(typeof(WalkSound), typeof(RunSound), typeof(WalkController))]
 public class MovementController : MonoBehaviour
 {
-    [SerializeField] AnimationCurve m_movementSpeed;
-    [SerializeField] MoveController[] m_moveControllers;
+    [SerializeField] private AnimationCurve _movementSpeed;
+    [SerializeField] private MoveController[] _moveControllers;
 
-    [Inject] readonly WalkController m_walkController;
+    [Inject] private readonly WalkController _walkController;
+    private MoveController _usingMoveController;
 
-    float m_speed;
-    MoveController m_usingMoveController;
-
-    public AnimationCurve MovementSpeed { get => m_movementSpeed; }
+    public AnimationCurve MovementSpeed => _movementSpeed;
     public float SlowDownFactor { get; set; }
     public float MoveTime { get; set; }
+    public float Speed { get; set; }
 
     public float GetPlayerSpeed()
     {
-         GetSpeedOfMoveControllers();
+        GetSpeedOfMoveControllers();
 
-        if (MoveTime > m_usingMoveController.MaxMoveTime)
+        if (MoveTime > _usingMoveController.MaxMoveTime)
         {
             MoveTime -= Time.deltaTime;
         }
 
-        return m_speed - SlowDownFactor;
+        return Speed - SlowDownFactor;
     }
 
-    void GetSpeedOfMoveControllers()
+    private void GetSpeedOfMoveControllers()
     {
-        m_speed = 0;
+        Speed = 0;
 
-        foreach (MoveController controller in m_moveControllers)
+        foreach (MoveController controller in _moveControllers)
         {
-            if (m_speed != 0) { break; }
+            if (Speed != 0) { break; }
 
             controller.StopMove();
-            m_speed = controller.GetMove();
+            Speed = controller.GetMove();
 
-            m_usingMoveController = controller;
+            _usingMoveController = controller;
         }
 
-        if (m_speed == 0)
+        if (Speed == 0)
         {
-            m_usingMoveController = m_walkController;
-            m_speed = m_walkController.GetMove();
+            _usingMoveController = _walkController;
+            Speed = _walkController.GetMove();
         }
     }
 }

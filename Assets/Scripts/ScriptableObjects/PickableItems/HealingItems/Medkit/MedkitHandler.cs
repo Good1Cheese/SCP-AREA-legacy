@@ -2,28 +2,27 @@
 
 public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 {
-    [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject] readonly CharacterBleeding m_playerBleeding;
-
-    bool m_isInjectUsed;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    [Inject] private readonly CharacterBleeding _playerBleeding;
+    private bool _isInjectUsed;
 
     public new void Inject()
     {
-        m_isInjectUsed = true;
+        _isInjectUsed = true;
         Use();
     }
 
     public override void Use()
     {
-        m_playerBleeding.StopBleeding();
-        m_playerHealth.Heal(((Medkit_SO)GetItem()).healthToHeal);
+        _playerBleeding.StopBleeding();
+        _playerHealth.Heal(((Medkit_SO)GetItem()).healthToHeal);
     }
 
     public override void Clicked(int slotIndex)
     {
-        if (m_isInjectUsed) { return; }
+        if (_isInjectUsed) { return; }
 
         base.Clicked(slotIndex);
-        m_numOfUses -= m_numOfUses;
+        _numOfUses -= _numOfUses;
     }
 }

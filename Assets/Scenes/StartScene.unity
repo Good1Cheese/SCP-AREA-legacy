@@ -1279,9 +1279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 459fa53135f2a6c4d82048fe95627579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_loadSlider: {fileID: 2067827226}
-  m_progressText: {fileID: 36718939}
-  m_gameObject: {fileID: 1676371460}
+  _loadSlider: {fileID: 2067827226}
+  _progressText: {fileID: 36718939}
+  _gameObject: {fileID: 1676371460}
 --- !u!114 &1490123857
 MonoBehaviour:
   m_ObjectHideFlags: 0

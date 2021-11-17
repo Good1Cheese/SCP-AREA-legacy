@@ -3,7 +3,7 @@ using Zenject;
 
 public abstract class DataSaving : MonoBehaviour
 {
-    [Inject] protected readonly GameSaving m_gameSaving;
+    [Inject] protected readonly GameSaving _gameSaving;
 
     public abstract void Save();
 
@@ -15,6 +15,8 @@ public abstract class DataSaving : MonoBehaviour
         LoadData();
     }
 
-    public virtual string ToJson() => JsonUtility.ToJson(this);
-
+    public virtual string ToJson()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }

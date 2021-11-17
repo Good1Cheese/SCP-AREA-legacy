@@ -4,34 +4,34 @@ using Zenject;
 [RequireComponent(typeof(WeaponActivator), typeof(WeaponShot), typeof(WeaponShot))]
 public class WeaponInstaller : MonoInstaller
 {
-    WeaponFire m_weaponFire;
-    WeaponShot m_weaponShot;
-    WeaponReload m_weaponReload;
-    WeaponAim m_weaponAiming;
-    Animator m_weaponAnimator;
-    WeaponMiss m_weaponAmmoController;
-    RayForFireProvider m_rayForShootingProvider;
+    private WeaponFire _weaponFire;
+    private WeaponShot _weaponShot;
+    private WeaponReload _weaponReload;
+    private WeaponAim _weaponAiming;
+    private Animator _weaponAnimator;
+    private WeaponMiss _weaponAmmoController;
+    private RayForFireProvider _rayForShootingProvider;
 
     public override void InstallBindings()
     {
         GetComponents();
-        Container.BindInstance(m_weaponFire).AsSingle();
-        Container.BindInstance(m_weaponShot).AsSingle();
-        Container.BindInstance(m_weaponReload).AsSingle();
-        Container.BindInstance(m_weaponAiming).AsSingle();
-        Container.BindInstance(m_weaponAnimator).AsSingle();
-        Container.BindInstance(m_weaponAmmoController).AsSingle();
-        Container.BindInstance(m_rayForShootingProvider).AsSingle();
+        Container.BindInstance(_weaponFire).AsSingle();
+        Container.BindInstance(_weaponShot).AsSingle();
+        Container.BindInstance(_weaponReload).AsSingle();
+        Container.BindInstance(_weaponAiming).AsSingle();
+        Container.BindInstance(_weaponAnimator).AsSingle();
+        Container.BindInstance(_weaponAmmoController).AsSingle();
+        Container.BindInstance(_rayForShootingProvider).AsSingle();
     }
 
-    void GetComponents()
+    private void GetComponents()
     {
-        m_weaponFire = GetComponent<WeaponFire>();
-        m_weaponShot = GetComponent<WeaponShot>();
-        m_weaponReload = GetComponent<WeaponReload>();
-        m_weaponAiming = GetComponent<WeaponAim>();
-        m_weaponAnimator = GetComponent<Animator>();
-        m_weaponAmmoController = GetComponent<WeaponMiss>();
-        m_rayForShootingProvider = GetComponent<RayForFireProvider>();
+        _weaponFire = GetComponent<WeaponFire>();
+        _weaponShot = GetComponent<WeaponShot>();
+        _weaponReload = GetComponent<WeaponReload>();
+        _weaponAiming = GetComponent<WeaponAim>();
+        _weaponAnimator = GetComponent<Animator>();
+        _weaponAmmoController = GetComponent<WeaponMiss>();
+        _rayForShootingProvider = GetComponent<RayForFireProvider>();
     }
 }

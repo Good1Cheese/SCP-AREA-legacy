@@ -5,36 +5,36 @@ using Zenject;
 
 public class LoadingSceneUIController : MonoBehaviour
 {
-    [SerializeField] Slider m_loadSlider;
-    [SerializeField] TextMeshProUGUI m_progressText;
-    [SerializeField] GameObject m_gameObject;
+    [SerializeField] private Slider _loadSlider;
+    [SerializeField] private TextMeshProUGUI _progressText;
+    [SerializeField] private GameObject _gameObject;
 
-    [Inject] readonly SceneTransition m_sceneTransition;
+    [Inject] private readonly SceneTransition _sceneTransition;
 
     public bool IsActiveStateConstant { get; set; }
 
-    void Start()
+    private void Start()
     {
-        if (m_sceneTransition.LoadingSceneUIController != null) 
+        if (_sceneTransition.LoadingSceneUIController != null)
         {
-            Destroy(m_sceneTransition.LoadingSceneUIController.gameObject);
+            Destroy(_sceneTransition.LoadingSceneUIController.gameObject);
         }
 
-        m_sceneTransition.LoadingSceneUIController = this;
+        _sceneTransition.LoadingSceneUIController = this;
 
-        m_gameObject.SetActive(false);
+        _gameObject.SetActive(false);
     }
 
     public void SetActiveState(bool activeState)
     {
         if (IsActiveStateConstant) { return; }
 
-        m_gameObject.SetActive(activeState);
+        _gameObject.SetActive(activeState);
     }
 
     public void UpdateUI(float progress)
     {
-        m_loadSlider.value = progress;
-        m_progressText.text = string.Format($"{Mathf.Round(progress * 100)} %");
+        _loadSlider.value = progress;
+        _progressText.text = string.Format($"{Mathf.Round(progress * 100)} %");
     }
 }

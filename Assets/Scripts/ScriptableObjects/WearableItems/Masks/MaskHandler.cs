@@ -2,6 +2,6 @@
 {
     public override void Equip()
     {
-        m_wearableItemsInventory.MaskSlot.SetItem(this);
+        _wearableItemsInventory.MaskSlot.SetItem(this);
     }
 }

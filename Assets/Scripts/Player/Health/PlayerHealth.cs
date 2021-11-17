@@ -1,22 +1,25 @@
 using System;
-using Zenject;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(CharacterBleeding), typeof(PlayerDamageSound))]
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int m_maxHealth;
-    [SerializeField] int m_health;
 
-    [Inject] readonly CharacterBleeding m_characterBleeding;
+    [SerializeField] private int _maxHealth;
+    [SerializeField] private int _health;
 
-    public int Amount { get => m_health; set => m_health = value; }
-    public int MaxAmount { get => m_maxHealth; }
+    [Inject] private readonly CharacterBleeding _characterBleeding;
 
-    public Action OnPlayerDies { get; set; }
+    public int Amount { get => _health; set => _health = value; }
+
+    public int MaxAmount => _maxHealth;
+
     public Action OnPlayerGetsDamage { get; set; }
-    public Action OnPlayerGetsNonBleedDamage { get; set; }
     public Action OnPlayerHeals { get; set; }
+    public Action OnPlayerGetsNonBleedDamage { get; set; }
+    public Action OnPlayerDies { get; set; }
+    public Action OnPlayerGotAdrenalinHealth { get; set; }
 
     public void Damage(int damage)
     {
@@ -26,27 +29,32 @@ public class PlayerHealth : MonoBehaviour
 
     public void DamageWithOutNotify(int damage)
     {
-        if (m_health - damage <= 0)
+        if (_health - damage <= 0)
         {
-            m_health = 0;
+            _health = 0;
             Die();
         }
 
-        m_health -= damage;
+        _health -= damage;
         OnPlayerGetsDamage?.Invoke();
     }
 
     public int GetHealthPercent()
     {
-        return m_health / 25;
+        return _health / 25;
+    }
+
+    public void AddAdrenalineHealth(int health)
+    {
+        OnPlayerGotAdrenalinHealth.Invoke();
     }
 
     public void Heal(int healthToHeal)
     {
-        if (m_characterBleeding.IsBleeding) { return; }
+        if (_characterBleeding.IsBleeding) { return; }
 
-        m_health += healthToHeal;
-        m_health = Mathf.Clamp(m_health, 0, m_maxHealth);
+        _health += healthToHeal;
+        _health = Mathf.Clamp(_health, 0, _maxHealth);
 
         OnPlayerHeals?.Invoke();
     }

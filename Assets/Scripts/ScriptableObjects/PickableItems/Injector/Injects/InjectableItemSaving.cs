@@ -2,7 +2,7 @@
 {
     public int numOfUses;
 
-    InjectableItemHandler InjectableItemHandler => (InjectableItemHandler)ItemHandler;
+    private InjectableItemHandler InjectableItemHandler => (InjectableItemHandler)ItemHandler;
 
     public override void Save()
     {

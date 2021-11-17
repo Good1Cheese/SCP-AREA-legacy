@@ -3,30 +3,36 @@ using Zenject;
 
 public class CrosshairEnablerDisabler : MonoBehaviour
 {
-    [Inject] readonly WeaponAim m_weaponAim;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly GameLoader m_gameLoader;
+    [Inject] private readonly WeaponAim _weaponAim;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly GameLoader _gameLoader;
+    private GameObject _gameObject;
 
-    GameObject m_gameObject;
-
-    void Awake()
+    private void Awake()
     {
-        m_gameObject = gameObject;
+        _gameObject = gameObject;
 
-        m_weaponAim.OnPlayerAimed += Deactivate;
-        m_weaponAim.OnPlayerInTakedAim += Activate;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += Activate;
-        m_gameLoader.OnGameLoadingUI += m_gameObject.SetActive;
+        _weaponAim.OnPlayerAimed += Deactivate;
+        _weaponAim.OnPlayerInTakedAim += Activate;
+        _wearableItemsInventory.WeaponSlot.OnWeaponDropped += Activate;
+        _gameLoader.OnGameLoadingUI += _gameObject.SetActive;
     }
 
-    void Activate() => m_gameObject.SetActive(true);
-    void Deactivate() => m_gameObject.SetActive(false);
-
-    void OnDestroy()
+    private void Activate()
     {
-        m_weaponAim.OnPlayerAimed -= Deactivate;
-        m_weaponAim.OnPlayerInTakedAim -= Activate;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= Activate;
-        m_gameLoader.OnGameLoadingUI -= m_gameObject.SetActive;
+        _gameObject.SetActive(true);
+    }
+
+    private void Deactivate()
+    {
+        _gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        _weaponAim.OnPlayerAimed -= Deactivate;
+        _weaponAim.OnPlayerInTakedAim -= Activate;
+        _wearableItemsInventory.WeaponSlot.OnWeaponDropped -= Activate;
+        _gameLoader.OnGameLoadingUI -= _gameObject.SetActive;
     }
 }

@@ -1,6 +1,6 @@
-﻿public class InjectableItem_SO : PickableItem_SO
+﻿public class InjectableIte_SO : PickableIte_SO
 {
-    public int m_maxNumOfUses;
+    public int _maxNumOfUses;
 
-    public int NumOfUses => m_maxNumOfUses;
+    public int NumOfUses => _maxNumOfUses;
 }

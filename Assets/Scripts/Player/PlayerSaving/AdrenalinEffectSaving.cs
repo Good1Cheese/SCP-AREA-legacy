@@ -1,32 +1,31 @@
-using System;
 using UnityEngine;
 using Zenject;
 
 public class AdrenalinEffectSaving : DataSaving
 {
-    [Inject] readonly StaminaUseDisabler m_staminaUseDisabler;
+    [Inject] private readonly StaminaUseDisabler _staminaUseDisabler;
 
     public float effectTime;
-    bool m_isEffectGoing;
+    private bool _isEffectGoing;
 
-    void Start()
+    private void Start()
     {
-        m_staminaUseDisabler.OnUseDisabled += GetEffectTime;
+        _staminaUseDisabler.OnUseDisabled += GetEffectTime;
     }
 
-    void GetEffectTime(float effectTime)
+    private void GetEffectTime(float effectTime)
     {
-        m_isEffectGoing = true;
+        _isEffectGoing = true;
         this.effectTime = effectTime;
     }
 
-    void Update()
+    private void Update()
     {
-        if (m_isEffectGoing)
+        if (_isEffectGoing)
         {
             if (effectTime <= 0)
             {
-                m_isEffectGoing = false;
+                _isEffectGoing = false;
                 return;
             }
 
@@ -36,23 +35,23 @@ public class AdrenalinEffectSaving : DataSaving
 
     public override void Save()
     {
-        m_isEffectGoing = false;
+        _isEffectGoing = false;
     }
 
     public override void LoadData()
     {
         if (effectTime > 0)
         {
-            m_staminaUseDisabler.Disable(effectTime);
+            _staminaUseDisabler.Disable(effectTime);
             return;
         }
-        m_staminaUseDisabler.StopDisabling();
-        
+        _staminaUseDisabler.StopDisabling();
+
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_staminaUseDisabler.OnUseDisabled -= GetEffectTime;
+        _staminaUseDisabler.OnUseDisabled -= GetEffectTime;
     }
 
 }

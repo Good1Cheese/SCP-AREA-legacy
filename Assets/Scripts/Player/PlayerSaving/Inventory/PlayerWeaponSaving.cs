@@ -2,7 +2,7 @@
 
 public class PlayerWeaponSaving : WearableItemSaving
 {
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
 
-    protected override WearableItemSlot SlotToSave => m_wearableItemsInventory.WeaponSlot;
+    protected override WearableItemSlot SlotToSave => _wearableItemsInventory.WeaponSlot;
 }

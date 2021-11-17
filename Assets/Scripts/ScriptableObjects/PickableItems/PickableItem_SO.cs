@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public abstract class PickableItem_SO : Item_SO
+﻿public abstract class PickableIte_SO : Ite_SO
 {
 
 }

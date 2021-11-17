@@ -2,7 +2,7 @@
 using static Ammo_SO;
 
 [CreateAssetMenu(fileName = "new Weapon", menuName = "ScriptableObjects/WearableItems/Weapons/HK-USP")]
-public class Weapon_SO : WearableItem_SO
+public class Weapon_SO : WearableIte_SO
 {
     public int damagePerShot;
     public AmmoType ammoType;

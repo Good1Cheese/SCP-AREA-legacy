@@ -28,7 +28,7 @@ public class SceneTransition : MonoBehaviour
 
     public IEnumerator LoadSceneAsynchronouslyCoroutine(int index)
     {
-        var loadingSceneProcess = SceneManager.LoadSceneAsync(index);
+        AsyncOperation loadingSceneProcess = SceneManager.LoadSceneAsync(index);
 
         while (!loadingSceneProcess.isDone)
         {

@@ -4,16 +4,16 @@ using Zenject;
 
 public class InjurySaturationEffect : InjuryEffect
 {
-    ColorAdjustments m_colorAdjustments;
+    private ColorAdjustments _colorAdjustments;
 
     [Inject]
-    void Construct(Volume volume)
+    private void Construct(Volume volume)
     {
-        volume.profile.TryGet(out m_colorAdjustments);
+        volume.profile.TryGet(out _colorAdjustments);
     }
 
     protected override float EffectIntensity
     {
-        set => m_colorAdjustments.saturation.value = value;
+        set => _colorAdjustments.saturation.value = value;
     }
 }

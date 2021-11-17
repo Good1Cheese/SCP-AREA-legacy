@@ -3,8 +3,8 @@
 public class SlowWalkDetector : MoveDetector
 {
     [Inject]
-    void Construct(SlowWalkController slowWalkController)
+    private void Construct(SlowWalkController slowWalkController)
     {
-        m_moveController = slowWalkController;
+        _moveController = slowWalkController;
     }
 }

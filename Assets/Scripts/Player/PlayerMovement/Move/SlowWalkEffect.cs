@@ -3,49 +3,54 @@ using Zenject;
 
 public class SlowWalkEffect : MonoBehaviour
 {
-    [SerializeField] float m_yChangeTime;
-    [SerializeField] AnimationCurve m_slowWalkYChangeCurve;
-    [SerializeField] CharacterController m_characterController;
+    [SerializeField] private float _yChangeTime;
+    [SerializeField] private AnimationCurve _yForSlowWalk;
+    [SerializeField] private CharacterController _characterController;
 
-    [Inject] readonly SlowWalkController m_slowWalkController;
+    [Inject] private readonly SlowWalkController _slowWalkController;
 
-    float m_slowWalkTime;
+    public float SlowWalkTime { get; set; }
 
-    void Start()
+    private void Start()
     {
-        m_slowWalkController.OnPlayerStartedUseOfMove += SetSlowWalkTimeToZero;
-        m_slowWalkController.OnPlayerStoppedUseOfMove += SetSlowWalkTimeToMaxValue;
-        m_slowWalkController.OnPlayerUsingMove += ActivateEffect;
-        m_slowWalkController.OnPlayerNotUsingMove += DeactivateEffect;
+        _slowWalkController.OnPlayerStartedUseOfMove += SetSlowWalkTimeToZero;
+        _slowWalkController.OnPlayerStoppedUseOfMove += SetSlowWalkTimeToMaxValue;
+        _slowWalkController.OnPlayerUsingMove += ActivateEffect;
+        _slowWalkController.OnPlayerNotUsingMove += DeactivateEffect;
     }
 
-    void SetSlowWalkTimeToZero()
+    private void SetSlowWalkTimeToZero()
     {
-        m_slowWalkTime = 0;
+        SlowWalkTime = 0;
     }
 
-    void SetSlowWalkTimeToMaxValue()
+    private void SetSlowWalkTimeToMaxValue()
     {
-        m_slowWalkTime = m_yChangeTime;
+        SlowWalkTime = _yChangeTime;
     }
 
-    void ActivateEffect()
+    private void ActivateEffect()
     {
-        m_slowWalkTime += Time.deltaTime;
-        m_characterController.height = m_slowWalkYChangeCurve.Evaluate(m_slowWalkTime);
+        SlowWalkTime += Time.deltaTime;
+        SetHeight();
     }
 
-    void DeactivateEffect()
+    private void DeactivateEffect()
     {
-        m_slowWalkTime -= Time.deltaTime;
-        m_characterController.height = m_slowWalkYChangeCurve.Evaluate(m_slowWalkTime);
+        SlowWalkTime -= Time.deltaTime;
+        SetHeight();
     }
 
-    void OnDestroy()
+    public void SetHeight()
     {
-        m_slowWalkController.OnPlayerStartedUseOfMove -= SetSlowWalkTimeToZero;
-        m_slowWalkController.OnPlayerStoppedUseOfMove -= SetSlowWalkTimeToMaxValue;
-        m_slowWalkController.OnPlayerUsingMove -= ActivateEffect;
-        m_slowWalkController.OnPlayerNotUsingMove -= DeactivateEffect;
+        _characterController.height = _yForSlowWalk.Evaluate(SlowWalkTime);
+    }
+
+    private void OnDestroy()
+    {
+        _slowWalkController.OnPlayerStartedUseOfMove -= SetSlowWalkTimeToZero;
+        _slowWalkController.OnPlayerStoppedUseOfMove -= SetSlowWalkTimeToMaxValue;
+        _slowWalkController.OnPlayerUsingMove -= ActivateEffect;
+        _slowWalkController.OnPlayerNotUsingMove -= DeactivateEffect;
     }
 }

@@ -3,18 +3,18 @@ using Zenject;
 
 public abstract class UIEnablerDisabler : MonoBehaviour
 {
-    [Inject] readonly PlayerHealth m_playerHealth;
-    [Inject] readonly GameLoader m_gameLoader;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    [Inject] private readonly GameLoader _gameLoader;
 
     public bool IsUIActivated { get; set; }
 
-    void Awake()
+    private void Awake()
     {
-        m_playerHealth.OnPlayerDies += DisableUI;
-        m_gameLoader.OnGameLoadingUI += SetScriptActiveState;
+        _playerHealth.OnPlayerDies += DisableUI;
+        _gameLoader.OnGameLoadingUI += SetScriptActiveState;
     }
 
-    void DisableUI()
+    private void DisableUI()
     {
         if (IsUIActivated)
         {
@@ -23,16 +23,16 @@ public abstract class UIEnablerDisabler : MonoBehaviour
         enabled = false;
     }
 
-    void SetScriptActiveState(bool activeState)
+    private void SetScriptActiveState(bool activeState)
     {
         enabled = activeState;
     }
 
     public abstract void EnableDisableUI();
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_playerHealth.OnPlayerDies -= DisableUI;
-        m_gameLoader.OnGameLoadingUI -= SetScriptActiveState;
+        _playerHealth.OnPlayerDies -= DisableUI;
+        _gameLoader.OnGameLoadingUI -= SetScriptActiveState;
     }
 }

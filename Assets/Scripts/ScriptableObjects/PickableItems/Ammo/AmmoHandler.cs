@@ -1,48 +1,47 @@
-﻿using UnityEngine;
-using System.Linq;
+﻿using System.Linq;
+using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(AmmoSaving))]
 public class AmmoHandler : PickableItemHandler
 {
-    const int MAX_SLOT_AMMO = 50;
+    private const int MAX_SLOT_AMMO = 50;
 
-    [SerializeField] int ammoCount;
+    [SerializeField] private int ammoCount;
 
-    [Inject] readonly WeaponReload m_weaponReload;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
+    [Inject] private readonly WeaponReload _weaponReload;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    private WeaponHandler _weaponHandler;
 
-    WeaponHandler m_weaponHandler;
-
-    public Ammo_SO Ammo_SO => (Ammo_SO)m_pickableItem_SO;
+    public Ammo_SO Ammo_SO => (Ammo_SO)_pickableIte_SO;
     public bool IsAmmoAdded { get; set; }
     public bool WasAmmoMixed { get; set; }
     public int AmmoCount { get => ammoCount; set => ammoCount = value; }
 
-    void Awake()
+    private void Awake()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += AddAmmo;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped += TakeAmmoFromGun;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += AddAmmo;
+        _wearableItemsInventory.WeaponSlot.OnWeaponDropped += TakeAmmoFromGun;
     }
 
     public override void Equip()
     {
         EquipAmmo();
 
-        if (m_weaponHandler == null) { return; }
+        if (_weaponHandler == null) { return; }
 
-        AddAmmo(m_weaponHandler);
+        AddAmmo(_weaponHandler);
     }
 
     public override void OnItemDropped()
     {
-        m_weaponReload.UpdateWeaponAmmoCount(AmmoCount);
+        _weaponReload.UpdateWeaponAmmoCount(AmmoCount);
         IsAmmoAdded = false;
     }
 
-    void EquipAmmo()
+    private void EquipAmmo()
     {
-        AmmoHandler ammoHandler = (AmmoHandler)m_pickableItemsInventory.Inventory.LastOrDefault(item => item as AmmoHandler != null);
+        AmmoHandler ammoHandler = (AmmoHandler)_pickableItemsInventory.Inventory.LastOrDefault(item => item as AmmoHandler != null);
 
         if (ammoHandler == null || ammoHandler.AmmoCount + AmmoCount > MAX_SLOT_AMMO)
         {
@@ -54,37 +53,37 @@ public class AmmoHandler : PickableItemHandler
         IsAmmoAdded = true;
         WasAmmoMixed = true;
 
-        if (m_weaponHandler == null) { return; }
+        if (_weaponHandler == null) { return; }
 
-        m_weaponHandler.AmmoCount = ammoHandler.AmmoCount;
-        m_wearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(m_weaponHandler);
+        _weaponHandler.AmmoCount = ammoHandler.AmmoCount;
+        _wearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(_weaponHandler);
     }
 
-    void TakeAmmoFromGun()
+    private void TakeAmmoFromGun()
     {
-        m_weaponHandler.AmmoCount = 0;
+        _weaponHandler.AmmoCount = 0;
         IsAmmoAdded = false;
-        m_weaponHandler = null;
+        _weaponHandler = null;
     }
 
-    void AddAmmo(WeaponHandler weaponHandler)
+    private void AddAmmo(WeaponHandler weaponHandler)
     {
-        m_weaponHandler = weaponHandler;
+        _weaponHandler = weaponHandler;
 
         if (!IsInInventory || IsAmmoAdded || WasAmmoMixed) { return; }
 
-        if (m_weaponHandler.Weapon_SO.ammoType == Ammo_SO.ammoType)
+        if (_weaponHandler.Weapon_SO.ammoType == Ammo_SO.ammoType)
         {
             weaponHandler.AmmoCount += AmmoCount;
-            m_wearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(m_weaponHandler);
+            _wearableItemsInventory.WeaponSlot.OnAmmoAdded.Invoke(_weaponHandler);
 
             IsAmmoAdded = true;
         }
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= AddAmmo;
-        m_wearableItemsInventory.WeaponSlot.OnWeaponDropped -= TakeAmmoFromGun;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= AddAmmo;
+        _wearableItemsInventory.WeaponSlot.OnWeaponDropped -= TakeAmmoFromGun;
     }
 }

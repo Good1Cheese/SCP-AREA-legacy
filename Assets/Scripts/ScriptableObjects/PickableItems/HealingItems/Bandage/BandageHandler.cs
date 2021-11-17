@@ -1,13 +1,13 @@
-﻿    using Zenject;
+﻿using Zenject;
 
 public class BandageHandler : PickableItemHandler
 {
-    [Inject] readonly CharacterBleeding m_playerBleeding;
+    [Inject] private readonly CharacterBleeding _playerBleeding;
 
     public override void Use()
     {
-        m_playerBleeding.StopBleeding();
+        _playerBleeding.StopBleeding();
     }
 
-    public override bool ShouldItemNotBeUsed => !m_playerBleeding.IsBleeding;
+    public override bool ShouldItemNotBeUsed => !_playerBleeding.IsBleeding;
 }

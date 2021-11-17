@@ -1,18 +1,17 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using Zenject;
 
 public class GameLoading : MonoBehaviour
 {
-    [Inject] readonly GameSaving m_gameSaving;
-    [Inject] readonly SceneTransition m_sceneTransition;
+    [Inject] private readonly GameSaving _gameSaving;
+    [Inject] private readonly SceneTransition _sceneTransition;
 
     public bool WasGameLoadedFromMenu { get; set; } = false;
 
     public void Load()
     {
-        string path = m_gameSaving.GetSaveFilePath();
+        string path = _gameSaving.GetSaveFilePath();
 
         if (!File.Exists(path))
         {
@@ -25,19 +24,19 @@ public class GameLoading : MonoBehaviour
 
     public void PreLoadGame()
     {
-        m_gameSaving.SaveData.Clear();
-        m_sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
+        _gameSaving.SaveData.Clear();
+        _sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
         WasGameLoadedFromMenu = true;
     }
 
     public void LoadGame()
     {
-        StreamReader reader = new StreamReader(m_gameSaving.GetSaveFilePath());
+        StreamReader reader = new StreamReader(_gameSaving.GetSaveFilePath());
 
         string json;
         for (int i = 0; (json = reader.ReadLine()) != null; i++)
         {
-            m_gameSaving.SaveData[i].Load(json);
+            _gameSaving.SaveData[i].Load(json);
         }
 
         reader.Close();

@@ -1,35 +1,33 @@
+using TMPro;
 using UnityEngine;
 using Zenject;
-using TMPro;
-using System;
 
 public class AmmoUICountUpdater : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI m_textMeshProUGUI;
-    [Inject] readonly WearableItemsInventory m_wearableItemsInventory;
-    [Inject] readonly WeaponFire m_weaponFire;
-    [Inject] readonly WeaponReload m_weaponReload;
+    [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
+    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponFire _weaponFire;
+    [Inject] private readonly WeaponReload _weaponReload;
+    private WeaponHandler _weaponHandler;
 
-    WeaponHandler m_weaponHandler;
+    public TextMeshProUGUI TextMeshProUGUI => _textMeshProUGUI;
 
-    public TextMeshProUGUI TextMeshProUGUI { get => m_textMeshProUGUI; }
-
-    void Awake()
+    private void Awake()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.OnAmmoAdded += UpdateUIProperly;
-        m_weaponFire.OnPlayerFired += UpdateUI;
-        m_weaponReload.OnWeaponAmmoChanged += UpdateUI;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        _wearableItemsInventory.WeaponSlot.OnAmmoAdded += UpdateUIProperly;
+        _weaponFire.OnPlayerFired += UpdateUI;
+        _weaponReload.OnWeaponAmmoChanged += UpdateUI;
     }
 
-    void SetWeapon(WeaponHandler weaponHandler)
+    private void SetWeapon(WeaponHandler weaponHandler)
     {
-        m_weaponHandler = weaponHandler;
+        _weaponHandler = weaponHandler;
     }
 
     public void UpdateUI()
     {
-        TextMeshProUGUI.text = string.Format($"{m_weaponHandler.ClipAmmo}/{m_weaponHandler.AmmoCount}");
+        TextMeshProUGUI.text = string.Format($"{_weaponHandler.ClipAmmo}/{_weaponHandler.AmmoCount}");
     }
 
     public void UpdateUIProperly(WeaponHandler weaponHandler)
@@ -37,12 +35,12 @@ public class AmmoUICountUpdater : MonoBehaviour
         TextMeshProUGUI.text = string.Format($"{weaponHandler.ClipAmmo}/{weaponHandler.AmmoCount}");
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
-        m_wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        m_wearableItemsInventory.WeaponSlot.OnAmmoAdded -= UpdateUIProperly;
-        m_weaponFire.OnPlayerFired -= UpdateUI;
-        m_weaponReload.OnPlayerReloaded -= UpdateUI;
+        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        _wearableItemsInventory.WeaponSlot.OnAmmoAdded -= UpdateUIProperly;
+        _weaponFire.OnPlayerFired -= UpdateUI;
+        _weaponReload.OnPlayerReloaded -= UpdateUI;
     }
 
 }

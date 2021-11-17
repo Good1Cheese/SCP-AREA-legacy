@@ -5,14 +5,14 @@ using Zenject;
 
 public class WearableItemSlot : InventorySlot
 {
-    [Inject] readonly WearableItemsInteraction m_wearableItemsInteraction;
+    [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
 
     public Action<WearableItemHandler> OnItemChanged { get; set; }
     public WearableItemActivator WearableItemActivator { get; set; }
-    public Action OnItemRemoved  { get; set; }
+    public Action OnItemRemoved { get; set; }
     public bool IsItemActionGoing { get; set; }
 
-    IEnumerator StartItemActionCoroutine(WaitForSeconds waitForSeconds) 
+    private IEnumerator StartItemActionCoroutine(WaitForSeconds waitForSeconds)
     {
         IsItemActionGoing = true;
 
@@ -32,7 +32,7 @@ public class WearableItemSlot : InventorySlot
         {
             if (IsItemActionGoing) { return; }
 
-            m_wearableItemsInteraction.DropItem(this);
+            _wearableItemsInteraction.DropItem(this);
         }
 
         OnItemChanged?.Invoke((WearableItemHandler)item);
@@ -43,22 +43,22 @@ public class WearableItemSlot : InventorySlot
     {
         OnItemDeleted();
         ItemHandler = null;
-        m_image.sprite = null;
+        _image.sprite = null;
     }
 
     public override void OnItemSet()
     {
-        m_image.enabled = true;
+        _image.enabled = true;
     }
 
     public override void OnItemDeleted()
     {
         OnItemRemoved?.Invoke();
-        m_image.enabled = false;
+        _image.enabled = false;
     }
 
     public override void OnRightClick()
     {
-        m_wearableItemsInteraction.DropItem(this);
+        _wearableItemsInteraction.DropItem(this);
     }
 }

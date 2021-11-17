@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df87091997339ef478155d725ceb52e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_propsHandler: {fileID: 0}
+  _propsHandler: {fileID: 0}
 --- !u!114 &4504709229982532498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0c65c1a4707a54c9f8dd8cca0c1f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_effectCurve:
+  _effectIntensityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfad11fbc6cfa54195f26eaa836e6c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_effectCurve:
+  _effectIntensityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -212,8 +212,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1.6
       value: -70
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6ee31454f7c664d8679dffb915f8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_effectCurve:
+  _effectIntensityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -269,11 +269,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a62960b52d3ed469178dd0d7047680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_keyCardSlot: {fileID: 0}
-  m_maskSlot: {fileID: 0}
-  m_weaponSlot: {fileID: 0}
-  m_deviceSlot: {fileID: 0}
-  m_injectorSlot: {fileID: 0}
+  _keyCardSlot: {fileID: 0}
+  _maskSlot: {fileID: 0}
+  _weaponSlot: {fileID: 0}
+  _deviceSlot: {fileID: 0}
+  _injectorSlot: {fileID: 0}
 --- !u!114 &28724566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,8 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bce1f59341a3d141bf0f7d8cde79a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxSlotsAmount: 8
-  m_itemsOffsetForSpawn: {x: 0, y: 0, z: 0}
+  _maxSlotsAmount: 8
+  _itemsOffsetForSpawn: {x: 0, y: 0, z: 0.5}
 --- !u!114 &4504709228995589975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,4 +312,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ef44aa0d9e8604cbd6a2b2eb10c3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerInventoryUI: {fileID: 0}
+  _playerInventoryUI: {fileID: 0}

@@ -3,7 +3,7 @@ using Zenject;
 
 public abstract class WearableItemSaving : DataSaving
 {
-    [Inject(Id = "PropsHandler")] readonly protected Transform PropsHandler;
+    [Inject(Id = "PropsHandler")] protected readonly Transform PropsHandler;
 
     public string itemName;
     public bool isActive;

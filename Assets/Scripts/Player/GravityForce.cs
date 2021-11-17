@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class GravityForce : MonoBehaviour
 {
-    [SerializeField] float m_initialVelocityValue;
-    [SerializeField] float m_gravity;
+    [SerializeField] private float _initialVelocityValue;
+    [SerializeField] private float _gravity;
+    private CharacterController _characterController;
+    private Vector3 _velocity;
 
-    CharacterController m_characterController;
-    Vector3 m_velocity;
-
-    void Start()
+    private void Start()
     {
-        m_characterController = GetComponent<CharacterController>();
+        _characterController = GetComponent<CharacterController>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (m_characterController.isGrounded && m_velocity.y < 0)
+        if (_characterController.isGrounded && _velocity.y < 0)
         {
-            m_velocity.y = m_initialVelocityValue;
+            _velocity.y = _initialVelocityValue;
         }
 
-        m_velocity.y += m_gravity * Time.fixedDeltaTime;
-        m_characterController.Move(m_velocity * Time.fixedDeltaTime);
+        _velocity.y += _gravity * Time.fixedDeltaTime;
+        _characterController.Move(_velocity * Time.fixedDeltaTime);
     }
 }

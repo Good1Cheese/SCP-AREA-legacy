@@ -1,11 +1,10 @@
-using UnityEngine;
 using Zenject;
 
 public class RunDetector : MoveDetector
 {
     [Inject]
-    void Construct(RunController runController)
+    private void Construct(RunController runController)
     {
-        m_moveController = runController;
+        _moveController = runController;
     }
 }

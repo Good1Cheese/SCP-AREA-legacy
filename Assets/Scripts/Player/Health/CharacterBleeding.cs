@@ -5,21 +5,20 @@ using Zenject;
 
 public class CharacterBleeding : MonoBehaviour
 {
-    [SerializeField] int m_damage;
-    [SerializeField] float m_maxDelay;
-    [SerializeField] float m_minDelay;
+    [SerializeField] private int _damage;
+    [SerializeField] private float _maxDelay;
+    [SerializeField] private float _minDelay;
 
-    [Inject] readonly PlayerHealth m_playerHealth;
-
-    WaitForSeconds m_timeoutDuringBleeding;
-    IEnumerator m_bleedCoroutine;
+    [Inject] private readonly PlayerHealth _playerHealth;
+    private WaitForSeconds _timeoutDuringBleeding;
+    private IEnumerator _bleedCoroutine;
 
     public bool IsBleeding { get; set; }
     public Action OnPlayerBleeding { get; set; }
 
-    void Start()
+    private void Start()
     {
-        m_bleedCoroutine = BleedCoroutine();
+        _bleedCoroutine = BleedCoroutine();
         SetBleedingDelay();
     }
 
@@ -28,7 +27,7 @@ public class CharacterBleeding : MonoBehaviour
         if (IsBleeding) { return; }
 
         IsBleeding = true;
-        StartCoroutine(m_bleedCoroutine);
+        StartCoroutine(_bleedCoroutine);
     }
 
     public void StopBleeding()
@@ -38,25 +37,25 @@ public class CharacterBleeding : MonoBehaviour
 
     public void StopBleedingWithoutNotify()
     {
-        StopCoroutine(m_bleedCoroutine);
-        m_bleedCoroutine = BleedCoroutine();
+        StopCoroutine(_bleedCoroutine);
+        _bleedCoroutine = BleedCoroutine();
 
         IsBleeding = false;
     }
 
     public void SetBleedingDelay()
     {
-        float delay = UnityEngine.Random.Range(m_minDelay, m_maxDelay);
-        m_timeoutDuringBleeding = new WaitForSeconds(delay);
+        float delay = UnityEngine.Random.Range(_minDelay, _maxDelay);
+        _timeoutDuringBleeding = new WaitForSeconds(delay);
     }
 
-    IEnumerator BleedCoroutine()
+    private IEnumerator BleedCoroutine()
     {
-        while (m_playerHealth.Amount > 0)
+        while (_playerHealth.Amount > 0)
         {
-            yield return m_timeoutDuringBleeding;
+            yield return _timeoutDuringBleeding;
 
-            m_playerHealth.DamageWithOutNotify(m_damage);
+            _playerHealth.DamageWithOutNotify(_damage);
             OnPlayerBleeding?.Invoke();
             SetBleedingDelay();
         }

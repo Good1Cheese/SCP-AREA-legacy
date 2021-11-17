@@ -4,22 +4,22 @@ using Zenject;
 [RequireComponent(typeof(SceneTransition))]
 public class MainInstaller : MonoInstaller
 {
-    SceneTransition m_sceneTransition;
-    GameSaving m_gameSaving;
-    GameLoading m_gameLoading;
+    private SceneTransition _sceneTransition;
+    private GameSaving _gameSaving;
+    private GameLoading _gameLoading;
 
     public override void InstallBindings()
     {
         GetComponents();
-        Container.BindInstance(m_gameLoading).AsSingle();
-        Container.BindInstance(m_gameSaving).AsSingle();
-        Container.BindInstance(m_sceneTransition).AsSingle(); 
+        Container.BindInstance(_gameLoading).AsSingle();
+        Container.BindInstance(_gameSaving).AsSingle();
+        Container.BindInstance(_sceneTransition).AsSingle();
     }
 
-    void GetComponents()
+    private void GetComponents()
     {
-        m_sceneTransition = GetComponent<SceneTransition>();
-        m_gameLoading = GetComponent<GameLoading>();
-        m_gameSaving = GetComponent<GameSaving>();
+        _sceneTransition = GetComponent<SceneTransition>();
+        _gameLoading = GetComponent<GameLoading>();
+        _gameSaving = GetComponent<GameSaving>();
     }
 }
