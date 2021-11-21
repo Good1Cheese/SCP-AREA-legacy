@@ -43,7 +43,7 @@ public class WearableItemActivator : MonoBehaviour
     protected void SetItem(WearableItemHandler wearableItemHandler)
     {
         _wearableItemHandler = wearableItemHandler;
-        WearableIte_SO ite_SO = (WearableIte_SO)_wearableItemHandler.GetItem();
+        WearableIte_SO ite_SO = (WearableIte_SO)_wearableItemHandler.Item;
 
         _wearableItemHandler.GameObjectForPlayer.transform.SetParent(_itemParent);
         _wearableItemHandler.GameObjectForPlayer.transform.localPosition = ite_SO.playerGameObjectspawnOffset;

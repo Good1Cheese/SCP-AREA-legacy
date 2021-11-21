@@ -8,6 +8,7 @@ public class GameControllerInstaller : MonoInstaller
     [SerializeField] private Transform _propsHandler;
     private GameLoader _gameLoader;
     private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    private AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
     private InventoryEnablerDisabler _inventoryEnablerDisabler;
     private InjuryLensDistortionEffect _injuryState;
     private Volume _volume;
@@ -28,6 +29,7 @@ public class GameControllerInstaller : MonoInstaller
         Container.BindInstance(PickableItemsInventory).AsSingle();
         Container.BindInstance(_gameLoader).AsSingle();
         Container.BindInstance(_pauseMenuEnablerDisabler).AsSingle();
+        Container.BindInstance(_ammoUIEnablerDisabler).AsSingle();
         Container.BindInstance(_inventoryEnablerDisabler).AsSingle();
         Container.BindInstance(_injuryState).AsSingle();
         Container.BindInstance(_volume).AsSingle();
@@ -40,6 +42,7 @@ public class GameControllerInstaller : MonoInstaller
         PickableItemsInventory = GetComponent<PickableItemsInventory>();
         _gameLoader = GetComponent<GameLoader>();
         _pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();
+        _ammoUIEnablerDisabler = GetComponent<AmmoUIEnablerDisabler>();
         _inventoryEnablerDisabler = GetComponent<InventoryEnablerDisabler>();
         _injuryState = GetComponent<InjuryLensDistortionEffect>();
         _volume = GetComponent<Volume>();

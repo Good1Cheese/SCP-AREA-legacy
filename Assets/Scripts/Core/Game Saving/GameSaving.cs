@@ -6,13 +6,11 @@ using UnityEngine;
 public class GameSaving : MonoBehaviour
 {
     [SerializeField] private string _fileName;
+
     public List<DataSaving> SaveData { get; set; } = new List<DataSaving>();
-    public Action OnGameSaving { get; set; }
 
     public void Save()
     {
-        OnGameSaving?.Invoke();
-
         string path = GetSaveFilePath();
         FileStream fileStream = new FileStream(path, FileMode.Create);
         using StreamWriter writer = new StreamWriter(fileStream);

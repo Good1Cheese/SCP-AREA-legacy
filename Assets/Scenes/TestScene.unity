@@ -279,6 +279,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85756702}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &276442108 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 497546729, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
+  m_PrefabInstance: {fileID: 598540604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee04dafc6e8e2a243a1490afaab2a0fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &330630532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1246,7 +1257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098461308746145469, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -28.852966
+      value: -28.852814
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
@@ -1685,7 +1696,7 @@ GameObject:
   - component: {fileID: 850343923}
   - component: {fileID: 850343922}
   - component: {fileID: 850343921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1730,8 +1741,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1.15}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!23 &850343923
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2396,7 +2407,7 @@ GameObject:
   - component: {fileID: 1454403180}
   - component: {fileID: 1454403179}
   - component: {fileID: 1454403178}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2441,8 +2452,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1.15}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!23 &1454403180
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2626,7 +2637,7 @@ GameObject:
   - component: {fileID: 1711881914}
   - component: {fileID: 1711881913}
   - component: {fileID: 1711881912}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2671,8 +2682,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1.15}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!23 &1711881914
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3087,7 +3098,7 @@ GameObject:
   - component: {fileID: 2119900389}
   - component: {fileID: 2119900388}
   - component: {fileID: 2119900387}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3132,8 +3143,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1.15}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!23 &2119900389
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3272,6 +3283,10 @@ PrefabInstance:
       propertyPath: _injectorSlot
       value: 
       objectReference: {fileID: 590408902}
+    - target: {fileID: 973495705, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
+      propertyPath: _ammoUICountUpdater
+      value: 
+      objectReference: {fileID: 276442108}
     - target: {fileID: 4504709228895964004, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
       propertyPath: _monoInstallers.Array.data[0]
       value: 
@@ -5423,8 +5438,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 6291869656025110872}
     m_Modifications:
     - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: ammoCount
-      value: 100
+      propertyPath: _ammoCount
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5126512978939992522, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
       propertyPath: m_RootOrder
@@ -6667,8 +6682,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 1.15}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &6291869656295567289
 GameObject:
   m_ObjectHideFlags: 0
@@ -6682,7 +6697,7 @@ GameObject:
   - component: {fileID: 6291869656295567284}
   - component: {fileID: 6291869656295567287}
   - component: {fileID: 6291869656295567290}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DoorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7392,6 +7407,10 @@ PrefabInstance:
     - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
       propertyPath: ammoCount
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
+      propertyPath: _ammoCount
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5126512978939992522, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
       propertyPath: m_RootOrder

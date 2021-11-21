@@ -4,17 +4,12 @@ public class WeaponSlot : WearableItemSlot
 {
     public Action<WeaponHandler> OnWeaponChanged { get; set; }
     public Action OnWeaponDropped { get; set; }
-
-    public Action<WeaponHandler> OnAmmoAdded { get; set; }
-
-    public Action OnSilencerEquiped { get; set; }
-    public Action OnSilencerUnequiped { get; set; }
-
     public Action<bool> IsWeaponActived { get; set; }
 
     public override void OnItemSet()
     {
         base.OnItemSet();
+
         OnWeaponChanged.Invoke(ItemHandler as WeaponHandler);
         IsWeaponActived.Invoke(false);
     }
@@ -24,5 +19,4 @@ public class WeaponSlot : WearableItemSlot
         base.OnItemDeleted();
         OnWeaponDropped?.Invoke();
     }
-
 }

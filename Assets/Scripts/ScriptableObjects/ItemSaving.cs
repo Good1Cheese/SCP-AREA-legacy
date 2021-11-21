@@ -13,7 +13,7 @@
 
     public override void LoadData()
     {
-        ItemHandler.SetIsInventoty(isItemInInventory);
+        ItemHandler.SetIsInventotyState(isItemInInventory);
 
         if (!IsSaveable) { return; }
 

@@ -12,7 +12,11 @@ public abstract class WearableItemSaving : DataSaving
 
     protected abstract WearableItemSlot SlotToSave { get; }
 
-    protected virtual void SaveWearableItem() { }
+    protected virtual void SaveWearableItem()
+    {
+        isActive = ItemHandler.GameObjectForPlayer.activeSelf;
+        itemName = ItemHandler.name;
+    }
 
     public override void Save()
     {
@@ -22,8 +26,6 @@ public abstract class WearableItemSaving : DataSaving
         if (ItemHandler == null) { return; }
 
         SaveWearableItem();
-        isActive = ItemHandler.GameObjectForPlayer.activeSelf;
-        itemName = ItemHandler.name;
     }
 
     public override void Load(string json)

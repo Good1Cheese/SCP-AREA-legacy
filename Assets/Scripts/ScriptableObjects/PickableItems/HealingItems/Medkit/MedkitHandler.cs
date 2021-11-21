@@ -4,6 +4,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 {
     [Inject] private readonly PlayerHealth _playerHealth;
     [Inject] private readonly CharacterBleeding _playerBleeding;
+
     private bool _isInjectUsed;
 
     public new void Inject()
@@ -15,7 +16,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
     public override void Use()
     {
         _playerBleeding.StopBleeding();
-        _playerHealth.Heal(((Medkit_SO)GetItem()).healthToHeal);
+        _playerHealth.Heal(((Medkit_SO)Item).healthToHeal);
     }
 
     public override void Clicked(int slotIndex)

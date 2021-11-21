@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 using Zenject;
+using System.Linq;
 
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
-    private int _ammoCount;
-    private SilencerHandler _silencerHandler;
     [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
 
-    public int AmmoCount
-    {
-        get => _ammoCount;
-        set => _ammoCount = value;
-    }
+    private SilencerHandler _silencerHandler;
 
-    public int ClipAmmo { get; set; }
-    public AudioClip CurrentShotSound { get; set; }
     public SilencerHandler SilencerHandler
     {
         get => _silencerHandler;
@@ -26,7 +20,11 @@ public class WeaponHandler : WearableItemHandler
         }
     }
 
+    public int AmmoCount => _pickableItemsInventory.Inventory.TakeWhile(item => item != null && item as AmmoHandler)
+                                                    .Sum(item => (item as AmmoHandler).AmmoCount);
+    public int ClipAmmo { get; set; }
     public Weapon_SO Weapon_SO => (Weapon_SO)_wearableIte_SO;
+    public AudioClip CurrentShotSound { get; set; }
 
     private new void Awake()
     {

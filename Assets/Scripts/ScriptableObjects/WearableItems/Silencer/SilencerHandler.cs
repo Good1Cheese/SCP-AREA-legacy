@@ -15,7 +15,6 @@ public class SilencerHandler : WearableItemHandler
     public override void Equip()
     {
         EquipOnWeapon(_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler);
-        _wearableItemsInventory.WeaponSlot.OnSilencerEquiped?.Invoke();
     }
 
     public void EquipOnWeapon(WeaponHandler weaponForEquiping)

@@ -7,9 +7,7 @@ public class WeaponSaving : ItemSaving
     private WeaponHandler _weaponHandler;
 
     public string silencerName;
-    public int ammoCount;
     public int clipAmmo;
-    public bool isAmmoAdded;
 
     private void Start()
     {
@@ -18,9 +16,8 @@ public class WeaponSaving : ItemSaving
 
     public override void Save()
     {
-        ammoCount = _weaponHandler.AmmoCount;
-        clipAmmo = _weaponHandler.ClipAmmo;
         base.Save();
+        clipAmmo = _weaponHandler.ClipAmmo;
 
         if (_weaponHandler.SilencerHandler == null) { return; }
 
@@ -31,7 +28,6 @@ public class WeaponSaving : ItemSaving
     {
         base.LoadData();
 
-        _weaponHandler.AmmoCount = ammoCount;
         _weaponHandler.ClipAmmo = clipAmmo;
 
         if (string.IsNullOrEmpty(silencerName)) { return; }

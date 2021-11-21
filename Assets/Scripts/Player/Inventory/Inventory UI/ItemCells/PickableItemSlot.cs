@@ -41,7 +41,7 @@ public class PickableItemSlot : InventorySlot, IPointerClickHandler
 
     public override void OnItemSet()
     {
-        _itemDescription.text = ItemHandler.GetItem().description;
+        _itemDescription.text = ItemHandler.Item.description;
         _gameObject.SetActive(true);
     }
 

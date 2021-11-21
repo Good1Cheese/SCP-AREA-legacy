@@ -7,24 +7,21 @@ public abstract class PickableItemHandler : ItemHandler, IClickable
 
     [Inject] protected readonly PickableItemsInventory _pickableItemsInventory;
 
+    public virtual bool ShouldItemNotBeUsed => false;
+    public override Ite_SO Item => _pickableIte_SO;
+
     public virtual void Use() { }
-
-    public virtual void Clicked(int slotIndex)
-    {
-        if (!ShouldItemNotBeUsed) { return; }
-        Use();
-        _pickableItemsInventory.RemoveItem(slotIndex);
-    }
-
 
     public override void Equip()
     {
         _pickableItemsInventory.AddItem(this);
     }
 
-    public virtual bool ShouldItemNotBeUsed => false;
-    public override Ite_SO GetItem()
+    public virtual void Clicked(int slotIndex)
     {
-        return _pickableIte_SO;
+        if (!ShouldItemNotBeUsed) { return; }
+
+        Use();
+        _pickableItemsInventory.RemoveItem(slotIndex);
     }
 }

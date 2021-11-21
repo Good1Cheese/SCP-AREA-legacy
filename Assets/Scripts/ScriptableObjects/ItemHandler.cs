@@ -16,6 +16,7 @@ public abstract class ItemHandler : IInteractable
         }
     }
 
+    public abstract Ite_SO Item { get; }
     public Action<bool> OnIsInventoryChanged { get; set; }
     public GameObject GameObject { get; set; }
 
@@ -24,7 +25,7 @@ public abstract class ItemHandler : IInteractable
         GameObject = gameObject;
     }
 
-    public void SetIsInventoty(bool value)
+    public void SetIsInventotyState(bool value)
     {
         _isInInventory = value;
     }
@@ -36,8 +37,7 @@ public abstract class ItemHandler : IInteractable
         Equip();
     }
 
-    public virtual void OnItemDropped() { }
-    public abstract Ite_SO GetItem();
-
     public abstract void Equip();
+
+    public virtual void OnItemDropped() { }
 }

@@ -7,7 +7,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
     [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
 
     public IInjectable ClipInject { get; set; }
-    public Injector_SO Injector_SO => (Injector_SO)GetItem();
+    public Injector_SO Injector_SO => (Injector_SO)Item;
 
     private new void Start()
     {

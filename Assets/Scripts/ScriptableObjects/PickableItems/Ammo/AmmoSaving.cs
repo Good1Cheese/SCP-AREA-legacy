@@ -1,4 +1,4 @@
-public class AmmoSaving : DataSaving
+public class AmmoSaving : ItemSaving
 {
     private AmmoHandler _ammoHandler;
     public bool isAmmoAdded;
@@ -11,13 +11,15 @@ public class AmmoSaving : DataSaving
 
     public override void Save()
     {
-        isAmmoAdded = _ammoHandler.IsAmmoAdded;
+        base.Save();
+
         ammoCount = _ammoHandler.AmmoCount;
     }
 
     public override void LoadData()
     {
-        _ammoHandler.IsAmmoAdded = isAmmoAdded;
+        base.LoadData();
+
         _ammoHandler.AmmoCount = ammoCount;
     }
 }

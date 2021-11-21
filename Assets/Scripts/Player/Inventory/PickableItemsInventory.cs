@@ -43,7 +43,7 @@ public class PickableItemsInventory : MonoBehaviour
             for (int i = index + 1; Inventory[i] != null; i++)
             {
                 Inventory[i - 1] = Inventory[i];
-                Inventory[i].SetIsInventoty(false);
+                Inventory[i].SetIsInventotyState(false);
                 Inventory[i] = null;
             }
         }

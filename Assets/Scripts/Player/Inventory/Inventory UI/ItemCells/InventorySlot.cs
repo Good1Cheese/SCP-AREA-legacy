@@ -8,10 +8,10 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public ItemHandler ItemHandler { get; set; }
 
-    public void SetItem(ItemHandler item)
+    public void SetItem(ItemHandler itemHandler)
     {
-        ItemHandler = item;
-        _image.sprite = item.GetItem().sprite;
+        ItemHandler = itemHandler;
+        _image.sprite = itemHandler.Item.sprite;
         OnItemSet();
     }
 
