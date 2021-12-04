@@ -34,7 +34,7 @@ public class SilencerHandler : WearableItemHandler
     private void SpawnSilencer(GameObject silencer, GameObject spawnObject)
     {
         silencer.transform.SetParent(spawnObject.transform, false);
-        silencer.transform.localPosition = _wearableIte_SO.playerGameObjectspawnOffset;
+        silencer.transform.localPosition = _wearableIte_SO.playerGameObjectSpawnOffset;
         silencer.SetActive(true);
     }
 }

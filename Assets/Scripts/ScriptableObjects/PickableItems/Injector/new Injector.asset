@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: 
-  playerGameObjectspawnOffset: {x: 0.435, y: -0.129, z: 0.573}
+  playerGameObjectSpawnOffset: {x: 0.363, y: -0.173, z: 0.431}
   playerGameObjectPrefab: {fileID: 7399709133284153405, guid: 3d9201c8ffbc83f45a335f3824e6868c, type: 3}
   shotDelay: 1
   reloadDelay: 1

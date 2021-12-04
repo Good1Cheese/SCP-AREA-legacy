@@ -15,6 +15,11 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
 
     private void Start()
     {
+        if (_ammoUICountUpdater == null)
+        {
+            Debug.LogError("_ammoUICountUpdater field ist't serialized");
+        }
+
         _textMeshProGameObject = _ammoUICountUpdater.TextMeshProUGUI.gameObject;
         DeactivateWeaponUI();
     }

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: 
-  playerGameObjectspawnOffset: {x: 0.435, y: -0.129, z: 0.573}
+  playerGameObjectSpawnOffset: {x: 0.363, y: -0.173, z: 0.431}
   playerGameObjectPrefab: {fileID: 277353614761163988, guid: e5753bef0f12e9a41a61c24e0408d09c, type: 3}
-  m_scienceKeyCardLevel: 0
+  _scienceKeyCardLevel: 0

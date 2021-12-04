@@ -46,7 +46,7 @@ public class WearableItemActivator : MonoBehaviour
         WearableIte_SO ite_SO = (WearableIte_SO)_wearableItemHandler.Item;
 
         _wearableItemHandler.GameObjectForPlayer.transform.SetParent(_itemParent);
-        _wearableItemHandler.GameObjectForPlayer.transform.localPosition = ite_SO.playerGameObjectspawnOffset;
+        _wearableItemHandler.GameObjectForPlayer.transform.localPosition = ite_SO.playerGameObjectSpawnOffset;
         _wearableItemHandler.GameObjectForPlayer.transform.localRotation = Quaternion.identity;
 
         _wearableItemHandler.GameObjectForPlayer.SetActive(false);
