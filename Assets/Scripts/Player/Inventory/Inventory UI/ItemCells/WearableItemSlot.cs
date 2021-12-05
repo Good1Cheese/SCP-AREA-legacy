@@ -12,26 +12,10 @@ public class WearableItemSlot : InventorySlot
     public Action OnItemRemoved { get; set; }
     public bool IsItemActionGoing { get; set; }
 
-    private IEnumerator StartItemActionCoroutine(WaitForSeconds waitForSeconds)
-    {
-        IsItemActionGoing = true;
-
-        yield return waitForSeconds;
-
-        IsItemActionGoing = false;
-    }
-
-    public void StartItemAction(WaitForSeconds timeout)
-    {
-        WearableItemActivator.StartCoroutine(StartItemActionCoroutine(timeout));
-    }
-
     public new void SetItem(ItemHandler item)
     {
         if (ItemHandler != null)
         {
-            if (IsItemActionGoing) { return; }
-
             _wearableItemsInteraction.DropItem(this);
         }
 
@@ -60,5 +44,19 @@ public class WearableItemSlot : InventorySlot
     public override void OnRightClick()
     {
         _wearableItemsInteraction.DropItem(this);
+    }
+
+    public void StartItemAction(WaitForSeconds timeout)
+    {
+        WearableItemActivator.StartCoroutine(StartItemActionCoroutine(timeout));
+    }
+
+    private IEnumerator StartItemActionCoroutine(WaitForSeconds timeout)
+    {
+        IsItemActionGoing = true;
+
+        yield return timeout;
+
+        IsItemActionGoing = false;
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5019126763319737872}
   - component: {fileID: 1594463683838979028}
   - component: {fileID: 4373359106225255387}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HK-USP Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}

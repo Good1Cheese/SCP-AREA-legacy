@@ -30,10 +30,10 @@ public class WeaponFire : WeaponAction
             return;
         }
 
-        Shoot();
+        Fire();
     }
 
-    private void Shoot()
+    private void Fire()
     {
         _wearableItemsInventory.WeaponSlot.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout);
         _weaponHandler.ClipAmmo--;
@@ -41,7 +41,7 @@ public class WeaponFire : WeaponAction
         OnPlayerFired?.Invoke();
 
         Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
-        _weaponShot.AttendShot(raycastHit);
+        _weaponShot.Shoot(raycastHit);
 
         if (_weaponAim.IsAiming)
         {

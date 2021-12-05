@@ -6,8 +6,23 @@ public abstract class MoveSound : SoundOnAction
     [SerializeField] private AudioClip _clip;
 
     [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
+    [Inject] readonly private PlayerHealth _playerHealth;
 
     protected MoveController _moveController;
+
+    private void Start()
+    {
+        _playerHealth.OnPlayerDies += StopSoundOnPlayerDies;
+    }
+
+    private void StopSoundOnPlayerDies()
+    {
+        UnscribeToAction();
+
+        if (!_audioSource.isPlaying) { return; }
+
+        _audioSource.Stop();
+    }
 
     protected override void PlaySound()
     {
@@ -28,5 +43,12 @@ public abstract class MoveSound : SoundOnAction
         _moveController.OnPlayerUsingMove -= PlaySound;
         _moveController.OnPlayerStoppedUseOfMove -= StopSound;
         _pauseMenu.OnPauseMenuButtonPressed -= StopSound;
+    }
+
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
+
+        _playerHealth.OnPlayerDies -= StopSoundOnPlayerDies;
     }
 }

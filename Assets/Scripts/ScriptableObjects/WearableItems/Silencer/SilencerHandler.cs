@@ -14,7 +14,7 @@ public class SilencerHandler : WearableItemHandler
 
     public override void Equip()
     {
-        EquipOnWeapon(_wearableItemsInventory.WeaponSlot.ItemHandler as WeaponHandler);
+        EquipOnWeapon((WeaponHandler)_wearableItemsInventory.WeaponSlot.ItemHandler);
     }
 
     public void EquipOnWeapon(WeaponHandler weaponForEquiping)
@@ -29,6 +29,7 @@ public class SilencerHandler : WearableItemHandler
         SpawnSilencer(_silencerForWorldWeapon, weaponForEquiping.GameObject);
 
         weaponForEquiping.SilencerHandler = this;
+        weaponForEquiping.CurrentShotSound = weaponForEquiping.Weapon_SO.shotSoundWithSilencer;
     }
 
     private void SpawnSilencer(GameObject silencer, GameObject spawnObject)

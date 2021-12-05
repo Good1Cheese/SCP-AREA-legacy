@@ -7,14 +7,13 @@ using Zenject;
 [RequireComponent(typeof(InteractionMarkEnablerDisabler))]
 public class InteractionProvider : MonoBehaviour
 {
-    [SerializeField] private LayerMask _itemsLayerMask;
     [SerializeField] private float _maxInteractionDistance;
-    [SerializeField] private float _radiousOfSphereInteraction;
+    [SerializeField] private float _interactionSphereRadious;
     [SerializeField] private float _delayAfterInteraction;
 
     [Inject] private readonly RayProvider _rayProvider;
     [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
-    [Inject] private readonly GameObject _playerGameObject;
+
     private IInteractable _interactable;
     private bool _isDelayGoing;
     private WaitForSeconds _timeoutAfterInteraction;
@@ -37,12 +36,7 @@ public class InteractionProvider : MonoBehaviour
     {
         if (_isDelayGoing) { return; }
 
-        RaycastHit[] raycastHits = Physics.SphereCastAll(_rayProvider.ProvideRay(),
-                                                         _radiousOfSphereInteraction,
-                                                         _maxInteractionDistance,
-                                                         _itemsLayerMask);
-
-        Collider raycastHit = GetInteractableObject(raycastHits);
+        Collider raycastHit = GetRayCastHit();
 
         if (raycastHit == null)
         {
@@ -50,22 +44,30 @@ public class InteractionProvider : MonoBehaviour
             return;
         }
 
+        print(raycastHit.name);
         OnPlayerFindInteractable?.Invoke(raycastHit);
 
+        Interact();
+    }
+
+    private Collider GetRayCastHit()
+    {
+        bool raycasted = Physics.SphereCast(_rayProvider.ProvideRay(),
+                                            _interactionSphereRadious,
+                                            out RaycastHit raycastHit,
+                                            _maxInteractionDistance);
+
+        Collider collider = raycastHit.collider;
+
+        return raycasted && collider.TryGetComponent(out _interactable) ? collider : null;
+    }
+
+    private void Interact()
+    {
         if (!Input.GetButtonDown("Interaction")) { return; }
 
         StartCoroutine(StartInteractionDelay());
         _interactable.Interact();
-    }
-
-    private Collider GetInteractableObject(RaycastHit[] raycastHits)
-    {
-        if (raycastHits == null)
-        {
-            return null;
-        }
-
-        return raycastHits.LastOrDefault(hit => hit.collider.gameObject.TryGetComponent(out _interactable)).collider;
     }
 
     private IEnumerator StartInteractionDelay()
@@ -82,5 +84,4 @@ public class InteractionProvider : MonoBehaviour
     {
         _inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;
     }
-
 }

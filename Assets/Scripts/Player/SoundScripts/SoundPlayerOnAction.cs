@@ -20,7 +20,7 @@ public abstract class SoundOnAction : MonoBehaviour
         _audioSource.Stop();
     }
 
-    private void OnDestroy()
+    protected void OnDestroy()
     {
         UnscribeToAction();
     }

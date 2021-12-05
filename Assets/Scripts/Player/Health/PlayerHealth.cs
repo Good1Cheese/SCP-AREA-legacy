@@ -5,21 +5,18 @@ using Zenject;
 [RequireComponent(typeof(CharacterBleeding), typeof(PlayerDamageSound))]
 public class PlayerHealth : MonoBehaviour
 {
-
     [SerializeField] private int _maxHealth;
     [SerializeField] private int _health;
 
     [Inject] private readonly CharacterBleeding _characterBleeding;
 
     public int Amount { get => _health; set => _health = value; }
-
     public int MaxAmount => _maxHealth;
 
     public Action OnPlayerGetsDamage { get; set; }
     public Action OnPlayerHeals { get; set; }
     public Action OnPlayerGetsNonBleedDamage { get; set; }
     public Action OnPlayerDies { get; set; }
-    public Action OnPlayerGotAdrenalinHealth { get; set; }
 
     public void Damage(int damage)
     {
@@ -39,16 +36,6 @@ public class PlayerHealth : MonoBehaviour
         OnPlayerGetsDamage?.Invoke();
     }
 
-    public int GetHealthPercent()
-    {
-        return _health / 25;
-    }
-
-    public void AddAdrenalineHealth(int health)
-    {
-        OnPlayerGotAdrenalinHealth.Invoke();
-    }
-
     public void Heal(int healthToHeal)
     {
         if (_characterBleeding.IsBleeding) { return; }
@@ -62,7 +49,5 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         OnPlayerDies?.Invoke();
-        //Destroy(gameObject);
     }
-
 }

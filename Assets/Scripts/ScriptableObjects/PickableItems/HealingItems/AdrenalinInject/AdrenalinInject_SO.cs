@@ -4,5 +4,4 @@
 public class AdrenalinInject_SO : InjectableIte_SO
 {
     public float adrenalineTime;
-    public int adrenalineHealthAmount;
 }

@@ -20,8 +20,6 @@ public class WeaponAim : WeaponAction
 
     private void Update()
     {
-        if (_weaponReload.IsPlayerReloading) { return; }
-
         if (Input.GetKeyDown(AI_KEY))
         {
             SetAimState(true);
@@ -37,6 +35,8 @@ public class WeaponAim : WeaponAction
 
     public void SetAimState(bool isAiming)
     {
+        if (_weaponReload.IsPlayerReloading) { return; }
+
         IsAiming = isAiming;
         _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);
 

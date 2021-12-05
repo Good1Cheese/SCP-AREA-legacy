@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 public class SlowWalkEffect : MonoBehaviour
@@ -13,43 +14,36 @@ public class SlowWalkEffect : MonoBehaviour
 
     private void Start()
     {
-        _slowWalkController.OnPlayerStartedUseOfMove += SetSlowWalkTimeToZero;
-        _slowWalkController.OnPlayerStoppedUseOfMove += SetSlowWalkTimeToMaxValue;
         _slowWalkController.OnPlayerUsingMove += ActivateEffect;
         _slowWalkController.OnPlayerNotUsingMove += DeactivateEffect;
     }
 
-    private void SetSlowWalkTimeToZero()
-    {
-        SlowWalkTime = 0;
-    }
-
-    private void SetSlowWalkTimeToMaxValue()
-    {
-        SlowWalkTime = _yChangeTime;
-    }
-
     private void ActivateEffect()
     {
-        SlowWalkTime += Time.deltaTime;
-        SetHeight();
+        SetHeight(() =>
+        {
+            return SlowWalkTime >= _yChangeTime;
+        }, 1);
     }
 
     private void DeactivateEffect()
     {
-        SlowWalkTime -= Time.deltaTime;
-        SetHeight();
+        SetHeight(() =>
+        {
+            return SlowWalkTime <= 0;
+        }, -1);
     }
 
-    public void SetHeight()
+    public void SetHeight(Func<bool> condition, sbyte deltaTimeMultypliyer)
     {
+        if (condition.Invoke()) { return; }
+
+        SlowWalkTime += Time.deltaTime * deltaTimeMultypliyer;
         _characterController.height = _yForSlowWalk.Evaluate(SlowWalkTime);
     }
 
     private void OnDestroy()
     {
-        _slowWalkController.OnPlayerStartedUseOfMove -= SetSlowWalkTimeToZero;
-        _slowWalkController.OnPlayerStoppedUseOfMove -= SetSlowWalkTimeToMaxValue;
         _slowWalkController.OnPlayerUsingMove -= ActivateEffect;
         _slowWalkController.OnPlayerNotUsingMove -= DeactivateEffect;
     }

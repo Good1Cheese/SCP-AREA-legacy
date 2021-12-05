@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6458915922648080912}
   - component: {fileID: 5127248310440600291}
   - component: {fileID: 8072456192214955555}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: KeyCard Level3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4814494893297602283}
   - component: {fileID: 4814494893297602276}
   - component: {fileID: 4814494893297602277}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

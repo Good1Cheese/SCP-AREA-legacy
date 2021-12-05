@@ -14,6 +14,6 @@ public class SlowWalkEffectSaving : DataSaving
     public override void LoadData()
     {
         _slowWalkEffect.SlowWalkTime = slowWalkTime;
-        _slowWalkEffect.SetHeight();
+        _slowWalkEffect.SetHeight(() => false, 1);
     }
 }

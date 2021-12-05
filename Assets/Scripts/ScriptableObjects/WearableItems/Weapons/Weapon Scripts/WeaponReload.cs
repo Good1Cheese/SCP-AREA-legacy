@@ -8,7 +8,6 @@ using Zenject;
 public class WeaponReload : WeaponAction
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-    [Inject] private readonly WeaponAim _weaponAim;
 
     public bool IsPlayerReloading { get; set; }
     public Action OnPlayerReloaded { get; set; }
@@ -20,7 +19,6 @@ public class WeaponReload : WeaponAction
             || _wearableItemsInventory.WeaponSlot.IsItemActionGoing) { return; }
 
         IsPlayerReloading = true;
-        _weaponAim.SetAimState(false);
         StartCoroutine(Reload());
     }
 
@@ -33,13 +31,14 @@ public class WeaponReload : WeaponAction
 
         if (ammoHandler == null) { yield break; }
 
-        _weaponHandler.ClipAmmo = ammoToReload;
+        _weaponHandler.ClipAmmo = 0;
         ammoHandler.AmmoCount -= ammoToReload;
 
         OnPlayerReloaded?.Invoke();
 
         yield return _weaponHandler.Weapon_SO.reloadTimeout;
 
+        _weaponHandler.ClipAmmo = ammoToReload;
         IsPlayerReloading = false;
     }
 

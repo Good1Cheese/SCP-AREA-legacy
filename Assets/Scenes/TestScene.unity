@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.9178376, g: 2.0864367, b: 2.903199, a: 1}
+  m_IndirectSpecularColor: {r: 1.9178349, g: 2.0864353, b: 2.9031823, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -181,6 +181,14 @@ PrefabInstance:
     - target: {fileID: 4490448435668429674, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4490448437021268865, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
+      propertyPath: _interactionSphereRadious
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4490448437021268865, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
+      propertyPath: _interactableLayerMask.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
@@ -1429,10 +1437,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 850343919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab536352bf755f449a8a1ab4fe4431d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6accae793a7ef6d48869fce762b2495b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scienceKeyCardLevelToOpen: 0
+  _securityKeyCardLevelToOpen: 2
 --- !u!65 &850343922
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1877,10 +1885,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1454403176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab536352bf755f449a8a1ab4fe4431d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6accae793a7ef6d48869fce762b2495b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scienceKeyCardLevelToOpen: 0
+  _securityKeyCardLevelToOpen: 1
 --- !u!65 &1454403179
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2118,10 +2126,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711881910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6accae793a7ef6d48869fce762b2495b, type: 3}
+  m_Script: {fileID: 11500000, guid: ab536352bf755f449a8a1ab4fe4431d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _securityKeyCardLevelToOpen: 0
+  _scienceKeyCardLevelToOpen: 1
 --- !u!65 &1711881913
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2665,7 +2673,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1327532581525016960, guid: edf9cbef958f000419b882b135730caf, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1327532581525016960, guid: edf9cbef958f000419b882b135730caf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6169,10 +6177,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6291869656295567289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6accae793a7ef6d48869fce762b2495b, type: 3}
+  m_Script: {fileID: 11500000, guid: ab536352bf755f449a8a1ab4fe4431d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _securityKeyCardLevelToOpen: 0
+  _scienceKeyCardLevelToOpen: 0
 --- !u!114 &6291869656329151868
 MonoBehaviour:
   m_ObjectHideFlags: 0
