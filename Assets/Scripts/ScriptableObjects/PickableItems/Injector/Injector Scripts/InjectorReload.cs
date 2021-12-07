@@ -29,7 +29,7 @@ public class InjectorReload : InjectorScriptBase
 
     protected override void DoScriptAction()
     {
-        WearableItemsInventory.InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.reloadTimeout);
+        InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.reloadTimeout);
 
         if (_injectTypeSwitcher.Type == typeof(IHealthInjectable))
         {

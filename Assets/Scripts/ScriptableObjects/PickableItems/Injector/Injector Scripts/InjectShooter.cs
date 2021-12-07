@@ -10,7 +10,7 @@
 
     protected override void DoScriptAction()
     {
-        WearableItemsInventory.InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.injectChangeTimeout);
+        InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.injectChangeTimeout);
 
         if (_injectorReload.InjectorHandler.ClipInject == null) { return; }
 

@@ -1,7 +1,11 @@
+using Zenject;
+
 public class UtilityHandler : WearableItemHandler
 {
+    [Inject(Id = "UtilitySlot")] private readonly WearableSlot _utilitySlot;
+
     public override void Equip()
     {
-        _wearableItemsInventory.UtilitySlot.SetItem(this);
+        _utilitySlot.SetItem(this);
     }
 }

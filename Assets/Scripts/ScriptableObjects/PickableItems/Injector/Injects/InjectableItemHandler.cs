@@ -12,7 +12,7 @@ public abstract class InjectableItemHandler : PickableItemHandler, IInjectable
         {
             if (_numOfUses - 1 <= 0)
             {
-                _pickableItemsInventory.RemoveItem(this);
+                _pickableItemsInventory.Remove(this);
                 _numOfUses = 0;
 
                 return;

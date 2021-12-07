@@ -5,7 +5,7 @@ using Zenject;
 [RequireComponent(typeof(AudioSource))]
 public abstract class WeaponSoundPlayer : SoundOnAction
 {
-    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] protected readonly WeaponSlot _weaponSlot;
 
     protected WeaponHandler _weaponHandler;
 
@@ -13,7 +13,7 @@ public abstract class WeaponSoundPlayer : SoundOnAction
 
     private void Awake()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += GetWeaponHandler;
+        _weaponSlot.OnWeaponChanged += GetWeaponHandler;
         SubscribeToAction();
     }
 
@@ -28,10 +28,10 @@ public abstract class WeaponSoundPlayer : SoundOnAction
         _audioSource.Play();
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= GetWeaponHandler;
-        UnscribeToAction();
+        base.OnDestroy();
+        _weaponSlot.OnWeaponChanged -= GetWeaponHandler;
     }
 
 }

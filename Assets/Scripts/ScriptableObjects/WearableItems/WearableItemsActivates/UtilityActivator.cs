@@ -1,5 +1,9 @@
+using Zenject;
+
 public class UtilityActivator : WearableItemActivator
 {
-    protected override WearableItemSlot WearableItemSlot => _wearableItemsInventory.UtilitySlot;
+    [Inject(Id = "KeyCardSlot")] private readonly WearableSlot _utilitySlot;
+
+    protected override WearableSlot WearableItemSlot => _utilitySlot;
 
 }

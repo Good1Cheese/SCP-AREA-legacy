@@ -4,13 +4,13 @@ using Zenject;
 [RequireComponent(typeof(Animator))]
 public class WeaponRecoilAnimation : MonoBehaviour
 {
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponSlot _weaponSlot;
     [Inject] private readonly Animator _weaponAnimator;
     [Inject] private readonly WeaponAim _weaponAim;
 
     private void Awake()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponAnimator;
+        _weaponSlot.OnWeaponChanged += SetWeaponAnimator;
         _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
         _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
     }
@@ -32,7 +32,7 @@ public class WeaponRecoilAnimation : MonoBehaviour
 
     private void OnDestroy()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponAnimator;
+        _weaponSlot.OnWeaponChanged -= SetWeaponAnimator;
         _weaponAim.OnPlayerFiredWithAim -= ActivateRecoilInAim;
         _weaponAim.OnPlayerFiredWithoutAim -= ActivateRecoilWithoutAim;
     }

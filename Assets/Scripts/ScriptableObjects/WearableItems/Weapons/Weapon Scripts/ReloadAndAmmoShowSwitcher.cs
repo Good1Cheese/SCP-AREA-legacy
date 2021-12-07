@@ -9,7 +9,7 @@ public class ReloadAndAmmoShowSwitcher : WeaponAction
     [Inject] private readonly WeaponReload _weaponReload;
     [Inject] private readonly AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
 
-    private bool _Reloaded;
+    private bool _isSwitched;
     private float _pressTime;
     private sbyte _deltaTimeMultipliyer = 1;
 
@@ -17,7 +17,7 @@ public class ReloadAndAmmoShowSwitcher : WeaponAction
     {
         if (Input.GetKeyDown(RELOAD_KEY))
         {
-            _Reloaded = true;
+            _isSwitched = true;
         }
 
         if (!Input.GetKeyUp(RELOAD_KEY)) { return; }
@@ -25,7 +25,7 @@ public class ReloadAndAmmoShowSwitcher : WeaponAction
         _pressTime = 0;
         _deltaTimeMultipliyer = 1;
 
-        if (_Reloaded)
+        if (_isSwitched)
         {
             _weaponReload.ActivateReload();
             return;
@@ -41,12 +41,13 @@ public class ReloadAndAmmoShowSwitcher : WeaponAction
             _pressTime += Time.deltaTime * _deltaTimeMultipliyer;
         }
 
-        if (_pressTime >= _pressTimeToActivate)
-        {
-            _deltaTimeMultipliyer = 0;
-            _pressTime = 0;
-            _Reloaded = false;
-            _ammoUIEnablerDisabler.ActiveOrDisableUI(true);
-        }
+        if (_pressTime < _pressTimeToActivate || _weaponReload.IsReloading) { return; }
+
+        _deltaTimeMultipliyer = 0;
+        _pressTime = 0;
+
+        _isSwitched = false;
+        _weaponHandler.UpdateAmmo();
+        _ammoUIEnablerDisabler.ActiveOrDisableUI(true);
     }
 }

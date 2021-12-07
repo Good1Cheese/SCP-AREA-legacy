@@ -4,7 +4,7 @@ using Zenject;
 public class WeaponRecoilEffect : MonoBehaviour
 {
     [Inject] private readonly WeaponAim _weaponAim;
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponSlot _weaponSlot;
 
     private Weapon_SO _weapon_SO;
     private Vector3 _currentRotation;
@@ -15,7 +15,7 @@ public class WeaponRecoilEffect : MonoBehaviour
     {
         _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
         _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponSlot.OnWeaponChanged += SetWeapon;
     }
 
     private void Update()
@@ -56,6 +56,6 @@ public class WeaponRecoilEffect : MonoBehaviour
     {
         _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
         _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

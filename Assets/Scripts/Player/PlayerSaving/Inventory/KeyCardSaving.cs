@@ -2,7 +2,7 @@ using Zenject;
 
 public class KeyCardSaving : WearableItemSaving
 {
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject(Id = "KeyCardSlot")] private readonly WearableSlot _keyCardSlot;
 
-    protected override WearableItemSlot SlotToSave => _wearableItemsInventory.KeyCardSlot;
+    protected override WearableSlot SlotToSave => _keyCardSlot;
 }

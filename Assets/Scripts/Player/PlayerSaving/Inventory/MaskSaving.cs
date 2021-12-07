@@ -2,7 +2,7 @@
 
 public class MaskSaving : WearableItemSaving
 {
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject(Id = "MaskSlot")] private readonly WeaponSlot _maskSlot;
 
-    protected override WearableItemSlot SlotToSave => _wearableItemsInventory.MaskSlot;
+    protected override WearableSlot SlotToSave => _maskSlot;
 }

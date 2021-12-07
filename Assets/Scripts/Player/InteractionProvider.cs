@@ -44,7 +44,6 @@ public class InteractionProvider : MonoBehaviour
             return;
         }
 
-        print(raycastHit.name);
         OnPlayerFindInteractable?.Invoke(raycastHit);
 
         Interact();

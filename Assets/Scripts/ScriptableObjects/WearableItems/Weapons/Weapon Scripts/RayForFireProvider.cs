@@ -6,7 +6,7 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
     [SerializeField] private float _multyplierOfBulletSpawnPointRadious;
     [SerializeField] private Transform _bulletSpawnPoint;
 
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponSlot _weaponSlot;
     [Inject] private readonly WeaponAim _weaponAim;
     [Inject(Id = "Player")] private readonly Transform _playerTransform;
     private Ray ray;
@@ -18,7 +18,7 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
 
     private void Start()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
+        _weaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
     }
 
     public Ray ProvideRay()
@@ -58,7 +58,7 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
 
     private void OnDestroy()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
+        _weaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
     }
 
 }

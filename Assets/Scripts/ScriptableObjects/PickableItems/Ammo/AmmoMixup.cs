@@ -13,13 +13,14 @@ public class AmmoMixup : MonoBehaviour
         AmmoHandler secondAmmoHandler = (AmmoHandler)_pickableItemsInventory.Inventory.FirstOrDefault(item =>
         {
             AmmoHandler ammo = item as AmmoHandler;
-            return ammo != null
-                   && ammo.Ammo_SO.ammoType == ammoHandler.Ammo_SO.ammoType;
+            bool condition = ammo != null && ammo.Ammo_SO.ammoType == ammoHandler.Ammo_SO.ammoType;
+
+            return condition;
         });
 
-        if (secondAmmoHandler == null || secondAmmoHandler.AmmoCount + ammoHandler.AmmoCount > MAX_SLOT_AMMO) { return; }
+        if (secondAmmoHandler == null || secondAmmoHandler.Ammo + ammoHandler.Ammo > MAX_SLOT_AMMO) { return; }
 
-        secondAmmoHandler.AmmoCount += ammoHandler.AmmoCount;
-        ammoHandler.AmmoCount = 0;
+        secondAmmoHandler.Ammo += ammoHandler.Ammo;
+        ammoHandler.Ammo = 0;
     }
 }

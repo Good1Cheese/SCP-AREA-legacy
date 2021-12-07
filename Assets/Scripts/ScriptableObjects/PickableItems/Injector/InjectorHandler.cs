@@ -5,6 +5,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
+    [Inject] private readonly InjectorSlot _injectorSlot;
 
     public IInjectable ClipInject { get; set; }
     public Injector_SO Injector_SO => (Injector_SO)Item;
@@ -19,7 +20,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
         foreach (InjectorScriptBase i in GameObjectForPlayer.GetComponents<InjectorScriptBase>())
         {
             i.InventoryEnablerDisabler = _inventoryEnablerDisabler;
-            i.WearableItemsInventory = _wearableItemsInventory;
+            i.InjectorSlot = _injectorSlot;
             i.InjectorHandler = this;
         }
     }
@@ -37,17 +38,17 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
     public override void Equip()
     {
-        _wearableItemsInventory.InjectorSlot.SetItem(this);
-        _pickableItemsInventory.AddItem(this);
+        _injectorSlot.SetItem(this);
+        _pickableItemsInventory.Add(this);
     }
 
     public void Clicked(int slotIndex)
     {
-        _wearableItemsInventory.InjectorSlot.OnSlotUsed?.Invoke();
+        _injectorSlot.OnSlotUsed?.Invoke();
     }
 
     public override void OnItemDropped()
     {
-        _wearableItemsInventory.InjectorSlot.ClearWearableSlot();
+        _injectorSlot.ClearWearableSlot();
     }
 }

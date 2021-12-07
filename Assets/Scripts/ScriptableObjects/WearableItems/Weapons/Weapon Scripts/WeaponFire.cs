@@ -22,7 +22,7 @@ public class WeaponFire : WeaponAction
 
     private void Update()
     {
-        if (!Input.GetKeyDown(FIRE_KEY) || _wearableItemsInventory.WeaponSlot.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(FIRE_KEY) || _weaponSlot.IsItemActionGoing) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {
@@ -35,7 +35,7 @@ public class WeaponFire : WeaponAction
 
     private void Fire()
     {
-        _wearableItemsInventory.WeaponSlot.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout);
+        _weaponSlot.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout);
         _weaponHandler.ClipAmmo--;
 
         OnPlayerFired?.Invoke();

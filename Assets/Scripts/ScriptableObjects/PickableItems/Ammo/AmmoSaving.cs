@@ -13,13 +13,13 @@ public class AmmoSaving : ItemSaving
     {
         base.Save();
 
-        ammoCount = _ammoHandler.AmmoCount;
+        ammoCount = _ammoHandler.Ammo;
     }
 
     public override void LoadData()
     {
         base.LoadData();
 
-        _ammoHandler.AmmoCount = ammoCount;
+        _ammoHandler.Ammo = ammoCount;
     }
 }

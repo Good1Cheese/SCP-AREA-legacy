@@ -16,7 +16,7 @@ public class InjectTypeSwitch : InjectorScriptBase
 
     protected override void DoScriptAction()
     {
-        WearableItemsInventory.InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.injectChangeTimeout);
+        InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.injectChangeTimeout);
 
         if (Type == typeof(IHealthInjectable))
         {

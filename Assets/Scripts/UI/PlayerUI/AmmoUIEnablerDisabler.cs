@@ -4,20 +4,22 @@ using Zenject;
 public class AmmoUIEnablerDisabler : MonoBehaviour
 {
     [SerializeField] AmmoUICountUpdater _ammoUICountUpdater;
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+
+    [Inject] private readonly WeaponSlot _weaponSlot;
 
     private GameObject _textMeshProGameObject;
 
     private void Awake()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponDropped += DeactivateWeaponUI;
+        _weaponSlot.OnWeaponDropped += DeactivateWeaponUI;
+        _weaponSlot.OnNewAcitionStarted += DeactivateWeaponUI;
     }
 
     private void Start()
     {
         if (_ammoUICountUpdater == null)
         {
-            Debug.LogError("_ammoUICountUpdater field ist't serialized");
+            Debug.LogError("AmmoUICountUpdater field ist't serialized");
         }
 
         _textMeshProGameObject = _ammoUICountUpdater.TextMeshProUGUI.gameObject;
@@ -37,6 +39,7 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
 
     private void OnDestroy()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponDropped -= DeactivateWeaponUI;
+        _weaponSlot.OnWeaponDropped -= DeactivateWeaponUI;
+        _weaponSlot.OnNewAcitionStarted -= DeactivateWeaponUI;
     }
 }

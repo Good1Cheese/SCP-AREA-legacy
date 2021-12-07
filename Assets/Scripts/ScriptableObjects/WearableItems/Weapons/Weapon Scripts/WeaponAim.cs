@@ -35,7 +35,7 @@ public class WeaponAim : WeaponAction
 
     public void SetAimState(bool isAiming)
     {
-        if (_weaponReload.IsPlayerReloading) { return; }
+        if (_weaponReload.IsReloading) { return; }
 
         IsAiming = isAiming;
         _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);

@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(SceneTransition))]
-public class MainInstaller : MonoInstaller
+public class StartSceneInstaller : MonoInstaller
 {
     private SceneTransition _sceneTransition;
     private GameSaving _gameSaving;

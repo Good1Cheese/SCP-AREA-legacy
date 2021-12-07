@@ -5,14 +5,14 @@ public class WearableItemActivator : MonoBehaviour
 {
     [SerializeField] private KeyCode _key;
 
-    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] protected readonly WeaponSlot _wearableItemsInventory;
     [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
     protected WearableItemHandler _wearableItemHandler;
 
     protected Transform _itemParent;
 
-    protected virtual WearableItemSlot WearableItemSlot { get; }
+    protected virtual WearableSlot WearableItemSlot { get; }
 
     protected void Awake()
     {

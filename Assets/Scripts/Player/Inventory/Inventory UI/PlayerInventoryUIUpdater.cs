@@ -7,7 +7,7 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
     [Inject] private readonly PlayerHealth _playerHealth;
     private GameObject _gameObject;
 
-    public PickableItemSlot[] InventoryCells { get; set; }
+    public PickableSlot[] InventoryCells { get; set; }
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
 
     private void Start()
     {
-        InventoryCells = transform.GetComponentsInChildren<PickableItemSlot>();
+        InventoryCells = transform.GetComponentsInChildren<PickableSlot>();
 
         for (int i = 0; i < InventoryCells.Length; i++)
         {

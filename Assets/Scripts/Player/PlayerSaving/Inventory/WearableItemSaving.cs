@@ -10,7 +10,7 @@ public abstract class WearableItemSaving : DataSaving
 
     public WearableItemHandler ItemHandler { get; set; }
 
-    protected abstract WearableItemSlot SlotToSave { get; }
+    protected abstract WearableSlot SlotToSave { get; }
 
     protected virtual void SaveWearableItem()
     {
@@ -20,7 +20,7 @@ public abstract class WearableItemSaving : DataSaving
 
     public override void Save()
     {
-        WearableItemSlot slot = SlotToSave;
+        WearableSlot slot = SlotToSave;
         ItemHandler = (WearableItemHandler)slot.ItemHandler;
 
         if (ItemHandler == null) { return; }

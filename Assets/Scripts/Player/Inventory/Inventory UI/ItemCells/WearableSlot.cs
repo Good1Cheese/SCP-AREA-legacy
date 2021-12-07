@@ -3,13 +3,14 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class WearableItemSlot : InventorySlot
+public class WearableSlot : InventorySlot
 {
     [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
 
     public Action<WearableItemHandler> OnItemChanged { get; set; }
     public WearableItemActivator WearableItemActivator { get; set; }
     public Action OnItemRemoved { get; set; }
+    public Action OnNewAcitionStarted { get; set; }
     public bool IsItemActionGoing { get; set; }
 
     public new void SetItem(ItemHandler item)
@@ -55,6 +56,7 @@ public class WearableItemSlot : InventorySlot
     {
         IsItemActionGoing = true;
 
+        OnNewAcitionStarted?.Invoke();
         yield return timeout;
 
         IsItemActionGoing = false;

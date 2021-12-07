@@ -7,18 +7,18 @@ public class PickableItemsInteraction : MonoBehaviour
 
     [Inject] public PickableItemsInventory PickableItemsInventory { get; }
 
-    public void UseItem(PickableItemSlot pickableItemSlot)
+    public void UseItem(PickableSlot pickableItemSlot)
     {
         IClickable itemSlot = pickableItemSlot.ItemHandler as IClickable;
         itemSlot.Clicked(pickableItemSlot.SlotIndex);
     }
 
-    public void DropItem(PickableItemSlot pickableItemSlot)
+    public void DropItem(PickableSlot pickableItemSlot)
     {
         pickableItemSlot.ItemHandler.GameObject.transform.position = _playerTransform.position + _playerTransform.forward;
         pickableItemSlot.ItemHandler.GameObject.SetActive(true);
 
         pickableItemSlot.Clear();
-        PickableItemsInventory.RemoveItem(pickableItemSlot.SlotIndex);
+        PickableItemsInventory.Remove(pickableItemSlot.SlotIndex);
     }
 }

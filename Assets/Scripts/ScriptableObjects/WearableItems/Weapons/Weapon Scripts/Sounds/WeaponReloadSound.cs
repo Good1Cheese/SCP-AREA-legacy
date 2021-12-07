@@ -9,11 +9,11 @@ public class WeaponReloadSound : WeaponSoundPlayer
 
     protected override void SubscribeToAction()
     {
-        _weaponReload.OnPlayerReloaded += PlaySound;
+        _weaponReload.OnReloadStarted += PlaySound;
     }
 
     protected override void UnscribeToAction()
     {
-        _weaponReload.OnPlayerReloaded -= PlaySound;
+        _weaponReload.OnReloadStarted -= PlaySound;
     }
 }

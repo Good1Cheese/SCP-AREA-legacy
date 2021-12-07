@@ -7,14 +7,14 @@ public class WeaponShot : MonoBehaviour
     private const float NORMAL_MULTYPLIER = 0.001f;
 
     [Inject] private readonly GameObject _playerGameObject;
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponSlot _weaponSlot;
 
     private IDamagable _damagable;
     private Weapon_SO _weapon;
 
     private void Start()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponSlot.OnWeaponChanged += SetWeapon;
     }
 
     public void Shoot(RaycastHit raycastHit)
@@ -44,6 +44,6 @@ public class WeaponShot : MonoBehaviour
 
     private void OnDestroy()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponSlot.OnWeaponChanged -= SetWeapon;
     }
 }

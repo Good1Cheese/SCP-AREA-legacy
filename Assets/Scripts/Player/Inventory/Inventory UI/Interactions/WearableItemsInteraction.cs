@@ -5,7 +5,7 @@ public class WearableItemsInteraction : MonoBehaviour
 {
     [Inject(Id = "Player")] private readonly Transform _playerTransform;
 
-    public void DropItem(WearableItemSlot wearableItemSlot)
+    public void DropItem(WearableSlot wearableItemSlot)
     {
         if (wearableItemSlot.IsItemActionGoing) { return; }
 

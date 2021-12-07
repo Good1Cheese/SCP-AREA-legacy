@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-public class PickableItemSlot : InventorySlot, IPointerClickHandler
+public class PickableSlot : InventorySlot, IPointerClickHandler
 {
     private const int CLICK_COUNT_TO_USE = 2;
 

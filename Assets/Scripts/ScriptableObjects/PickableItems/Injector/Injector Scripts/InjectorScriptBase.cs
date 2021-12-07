@@ -5,7 +5,7 @@ public abstract class InjectorScriptBase : MonoBehaviour
     [SerializeField] protected KeyCode _key;
 
     public InventoryEnablerDisabler InventoryEnablerDisabler { get; set; }
-    public WearableItemsInventory WearableItemsInventory { get; set; }
+    public InjectorSlot InjectorSlot { get; set; }
     public InjectorHandler InjectorHandler { get; set; }
 
     protected void Start()
@@ -15,7 +15,7 @@ public abstract class InjectorScriptBase : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetKeyDown(_key) || WearableItemsInventory.InjectorSlot.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(_key) || InjectorSlot.IsItemActionGoing) { return; }
 
         DoScriptAction();
     }

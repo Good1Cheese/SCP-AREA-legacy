@@ -81,7 +81,6 @@ GameObject:
   - component: {fileID: 937838528}
   - component: {fileID: 4504709228995589976}
   - component: {fileID: 7071613214550454115}
-  - component: {fileID: 28724567}
   - component: {fileID: 28724566}
   - component: {fileID: 4504709228995589975}
   - component: {fileID: 9213037342631800206}
@@ -120,6 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df87091997339ef478155d725ceb52e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _keyCardSlot: {fileID: 0}
+  _maskSlot: {fileID: 0}
+  _weaponSlot: {fileID: 0}
+  _deviceSlot: {fileID: 0}
+  _injectorSlot: {fileID: 0}
   _propsHandler: {fileID: 0}
 --- !u!114 &4504709229982532498
 MonoBehaviour:
@@ -258,23 +262,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &28724567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504709229982532500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8a62960b52d3ed469178dd0d7047680, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _keyCardSlot: {fileID: 0}
-  _maskSlot: {fileID: 0}
-  _weaponSlot: {fileID: 0}
-  _deviceSlot: {fileID: 0}
-  _injectorSlot: {fileID: 0}
 --- !u!114 &28724566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,5 +313,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86efca3d5b9d8f846b429d97bb673de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pressTimeToActivate: 0.3
   _ammoUICountUpdater: {fileID: 0}

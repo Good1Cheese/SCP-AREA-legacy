@@ -14,7 +14,7 @@ public abstract class PickableItemHandler : ItemHandler, IClickable
 
     public override void Equip()
     {
-        _pickableItemsInventory.AddItem(this);
+        _pickableItemsInventory.Add(this);
     }
 
     public virtual void Clicked(int slotIndex)
@@ -22,6 +22,6 @@ public abstract class PickableItemHandler : ItemHandler, IClickable
         if (!ShouldItemNotBeUsed) { return; }
 
         Use();
-        _pickableItemsInventory.RemoveItem(slotIndex);
+        _pickableItemsInventory.Remove(slotIndex);
     }
 }

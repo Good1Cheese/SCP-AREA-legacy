@@ -4,7 +4,7 @@ using Zenject;
 public class CrosshairEnablerDisabler : MonoBehaviour
 {
     [Inject] private readonly WeaponAim _weaponAim;
-    [Inject] private readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] private readonly WeaponSlot _weaponSlot;
     [Inject] private readonly GameLoader _gameLoader;
     private GameObject _gameObject;
 
@@ -14,7 +14,7 @@ public class CrosshairEnablerDisabler : MonoBehaviour
 
         _weaponAim.OnPlayerAimed += Deactivate;
         _weaponAim.OnPlayerInTakedAim += Activate;
-        _wearableItemsInventory.WeaponSlot.OnWeaponDropped += Activate;
+        _weaponSlot.OnWeaponDropped += Activate;
         _gameLoader.OnGameLoadingUI += _gameObject.SetActive;
     }
 
@@ -32,7 +32,7 @@ public class CrosshairEnablerDisabler : MonoBehaviour
     {
         _weaponAim.OnPlayerAimed -= Deactivate;
         _weaponAim.OnPlayerInTakedAim -= Activate;
-        _wearableItemsInventory.WeaponSlot.OnWeaponDropped -= Activate;
+        _weaponSlot.OnWeaponDropped -= Activate;
         _gameLoader.OnGameLoadingUI -= _gameObject.SetActive;
     }
 }

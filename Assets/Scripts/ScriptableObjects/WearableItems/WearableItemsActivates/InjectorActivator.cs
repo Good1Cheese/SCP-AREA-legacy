@@ -1,11 +1,15 @@
-﻿public class InjectorActivator : WearableItemActivator
+﻿using Zenject;
+
+public class InjectorActivator : WearableItemActivator
 {
-    protected override WearableItemSlot WearableItemSlot => _wearableItemsInventory.InjectorSlot;
+    [Inject] private readonly InjectorSlot _injectorSlot;
+
+    protected override WearableSlot WearableItemSlot => _injectorSlot;
 
     private new void Start()
     {
         base.Start();
-        _wearableItemsInventory.InjectorSlot.OnSlotUsed += ActivateItem;
+        _injectorSlot.OnSlotUsed += ActivateItem;
     }
 
     private void ActivateItem()
@@ -16,6 +20,6 @@
     private new void OnDestroy()
     {
         base.OnDestroy();
-        _wearableItemsInventory.InjectorSlot.OnSlotUsed -= ActivateItem;
+        _injectorSlot.OnSlotUsed -= ActivateItem;
     }
 }

@@ -30,4 +30,3 @@ public class Weapon_SO : WearableIte_SO
     public AudioClip shotSoundWithSilencer;
     public AudioClip reloadSound;
 }
-

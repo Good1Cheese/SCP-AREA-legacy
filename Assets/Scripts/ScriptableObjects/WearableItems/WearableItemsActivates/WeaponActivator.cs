@@ -1,10 +1,14 @@
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(WeaponFire), typeof(WeaponReload))]
 public class WeaponActivator : WearableItemActivator
 {
     [SerializeField] private Transform _weaponParent;
-    protected override WearableItemSlot WearableItemSlot => _wearableItemsInventory.WeaponSlot;
+
+    [Inject] private readonly WeaponSlot _weaponSlot;
+
+    protected override WearableSlot WearableItemSlot => _weaponSlot;
 
     private new void Start()
     {
@@ -15,7 +19,7 @@ public class WeaponActivator : WearableItemActivator
     public override void SetItemActiveState(bool itemActiveState)
     {
         base.SetItemActiveState(itemActiveState);
-        _wearableItemsInventory.WeaponSlot.IsWeaponActived?.Invoke(itemActiveState);
+        _weaponSlot.IsWeaponActived?.Invoke(itemActiveState);
     }
 
 }

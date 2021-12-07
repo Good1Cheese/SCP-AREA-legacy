@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class SilencerHandler : WearableItemHandler
 {
+    [Inject] private readonly WeaponSlot _weaponSlot;
+
     private GameObject _silencerForWorldWeapon;
 
     private new void Awake()
@@ -14,7 +17,7 @@ public class SilencerHandler : WearableItemHandler
 
     public override void Equip()
     {
-        EquipOnWeapon((WeaponHandler)_wearableItemsInventory.WeaponSlot.ItemHandler);
+        EquipOnWeapon((WeaponHandler)_weaponSlot.ItemHandler);
     }
 
     public void EquipOnWeapon(WeaponHandler weaponForEquiping)

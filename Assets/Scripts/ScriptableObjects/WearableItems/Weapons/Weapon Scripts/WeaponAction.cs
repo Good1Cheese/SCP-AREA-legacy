@@ -3,15 +3,15 @@ using Zenject;
 
 public abstract class WeaponAction : MonoBehaviour
 {
-    [Inject] protected readonly WearableItemsInventory _wearableItemsInventory;
+    [Inject] protected readonly WeaponSlot _weaponSlot;
     [Inject] protected readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
     protected WeaponHandler _weaponHandler;
 
     protected void Start()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged += SetWeapon;
-        _wearableItemsInventory.WeaponSlot.IsWeaponActived += SetActiveState;
+        _weaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponSlot.IsWeaponActived += SetActiveState;
         _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += ChangeActiveStateOnInventoryEnabledDisabled;
         enabled = false;
     }
@@ -37,8 +37,8 @@ public abstract class WeaponAction : MonoBehaviour
 
     protected void OnDestroy()
     {
-        _wearableItemsInventory.WeaponSlot.OnWeaponChanged -= SetWeapon;
-        _wearableItemsInventory.WeaponSlot.IsWeaponActived -= SetActiveState;
+        _weaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponSlot.IsWeaponActived -= SetActiveState;
         _inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= ChangeActiveStateOnInventoryEnabledDisabled;
     }
 }
