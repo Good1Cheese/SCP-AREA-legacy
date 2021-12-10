@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
 
-
 [RequireComponent(typeof(AudioSource))]
 public abstract class WeaponSoundPlayer : SoundOnAction
 {
@@ -33,5 +32,4 @@ public abstract class WeaponSoundPlayer : SoundOnAction
         base.OnDestroy();
         _weaponSlot.OnWeaponChanged -= GetWeaponHandler;
     }
-
 }

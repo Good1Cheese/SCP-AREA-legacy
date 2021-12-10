@@ -4,17 +4,17 @@ public class BleedingSaving : DataSaving
 {
     [Inject] private readonly CharacterBleeding _characterBleeding;
 
-    public bool wasBleeding;
+    public bool isBleedingAcitonGoing;
 
     public override void Save()
     {
-        wasBleeding = _characterBleeding.IsBleeding;
+        isBleedingAcitonGoing = _characterBleeding.IsActionGoing;
     }
 
     public override void LoadData()
     {
-        if (!wasBleeding) { return; }
+        if (!isBleedingAcitonGoing) { return; }
 
-        _characterBleeding.Bleed();
+        _characterBleeding.StartAction();
     }
 }

@@ -27,7 +27,7 @@ public abstract class InjectableItemHandler : PickableItemHandler, IInjectable
         _numOfUses = value;
     }
 
-    public void Inject() { }
+    public abstract void Inject();
 
     protected new void Start()
     {

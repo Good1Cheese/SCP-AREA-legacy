@@ -10,6 +10,8 @@ public class CameraBobbing : MonoBehaviour
     [SerializeField] [Range(0, 1)] private float _headBobSmoothing;
 
     [Inject] private readonly Camera _mainCamera;
+    [Inject] private readonly PlayerMovement _playerMovement;
+
     private float _walkingTime;
     private (float, float) _startValuesOfChangableFields;
 
@@ -49,13 +51,7 @@ public class CameraBobbing : MonoBehaviour
         return offset;
     }
 
-    private bool IsPlayerMoving()
-    {
-        float horizontalMove = Input.GetAxis("Horizontal");
-        float verticalMove = Input.GetAxis("Vertical");
-
-        return horizontalMove != 0 || verticalMove != 0;
-    }
+    private bool IsPlayerMoving() => _playerMovement.HorizontalMove != 0 || _playerMovement.VerticalMove != 0;
 
     public void ResetBobbingValues()
     {
@@ -63,4 +59,3 @@ public class CameraBobbing : MonoBehaviour
         _bobVerticalAmplitude = _startValuesOfChangableFields.Item2;
     }
 }
-

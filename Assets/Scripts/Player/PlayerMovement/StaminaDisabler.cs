@@ -3,18 +3,19 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class StaminaUseDisabler : MonoBehaviour
+public class StaminaDisabler : MonoBehaviour
 {
     [Inject] private readonly PlayerStamina _playerStamina;
-    private float _startSpendingValue;
+
+    private int _startBurnSpeedMultipliyer;
     private IEnumerator _disableCoroutine;
 
-    public Action<float> OnUseDisabled { get; set; }
+    public Action<float> OnDisabled { get; set; }
 
     private void Start()
     {
-        //_startSpendingValue = _playerStamina.SpendingSpeed;
         _disableCoroutine = DisableCoroutine(0);
+        _startBurnSpeedMultipliyer = _playerStamina.BurnSpeedMultipliyer;
     }
 
     public void Disable(float effectTime)
@@ -26,17 +27,17 @@ public class StaminaUseDisabler : MonoBehaviour
     public void StopDisabling()
     {
         StopCoroutine(_disableCoroutine);
-        //_playerStamina.SpendingSpeed = _startSpendingValue;
     }
 
     public IEnumerator DisableCoroutine(float effectTime)
     {
-        //OnUseDisabled?.Invoke(effectTime);
-        //_playerStamina.SpendingSpeed = 0;
-        //_playerStamina.StaminaValue = _playerStamina.MaxStaminaAmount;
+        _playerStamina.StaminaTime = _playerStamina.MaxStaminaTime;
+        _playerStamina.BurnSpeedMultipliyer = 0;
+
+        OnDisabled?.Invoke(effectTime);
 
         yield return new WaitForSeconds(effectTime);
 
-        //_playerStamina.SpendingSpeed = _startSpendingValue;
+        _playerStamina.BurnSpeedMultipliyer = _startBurnSpeedMultipliyer;
     }
 }

@@ -38,6 +38,7 @@ public class WearableItemActivator : MonoBehaviour
     public virtual void SetItemActiveState(bool itemActiveState)
     {
         _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
+        WearableItemSlot.OnItemToggled?.Invoke(itemActiveState);
     }
 
     protected void SetItem(WearableItemHandler wearableItemHandler)

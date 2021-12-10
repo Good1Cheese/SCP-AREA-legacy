@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(InjectTypeSwitch), typeof(InjectShooter))]
-public class InjectorReload : InjectorScriptBase
+[RequireComponent(typeof(InjectTypeSwitch), typeof(InjectShoot))]
+public class InjectorReload : InjectorAction
 {
-    private InjectTypeSwitch _injectTypeSwitcher;
+    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
 
-    public PickableItemsInventory PickableItemsInventory { get; set; }
+    private InjectTypeSwitch _injectTypeSwitcher;
 
     public ItemHandler CurrentInject
     {
@@ -13,30 +14,31 @@ public class InjectorReload : InjectorScriptBase
         {
             if (value == null) { return; }
 
-            print(value.name);
+            print(value);
             InjectableItemHandler injectableItemHandler = (InjectableItemHandler)value;
             injectableItemHandler.NumsOfUses--;
 
-            InjectorHandler.ClipInject = injectableItemHandler;
+            _injectorHandler.ClipInject = injectableItemHandler;
         }
     }
 
     private new void Start()
     {
         base.Start();
+
         _injectTypeSwitcher = GetComponent<InjectTypeSwitch>();
     }
 
-    protected override void DoScriptAction()
+    protected override void DoAction()
     {
-        InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.reloadTimeout);
+        _injectorSlot.StartItemAction(_injectorHandler.Injector_SO.reloadTimeout);
 
-        if (_injectTypeSwitcher.Type == typeof(IHealthInjectable))
+        if (_injectTypeSwitcher.CurrentType == typeof(IHealthInjectable))
         {
-            CurrentInject = PickableItemsInventory.GetIem(item => item as IHealthInjectable != null);
+            CurrentInject = _pickableItemsInventory.GetIem(item => item as IHealthInjectable != null);
             return;
         }
 
-        CurrentInject = PickableItemsInventory.GetIem(item => item as IAdrenalinInjectable != null);
+        CurrentInject = _pickableItemsInventory.GetIem(item => item as IAdrenalinInjectable != null);
     }
 }

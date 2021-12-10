@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4556526946664556794}
   - component: {fileID: 5637027000859134480}
   - component: {fileID: 1276332681}
+  - component: {fileID: 3936539214176990913}
   - component: {fileID: 1222460817}
   - component: {fileID: 7487425542671704203}
   - component: {fileID: 719478325580480186}
@@ -142,6 +143,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802aa5d51a032de44afd62e843a470c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3936539214176990913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589210396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac1df8682e4ecc4a81e31180cbffa9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coroutineDelay: 0
 --- !u!114 &1222460817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +269,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -349,6 +363,9 @@ GameObject:
   m_Component:
   - component: {fileID: 708686659}
   - component: {fileID: 708686660}
+  - component: {fileID: 2095133004}
+  - component: {fileID: 2095133002}
+  - component: {fileID: 5309474764193268339}
   m_Layer: 0
   m_Name: InjectorSlot
   m_TagString: Untagged
@@ -383,6 +400,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _key: 99
+--- !u!114 &2095133004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708686658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958df43be92d86d4f8372da1e09394f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: 324
+--- !u!114 &2095133002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708686658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 478675e62a7711449aebf1af598ec0f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: 114
+--- !u!114 &5309474764193268339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708686658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d314416e64830284bbde03e58b0aa1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: 323
 --- !u!1 &761607339
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthAmount: 0
-  isHealGoing: 0
+  isHealActionGoing: 0
 --- !u!114 &1902653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,7 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4dd4eb700752a8448968ca7e914142f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wasBleeding: 0
+  isBleedingAcitonGoing: 0
 --- !u!114 &451768641149164666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,12 +878,12 @@ GameObject:
   - component: {fileID: 4986046973850489624}
   - component: {fileID: 4490448435668429652}
   - component: {fileID: 4490448435668429650}
+  - component: {fileID: 4958641543976159792}
   - component: {fileID: 1051959153436360280}
   - component: {fileID: 1902652}
   - component: {fileID: 752382766322954893}
   - component: {fileID: 6951859390169044810}
   - component: {fileID: -4375166956877939969}
-  - component: {fileID: 4958641543976159792}
   - component: {fileID: 1022559845}
   - component: {fileID: 4490448435668429673}
   - component: {fileID: 488694908}
@@ -921,8 +977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2038e6632c48e24d82c3125baaf7efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coroutineDelay: 1
   _healthBottomBorder: 80
-  _healDelay: 1
   _delayBeforeHeal: 1.5
   _healAmount: 1
 --- !u!114 &4986046973850489624
@@ -937,6 +993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d271a8d37299b4db37345b52dff895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coroutineDelay: 0
   _damage: 1
   _maxDelay: 0.3
   _minDelay: 0.5
@@ -964,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0f9cef3b89caa4794c75b796af97e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _burnSpeedMultipliyer: 2
+  _coroutineDelay: 1.5
   _staminaCurve:
     serializedVersion: 2
     m_Curve:
@@ -989,9 +1046,21 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _delayBeforeRegenerationStart: 1.5
-  _staminaValue: 100
+  _stamina: 100
   _staminaTime: 90
+  _burnSpeedMultipliyer: 2
+--- !u!114 &4958641543976159792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa70496b1347e9e47b9045326c77a8f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1051959153436360280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1120,18 +1189,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _characterController: {fileID: 4490448435668429673}
---- !u!114 &4958641543976159792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490448435668429674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa70496b1347e9e47b9045326c77a8f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1022559845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,7 +1354,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 30cff04402553ce4f94dd2160fcd3eea, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1435,7 +1492,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

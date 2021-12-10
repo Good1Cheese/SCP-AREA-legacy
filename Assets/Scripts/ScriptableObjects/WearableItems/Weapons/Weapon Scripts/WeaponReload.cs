@@ -5,15 +5,15 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponReloadSound))]
+[RequireComponent(typeof(WeaponReloadSound), typeof(WeaponReloadCoroutineUser))]
 public class WeaponReload : WeaponAction
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
+    [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
 
     private IEnumerable<ItemHandler> _items;
     private int _calculatedClipAmmo;
 
-    public bool IsReloading { get; set; }
     public Action OnReloadStarted { get; set; }
 
     public void ActivateReload()
@@ -22,13 +22,12 @@ public class WeaponReload : WeaponAction
             || _weaponHandler.Ammo == 0
             || _weaponSlot.IsItemActionGoing) { return; }
 
-        IsReloading = true;
-        StartCoroutine(Reload());
+        _weaponReloadCoroutineUser.StartAction();
     }
 
-    private IEnumerator Reload()
+    public IEnumerator Reload()
     {
-        _weaponSlot.StartItemAction(_weaponHandler.Weapon_SO.reloadTimeout);
+        _weaponSlot.StartInterruptingItemAction(_weaponHandler.Weapon_SO.reloadTimeout);
 
         CalculateCurrentAmmo();
         _weaponHandler.ClipAmmo = 0;
@@ -38,48 +37,36 @@ public class WeaponReload : WeaponAction
         yield return _weaponHandler.Weapon_SO.reloadTimeout;
 
         _weaponHandler.ClipAmmo = _calculatedClipAmmo;
-        IsReloading = false;
+        _weaponReloadCoroutineUser.IsActionGoing = false;
     }
 
     private void CalculateCurrentAmmo()
     {
         _items = _pickableItemsInventory.Inventory.TakeWhile(item => item != null);
 
-        AmmoHandler ammoHandler = GetLastFullAmmoHandler();
+        AmmoHandler[] ammos = GetAmmo();
         int clipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo;
-        _calculatedClipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo;
 
-        if (ammoHandler.Ammo - clipAmmo >= 0)
+        for (int i = 0; i < ammos.Length; i++)
         {
-            ammoHandler.Ammo -= clipAmmo;
-            return;
+            var currentAmmo = ammos[i].Ammo;
+            ammos[i].Ammo -= clipAmmo;
+
+            if (currentAmmo > clipAmmo) { clipAmmo = 0; break; }
+
+            clipAmmo -= currentAmmo;
+
+            if (clipAmmo < 0) { break; }
         }
-
-        while (clipAmmo >= ammoHandler.Ammo)
-        {
-            clipAmmo -= ammoHandler.Ammo;
-            ammoHandler.Ammo = 0;
-            _pickableItemsInventory.Remove(ammoHandler);
-
-            ammoHandler = GetLastFullAmmoHandler();
-
-            if (ammoHandler != null) { continue; }
-
-            if (clipAmmo != 0)
-            {
-                _calculatedClipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo - clipAmmo;
-            }
-
-            return;
-        }
+        _calculatedClipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo - clipAmmo;
     }
 
-    private AmmoHandler GetLastFullAmmoHandler()
+    private AmmoHandler[] GetAmmo()
     {
-        return (AmmoHandler)_items.LastOrDefault(item =>
-        {
-            AmmoHandler ammoHandler = item as AmmoHandler;
-            return ammoHandler != null && ammoHandler.Ammo != 0;
-        });
+        return _items.Where(item =>
+                 {
+                     var ammoHandler = item as AmmoHandler;
+                     return ammoHandler != null && ammoHandler.Ammo != 0;
+                 }).Select(item => (AmmoHandler)item).ToArray();
     }
 }

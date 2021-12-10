@@ -7,7 +7,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 
     private bool _isInjectUsed;
 
-    public new void Inject()
+    public override void Inject()
     {
         _isInjectUsed = true;
         Use();
@@ -15,8 +15,10 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 
     public override void Use()
     {
-        _playerBleeding.StopBleeding();
-        _playerHealth.Heal(((Medkit_SO)Item).healthToHeal);
+        _playerBleeding.StopAction();
+
+        var medkit = (Medkit_SO)Item;
+        _playerHealth.Heal(medkit.healthToHeal);
     }
 
     public override void Clicked(int slotIndex)

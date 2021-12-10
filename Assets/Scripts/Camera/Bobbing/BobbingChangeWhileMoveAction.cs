@@ -12,8 +12,8 @@ public abstract class BobbingChangeWhileMoveAction : MonoBehaviour
     {
         _cameraBobbing = GetComponent<CameraBobbing>();
 
-        _moveController.OnPlayerStartedUseOfMove += ChangeBobbingDuringRun;
-        _moveController.OnPlayerStoppedUseOfMove += _cameraBobbing.ResetBobbingValues;
+        _moveController.OnPlayerStartedUsing += ChangeBobbingDuringRun;
+        _moveController.OnPlayerStoppedUsing += _cameraBobbing.ResetBobbingValues;
     }
 
     protected void ChangeBobbingDuringRun()
@@ -24,8 +24,8 @@ public abstract class BobbingChangeWhileMoveAction : MonoBehaviour
 
     private void OnDestroy()
     {
-        _moveController.OnPlayerStartedUseOfMove -= ChangeBobbingDuringRun;
-        _moveController.OnPlayerStoppedUseOfMove -= _cameraBobbing.ResetBobbingValues;
+        _moveController.OnPlayerStartedUsing -= ChangeBobbingDuringRun;
+        _moveController.OnPlayerStoppedUsing -= _cameraBobbing.ResetBobbingValues;
     }
 }
 

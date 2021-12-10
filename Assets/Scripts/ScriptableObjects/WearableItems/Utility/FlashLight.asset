@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FlashLight
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  description: 
+  description: "\u0432\u0444"
   playerGameObjectSpawnOffset: {x: 0.363, y: -0.173, z: 0.431}
   playerGameObjectPrefab: {fileID: 7399709133284153405, guid: b1ec7dc0a50bf0044b67d645e301539d, type: 3}

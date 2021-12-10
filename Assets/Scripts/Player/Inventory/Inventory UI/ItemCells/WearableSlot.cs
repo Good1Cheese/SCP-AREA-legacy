@@ -7,11 +7,16 @@ public class WearableSlot : InventorySlot
 {
     [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
 
-    public Action<WearableItemHandler> OnItemChanged { get; set; }
+    private ItemAction _itemActionSource;
+
     public WearableItemActivator WearableItemActivator { get; set; }
-    public Action OnItemRemoved { get; set; }
-    public Action OnNewAcitionStarted { get; set; }
     public bool IsItemActionGoing { get; set; }
+
+    public Action<WearableItemHandler> OnItemChanged { get; set; }
+    public Action<bool> OnItemToggled { get; set; }
+
+    public Action OnItemRemoved { get; set; }
+    public Action OnNewActionStarted { get; set; }
 
     public new void SetItem(ItemHandler item)
     {
@@ -49,16 +54,27 @@ public class WearableSlot : InventorySlot
 
     public void StartItemAction(WaitForSeconds timeout)
     {
-        WearableItemActivator.StartCoroutine(StartItemActionCoroutine(timeout));
+        WearableItemActivator.StartCoroutine(DoActionCoroutine(timeout));
     }
 
-    private IEnumerator StartItemActionCoroutine(WaitForSeconds timeout)
+    public void StartInterruptingItemAction(WaitForSeconds timeout)
+    {
+        WearableItemActivator.StartCoroutine(DoInterruptingActionCoroutine(timeout));
+    }
+
+    private IEnumerator DoActionCoroutine(WaitForSeconds timeout)
     {
         IsItemActionGoing = true;
 
-        OnNewAcitionStarted?.Invoke();
+        OnNewActionStarted?.Invoke();
         yield return timeout;
 
         IsItemActionGoing = false;
+    }
+
+    private IEnumerator DoInterruptingActionCoroutine(WaitForSeconds timeout)
+    {
+        OnNewActionStarted?.Invoke();
+        yield return timeout;
     }
 }

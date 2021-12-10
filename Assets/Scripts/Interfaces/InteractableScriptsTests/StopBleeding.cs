@@ -6,6 +6,6 @@ public class StopBleeding : IInteractable
 
     public override void Interact()
     {
-        _characterBleeding.StopBleeding();
+        _characterBleeding.StopAction();
     }
 }

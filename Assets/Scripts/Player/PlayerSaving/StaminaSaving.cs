@@ -10,12 +10,12 @@ public class StaminaSaving : DataSaving
     public override void Save()
     {
         staminaTime = _playerStamina.StaminaTime;
-        hasTimeoutPassed = _playerStamina.HasTimeoutPassed;
+        hasTimeoutPassed = _playerStamina.IsTimeoutPassed;
     }
 
     public override void LoadData()
     {
         _playerStamina.StaminaTime = staminaTime;
-        _playerStamina.HasTimeoutPassed = hasTimeoutPassed;
+        _playerStamina.IsTimeoutPassed = hasTimeoutPassed;
     }
 }

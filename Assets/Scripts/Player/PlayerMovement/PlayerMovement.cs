@@ -11,13 +11,14 @@ public class PlayerMovement : MonoBehaviour
     [Inject] private readonly WalkController _walkController;
     [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
     [Inject(Id = "Player")] private readonly Transform _playerTransform;
+
     private CharacterController _characterController;
     private bool _isPlayerMoving;
-    private float _horizontalMove;
-    private float _verticalMove;
 
     public Action OnPlayerNotMoving { get; set; }
     public Action OnPlayerStoppedMoving { get; set; }
+    public float HorizontalMove { get; set; }
+    public float VerticalMove { get; set; }
 
     private void Start()
     {
@@ -32,12 +33,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _horizontalMove = Input.GetAxis("Horizontal");
-        _verticalMove = Input.GetAxis("Vertical");
+        HorizontalMove = Input.GetAxis("Horizontal");
+        VerticalMove = Input.GetAxis("Vertical");
 
-        if (_horizontalMove == 0 && _verticalMove == 0)
+        if (HorizontalMove == 0 && VerticalMove == 0)
         {
-            OnPlayerNotMoving.Invoke();
+            OnPlayerNotMoving?.Invoke();
             _movementController.MoveTime = 0;
 
             if (_isPlayerMoving)
@@ -56,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer(float moveSpeed)
     {
-        Vector3 move = _playerTransform.right * _horizontalMove + _playerTransform.forward * _verticalMove;
+        Vector3 move = _playerTransform.right * HorizontalMove + _playerTransform.forward * VerticalMove;
         move = Vector3.ClampMagnitude(move, MOVE_MAGNUTUDE_MAX_LENGHT) * Time.deltaTime;
         _characterController.Move(move * moveSpeed);
     }

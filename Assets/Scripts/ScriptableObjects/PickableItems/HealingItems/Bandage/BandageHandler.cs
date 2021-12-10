@@ -6,8 +6,8 @@ public class BandageHandler : PickableItemHandler
 
     public override void Use()
     {
-        _playerBleeding.StopBleeding();
+        _playerBleeding.StopAction();
     }
 
-    public override bool ShouldItemNotBeUsed => !_playerBleeding.IsBleeding;
+    public override bool ShouldItemNotBeUsed => !_playerBleeding.IsActionGoing;
 }

@@ -1,33 +1,19 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
-public abstract class WeaponAction : MonoBehaviour
+public abstract class WeaponAction : ItemAction
 {
     [Inject] protected readonly WeaponSlot _weaponSlot;
-    [Inject] protected readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
     protected WeaponHandler _weaponHandler;
 
-    protected void Start()
+    protected override WearableSlot ItemSlot => _weaponSlot;
+    protected override WearableItemHandler WearableItemHandler => _weaponHandler;
+
+    protected new void Start()
     {
+        base.Start();
+
         _weaponSlot.OnWeaponChanged += SetWeapon;
-        _weaponSlot.IsWeaponActived += SetActiveState;
-        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += ChangeActiveStateOnInventoryEnabledDisabled;
-        enabled = false;
-    }
-
-    private void ChangeActiveStateOnInventoryEnabledDisabled()
-    {
-        if (_weaponHandler == null
-            || !_weaponHandler.GameObjectForPlayer.activeSelf
-            || !_weaponHandler.IsInInventory) { return; }
-
-        SetActiveState(!enabled);
-    }
-
-    private void SetActiveState(bool activeState)
-    {
-        enabled = activeState;
     }
 
     protected virtual void SetWeapon(WeaponHandler weaponHandler)
@@ -35,10 +21,10 @@ public abstract class WeaponAction : MonoBehaviour
         _weaponHandler = weaponHandler;
     }
 
-    protected void OnDestroy()
+    protected new void OnDestroy()
     {
+        base.OnDestroy();
+
         _weaponSlot.OnWeaponChanged -= SetWeapon;
-        _weaponSlot.IsWeaponActived -= SetActiveState;
-        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= ChangeActiveStateOnInventoryEnabledDisabled;
     }
 }

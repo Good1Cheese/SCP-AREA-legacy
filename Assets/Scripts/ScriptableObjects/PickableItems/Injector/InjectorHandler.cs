@@ -4,26 +4,10 @@ using Zenject;
 public class InjectorHandler : WearableItemHandler, IClickable
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-    [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
     [Inject] private readonly InjectorSlot _injectorSlot;
 
     public IInjectable ClipInject { get; set; }
     public Injector_SO Injector_SO => (Injector_SO)Item;
-
-    private new void Start()
-    {
-        GameObject = gameObject;
-
-        InjectorReload injectorReloader = GameObjectForPlayer.GetComponent<InjectorReload>();
-        injectorReloader.PickableItemsInventory = _pickableItemsInventory;
-
-        foreach (InjectorScriptBase i in GameObjectForPlayer.GetComponents<InjectorScriptBase>())
-        {
-            i.InventoryEnablerDisabler = _inventoryEnablerDisabler;
-            i.InjectorSlot = _injectorSlot;
-            i.InjectorHandler = this;
-        }
-    }
 
     private new void Awake()
     {

@@ -15,11 +15,4 @@ public class WeaponActivator : WearableItemActivator
         base.Start();
         _itemParent = _weaponParent;
     }
-
-    public override void SetItemActiveState(bool itemActiveState)
-    {
-        base.SetItemActiveState(itemActiveState);
-        _weaponSlot.IsWeaponActived?.Invoke(itemActiveState);
-    }
-
 }

@@ -6,11 +6,11 @@ public class HealthSaving : DataSaving
     [Inject] private readonly HealableHealth _healableHealth;
 
     public int healthAmount;
-    public bool isHealGoing;
+    public bool isHealActionGoing;
 
     public override void Save()
     {
-        isHealGoing = _healableHealth.IsHealGoing;
+        isHealActionGoing = _healableHealth.IsActionGoing;
         healthAmount = _playerHealth.Amount;
     }
 
@@ -18,9 +18,9 @@ public class HealthSaving : DataSaving
     {
         _playerHealth.Amount = healthAmount;
 
-        if (isHealGoing)
+        if (isHealActionGoing)
         {
-            _healableHealth.StartHeal();
+            _healableHealth.StartAction();
         }
     }
 }

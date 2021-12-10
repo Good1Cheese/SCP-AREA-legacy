@@ -6,8 +6,10 @@ public class ReloadAndAmmoShowSwitcher : WeaponAction
     private const KeyCode RELOAD_KEY = KeyCode.R;
 
     [SerializeField] private float _pressTimeToActivate;
+
     [Inject] private readonly WeaponReload _weaponReload;
     [Inject] private readonly AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
+    [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
 
     private bool _isSwitched;
     private float _pressTime;
@@ -41,7 +43,7 @@ public class ReloadAndAmmoShowSwitcher : WeaponAction
             _pressTime += Time.deltaTime * _deltaTimeMultipliyer;
         }
 
-        if (_pressTime < _pressTimeToActivate || _weaponReload.IsReloading) { return; }
+        if (_pressTime < _pressTimeToActivate || _weaponReloadCoroutineUser.IsActionGoing) { return; }
 
         _deltaTimeMultipliyer = 0;
         _pressTime = 0;

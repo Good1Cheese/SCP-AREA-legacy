@@ -3,14 +3,14 @@ using Zenject;
 
 public class AdrenalinEffectSaving : DataSaving
 {
-    [Inject] private readonly StaminaUseDisabler _staminaUseDisabler;
+    [Inject] private readonly StaminaDisabler _staminaUseDisabler;
 
     public float effectTime;
     private bool _isEffectGoing;
 
     private void Start()
     {
-        _staminaUseDisabler.OnUseDisabled += GetEffectTime;
+        _staminaUseDisabler.OnDisabled += GetEffectTime;
     }
 
     private void GetEffectTime(float effectTime)
@@ -46,12 +46,10 @@ public class AdrenalinEffectSaving : DataSaving
             return;
         }
         _staminaUseDisabler.StopDisabling();
-
     }
 
     private void OnDestroy()
     {
-        _staminaUseDisabler.OnUseDisabled -= GetEffectTime;
+        _staminaUseDisabler.OnDisabled -= GetEffectTime;
     }
-
 }

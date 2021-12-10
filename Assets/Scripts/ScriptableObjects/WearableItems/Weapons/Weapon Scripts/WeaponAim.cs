@@ -8,8 +8,7 @@ public class WeaponAim : WeaponAction
     private const KeyCode AI_KEY = KeyCode.Mouse1;
 
     [Inject] private readonly Animator _weaponAnimator;
-    [Inject] private readonly WeaponReload _weaponReload;
-
+    [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
     public bool IsAiming { get; set; }
 
     public Action OnPlayerFiredWithAim { get; set; }
@@ -35,7 +34,7 @@ public class WeaponAim : WeaponAction
 
     public void SetAimState(bool isAiming)
     {
-        if (_weaponReload.IsReloading) { return; }
+        if (_weaponReloadCoroutineUser.IsActionGoing) { return; }
 
         IsAiming = isAiming;
         _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);
@@ -47,7 +46,6 @@ public class WeaponAim : WeaponAction
         }
         OnPlayerInTakedAim?.Invoke();
     }
-
 
     protected new void SetWeapon(WeaponHandler weaponHandler)
     {

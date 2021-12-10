@@ -38,7 +38,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(int healthToHeal)
     {
-        if (_characterBleeding.IsBleeding) { return; }
+        if (_characterBleeding.IsActionGoing) { return; }
 
         _health += healthToHeal;
         _health = Mathf.Clamp(_health, 0, _maxHealth);

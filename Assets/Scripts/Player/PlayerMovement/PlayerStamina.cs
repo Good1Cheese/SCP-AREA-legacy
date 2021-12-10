@@ -3,31 +3,16 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(StaminaUseDisabler))]
-public class PlayerStamina : MonoBehaviour
+[RequireComponent(typeof(StaminaDisabler))]
+public class PlayerStamina : CoroutineUser
 {
-    [SerializeField] private int _burnSpeedMultipliyer;
     [SerializeField] private AnimationCurve _staminaCurve;
-    [SerializeField] private float _delayBeforeRegenerationStart;
-    [SerializeField] private float _staminaValue;
+    [SerializeField] private float _stamina;
     [SerializeField] private float _staminaTime;
+    [SerializeField] private int _burnSpeedMultipliyer;
 
     [Inject] private readonly RunController _runController;
     [Inject] private readonly PlayerMovement _playerMovement;
-    private WaitForSeconds _timeoutBeforeRegeneration;
-    private IEnumerator _regenerationCoroutine;
-    private bool _isRegenerating;
-    private float _maxStaminaTime;
-
-    public float Stamina
-    {
-        get => _staminaValue;
-        set
-        {
-            _staminaValue = value;
-            OnStaminaValueChanged?.Invoke();
-        }
-    }
 
     public float StaminaTime
     {
@@ -36,26 +21,37 @@ public class PlayerStamina : MonoBehaviour
         {
             _staminaTime = value;
             Stamina = _staminaCurve.Evaluate(_staminaTime);
+            OnStaminaValueChanged?.Invoke();
         }
     }
 
+    public float Stamina { get => _stamina; set => _stamina = value; }
+    public int BurnSpeedMultipliyer { get => _burnSpeedMultipliyer; set => _burnSpeedMultipliyer = value; }
+    public float MaxStaminaTime { get; private set; }
+    public bool IsTimeoutPassed { get; set; }
     public Action OnStaminaValueChanged { get; set; }
     public Action OnStaminaRunningOut { get; set; }
-    public bool HasTimeoutPassed { get; set; }
 
     private void Awake()
     {
-        _maxStaminaTime = _staminaTime;
-        _regenerationCoroutine = RegenerateCoroutine();
-        _timeoutBeforeRegeneration = new WaitForSeconds(_delayBeforeRegenerationStart);
+        _runController.OnPlayerUsingMove += Burn;
+        _runController.OnPlayerStartedUsing += StopRegeneration;
+        _runController.OnPlayerStoppedUsing += StartAction;
+        _playerMovement.OnPlayerStoppedMoving += StartAction;
     }
 
-    private void Start()
+    private new void Start()
     {
-        _runController.OnPlayerUsingMove += Burn;
-        _runController.OnPlayerStartedUseOfMove += StopRegeneration;
-        _runController.OnPlayerStoppedUseOfMove += StartRegeneration;
-        _playerMovement.OnPlayerStoppedMoving += StartRegeneration;
+        base.Start();
+
+        MaxStaminaTime = _staminaTime;
+    }
+
+    private void Update()
+    {
+        if (!IsTimeoutPassed) { return; }
+
+        StaminaTime += Time.deltaTime;
     }
 
     private void Burn()
@@ -63,43 +59,28 @@ public class PlayerStamina : MonoBehaviour
         StaminaTime -= Time.deltaTime * _burnSpeedMultipliyer;
     }
 
-    public void StartRegeneration()
-    {
-        if (_isRegenerating) { return; }
-
-        StartCoroutine(_regenerationCoroutine);
-    }
-
     public void StopRegeneration()
     {
-        _staminaTime = (_staminaTime > _maxStaminaTime) ? _maxStaminaTime : _staminaTime;
-        HasTimeoutPassed = false;
-        _isRegenerating = false;
+        _staminaTime = (_staminaTime > MaxStaminaTime) ? MaxStaminaTime : _staminaTime;
+        IsTimeoutPassed = false;
 
-        StopCoroutine(_regenerationCoroutine);
-        _regenerationCoroutine = RegenerateCoroutine();
+        StopAction();
     }
 
-    private void Update()
+    protected override IEnumerator Coroutine()
     {
-        if (!HasTimeoutPassed) { return; }
+        IsActionGoing = true;
 
-        StaminaTime += Time.deltaTime;
-    }
+        yield return _coroutineTimeout;
 
-    private IEnumerator RegenerateCoroutine()
-    {
-        _isRegenerating = true;
-
-        yield return _timeoutBeforeRegeneration;
-        HasTimeoutPassed = true;
+        IsTimeoutPassed = true;
     }
 
     private void OnDestroy()
     {
         _runController.OnPlayerUsingMove -= Burn;
-        _runController.OnPlayerStartedUseOfMove -= StopRegeneration;
-        _runController.OnPlayerStoppedUseOfMove -= StartRegeneration;
-        _playerMovement.OnPlayerStoppedMoving -= StartRegeneration;
+        _runController.OnPlayerStartedUsing -= StopRegeneration;
+        _runController.OnPlayerStoppedUsing -= StartAction;
+        _playerMovement.OnPlayerStoppedMoving -= StartAction;
     }
 }

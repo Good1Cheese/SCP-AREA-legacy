@@ -14,7 +14,7 @@ public class CrosshairEnablerDisabler : MonoBehaviour
 
         _weaponAim.OnPlayerAimed += Deactivate;
         _weaponAim.OnPlayerInTakedAim += Activate;
-        _weaponSlot.OnWeaponDropped += Activate;
+        _weaponSlot.OnItemRemoved += Activate;
         _gameLoader.OnGameLoadingUI += _gameObject.SetActive;
     }
 
@@ -32,7 +32,7 @@ public class CrosshairEnablerDisabler : MonoBehaviour
     {
         _weaponAim.OnPlayerAimed -= Deactivate;
         _weaponAim.OnPlayerInTakedAim -= Activate;
-        _weaponSlot.OnWeaponDropped -= Activate;
+        _weaponSlot.OnItemRemoved -= Activate;
         _gameLoader.OnGameLoadingUI -= _gameObject.SetActive;
     }
 }

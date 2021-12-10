@@ -14,7 +14,11 @@ public class AmmoHandler : PickableItemHandler
     public int Ammo
     {
         get => _ammoCount;
-        set => _ammoCount = value;
+        set
+        {
+            value = Mathf.Clamp(value, 0, int.MaxValue);
+            _ammoCount = value;
+        }
     }
 
     public override void Equip()

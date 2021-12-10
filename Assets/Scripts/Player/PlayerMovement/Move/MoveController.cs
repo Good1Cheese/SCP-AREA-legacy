@@ -14,14 +14,14 @@ public abstract class MoveController : MonoBehaviour
 
     public Action OnPlayerUsingMove { get; set; }
     public Action OnPlayerNotUsingMove { get; set; }
-    public Action OnPlayerStartedUseOfMove { get; set; }
-    public Action OnPlayerStoppedUseOfMove { get; set; }
+    public Action OnPlayerStartedUsing { get; set; }
+    public Action OnPlayerStoppedUsing { get; set; }
 
     public virtual float GetMove()
     {
         if (Input.GetKeyDown(_key))
         {
-            OnPlayerStartedUseOfMove?.Invoke();
+            OnPlayerStartedUsing?.Invoke();
         }
 
         if (Input.GetKey(_key))
@@ -51,7 +51,7 @@ public abstract class MoveController : MonoBehaviour
         if (Input.GetKeyUp(_key))
         {
             IsMoving = false;
-            OnPlayerStoppedUseOfMove?.Invoke();
+            OnPlayerStoppedUsing?.Invoke();
         }
     }
 }

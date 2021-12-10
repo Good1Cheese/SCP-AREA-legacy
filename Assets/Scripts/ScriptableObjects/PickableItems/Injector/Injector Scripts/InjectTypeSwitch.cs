@@ -1,29 +1,29 @@
 ﻿using System;
 
-public class InjectTypeSwitch : InjectorScriptBase
+public class InjectTypeSwitch : InjectorAction
 {
-    private Type type = typeof(IHealthInjectable);
+    private Type _defaultType = typeof(IHealthInjectable);
 
-    public Type Type
+    public Type CurrentType
     {
-        get => type;
+        get => _defaultType;
         set
         {
             print(value);
-            type = value;
+            _defaultType = value;
         }
     }
 
-    protected override void DoScriptAction()
+    protected override void DoAction()
     {
-        InjectorSlot.StartItemAction(InjectorHandler.Injector_SO.injectChangeTimeout);
+        _injectorSlot.StartItemAction(_injectorHandler.Injector_SO.injectChangeTimeout);
 
-        if (Type == typeof(IHealthInjectable))
+        if (CurrentType == typeof(IHealthInjectable))
         {
-            Type = typeof(IAdrenalinInjectable);
+            CurrentType = typeof(IAdrenalinInjectable);
             return;
         }
 
-        Type = typeof(IHealthInjectable);
+        CurrentType = typeof(IHealthInjectable);
     }
 }

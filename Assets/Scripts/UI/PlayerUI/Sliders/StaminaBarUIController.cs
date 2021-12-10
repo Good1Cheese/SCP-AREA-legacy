@@ -22,4 +22,3 @@ public class StaminaBarUIController : StatisticsBarUIController
         _playerStamina.OnStaminaValueChanged -= UpdateUI;
     }
 }
-

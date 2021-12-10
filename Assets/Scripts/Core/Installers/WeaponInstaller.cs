@@ -8,6 +8,7 @@ public class WeaponInstaller : MonoInstaller
     private WeaponFire _weaponFire;
     private WeaponShot _weaponShot;
     private WeaponReload _weaponReload;
+    private WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
     private WeaponAim _weaponAiming;
     private Animator _weaponAnimator;
     private WeaponMiss _weaponAmmoController;
@@ -20,6 +21,7 @@ public class WeaponInstaller : MonoInstaller
         Container.BindInstance(_weaponFire).AsSingle();
         Container.BindInstance(_weaponShot).AsSingle();
         Container.BindInstance(_weaponReload).AsSingle();
+        Container.BindInstance(_weaponReloadCoroutineUser).AsSingle();
         Container.BindInstance(_weaponAiming).AsSingle();
         Container.BindInstance(_weaponAnimator).AsSingle();
         Container.BindInstance(_weaponAmmoController).AsSingle();
@@ -32,6 +34,7 @@ public class WeaponInstaller : MonoInstaller
         _weaponFire = GetComponent<WeaponFire>();
         _weaponShot = GetComponent<WeaponShot>();
         _weaponReload = GetComponent<WeaponReload>();
+        _weaponReloadCoroutineUser = GetComponent<WeaponReloadCoroutineUser>();
         _weaponAiming = GetComponent<WeaponAim>();
         _weaponAnimator = GetComponent<Animator>();
         _weaponAmmoController = GetComponent<WeaponMiss>();

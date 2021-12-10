@@ -10,7 +10,7 @@ public class PlayerInstaller : MonoInstaller
     private PlayerMovement _playerMovement;
     private PlayerRotator _playerRotator;
     private PlayerStamina _playerStamina;
-    private StaminaUseDisabler _staminaUseDisabler;
+    private StaminaDisabler _staminaUseDisabler;
     private MovementController _movementController;
     private RunController _runController;
     private SlowWalkController _slowWalkController;
@@ -54,7 +54,7 @@ public class PlayerInstaller : MonoInstaller
         _playerMovement = GetComponent<PlayerMovement>();
         _playerRotator = GetComponent<PlayerRotator>();
         _playerStamina = GetComponent<PlayerStamina>();
-        _staminaUseDisabler = GetComponent<StaminaUseDisabler>();
+        _staminaUseDisabler = GetComponent<StaminaDisabler>();
         _movementController = GetComponent<MovementController>();
         _runController = GetComponent<RunController>();
         _slowWalkController = GetComponent<SlowWalkController>();

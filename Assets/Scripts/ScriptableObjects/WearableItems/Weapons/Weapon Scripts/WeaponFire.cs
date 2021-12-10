@@ -10,15 +10,9 @@ public class WeaponFire : WeaponAction
     [Inject] private readonly RayForFireProvider _rayForFireProvider;
     [Inject] private readonly WeaponAim _weaponAim;
     [Inject] private readonly WeaponShot _weaponShot;
+    [Inject] private readonly WeaponMiss _weaponMiss;
 
     public Action OnPlayerFired { get; set; }
-
-    private WeaponMiss _weaponMiss;
-
-    private void Awake()
-    {
-        _weaponMiss = GetComponent<WeaponMiss>();
-    }
 
     private void Update()
     {
