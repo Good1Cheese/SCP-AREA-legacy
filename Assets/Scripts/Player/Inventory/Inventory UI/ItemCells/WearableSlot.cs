@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class WearableSlot : InventorySlot
+public abstract class WearableSlot : InventorySlot
 {
     [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
-
-    private ItemAction _itemActionSource;
+    [Inject(Id = "ItemsAudio")] private readonly AudioSource _slotAudio;
 
     public WearableItemActivator WearableItemActivator { get; set; }
-    public bool IsItemActionGoing { get; set; }
-
+    public ItemActionMaker ItemActionMaker { get; set; }
     public Action<WearableItemHandler> OnItemChanged { get; set; }
     public Action<bool> OnItemToggled { get; set; }
-
     public Action OnItemRemoved { get; set; }
-    public Action OnNewActionStarted { get; set; }
+
+    protected void Awake()
+    {
+        ItemActionMaker = new ItemActionMaker(WearableItemActivator, _slotAudio);
+    }
 
     public new void SetItem(ItemHandler item)
     {
@@ -43,6 +43,8 @@ public class WearableSlot : InventorySlot
 
     public override void OnItemDeleted()
     {
+        ItemActionMaker.StartEmptyItemAction2();
+
         OnItemRemoved?.Invoke();
         _image.enabled = false;
     }
@@ -50,31 +52,5 @@ public class WearableSlot : InventorySlot
     public override void OnRightClick()
     {
         _wearableItemsInteraction.DropItem(this);
-    }
-
-    public void StartItemAction(WaitForSeconds timeout)
-    {
-        WearableItemActivator.StartCoroutine(DoActionCoroutine(timeout));
-    }
-
-    public void StartInterruptingItemAction(WaitForSeconds timeout)
-    {
-        WearableItemActivator.StartCoroutine(DoInterruptingActionCoroutine(timeout));
-    }
-
-    private IEnumerator DoActionCoroutine(WaitForSeconds timeout)
-    {
-        IsItemActionGoing = true;
-
-        OnNewActionStarted?.Invoke();
-        yield return timeout;
-
-        IsItemActionGoing = false;
-    }
-
-    private IEnumerator DoInterruptingActionCoroutine(WaitForSeconds timeout)
-    {
-        OnNewActionStarted?.Invoke();
-        yield return timeout;
     }
 }

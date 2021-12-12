@@ -21,7 +21,7 @@ public abstract class InjectorAction : ItemAction
 
     protected void Update()
     {
-        if (!Input.GetKeyDown(_key) || _injectorSlot.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(_key) || _injectorSlot.ItemActionMaker.IsItemActionGoing) { return; }
 
         DoAction();
     }

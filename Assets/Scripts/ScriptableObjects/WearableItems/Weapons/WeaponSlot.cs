@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+using Zenject;
 
 public class WeaponSlot : WearableSlot
 {

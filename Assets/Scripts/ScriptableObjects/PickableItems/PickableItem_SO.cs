@@ -1,4 +1,4 @@
-﻿public abstract class PickableIte_SO : Ite_SO
+﻿public abstract class PickableIte_SO : Item_SO
 {
 
 }

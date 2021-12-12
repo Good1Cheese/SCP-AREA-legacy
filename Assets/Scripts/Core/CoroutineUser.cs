@@ -30,7 +30,6 @@ public abstract class CoroutineUser : MonoBehaviour
     {
         IsActionGoing = false;
         StopCoroutine(_actionCoroutine);
-        _actionCoroutine = Action;
     }
 
     protected abstract IEnumerator Coroutine();

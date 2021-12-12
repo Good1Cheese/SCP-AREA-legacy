@@ -5,9 +5,9 @@ using Zenject;
 [RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler), typeof(InjuryLensDistortionEffect))]
 public class GameControllerInstaller : MonoInstaller
 {
-    [SerializeField] private WearableSlot _keyCardSlot;
-    [SerializeField] private WearableSlot _maskSlot;
-    [SerializeField] private WearableSlot _utilitySlot;
+    [SerializeField] private KeyCardSlot _keyCardSlot;
+    [SerializeField] private MaskSlot _maskSlot;
+    [SerializeField] private UtilitySlot _utilitySlot;
     [SerializeField] private WeaponSlot _weaponSlot;
     [SerializeField] private InjectorSlot _injectorSlot;
     [SerializeField] private Transform _propsHandler;
@@ -29,6 +29,8 @@ public class GameControllerInstaller : MonoInstaller
         }
 
         GetComponents();
+        SetActivatorsOnSlots();
+
         Container.BindInstance(_propsHandler).WithId("PropsHandler").AsCached();
         Container.BindInstance(_gameLoader).AsSingle();
         Container.BindInstance(_pauseMenuEnablerDisabler).AsSingle();
@@ -38,9 +40,9 @@ public class GameControllerInstaller : MonoInstaller
         Container.BindInstance(_volume).AsSingle();
         Container.BindInstance(_pickableItemsInventory).AsSingle();
         Container.BindInstance(_wearableItemsInventory).AsSingle();
-        Container.BindInstance(_keyCardSlot).WithId("KeyCardSlot").AsCached();
-        Container.BindInstance(_maskSlot).WithId("MaskSlot").AsCached();
-        Container.BindInstance(_utilitySlot).WithId("UtilitySlot").AsCached();  
+        Container.BindInstance(_keyCardSlot).AsSingle();
+        Container.BindInstance(_maskSlot).AsSingle();
+        Container.BindInstance(_utilitySlot).AsSingle();  
         Container.BindInstance(_weaponSlot).AsSingle();
         Container.BindInstance(_injectorSlot).AsSingle();
         Container.BindInstance(this).AsSingle();
@@ -56,5 +58,14 @@ public class GameControllerInstaller : MonoInstaller
         _volume = GetComponent<Volume>();
         _pickableItemsInventory = GetComponent<PickableItemsInventory>();
         _wearableItemsInventory = GetComponent<WearableItemsInventory>();
+    }
+
+    private void SetActivatorsOnSlots()
+    {
+        _keyCardSlot.WearableItemActivator = GetComponent<KeyCardActivator>();
+        _maskSlot.WearableItemActivator = GetComponent<MaskActivator>();
+        _utilitySlot.WearableItemActivator = GetComponent<UtilityActivator>();
+        _weaponSlot.WearableItemActivator = GetComponent<WeaponActivator>();
+        _injectorSlot.WearableItemActivator = GetComponent<InjectorActivator>();
     }
 }

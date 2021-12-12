@@ -31,7 +31,7 @@ public class InjectorReload : InjectorAction
 
     protected override void DoAction()
     {
-        _injectorSlot.StartItemAction(_injectorHandler.Injector_SO.reloadTimeout);
+        _injectorSlot.ItemActionMaker.StartItemAction(_injectorHandler.Injector_SO.reloadTimeout, null);
 
         if (_injectTypeSwitcher.CurrentType == typeof(IHealthInjectable))
         {

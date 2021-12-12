@@ -5,13 +5,13 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponReloadSound), typeof(WeaponReloadCoroutineUser))]
+[RequireComponent(typeof(WeaponReloadCoroutineUser))]
 public class WeaponReload : WeaponAction
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
 
-    private IEnumerable<ItemHandler> _items;
+    private IEnumerable<AmmoHandler> _inventoryAmmoEnumarable;
     private int _calculatedClipAmmo;
 
     public Action OnReloadStarted { get; set; }
@@ -20,31 +20,31 @@ public class WeaponReload : WeaponAction
     {
         if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
             || _weaponHandler.Ammo == 0
-            || _weaponSlot.IsItemActionGoing) { return; }
+            || _weaponSlot.ItemActionMaker.IsItemActionGoing) { return; }
 
         _weaponReloadCoroutineUser.StartAction();
     }
 
     public IEnumerator Reload()
     {
-        _weaponSlot.StartInterruptingItemAction(_weaponHandler.Weapon_SO.reloadTimeout);
+        _weaponSlot.ItemActionMaker.StartInterruptingItemAction(_weaponReloadCoroutineUser, _weaponHandler.Weapon_SO.reloadSound);
 
-        CalculateCurrentAmmo();
+        AddClipAmmoToInventoryAmmo();
         _weaponHandler.ClipAmmo = 0;
 
         OnReloadStarted?.Invoke();
 
         yield return _weaponHandler.Weapon_SO.reloadTimeout;
 
+        CalculateCurrentClipAmmo();
+
         _weaponHandler.ClipAmmo = _calculatedClipAmmo;
         _weaponReloadCoroutineUser.IsActionGoing = false;
     }
 
-    private void CalculateCurrentAmmo()
+    private void CalculateCurrentClipAmmo()
     {
-        _items = _pickableItemsInventory.Inventory.TakeWhile(item => item != null);
-
-        AmmoHandler[] ammos = GetAmmo();
+        AmmoHandler[] ammos = GetInventoryAmmo();
         int clipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo;
 
         for (int i = 0; i < ammos.Length; i++)
@@ -61,12 +61,20 @@ public class WeaponReload : WeaponAction
         _calculatedClipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo - clipAmmo;
     }
 
-    private AmmoHandler[] GetAmmo()
+    private AmmoHandler[] GetInventoryAmmo()
     {
-        return _items.Where(item =>
-                 {
-                     var ammoHandler = item as AmmoHandler;
-                     return ammoHandler != null && ammoHandler.Ammo != 0;
-                 }).Select(item => (AmmoHandler)item).ToArray();
+        return _inventoryAmmoEnumarable.ToArray();
+    }
+
+    private void AddClipAmmoToInventoryAmmo()
+    {
+        _inventoryAmmoEnumarable = _pickableItemsInventory.Inventory.TakeWhile(item => item != null).Where(item =>
+        {
+            var ammo = item as AmmoHandler;
+            return ammo != null && ammo.Ammo != 0;
+        }).Select(item => (AmmoHandler)item);
+
+        var ammo = _inventoryAmmoEnumarable.FirstOrDefault(ammo => ammo.Ammo + _weaponHandler.ClipAmmo <= AmmoHandler.MAX_SLOT_AMMO);
+        ammo.Ammo += _weaponHandler.ClipAmmo;
     }
 }

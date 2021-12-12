@@ -47,7 +47,7 @@ public class WeaponAim : WeaponAction
         OnPlayerInTakedAim?.Invoke();
     }
 
-    protected new void SetWeapon(WeaponHandler weaponHandler)
+    protected new void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }

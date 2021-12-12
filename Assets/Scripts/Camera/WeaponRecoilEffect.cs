@@ -15,7 +15,7 @@ public class WeaponRecoilEffect : MonoBehaviour
     {
         _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
         _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
-        _weaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponSlot.OnWeaponChanged += SetWeaponHandler;
     }
 
     private void Update()
@@ -47,7 +47,7 @@ public class WeaponRecoilEffect : MonoBehaviour
         _targetRotation += _recoilRotation;
     }
 
-    private void SetWeapon(WeaponHandler weaponHandler)
+    private void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weapon_SO = weaponHandler.Weapon_SO;
     }
@@ -56,6 +56,6 @@ public class WeaponRecoilEffect : MonoBehaviour
     {
         _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
         _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
-        _weaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponSlot.OnWeaponChanged -= SetWeaponHandler;
     }
 }

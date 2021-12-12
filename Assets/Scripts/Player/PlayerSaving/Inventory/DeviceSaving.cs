@@ -2,7 +2,7 @@
 
 public class DeviceSaving : WearableItemSaving
 {
-    [Inject(Id = "UtilitySlot")] private readonly WearableSlot _utilitySlot;
+    [Inject] private readonly UtilitySlot _utilitySlot;
 
     protected override WearableSlot SlotToSave => _utilitySlot;
 }

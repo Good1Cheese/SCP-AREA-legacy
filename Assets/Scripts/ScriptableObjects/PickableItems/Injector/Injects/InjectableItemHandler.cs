@@ -31,7 +31,7 @@ public abstract class InjectableItemHandler : PickableItemHandler, IInjectable
 
     protected new void Start()
     {
-        _numOfUses = (_pickableIte_SO as InjectableIte_SO).NumOfUses;
+        _numOfUses = (_pickableItem_SO as InjectableIte_SO).NumOfUses;
         base.Start();
     }
 }

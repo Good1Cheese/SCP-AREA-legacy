@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Zenject;
 
 public abstract class WearableItemHandler : ItemHandler
 {
@@ -13,5 +12,5 @@ public abstract class WearableItemHandler : ItemHandler
         GameObjectForPlayer.SetActive(false);
     }
 
-    public override Ite_SO Item => _wearableIte_SO;
+    public override Item_SO Item => _wearableIte_SO;
 }

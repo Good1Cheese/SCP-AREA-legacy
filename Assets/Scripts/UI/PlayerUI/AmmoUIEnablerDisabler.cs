@@ -9,14 +9,11 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
 
     private GameObject _textMeshProGameObject;
 
-    private void Awake()
-    {
-        _weaponSlot.OnItemRemoved += DeactivateWeaponUI;
-        _weaponSlot.OnNewActionStarted += DeactivateWeaponUI;
-    }
-
     private void Start()
     {
+        _weaponSlot.OnItemRemoved += DeactivateWeaponUI;
+        _weaponSlot.ItemActionMaker.OnNewActionStarted += DeactivateWeaponUI;
+
         if (_ammoUICountUpdater == null)
         {
             Debug.LogError("AmmoUICountUpdater field ist't serialized");
@@ -40,6 +37,6 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
     private void OnDestroy()
     {
         _weaponSlot.OnItemRemoved -= DeactivateWeaponUI;
-        _weaponSlot.OnNewActionStarted -= DeactivateWeaponUI;
+        _weaponSlot.ItemActionMaker.OnNewActionStarted -= DeactivateWeaponUI;
     }
 }

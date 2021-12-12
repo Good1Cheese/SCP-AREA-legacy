@@ -16,7 +16,7 @@ public abstract class ItemHandler : IInteractable
         }
     }
 
-    public abstract Ite_SO Item { get; }
+    public abstract Item_SO Item { get; }
     public Action<bool> OnIsInventoryChanged { get; set; }
     public GameObject GameObject { get; set; }
 

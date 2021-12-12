@@ -14,7 +14,7 @@ public class WeaponShot : MonoBehaviour
 
     private void Start()
     {
-        _weaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponSlot.OnWeaponChanged += SetWeaponHandler;
     }
 
     public void Shoot(RaycastHit raycastHit)
@@ -37,13 +37,13 @@ public class WeaponShot : MonoBehaviour
         bulletHole.transform.LookAt(raycastHit.point + raycastHit.normal);
     }
 
-    private void SetWeapon(WeaponHandler weaponHandler)
+    private void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weapon = weaponHandler.Weapon_SO;
     }
 
     private void OnDestroy()
     {
-        _weaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponSlot.OnWeaponChanged -= SetWeaponHandler;
     }
 }

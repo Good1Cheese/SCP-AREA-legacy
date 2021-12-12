@@ -4,7 +4,7 @@ public class AdrenalinInjectHandler : InjectableItemHandler, IAdrenalinInjectabl
 {
     [Inject] private readonly StaminaDisabler _staminaUseDisabler;
 
-    public AdrenalinInject_SO AdrenalinInject_SO => _pickableIte_SO as AdrenalinInject_SO;
+    public AdrenalinInject_SO AdrenalinInject_SO => _pickableItem_SO as AdrenalinInject_SO;
 
     public override void Inject()
     {

@@ -4,12 +4,14 @@ using Zenject;
 [RequireComponent(typeof(AmmoSaving))]
 public class AmmoHandler : PickableItemHandler
 {
+    public const int MAX_SLOT_AMMO = 50;
+
     [SerializeField] private int _ammoCount;
 
     [Inject] private readonly WeaponSlot _weaponSlot;
     [Inject] private readonly AmmoMixup _ammoMixup;
 
-    public Ammo_SO Ammo_SO => (Ammo_SO)_pickableIte_SO;
+    public Ammo_SO Ammo_SO => (Ammo_SO)_pickableItem_SO;
 
     public int Ammo
     {

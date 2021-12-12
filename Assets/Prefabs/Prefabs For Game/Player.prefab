@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 589210397}
   - component: {fileID: 86165868}
-  - component: {fileID: 589210398}
   - component: {fileID: 1276332682}
   - component: {fileID: 1276332688}
   - component: {fileID: 4556526946664556794}
@@ -22,9 +21,6 @@ GameObject:
   - component: {fileID: 719478325580480186}
   - component: {fileID: 4906315331970770613}
   - component: {fileID: 141266703381938076}
-  - component: {fileID: 1955211647258080879}
-  - component: {fileID: 2800942804778793745}
-  - component: {fileID: 2034084644}
   - component: {fileID: 2034084654}
   m_Layer: 0
   m_Name: WeaponSlot
@@ -61,20 +57,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e472aa5c6487aaf40a0afadfc9321fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &589210398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589210396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62563c7abf998d44d95400fbd0126532, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _key: 116
-  _weaponParent: {fileID: 4287118893623227423}
 --- !u!114 &1276332682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,45 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb074635031cd43b0a5b1b3c7eb9dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1955211647258080879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589210396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76aec2de52be4684cb4e32b0eb99b81d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioSource: {fileID: 2034084654}
---- !u!114 &2800942804778793745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589210396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acca6a017a18eba4398431cd4ab21f98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioSource: {fileID: 2034084654}
---- !u!114 &2034084644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589210396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acff948a4002d4d48b56c026a81e9583, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioSource: {fileID: 2034084654}
 --- !u!82 &2034084654
 AudioSource:
   m_ObjectHideFlags: 0
@@ -269,7 +212,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -362,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 708686659}
-  - component: {fileID: 708686660}
+  - component: {fileID: 896569296}
   - component: {fileID: 2095133004}
   - component: {fileID: 2095133002}
   - component: {fileID: 5309474764193268339}
@@ -387,7 +330,7 @@ Transform:
   m_Father: {fileID: 4490448437021268867}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &708686660
+--- !u!114 &896569296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -396,10 +339,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 708686658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50b19b8639e468c4c80e20cf15c836c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 01ac27425fd07f145bc8ec25c30ba9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 99
 --- !u!114 &2095133004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,7 +390,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 761607340}
-  - component: {fileID: 761607341}
   m_Layer: 0
   m_Name: KeyCardSlot
   m_TagString: Untagged
@@ -470,19 +411,6 @@ Transform:
   m_Father: {fileID: 4490448437021268867}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &761607341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 761607339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd984f24e0f4d7948ad2f13013ab2f06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _key: 103
 --- !u!1 &1039655024
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,7 +670,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349847632}
-  - component: {fileID: 840157120}
   m_Layer: 0
   m_Name: UtilitySlot
   m_TagString: Untagged
@@ -764,19 +691,6 @@ Transform:
   m_Father: {fileID: 4490448437021268867}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &840157120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349847631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a4da3b8e27afd4fa04ac717523a86a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _key: 102
 --- !u!1 &1425020528
 GameObject:
   m_ObjectHideFlags: 0

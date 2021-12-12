@@ -2,14 +2,12 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponMissFireSound))]
 public class WeaponMiss : MonoBehaviour
 {
     [Inject] private readonly WeaponSlot _weaponSlot;
 
     private WaitForSeconds _timeoutAfterShot;
-
-    public Action OnAmmoRunOut { get; set; }
+    private WeaponHandler _weaponHandler;
 
     private void Start()
     {
@@ -18,13 +16,12 @@ public class WeaponMiss : MonoBehaviour
 
     public void ActivateMissSound()
     {
-        _weaponSlot.StartItemAction(_timeoutAfterShot);
-
-        OnAmmoRunOut.Invoke();
+        _weaponSlot.ItemActionMaker.StartItemAction(_timeoutAfterShot, _weaponHandler.Weapon_SO.missFireSound);
     }
 
     private void SetWeaponTimeoutAfterShot(WeaponHandler weaponHandler)
     {
+        _weaponHandler = weaponHandler;
         _timeoutAfterShot = new WaitForSeconds(weaponHandler.Weapon_SO.shotDelay);
     }
 

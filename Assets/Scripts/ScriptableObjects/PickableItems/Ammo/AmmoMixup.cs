@@ -4,8 +4,6 @@ using Zenject;
 
 public class AmmoMixup : MonoBehaviour
 {
-    private const int MAX_SLOT_AMMO = 50;
-
     [Inject] readonly PickableItemsInventory _pickableItemsInventory;
 
     public void MixUpAmmo(AmmoHandler ammoHandler)
@@ -18,7 +16,7 @@ public class AmmoMixup : MonoBehaviour
             return condition;
         });
 
-        if (secondAmmoHandler == null || secondAmmoHandler.Ammo + ammoHandler.Ammo > MAX_SLOT_AMMO) { return; }
+        if (secondAmmoHandler == null || secondAmmoHandler.Ammo + ammoHandler.Ammo > AmmoHandler.MAX_SLOT_AMMO) { return; }
 
         secondAmmoHandler.Ammo += ammoHandler.Ammo;
         ammoHandler.Ammo = 0;

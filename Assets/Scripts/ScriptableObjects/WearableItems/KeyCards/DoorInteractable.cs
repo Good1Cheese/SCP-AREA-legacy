@@ -5,7 +5,7 @@ public abstract class DoorInteractable : IInteractable
     public abstract int KeyCardType { get; }
     public abstract int KeyCardLevelToOpen { get; }
 
-    [Inject(Id = "KeyCardSlot")] private readonly WearableSlot _keyCardSlot;
+    [Inject] private readonly KeyCardSlot _keyCardSlot;
 
     public override void Interact()
     {

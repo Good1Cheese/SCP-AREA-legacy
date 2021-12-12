@@ -2,7 +2,7 @@
 
 public class MaskHandler : WearableItemHandler
 {
-    [Inject(Id = "MaskSlot")] private readonly WearableSlot _maskSlot;
+    [Inject] private readonly MaskSlot _maskSlot;
 
     public override void Equip()
     {

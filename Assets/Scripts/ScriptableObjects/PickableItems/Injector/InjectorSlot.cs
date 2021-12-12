@@ -1,5 +1,5 @@
 ﻿using System;
-
+using UnityEngine;
 
 public class InjectorSlot : WearableSlot
 {

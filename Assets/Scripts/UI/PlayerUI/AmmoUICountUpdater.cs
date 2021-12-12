@@ -14,11 +14,11 @@ public class AmmoUICountUpdater : MonoBehaviour
 
     private void Awake()
     {
-        _weaponSlot.OnWeaponChanged += SetWeapon;
+        _weaponSlot.OnWeaponChanged += SetWeaponHandler;
         _weaponSlot.OnAmmoAdded += UpdateAmmoAndUI;
     }
 
-    private void SetWeapon(WeaponHandler weaponHandler)
+    private void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weaponHandler = weaponHandler;
     }
@@ -36,7 +36,7 @@ public class AmmoUICountUpdater : MonoBehaviour
 
     private void OnDestroy()
     {
-        _weaponSlot.OnWeaponChanged -= SetWeapon;
+        _weaponSlot.OnWeaponChanged -= SetWeaponHandler;
         _weaponSlot.OnAmmoAdded -= UpdateAmmoAndUI;
     }
 }

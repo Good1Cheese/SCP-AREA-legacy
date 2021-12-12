@@ -9,7 +9,6 @@ public class WearableItemActivator : MonoBehaviour
     [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
     protected WearableItemHandler _wearableItemHandler;
-
     protected Transform _itemParent;
 
     protected virtual WearableSlot WearableItemSlot { get; }
@@ -21,8 +20,6 @@ public class WearableItemActivator : MonoBehaviour
 
     protected void Start()
     {
-        WearableItemSlot.WearableItemActivator = this;
-
         WearableItemSlot.OnItemChanged += SetItem;
         WearableItemSlot.OnItemRemoved += DeactivateWeapon;
         _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += SetActiveState;
@@ -37,6 +34,7 @@ public class WearableItemActivator : MonoBehaviour
 
     public virtual void SetItemActiveState(bool itemActiveState)
     {
+        WearableItemSlot.ItemActionMaker.StartEmptyItemAction2();
         _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
         WearableItemSlot.OnItemToggled?.Invoke(itemActiveState);
     }
@@ -44,10 +42,10 @@ public class WearableItemActivator : MonoBehaviour
     protected void SetItem(WearableItemHandler wearableItemHandler)
     {
         _wearableItemHandler = wearableItemHandler;
-        WearableIte_SO ite_SO = (WearableIte_SO)_wearableItemHandler.Item;
+        WearableIte_SO item_SO = (WearableIte_SO)_wearableItemHandler.Item;
 
         _wearableItemHandler.GameObjectForPlayer.transform.SetParent(_itemParent);
-        _wearableItemHandler.GameObjectForPlayer.transform.localPosition = ite_SO.playerGameObjectSpawnOffset;
+        _wearableItemHandler.GameObjectForPlayer.transform.localPosition = item_SO.playerGameObjectSpawnOffset;
         _wearableItemHandler.GameObjectForPlayer.transform.localRotation = Quaternion.identity;
 
         _wearableItemHandler.GameObjectForPlayer.SetActive(false);

@@ -1,7 +1,6 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponFire), typeof(WeaponReload))]
 public class WeaponActivator : WearableItemActivator
 {
     [SerializeField] private Transform _weaponParent;
