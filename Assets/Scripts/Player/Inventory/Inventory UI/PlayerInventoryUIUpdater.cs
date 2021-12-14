@@ -12,9 +12,8 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
     private void Awake()
     {
         _gameObject = gameObject;
-        _playerInventory.OnInventoryChanged += Renew;
-        _playerInventory.OnInventoryRemaded += Renew;
-        _playerHealth.OnPlayerDies += DisableUI;
+        _playerInventory.Changed += Renew;
+        _playerHealth.Died += DisableUI;
     }
 
     private void Start()
@@ -64,8 +63,7 @@ public class PlayerInventoryUIUpdater : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerInventory.OnInventoryChanged -= Renew;
-        _playerInventory.OnInventoryRemaded -= Renew;
-        _playerHealth.OnPlayerDies -= DisableUI;
+        _playerInventory.Changed -= Renew;
+        _playerHealth.Died -= DisableUI;
     }
 }

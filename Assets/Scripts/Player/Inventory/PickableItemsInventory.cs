@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(InventoryEnablerDisabler))]
 public class PickableItemsInventory : MonoBehaviour
@@ -9,9 +8,8 @@ public class PickableItemsInventory : MonoBehaviour
     [SerializeField, Range(0, 8)] private int _maxSlotsAmount;
 
     public ItemHandler[] Inventory { get; set; }
-    public Action OnInventoryChanged { get; set; }
-    public Action OnInventoryRemaded { get; set; }
-
+    public Action Changed { get; set; }
+    public Action ItemRemoved { get; set; }
     public int CurrentItemIndex { get; set; }
 
     private void Awake()
@@ -26,7 +24,7 @@ public class PickableItemsInventory : MonoBehaviour
         Inventory[CurrentItemIndex] = item;
         CurrentItemIndex++;
 
-        OnInventoryChanged?.Invoke();
+        Changed?.Invoke();
     }
 
     public void Remove(int index)
@@ -46,7 +44,8 @@ public class PickableItemsInventory : MonoBehaviour
         }
 
         CurrentItemIndex = !isIndexItemLast ? CurrentItemIndex - 1 : index - 1;
-        OnInventoryChanged?.Invoke();
+        Changed?.Invoke();
+        ItemRemoved.Invoke();
     }
 
     public void Remove(ItemHandler itemHandler)
@@ -63,6 +62,6 @@ public class PickableItemsInventory : MonoBehaviour
 
     public ItemHandler GetIem(Predicate<ItemHandler> condition)
     {
-        return Inventory.TakeWhile(item => item != null).LastOrDefault(item => condition.Invoke(item));
+        return Inventory.TakeWhile(item => item != null).FirstOrDefault(item => condition.Invoke(item));
     }
 }

@@ -12,16 +12,16 @@ public abstract class MoveController : MonoBehaviour
     public bool IsMoving { get; set; }
     public float MaxMoveTime => _maxMoveTime;
 
-    public Action OnPlayerUsingMove { get; set; }
-    public Action OnPlayerNotUsingMove { get; set; }
-    public Action OnPlayerStartedUsing { get; set; }
-    public Action OnPlayerStoppedUsing { get; set; }
+    public Action Using { get; set; }
+    public Action NotUsing { get; set; }
+    public Action UseStarted { get; set; }
+    public Action UseStopped { get; set; }
 
     public virtual float GetMove()
     {
         if (Input.GetKeyDown(_key))
         {
-            OnPlayerStartedUsing?.Invoke();
+            UseStarted?.Invoke();
         }
 
         if (Input.GetKey(_key))
@@ -29,14 +29,14 @@ public abstract class MoveController : MonoBehaviour
             return Move();
         }
 
-        OnPlayerNotUsingMove?.Invoke();
+        NotUsing?.Invoke();
         return 0;
     }
 
     protected float Move()
     {
         IsMoving = true;
-        OnPlayerUsingMove?.Invoke();
+        Using?.Invoke();
 
         if (_movementController.MoveTime < MaxMoveTime)
         {
@@ -51,7 +51,7 @@ public abstract class MoveController : MonoBehaviour
         if (Input.GetKeyUp(_key))
         {
             IsMoving = false;
-            OnPlayerStoppedUsing?.Invoke();
+            UseStopped?.Invoke();
         }
     }
 }

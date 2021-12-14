@@ -10,9 +10,9 @@ public class WeaponRecoilAnimation : MonoBehaviour
 
     private void Awake()
     {
-        _weaponSlot.OnWeaponChanged += SetWeaponAnimator;
-        _weaponAim.OnPlayerFiredWithAim += ActivateRecoilInAim;
-        _weaponAim.OnPlayerFiredWithoutAim += ActivateRecoilWithoutAim;
+        _weaponSlot.Changed += SetWeaponAnimator;
+        _weaponAim.FiredWithAim += ActivateRecoilInAim;
+        _weaponAim.FiredWithoutAim += ActivateRecoilWithoutAim;
     }
 
     private void ActivateRecoilInAim()
@@ -32,8 +32,8 @@ public class WeaponRecoilAnimation : MonoBehaviour
 
     private void OnDestroy()
     {
-        _weaponSlot.OnWeaponChanged -= SetWeaponAnimator;
-        _weaponAim.OnPlayerFiredWithAim -= ActivateRecoilInAim;
-        _weaponAim.OnPlayerFiredWithoutAim -= ActivateRecoilWithoutAim;
+        _weaponSlot.Changed -= SetWeaponAnimator;
+        _weaponAim.FiredWithAim -= ActivateRecoilInAim;
+        _weaponAim.FiredWithoutAim -= ActivateRecoilWithoutAim;
     }
 }

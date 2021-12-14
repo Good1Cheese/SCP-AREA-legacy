@@ -4,12 +4,12 @@ public class InjectorActivator : WearableItemActivator
 {
     [Inject] private readonly InjectorSlot _injectorSlot;
 
-    protected override WearableSlot WearableItemSlot => _injectorSlot;
+    public override WearableSlot WearableItemSlot => _injectorSlot;
 
     private new void Start()
     {
         base.Start();
-        _injectorSlot.OnSlotUsed += ActivateItem;
+        _injectorSlot.Used += ActivateItem;
     }
 
     private void ActivateItem()
@@ -20,6 +20,6 @@ public class InjectorActivator : WearableItemActivator
     private new void OnDestroy()
     {
         base.OnDestroy();
-        _injectorSlot.OnSlotUsed -= ActivateItem;
+        _injectorSlot.Used -= ActivateItem;
     }
 }

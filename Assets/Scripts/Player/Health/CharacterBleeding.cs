@@ -11,7 +11,7 @@ public class CharacterBleeding : CoroutineUser
 
     [Inject] private readonly PlayerHealth _playerHealth;
 
-    public Action OnPlayerBleeding { get; set; }
+    public Action Bleeding { get; set; }
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class CharacterBleeding : CoroutineUser
             yield return _coroutineTimeout;
 
             _playerHealth.DamageWithOutNotify(_damage);
-            OnPlayerBleeding?.Invoke();
+            Bleeding?.Invoke();
             SetBleedingDelay();
         }
 

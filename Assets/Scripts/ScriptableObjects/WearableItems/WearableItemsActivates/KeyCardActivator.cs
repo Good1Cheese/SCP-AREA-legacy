@@ -4,5 +4,5 @@ public class KeyCardActivator : WearableItemActivator
 {
     [Inject] private readonly KeyCardSlot _keyCardSlot;
 
-    protected override WearableSlot WearableItemSlot => _keyCardSlot;
+    public override WearableSlot WearableItemSlot => _keyCardSlot;
 }

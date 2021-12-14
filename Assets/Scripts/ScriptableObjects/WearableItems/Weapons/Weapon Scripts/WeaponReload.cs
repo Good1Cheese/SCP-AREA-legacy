@@ -14,13 +14,13 @@ public class WeaponReload : WeaponAction
     private IEnumerable<AmmoHandler> _inventoryAmmoEnumarable;
     private int _calculatedClipAmmo;
 
-    public Action OnReloadStarted { get; set; }
+    public Action Reloaded { get; set; }
 
     public void ActivateReload()
     {
         if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
             || _weaponHandler.Ammo == 0
-            || _weaponSlot.ItemActionMaker.IsItemActionGoing) { return; }
+            || _weaponSlot.ItemActionMaker.IsGoing) { return; }
 
         _weaponReloadCoroutineUser.StartAction();
     }
@@ -32,7 +32,7 @@ public class WeaponReload : WeaponAction
         AddClipAmmoToInventoryAmmo();
         _weaponHandler.ClipAmmo = 0;
 
-        OnReloadStarted?.Invoke();
+        Reloaded?.Invoke();
 
         yield return _weaponHandler.Weapon_SO.reloadTimeout;
 

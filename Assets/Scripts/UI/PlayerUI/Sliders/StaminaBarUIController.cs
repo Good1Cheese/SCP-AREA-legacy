@@ -14,11 +14,11 @@ public class StaminaBarUIController : StatisticsBarUIController
 
     protected override void Subscribe()
     {
-        _playerStamina.OnStaminaValueChanged += UpdateUI;
+        _playerStamina.Changed += UpdateUI;
     }
 
     protected override void Unsubscribe()
     {
-        _playerStamina.OnStaminaValueChanged -= UpdateUI;
+        _playerStamina.Changed -= UpdateUI;
     }
 }

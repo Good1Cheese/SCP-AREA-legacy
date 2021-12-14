@@ -28,6 +28,6 @@ public class AmmoHandler : PickableItemHandler
         _ammoMixup.MixUpAmmo(this);
         base.Equip();
 
-        _weaponSlot.OnAmmoAdded?.Invoke();
+        _weaponSlot.AmmoAdded?.Invoke();
     }
 }

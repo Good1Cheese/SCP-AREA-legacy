@@ -10,7 +10,7 @@ public class StaminaDisabler : MonoBehaviour
     private int _startBurnSpeedMultipliyer;
     private IEnumerator _disableCoroutine;
 
-    public Action<float> OnDisabled { get; set; }
+    public Action<float> Disabled { get; set; }
 
     private void Start()
     {
@@ -34,7 +34,7 @@ public class StaminaDisabler : MonoBehaviour
         _playerStamina.StaminaTime = _playerStamina.MaxStaminaTime;
         _playerStamina.BurnSpeedMultipliyer = 0;
 
-        OnDisabled?.Invoke(effectTime);
+        Disabled?.Invoke(effectTime);
 
         yield return new WaitForSeconds(effectTime);
 

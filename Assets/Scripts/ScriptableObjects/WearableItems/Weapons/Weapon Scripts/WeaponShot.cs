@@ -14,7 +14,7 @@ public class WeaponShot : MonoBehaviour
 
     private void Start()
     {
-        _weaponSlot.OnWeaponChanged += SetWeaponHandler;
+        _weaponSlot.Changed += SetWeaponHandler;
     }
 
     public void Shoot(RaycastHit raycastHit)
@@ -44,6 +44,6 @@ public class WeaponShot : MonoBehaviour
 
     private void OnDestroy()
     {
-        _weaponSlot.OnWeaponChanged -= SetWeaponHandler;
+        _weaponSlot.Changed -= SetWeaponHandler;
     }
 }

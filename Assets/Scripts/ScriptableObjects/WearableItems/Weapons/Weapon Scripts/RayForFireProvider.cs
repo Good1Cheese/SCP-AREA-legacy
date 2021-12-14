@@ -18,7 +18,7 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
 
     private void Start()
     {
-        _weaponSlot.OnWeaponChanged += SetWeaponBulletSpawnPoint;
+        _weaponSlot.Changed += SetWeaponBulletSpawnPoint;
     }
 
     public Ray ProvideRay()
@@ -58,7 +58,7 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
 
     private void OnDestroy()
     {
-        _weaponSlot.OnWeaponChanged -= SetWeaponBulletSpawnPoint;
+        _weaponSlot.Changed -= SetWeaponBulletSpawnPoint;
     }
 
 }

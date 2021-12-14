@@ -11,7 +11,7 @@ public class WeaponMiss : MonoBehaviour
 
     private void Start()
     {
-        _weaponSlot.OnWeaponChanged += SetWeaponTimeoutAfterShot;
+        _weaponSlot.Changed += SetWeaponTimeoutAfterShot;
     }
 
     public void ActivateMissSound()
@@ -27,6 +27,6 @@ public class WeaponMiss : MonoBehaviour
 
     private void OnDestroy()
     {
-        _weaponSlot.OnWeaponChanged -= SetWeaponTimeoutAfterShot;
+        _weaponSlot.Changed -= SetWeaponTimeoutAfterShot;
     }
 }

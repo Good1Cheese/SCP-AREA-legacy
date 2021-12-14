@@ -9,7 +9,7 @@ public class PlayerUIEnablerDisabler : MonoBehaviour
     private void Start()
     {
         _gameObject = gameObject;
-        _pauseMenu.OnPauseMenuButtonPressed += SetActive;
+        _pauseMenu.PauseMenuButtonPressed += SetActive;
     }
 
     private void SetActive()
@@ -19,6 +19,6 @@ public class PlayerUIEnablerDisabler : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenu.OnPauseMenuButtonPressed -= SetActive;
+        _pauseMenu.PauseMenuButtonPressed -= SetActive;
     }
 }

@@ -16,12 +16,12 @@ public abstract class InjectorAction : ItemAction
     {
         base.Start();
 
-        _injectorSlot.OnInjectorChanged += SetInjector;
+        _injectorSlot.Changed += SetInjector;
     }
 
     protected void Update()
     {
-        if (!Input.GetKeyDown(_key) || _injectorSlot.ItemActionMaker.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(_key) || _injectorSlot.ItemActionMaker.IsGoing) { return; }
 
         DoAction();
     }
@@ -37,6 +37,6 @@ public abstract class InjectorAction : ItemAction
     {
         base.OnDestroy();
 
-        _injectorSlot.OnInjectorChanged -= SetInjector;
+        _injectorSlot.Changed -= SetInjector;
     }
 }

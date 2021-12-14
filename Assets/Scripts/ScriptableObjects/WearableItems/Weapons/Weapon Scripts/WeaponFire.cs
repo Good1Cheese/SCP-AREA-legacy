@@ -12,11 +12,11 @@ public class WeaponFire : WeaponAction
     [Inject] private readonly WeaponShot _weaponShot;
     [Inject] private readonly WeaponMiss _weaponMiss;
 
-    public Action OnPlayerFired { get; set; }
+    public Action Fired { get; set; }
 
     private void Update()
     {
-        if (!Input.GetKeyDown(FIRE_KEY) || _weaponSlot.ItemActionMaker.IsItemActionGoing) { return; }
+        if (!Input.GetKeyDown(FIRE_KEY) || _weaponSlot.ItemActionMaker.IsGoing) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {
@@ -32,16 +32,16 @@ public class WeaponFire : WeaponAction
         _weaponSlot.ItemActionMaker.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout, _weaponHandler.CurrentShotSound);
         _weaponHandler.ClipAmmo--;
 
-        OnPlayerFired?.Invoke();
+        Fired?.Invoke();
 
         Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
         _weaponShot.Shoot(raycastHit);
 
         if (_weaponAim.IsAiming)
         {
-            _weaponAim.OnPlayerFiredWithAim?.Invoke();
+            _weaponAim.FiredWithAim?.Invoke();
             return;
         }
-        _weaponAim.OnPlayerFiredWithoutAim?.Invoke();
+        _weaponAim.FiredWithoutAim?.Invoke();
     }
 }

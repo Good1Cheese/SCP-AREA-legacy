@@ -18,12 +18,13 @@ public class InteractionProvider : MonoBehaviour
     private bool _isDelayGoing;
     private WaitForSeconds _timeoutAfterInteraction;
 
-    public Action OnPlayerFindUnInteractable { get; set; }
-    public Action<Collider> OnPlayerFindInteractable { get; set; }
+    public Action UnInteractableFound { get; set; }
+    public Action<Collider> InteractableFound { get; set; }
+    public Action Interacted { get; set; }
 
     private void Start()
     {
-        _inventoryEnablerDisabler.OnInventoryEnabledDisabled += SetActiveState;
+        _inventoryEnablerDisabler.ActiveStateChanged += SetActiveState;
         _timeoutAfterInteraction = new WaitForSeconds(_delayAfterInteraction);
     }
 
@@ -40,21 +41,17 @@ public class InteractionProvider : MonoBehaviour
 
         if (raycastHit == null)
         {
-            OnPlayerFindUnInteractable?.Invoke();
+            UnInteractableFound?.Invoke();
             return;
         }
 
-        OnPlayerFindInteractable?.Invoke(raycastHit);
-
+        InteractableFound?.Invoke(raycastHit);
         Interact();
     }
 
     private Collider GetRayCastHit()
     {
-        bool raycasted = Physics.SphereCast(_rayProvider.ProvideRay(),
-                                            _interactionSphereRadious,
-                                            out RaycastHit raycastHit,
-                                            _maxInteractionDistance);
+        bool raycasted = Physics.SphereCast(_rayProvider.ProvideRay(), _interactionSphereRadious, out RaycastHit raycastHit, _maxInteractionDistance);
 
         Collider collider = raycastHit.collider;
 
@@ -65,13 +62,14 @@ public class InteractionProvider : MonoBehaviour
     {
         if (!Input.GetButtonDown("Interaction")) { return; }
 
-        StartCoroutine(StartInteractionDelay());
         _interactable.Interact();
-    }
+        Interacted?.Invoke();
+        StartCoroutine(StartInteractionDelay());
+    }   
 
     private IEnumerator StartInteractionDelay()
     {
-        OnPlayerFindUnInteractable?.Invoke();
+        UnInteractableFound?.Invoke();
         _isDelayGoing = true;
 
         yield return _timeoutAfterInteraction;
@@ -81,6 +79,6 @@ public class InteractionProvider : MonoBehaviour
 
     private void OnDestroy()
     {
-        _inventoryEnablerDisabler.OnInventoryEnabledDisabled -= SetActiveState;
+        _inventoryEnablerDisabler.ActiveStateChanged -= SetActiveState;
     }
 }

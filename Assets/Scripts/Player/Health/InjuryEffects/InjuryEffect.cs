@@ -11,7 +11,7 @@ public abstract class InjuryEffect : MonoBehaviour
 
     private void Start()
     {
-        _injuryEffectsController.OnEffectTimeChanging += SetEffectValue;
+        _injuryEffectsController.EffectTimeChanged += SetEffectValue;
     }
 
     private void SetEffectValue(float time)
@@ -21,6 +21,6 @@ public abstract class InjuryEffect : MonoBehaviour
 
     private void OnDestroy()
     {
-        _injuryEffectsController.OnEffectTimeChanging -= SetEffectValue;
+        _injuryEffectsController.EffectTimeChanged -= SetEffectValue;
     }
 }

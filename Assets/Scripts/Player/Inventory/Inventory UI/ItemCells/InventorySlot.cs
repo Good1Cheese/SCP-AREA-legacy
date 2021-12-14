@@ -11,14 +11,14 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
     public void SetItem(ItemHandler itemHandler)
     {
         ItemHandler = itemHandler;
-        _image.sprite = itemHandler.Item.sprite;
-        OnItemSet();
+        _image.sprite = itemHandler.Item_SO.sprite;
+        Setted();
     }
 
     public void Clear()
     {
-        ItemHandler.OnItemDropped();
-        OnItemDeleted();
+        ItemHandler.Dropped();
+        Cleared();
         ItemHandler = null;
         _image.sprite = null;
     }
@@ -30,11 +30,11 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             eventData.clickCount = 0;
-            OnRightClick();
+            Clicked();
         }
     }
 
-    public abstract void OnItemSet();
-    public abstract void OnItemDeleted();
-    public abstract void OnRightClick();
+    public abstract void Setted();
+    public abstract void Cleared();
+    public abstract void Clicked();
 }

@@ -17,7 +17,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
     {
         _playerBleeding.StopAction();
 
-        var medkit = (Medkit_SO)Item;
+        var medkit = (Medkit_SO)Item_SO;
         _playerHealth.Heal(medkit.healthToHeal);
     }
 

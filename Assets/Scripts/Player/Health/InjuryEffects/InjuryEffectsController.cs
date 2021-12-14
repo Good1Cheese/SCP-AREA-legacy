@@ -10,7 +10,7 @@ public class InjuryEffectsController : MonoBehaviour
     private sbyte _curveTimeMultiplayer;
     private Func<bool> _timeChangeCondition;
 
-    public Action<float> OnEffectTimeChanging { get; set; }
+    public Action<float> EffectTimeChanged { get; set; }
     public float CurveTargetTime { get; set; }
     public float CurveCurrentTime { get; set; }
 
@@ -18,9 +18,9 @@ public class InjuryEffectsController : MonoBehaviour
     {
         SetCurveTimeDataAfterDamage();
 
-        _playerHealth.OnPlayerGetsDamage += SetCurveTimeDataAfterDamage;
-        _playerHealth.OnPlayerHeals += SetCurveTimeDataAfterBleedDamage;
-        _playerHealth.OnPlayerDies += OnDestroy;
+        _playerHealth.Damaged += SetCurveTimeDataAfterDamage;
+        _playerHealth.Healed += SetCurveTimeDataAfterBleedDamage;
+        _playerHealth.Died += OnDestroy;
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class InjuryEffectsController : MonoBehaviour
         if (_timeChangeCondition.Invoke())
         {
             CurveCurrentTime += Time.deltaTime * _curveTimeMultiplayer;
-            OnEffectTimeChanging?.Invoke(CurveCurrentTime);
+            EffectTimeChanged?.Invoke(CurveCurrentTime);
         }
     }
 
@@ -56,8 +56,8 @@ public class InjuryEffectsController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerHealth.OnPlayerGetsDamage -= SetCurveTimeDataAfterDamage;
-        _playerHealth.OnPlayerHeals -= SetCurveTimeDataAfterBleedDamage;
-        _playerHealth.OnPlayerDies -= OnDestroy;
+        _playerHealth.Damaged -= SetCurveTimeDataAfterDamage;
+        _playerHealth.Healed -= SetCurveTimeDataAfterBleedDamage;
+        _playerHealth.Died -= OnDestroy;
     }
 }

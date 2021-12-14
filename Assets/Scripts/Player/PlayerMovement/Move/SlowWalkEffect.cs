@@ -14,8 +14,8 @@ public class SlowWalkEffect : MonoBehaviour
 
     private void Start()
     {
-        _slowWalkController.OnPlayerUsingMove += ActivateEffect;
-        _slowWalkController.OnPlayerNotUsingMove += DeactivateEffect;
+        _slowWalkController.Using += ActivateEffect;
+        _slowWalkController.NotUsing += DeactivateEffect;
     }
 
     private void ActivateEffect()
@@ -44,7 +44,7 @@ public class SlowWalkEffect : MonoBehaviour
 
     private void OnDestroy()
     {
-        _slowWalkController.OnPlayerUsingMove -= ActivateEffect;
-        _slowWalkController.OnPlayerNotUsingMove -= DeactivateEffect;
+        _slowWalkController.Using -= ActivateEffect;
+        _slowWalkController.NotUsing -= DeactivateEffect;
     }
 }

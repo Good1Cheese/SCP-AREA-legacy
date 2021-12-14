@@ -17,8 +17,8 @@ public class InteractionMarkEnablerDisabler : MonoBehaviour
 
     private void Start()
     {
-        _interactionProvider.OnPlayerFindInteractable += ActivateMark;
-        _interactionProvider.OnPlayerFindUnInteractable += DisableMark;
+        _interactionProvider.InteractableFound += ActivateMark;
+        _interactionProvider.UnInteractableFound += DisableMark;
     }
 
     public void ActivateMark(Collider collider)
@@ -35,7 +35,7 @@ public class InteractionMarkEnablerDisabler : MonoBehaviour
 
     private void OnDestroy()
     {
-        _interactionProvider.OnPlayerFindInteractable -= ActivateMark;
-        _interactionProvider.OnPlayerFindUnInteractable -= DisableMark;
+        _interactionProvider.InteractableFound -= ActivateMark;
+        _interactionProvider.UnInteractableFound -= DisableMark;
     }
 }

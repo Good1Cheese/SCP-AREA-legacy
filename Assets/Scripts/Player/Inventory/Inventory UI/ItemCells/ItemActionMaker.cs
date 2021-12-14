@@ -14,20 +14,24 @@ public class ItemActionMaker
         _slotAudio = slotAudio;
     }
 
-    public bool IsItemActionGoing { get; set; }
-    public Action OnNewActionStarted { get; set; }
+    public bool IsGoing { get; set; }
+    public Action ActionStarted { get; set; }
 
     public void StartItemAction(WaitForSeconds timeout, AudioClip actionSound)
     {
+        Debug.Log("Начато непрерываемое действие");
+
         PlaySound(actionSound);
         _wearableItemActivator.StartCoroutine(DoAction(timeout));
     }
 
     public void StartInterruptingItemAction(CoroutineUser coroutineUser, AudioClip actionSound)
     {
+        Debug.Log("Начато прерывание действие");
+
         PlaySound(actionSound);
         _currentItemAction = coroutineUser;
-        OnNewActionStarted?.Invoke();
+        ActionStarted?.Invoke();
     }
 
     private void PlaySound(AudioClip actionSound)
@@ -38,26 +42,28 @@ public class ItemActionMaker
 
     private IEnumerator DoAction(WaitForSeconds timeout)
     {
-        IsItemActionGoing = true;
+        IsGoing = true;
 
         StartEmptyItemAction();
         yield return timeout;
 
-        IsItemActionGoing = false;
+        IsGoing = false;
     }
 
     public void StartEmptyItemAction()
     {
-        OnNewActionStarted?.Invoke();
-
+        ActionStarted?.Invoke();
+            
         if (_currentItemAction == null) { return; }
 
         _currentItemAction.StopAction();
         _currentItemAction = null;
     }
 
-    public void StartEmptyItemAction2()
+    public void StartEmptyItemActionWithAudioStop()
     {
+        Debug.Log("Прерывание действия");
+
         _slotAudio.Stop();
         StartEmptyItemAction();
     }

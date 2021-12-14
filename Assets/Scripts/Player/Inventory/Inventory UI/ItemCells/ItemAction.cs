@@ -10,12 +10,12 @@ public abstract class ItemAction : MonoBehaviour
 
     protected void Start()
     {
-        ItemSlot.OnItemToggled += SetActiveState;
-        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += ChangeActiveStateOnInventoryEnabledDisabled;
+        ItemSlot.Toggled += SetActiveState;
+        _inventoryAcviteStateSetter.ActiveStateChanged += ChangeActiveState;
         enabled = false;
     }
 
-    private void ChangeActiveStateOnInventoryEnabledDisabled()
+    private void ChangeActiveState()
     {
         if (WearableItemHandler == null
             || !WearableItemHandler.GameObjectForPlayer.activeSelf
@@ -31,7 +31,7 @@ public abstract class ItemAction : MonoBehaviour
 
     protected void OnDestroy()
     {
-        ItemSlot.OnItemToggled -= SetActiveState;
-        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= ChangeActiveStateOnInventoryEnabledDisabled;
+        ItemSlot.Toggled -= SetActiveState;
+        _inventoryAcviteStateSetter.ActiveStateChanged -= ChangeActiveState;
     }
 }

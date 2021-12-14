@@ -17,6 +17,6 @@ public class InjuryEffectsSaving : DataSaving
     {
         _injuryEffectsController.CurveTargetTime = curveTargetTime;
         _injuryEffectsController.CurveCurrentTime = curveCurrentTime;
-        _injuryEffectsController.OnEffectTimeChanging?.Invoke(curveCurrentTime);
+        _injuryEffectsController.EffectTimeChanged?.Invoke(curveCurrentTime);
     }
 }

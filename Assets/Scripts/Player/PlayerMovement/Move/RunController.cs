@@ -11,7 +11,7 @@ public class RunController : MoveController
 
         if (_playerStamina.Stamina <= 0)
         {
-            _playerStamina.OnStaminaRunningOut?.Invoke();
+            _playerStamina.RanOut?.Invoke();
             return 0;
         }
 

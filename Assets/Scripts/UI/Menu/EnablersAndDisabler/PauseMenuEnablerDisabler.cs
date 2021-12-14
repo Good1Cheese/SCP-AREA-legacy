@@ -8,7 +8,7 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
     private const KeyCode PAUSE_KEY = KeyCode.Escape;
     [Inject] private readonly InventoryEnablerDisabler _wearableInventoryActivator;
 
-    public Action OnPauseMenuButtonPressed { get; set; }
+    public Action PauseMenuButtonPressed { get; set; }
 
     private void Update()
     {
@@ -24,7 +24,7 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
     public override void EnableDisableUI()
     {
         IsUIActivated = !IsUIActivated;
-        _wearableInventoryActivator.OnInventoryEnabledDisabled?.Invoke();
-        OnPauseMenuButtonPressed.Invoke();
+        _wearableInventoryActivator.ActiveStateChanged?.Invoke();
+        PauseMenuButtonPressed.Invoke();
     }
 }

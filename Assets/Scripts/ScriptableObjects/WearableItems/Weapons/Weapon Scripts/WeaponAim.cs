@@ -11,11 +11,11 @@ public class WeaponAim : WeaponAction
     [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
     public bool IsAiming { get; set; }
 
-    public Action OnPlayerFiredWithAim { get; set; }
-    public Action OnPlayerFiredWithoutAim { get; set; }
+    public Action FiredWithAim { get; set; }
+    public Action FiredWithoutAim { get; set; }
 
-    public Action OnPlayerAimed { get; set; }
-    public Action OnPlayerInTakedAim { get; set; }
+    public Action Aimed { get; set; }
+    public Action Unaimed { get; set; }
 
     private void Update()
     {
@@ -41,10 +41,10 @@ public class WeaponAim : WeaponAction
 
         if (IsAiming)
         {
-            OnPlayerAimed?.Invoke();
+            Aimed?.Invoke();
             return;
         }
-        OnPlayerInTakedAim?.Invoke();
+        Unaimed?.Invoke();
     }
 
     protected new void SetWeaponHandler(WeaponHandler weaponHandler)

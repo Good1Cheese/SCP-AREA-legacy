@@ -6,12 +6,12 @@ public class PlayerBleedingSound : SoundOnAction
 
     protected override void SubscribeToAction()
     {
-        _playerBleeding.OnPlayerBleeding += PlaySound;
+        _playerBleeding.Bleeding += PlaySound;
     }
 
     protected override void UnscribeToAction()
     {
-        _playerBleeding.OnPlayerBleeding -= PlaySound;
+        _playerBleeding.Bleeding -= PlaySound;
     }
 
 }

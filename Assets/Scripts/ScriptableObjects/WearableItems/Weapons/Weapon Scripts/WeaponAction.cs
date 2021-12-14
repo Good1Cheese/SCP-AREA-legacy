@@ -13,7 +13,7 @@ public abstract class WeaponAction : ItemAction
     {
         base.Start();
 
-        _weaponSlot.OnWeaponChanged += SetWeaponHandler;
+        _weaponSlot.Changed += SetWeaponHandler;
     }
 
     protected virtual void SetWeaponHandler(WeaponHandler weaponHandler)
@@ -25,6 +25,6 @@ public abstract class WeaponAction : ItemAction
     {
         base.OnDestroy();
 
-        _weaponSlot.OnWeaponChanged -= SetWeaponHandler;
+        _weaponSlot.Changed -= SetWeaponHandler;
     }
 }

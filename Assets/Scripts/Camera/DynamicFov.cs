@@ -23,12 +23,12 @@ public class DynamicFov : MonoBehaviour
 
     private void Start()
     {
-        _runController.OnPlayerUsingMove += SetFovForRun;
-        _slowWalkController.OnPlayerUsingMove += SetFovForSlowWalk;
-        _slowWalkController.OnPlayerNotUsingMove += ResetFovAfterSlowWalk;
-        _runController.OnPlayerNotUsingMove += ResetFovAfterMoving;
-        _playerStamina.OnStaminaRunningOut += ResetFovAfterMoving;
-        _playerMovement.OnPlayerNotMoving += ResetFovAfterMoving;
+        _runController.Using += SetFovForRun;
+        _slowWalkController.Using += SetFovForSlowWalk;
+        _slowWalkController.NotUsing += ResetFovAfterSlowWalk;
+        _runController.NotUsing += ResetFovAfterMoving;
+        _playerStamina.RanOut += ResetFovAfterMoving;
+        _playerMovement.NotMoving += ResetFovAfterMoving;
     }
 
     private void SetFovForRun()
@@ -61,11 +61,11 @@ public class DynamicFov : MonoBehaviour
 
     private void OnDestroy()
     {
-        _runController.OnPlayerUsingMove -= SetFovForRun;
-        _slowWalkController.OnPlayerUsingMove -= SetFovForSlowWalk;
-        _slowWalkController.OnPlayerNotUsingMove -= ResetFovAfterSlowWalk;
-        _runController.OnPlayerNotUsingMove -= ResetFovAfterMoving;
-        _playerStamina.OnStaminaRunningOut -= ResetFovAfterMoving;
-        _playerMovement.OnPlayerNotMoving -= ResetFovAfterMoving;
+        _runController.Using -= SetFovForRun;
+        _slowWalkController.Using -= SetFovForSlowWalk;
+        _slowWalkController.NotUsing -= ResetFovAfterSlowWalk;
+        _runController.NotUsing -= ResetFovAfterMoving;
+        _playerStamina.RanOut -= ResetFovAfterMoving;
+        _playerMovement.NotMoving -= ResetFovAfterMoving;
     }
 }

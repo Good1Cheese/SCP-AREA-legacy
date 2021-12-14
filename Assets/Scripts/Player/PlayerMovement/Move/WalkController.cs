@@ -8,6 +8,6 @@
     public override void StopMove()
     {
         IsMoving = false;
-        OnPlayerStoppedUsing?.Invoke();
+        UseStopped?.Invoke();
     }
 }

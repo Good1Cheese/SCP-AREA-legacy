@@ -7,7 +7,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
     [Inject] private readonly InjectorSlot _injectorSlot;
 
     public IInjectable ClipInject { get; set; }
-    public Injector_SO Injector_SO => (Injector_SO)Item;
+    public Injector_SO Injector_SO => (Injector_SO)Item_SO;
 
     private new void Awake()
     {
@@ -28,10 +28,10 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
     public void Clicked(int slotIndex)
     {
-        _injectorSlot.OnSlotUsed?.Invoke();
+        _injectorSlot.Used?.Invoke();
     }
 
-    public override void OnItemDropped()
+    public override void Dropped()
     {
         _injectorSlot.ClearWearableSlot();
     }

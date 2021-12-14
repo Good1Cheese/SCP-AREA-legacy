@@ -13,15 +13,15 @@ public class PlayerHealth : MonoBehaviour
     public int Amount { get => _health; set => _health = value; }
     public int MaxAmount => _maxHealth;
 
-    public Action OnPlayerGetsDamage { get; set; }
-    public Action OnPlayerHeals { get; set; }
-    public Action OnPlayerGetsNonBleedDamage { get; set; }
-    public Action OnPlayerDies { get; set; }
+    public Action Damaged { get; set; }
+    public Action Healed { get; set; }
+    public Action GetsNonBleedDamage { get; set; }
+    public Action Died { get; set; }
 
     public void Damage(int damage)
     {
         DamageWithOutNotify(damage);
-        OnPlayerGetsNonBleedDamage?.Invoke();
+        GetsNonBleedDamage?.Invoke();
     }
 
     public void DamageWithOutNotify(int damage)
@@ -33,7 +33,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         _health -= damage;
-        OnPlayerGetsDamage?.Invoke();
+        Damaged?.Invoke();
     }
 
     public void Heal(int healthToHeal)
@@ -43,11 +43,11 @@ public class PlayerHealth : MonoBehaviour
         _health += healthToHeal;
         _health = Mathf.Clamp(_health, 0, _maxHealth);
 
-        OnPlayerHeals?.Invoke();
+        Healed?.Invoke();
     }
 
     public void Die()
     {
-        OnPlayerDies?.Invoke();
+        Died?.Invoke();
     }
 }

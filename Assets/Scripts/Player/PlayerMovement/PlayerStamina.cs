@@ -21,7 +21,7 @@ public class PlayerStamina : CoroutineUser
         {
             _staminaTime = value;
             Stamina = _staminaCurve.Evaluate(_staminaTime);
-            OnStaminaValueChanged?.Invoke();
+            Changed?.Invoke();
         }
     }
 
@@ -29,15 +29,15 @@ public class PlayerStamina : CoroutineUser
     public int BurnSpeedMultipliyer { get => _burnSpeedMultipliyer; set => _burnSpeedMultipliyer = value; }
     public float MaxStaminaTime { get; private set; }
     public bool IsTimeoutPassed { get; set; }
-    public Action OnStaminaValueChanged { get; set; }
-    public Action OnStaminaRunningOut { get; set; }
+    public Action Changed { get; set; }
+    public Action RanOut { get; set; }
 
     private void Awake()
     {
-        _runController.OnPlayerUsingMove += Burn;
-        _runController.OnPlayerStartedUsing += StopRegeneration;
-        _runController.OnPlayerStoppedUsing += StartAction;
-        _playerMovement.OnPlayerStoppedMoving += StartAction;
+        _runController.Using += Burn;
+        _runController.UseStarted += StopRegeneration;
+        _runController.UseStopped += StartAction;
+        _playerMovement.StoppedMoving += StartAction;
     }
 
     private new void Start()
@@ -78,9 +78,9 @@ public class PlayerStamina : CoroutineUser
 
     private void OnDestroy()
     {
-        _runController.OnPlayerUsingMove -= Burn;
-        _runController.OnPlayerStartedUsing -= StopRegeneration;
-        _runController.OnPlayerStoppedUsing -= StartAction;
-        _playerMovement.OnPlayerStoppedMoving -= StartAction;
+        _runController.Using -= Burn;
+        _runController.UseStarted -= StopRegeneration;
+        _runController.UseStopped -= StartAction;
+        _playerMovement.StoppedMoving -= StartAction;
     }
 }

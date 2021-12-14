@@ -15,16 +15,16 @@ public class HealthBarUIController : StatisticsBarUIController
 
     protected override void Subscribe()
     {
-        _playerHealth.OnPlayerGetsDamage += UpdateUI;
-        _playerHealth.OnPlayerHeals += UpdateUI;
-        _gameLoader.OnGameLoaded += UpdateUI;
+        _playerHealth.Damaged += UpdateUI;
+        _playerHealth.Healed += UpdateUI;
+        _gameLoader.Loaded += UpdateUI;
     }
 
     protected override void Unsubscribe()
     {
-        _playerHealth.OnPlayerGetsDamage -= UpdateUI;
-        _playerHealth.OnPlayerHeals -= UpdateUI;
-        _gameLoader.OnGameLoaded -= UpdateUI;
+        _playerHealth.Damaged -= UpdateUI;
+        _playerHealth.Healed -= UpdateUI;
+        _gameLoader.Loaded -= UpdateUI;
     }
 }
 

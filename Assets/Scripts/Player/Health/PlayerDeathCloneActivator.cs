@@ -16,7 +16,7 @@ public class PlayerDeathCloneActivator : MonoBehaviour
 
     private void Start()
     {
-        _playerHealth.OnPlayerDies += ActivateDeathAnimation;
+        _playerHealth.Died += ActivateDeathAnimation;
         _gameObject.SetActive(false);
     }
 
@@ -30,6 +30,6 @@ public class PlayerDeathCloneActivator : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerHealth.OnPlayerDies -= ActivateDeathAnimation;
+        _playerHealth.Died -= ActivateDeathAnimation;
     }
 }

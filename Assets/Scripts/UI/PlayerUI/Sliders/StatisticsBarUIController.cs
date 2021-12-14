@@ -15,7 +15,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
         _slider.maxValue = startBarValue;
         _slider.value = startBarValue;
 
-        _gameLoader.OnGameLoadingUI += gameObject.SetActive;
+        _gameLoader.UILoading += gameObject.SetActive;
         Subscribe();
     }
 
@@ -30,7 +30,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gameLoader.OnGameLoadingUI -= gameObject.SetActive;
+        _gameLoader.UILoading -= gameObject.SetActive;
         Unsubscribe();
     }
 

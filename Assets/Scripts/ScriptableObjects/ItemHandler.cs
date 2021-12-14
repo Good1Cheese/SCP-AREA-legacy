@@ -12,12 +12,12 @@ public abstract class ItemHandler : IInteractable
         set
         {
             _isInInventory = value;
-            OnIsInventoryChanged?.Invoke(_isInInventory);
+            InventoryChanged?.Invoke(_isInInventory);
         }
     }
 
-    public abstract Item_SO Item { get; }
-    public Action<bool> OnIsInventoryChanged { get; set; }
+    public abstract Item_SO Item_SO { get; }
+    public Action<bool> InventoryChanged { get; set; }
     public GameObject GameObject { get; set; }
 
     protected void Start()
@@ -39,5 +39,5 @@ public abstract class ItemHandler : IInteractable
 
     public abstract void Equip();
 
-    public virtual void OnItemDropped() { }
+    public virtual void Dropped() { }
 }

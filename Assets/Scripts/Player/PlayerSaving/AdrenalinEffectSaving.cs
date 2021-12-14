@@ -10,7 +10,7 @@ public class AdrenalinEffectSaving : DataSaving
 
     private void Start()
     {
-        _staminaUseDisabler.OnDisabled += GetEffectTime;
+        _staminaUseDisabler.Disabled += GetEffectTime;
     }
 
     private void GetEffectTime(float effectTime)
@@ -50,6 +50,6 @@ public class AdrenalinEffectSaving : DataSaving
 
     private void OnDestroy()
     {
-        _staminaUseDisabler.OnDisabled -= GetEffectTime;
+        _staminaUseDisabler.Disabled -= GetEffectTime;
     }
 }

@@ -4,25 +4,20 @@ using Zenject;
 public class WearableItemActivator : MonoBehaviour
 {
     [SerializeField] private KeyCode _key;
+    [SerializeField] Transform _itemParent;
 
     [Inject] protected readonly WeaponSlot _wearableItemsInventory;
     [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
     protected WearableItemHandler _wearableItemHandler;
-    protected Transform _itemParent;
 
-    protected virtual WearableSlot WearableItemSlot { get; }
-
-    protected void Awake()
-    {
-        _itemParent = transform;
-    }
+    public virtual WearableSlot WearableItemSlot { get; }
 
     protected void Start()
     {
-        WearableItemSlot.OnItemChanged += SetItem;
-        WearableItemSlot.OnItemRemoved += DeactivateWeapon;
-        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled += SetActiveState;
+        WearableItemSlot.ItemChanged += SpawnGameObjectForPlayer;
+        WearableItemSlot.ItemRemoved += DeactivateWeapon;
+        _inventoryAcviteStateSetter.ActiveStateChanged += SetActiveState;
     }
 
     private void Update()
@@ -30,19 +25,20 @@ public class WearableItemActivator : MonoBehaviour
         if (!Input.GetKeyDown(_key) || _wearableItemHandler == null) { return; }
 
         SetItemActiveState(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        WearableSlot.CurrentItemActivator = this;
     }
 
     public virtual void SetItemActiveState(bool itemActiveState)
     {
-        WearableItemSlot.ItemActionMaker.StartEmptyItemAction2();
+        WearableItemSlot.ItemActionMaker.StartEmptyItemActionWithAudioStop();
         _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
-        WearableItemSlot.OnItemToggled?.Invoke(itemActiveState);
+        WearableItemSlot.Toggled?.Invoke(itemActiveState);
     }
 
-    protected void SetItem(WearableItemHandler wearableItemHandler)
+    protected void SpawnGameObjectForPlayer(WearableItemHandler wearableItemHandler)
     {
         _wearableItemHandler = wearableItemHandler;
-        WearableIte_SO item_SO = (WearableIte_SO)_wearableItemHandler.Item;
+        WearableIte_SO item_SO = (WearableIte_SO)_wearableItemHandler.Item_SO;
 
         _wearableItemHandler.GameObjectForPlayer.transform.SetParent(_itemParent);
         _wearableItemHandler.GameObjectForPlayer.transform.localPosition = item_SO.playerGameObjectSpawnOffset;
@@ -64,8 +60,8 @@ public class WearableItemActivator : MonoBehaviour
 
     protected void OnDestroy()
     {
-        WearableItemSlot.OnItemChanged -= SetItem;
-        WearableItemSlot.OnItemRemoved -= DeactivateWeapon;
-        _inventoryAcviteStateSetter.OnInventoryEnabledDisabled -= SetActiveState;
+        WearableItemSlot.ItemChanged -= SpawnGameObjectForPlayer;
+        WearableItemSlot.ItemRemoved -= DeactivateWeapon;
+        _inventoryAcviteStateSetter.ActiveStateChanged -= SetActiveState;
     }
 }

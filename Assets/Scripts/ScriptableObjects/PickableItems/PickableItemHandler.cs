@@ -8,7 +8,7 @@ public abstract class PickableItemHandler : ItemHandler, IClickable
     [Inject] protected readonly PickableItemsInventory _pickableItemsInventory;
 
     public virtual bool ShouldItemNotBeUsed => false;
-    public override Item_SO Item => _pickableItem_SO;
+    public override Item_SO Item_SO => _pickableItem_SO;
 
     public virtual void Use() { }
 

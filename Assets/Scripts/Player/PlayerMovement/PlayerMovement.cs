@@ -15,15 +15,15 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _characterController;
     private bool _isPlayerMoving;
 
-    public Action OnPlayerNotMoving { get; set; }
-    public Action OnPlayerStoppedMoving { get; set; }
+    public Action NotMoving { get; set; }
+    public Action StoppedMoving { get; set; }
     public float HorizontalMove { get; set; }
     public float VerticalMove { get; set; }
 
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _pauseMenu.OnPauseMenuButtonPressed += ReverseEnableState;
+        _pauseMenu.PauseMenuButtonPressed += ReverseEnableState;
     }
 
     private void ReverseEnableState()
@@ -38,12 +38,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (HorizontalMove == 0 && VerticalMove == 0)
         {
-            OnPlayerNotMoving?.Invoke();
+            NotMoving?.Invoke();
             _movementController.MoveTime = 0;
 
             if (_isPlayerMoving)
             {
-                OnPlayerStoppedMoving?.Invoke();
+                StoppedMoving?.Invoke();
                 _walkController.StopMove();
                 _isPlayerMoving = false;
             }
@@ -64,6 +64,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenu.OnPauseMenuButtonPressed -= ReverseEnableState;
+        _pauseMenu.PauseMenuButtonPressed -= ReverseEnableState;
     }
 }

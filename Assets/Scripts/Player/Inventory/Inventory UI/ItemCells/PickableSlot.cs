@@ -34,18 +34,18 @@ public class PickableSlot : InventorySlot, IPointerClickHandler
         _pickableItemsInteraction.UseItem(this);
     }
 
-    public override void OnRightClick()
+    public override void Clicked()
     {
         _pickableItemsInteraction.DropItem(this);
     }
 
-    public override void OnItemSet()
+    public override void Setted()
     {
-        _itemDescription.text = ItemHandler.Item.description;
+        _itemDescription.text = ItemHandler.Item_SO.description;
         _gameObject.SetActive(true);
     }
 
-    public override void OnItemDeleted()
+    public override void Cleared()
     {
         _gameObject.SetActive(false);
     }

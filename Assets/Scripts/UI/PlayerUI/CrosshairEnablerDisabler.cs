@@ -12,10 +12,10 @@ public class CrosshairEnablerDisabler : MonoBehaviour
     {
         _gameObject = gameObject;
 
-        _weaponAim.OnPlayerAimed += Deactivate;
-        _weaponAim.OnPlayerInTakedAim += Activate;
-        _weaponSlot.OnItemRemoved += Activate;
-        _gameLoader.OnGameLoadingUI += _gameObject.SetActive;
+        _weaponAim.Aimed += Deactivate;
+        _weaponAim.Unaimed += Activate;
+        _weaponSlot.ItemRemoved += Activate;
+        _gameLoader.UILoading += _gameObject.SetActive;
     }
 
     private void Activate()
@@ -30,9 +30,9 @@ public class CrosshairEnablerDisabler : MonoBehaviour
 
     private void OnDestroy()
     {
-        _weaponAim.OnPlayerAimed -= Deactivate;
-        _weaponAim.OnPlayerInTakedAim -= Activate;
-        _weaponSlot.OnItemRemoved -= Activate;
-        _gameLoader.OnGameLoadingUI -= _gameObject.SetActive;
+        _weaponAim.Aimed -= Deactivate;
+        _weaponAim.Unaimed -= Activate;
+        _weaponSlot.ItemRemoved -= Activate;
+        _gameLoader.UILoading -= _gameObject.SetActive;
     }
 }

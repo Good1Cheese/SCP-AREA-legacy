@@ -12,10 +12,10 @@ public abstract class MoveSound : SoundOnAction
 
     private void Start()
     {
-        _playerHealth.OnPlayerDies += StopSoundOnPlayerDies;
+        _playerHealth.Died += StopSoundOnPlayerDied;
     }
 
-    private void StopSoundOnPlayerDies()
+    private void StopSoundOnPlayerDied()
     {
         UnscribeToAction();
 
@@ -27,28 +27,30 @@ public abstract class MoveSound : SoundOnAction
     protected override void PlaySound()
     {
         _audioSource.clip = _clip;
+
         if (_audioSource.isPlaying) { return; }
+
         _audioSource.Play();
     }
 
     protected override void SubscribeToAction()
     {
-        _moveController.OnPlayerUsingMove += PlaySound;
-        _moveController.OnPlayerStoppedUsing += StopSound;
-        _pauseMenu.OnPauseMenuButtonPressed += StopSound;
+        _moveController.Using += PlaySound;
+        _moveController.UseStopped += StopSound;
+        _pauseMenu.PauseMenuButtonPressed += StopSound;
     }
 
     protected override void UnscribeToAction()
     {
-        _moveController.OnPlayerUsingMove -= PlaySound;
-        _moveController.OnPlayerStoppedUsing -= StopSound;
-        _pauseMenu.OnPauseMenuButtonPressed -= StopSound;
+        _moveController.Using -= PlaySound;
+        _moveController.UseStopped -= StopSound;
+        _pauseMenu.PauseMenuButtonPressed -= StopSound;
     }
 
     private new void OnDestroy()
     {
         base.OnDestroy();
 
-        _playerHealth.OnPlayerDies -= StopSoundOnPlayerDies;
+        _playerHealth.Died -= StopSoundOnPlayerDied;
     }
 }

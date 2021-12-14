@@ -7,11 +7,30 @@ public abstract class WearableSlot : InventorySlot
     [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
     [Inject(Id = "ItemsAudio")] private readonly AudioSource _slotAudio;
 
+    private static WearableItemActivator _currentItemActivator;
+
     public WearableItemActivator WearableItemActivator { get; set; }
     public ItemActionMaker ItemActionMaker { get; set; }
-    public Action<WearableItemHandler> OnItemChanged { get; set; }
-    public Action<bool> OnItemToggled { get; set; }
-    public Action OnItemRemoved { get; set; }
+    public Action<WearableItemHandler> ItemChanged { get; set; }
+    public Action<bool> Toggled { get; set; }
+    public Action ItemRemoved { get; set; }
+
+    public static Action NewItemActivated { get; set; }
+
+    public static WearableItemActivator CurrentItemActivator
+    {
+        get => _currentItemActivator;
+        set
+        {
+            if (_currentItemActivator != null && _currentItemActivator != value)
+            {
+                _currentItemActivator.SetItemActiveState(false);
+                NewItemActivated?.Invoke();
+            }
+
+            _currentItemActivator = value;
+        }
+    }
 
     protected void Awake()
     {
@@ -25,31 +44,31 @@ public abstract class WearableSlot : InventorySlot
             _wearableItemsInteraction.DropItem(this);
         }
 
-        OnItemChanged?.Invoke((WearableItemHandler)item);
+        ItemChanged?.Invoke((WearableItemHandler)item);
         base.SetItem(item);
     }
 
     public void ClearWearableSlot()
     {
-        OnItemDeleted();
+        Cleared();
         ItemHandler = null;
         _image.sprite = null;
     }
 
-    public override void OnItemSet()
+    public override void Setted()
     {
         _image.enabled = true;
     }
 
-    public override void OnItemDeleted()
+    public override void Cleared()
     {
-        ItemActionMaker.StartEmptyItemAction2();
+        ItemActionMaker.StartEmptyItemActionWithAudioStop();
 
-        OnItemRemoved?.Invoke();
+        ItemRemoved?.Invoke();
         _image.enabled = false;
     }
 
-    public override void OnRightClick()
+    public override void Clicked()
     {
         _wearableItemsInteraction.DropItem(this);
     }

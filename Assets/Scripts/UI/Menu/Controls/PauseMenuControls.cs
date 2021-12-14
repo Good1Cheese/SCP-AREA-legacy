@@ -13,7 +13,7 @@ public class PauseMenuControls : MonoBehaviour
     {
         _gameObject = gameObject;
         _gameObject.SetActive(false);
-        _pauseMenu.OnPauseMenuButtonPressed += ActivateOrDeacrivateUI;
+        _pauseMenu.PauseMenuButtonPressed += ActivateOrDeacrivateUI;
     }
 
     public void ActivateOrDeacrivateUI()
@@ -47,6 +47,6 @@ public class PauseMenuControls : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenu.OnPauseMenuButtonPressed -= ActivateOrDeacrivateUI;
+        _pauseMenu.PauseMenuButtonPressed -= ActivateOrDeacrivateUI;
     }
 }

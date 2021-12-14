@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class InjectorSlot : WearableSlot
 {
-    public Action<InjectorHandler> OnInjectorChanged { get; set; }
-    public Action OnSlotUsed { get; set; }
+    public Action<InjectorHandler> Changed { get; set; }
+    public Action Used { get; set; }
 
-    public override void OnItemSet()
+    public override void Setted()
     {
-        base.OnItemSet();
+        base.Setted();
 
-        OnInjectorChanged.Invoke(ItemHandler as InjectorHandler);
-        OnItemToggled?.Invoke(false);
+        Changed.Invoke(ItemHandler as InjectorHandler);
+        Toggled?.Invoke(false);
     }
 }

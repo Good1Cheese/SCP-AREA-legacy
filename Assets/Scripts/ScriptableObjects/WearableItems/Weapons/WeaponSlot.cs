@@ -4,14 +4,14 @@ using Zenject;
 
 public class WeaponSlot : WearableSlot
 {
-    public Action<WeaponHandler> OnWeaponChanged { get; set; }
-    public Action OnAmmoAdded { get; set; }
+    public Action<WeaponHandler> Changed { get; set; }
+    public Action AmmoAdded { get; set; }
 
-    public override void OnItemSet()
+    public override void Setted()
     {
-        base.OnItemSet();
+        base.Setted();
 
-        OnWeaponChanged.Invoke(ItemHandler as WeaponHandler);
-        OnItemToggled?.Invoke(false);
+        Changed.Invoke(ItemHandler as WeaponHandler);
+        Toggled?.Invoke(false);
     }
 }

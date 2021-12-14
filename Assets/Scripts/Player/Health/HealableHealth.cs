@@ -13,9 +13,9 @@ public class HealableHealth : CoroutineUser
 
     private void Awake()
     {
-        _playerHealth.OnPlayerGetsDamage += StopAction;
-        _playerHealth.OnPlayerGetsDamage += Heal;
-        _playerHealth.OnPlayerHeals += Heal;
+        _playerHealth.Damaged += StopAction;
+        _playerHealth.Damaged += Heal;
+        _playerHealth.Healed += Heal;
     }
 
     private new void Start()
@@ -39,7 +39,7 @@ public class HealableHealth : CoroutineUser
         while (_playerHealth.Amount <= _playerHealth.MaxAmount)
         {
             _playerHealth.Amount += _healAmount;
-            _playerHealth.OnPlayerHeals?.Invoke();
+            _playerHealth.Healed?.Invoke();
 
             yield return _coroutineTimeout;
         }
@@ -49,8 +49,8 @@ public class HealableHealth : CoroutineUser
 
     private void OnDestroy()
     {
-        _playerHealth.OnPlayerGetsDamage -= StopAction;
-        _playerHealth.OnPlayerGetsDamage -= Heal;
-        _playerHealth.OnPlayerHeals -= Heal;
+        _playerHealth.Damaged -= StopAction;
+        _playerHealth.Damaged -= Heal;
+        _playerHealth.Healed -= Heal;
     }
 }

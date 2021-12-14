@@ -12,5 +12,5 @@ public abstract class WearableItemHandler : ItemHandler
         GameObjectForPlayer.SetActive(false);
     }
 
-    public override Item_SO Item => _wearableIte_SO;
+    public override Item_SO Item_SO => _wearableIte_SO;
 }

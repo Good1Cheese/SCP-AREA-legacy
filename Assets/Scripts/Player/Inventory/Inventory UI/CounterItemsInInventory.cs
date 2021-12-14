@@ -5,24 +5,22 @@ using Zenject;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class CounterItemsInInventory : MonoBehaviour
 {
-    [Inject] private readonly PickableItemsInventory _playerInventory;
+    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     private TextMeshProUGUI _textMesh;
 
     private void Awake()
     {
         _textMesh = GetComponent<TextMeshProUGUI>();
-        _playerInventory.OnInventoryChanged += UpdateItemsCount;
-        _playerInventory.OnInventoryRemaded += UpdateItemsCount;
+        _pickableItemsInventory.Changed += UpdateItemsCount;
     }
 
     private void UpdateItemsCount()
     {
-        _textMesh.text = string.Format($"{_playerInventory.CurrentItemIndex}/{_playerInventory.Inventory.Length}");
+        _textMesh.text = string.Format($"{_pickableItemsInventory.CurrentItemIndex}/{_pickableItemsInventory.Inventory.Length}");
     }
 
     private void OnDestroy()
     {
-        _playerInventory.OnInventoryChanged -= UpdateItemsCount;
-        _playerInventory.OnInventoryRemaded -= UpdateItemsCount;
+        _pickableItemsInventory.Changed -= UpdateItemsCount;
     }
 }
