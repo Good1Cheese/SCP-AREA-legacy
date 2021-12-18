@@ -12,7 +12,7 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
     private void Start()
     {
         _weaponSlot.ItemRemoved += DeactivateWeaponUI;
-        _weaponSlot.ItemActionMaker.ActionStarted += DeactivateWeaponUI;
+        _weaponSlot.ActionStarted += DeactivateWeaponUI;
 
         if (_ammoUICountUpdater == null)
         {
@@ -37,6 +37,6 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
     private void OnDestroy()
     {
         _weaponSlot.ItemRemoved -= DeactivateWeaponUI;
-        _weaponSlot.ItemActionMaker.ActionStarted -= DeactivateWeaponUI;
+        _weaponSlot.ActionStarted -= DeactivateWeaponUI;
     }
 }

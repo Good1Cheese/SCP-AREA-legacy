@@ -4,6 +4,7 @@ using Zenject;
 
 public class WeaponMiss : MonoBehaviour
 {
+    [Inject] private readonly ItemActionCreator _itemActionCreator;
     [Inject] private readonly WeaponSlot _weaponSlot;
 
     private WaitForSeconds _timeoutAfterShot;
@@ -16,7 +17,7 @@ public class WeaponMiss : MonoBehaviour
 
     public void ActivateMissSound()
     {
-        _weaponSlot.ItemActionMaker.StartItemAction(_timeoutAfterShot, _weaponHandler.Weapon_SO.missFireSound);
+        _itemActionCreator.StartItemAction(_timeoutAfterShot, _weaponHandler.Weapon_SO.missFireSound, false);
     }
 
     private void SetWeaponTimeoutAfterShot(WeaponHandler weaponHandler)

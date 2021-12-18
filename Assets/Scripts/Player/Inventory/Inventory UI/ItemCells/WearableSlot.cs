@@ -1,21 +1,17 @@
 ﻿using System;
-using UnityEngine;
 using Zenject;
 
 public abstract class WearableSlot : InventorySlot
 {
     [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
-    [Inject(Id = "ItemsAudio")] private readonly AudioSource _slotAudio;
 
     private static WearableItemActivator _currentItemActivator;
 
-    public WearableItemActivator WearableItemActivator { get; set; }
-    public ItemActionMaker ItemActionMaker { get; set; }
     public Action<WearableItemHandler> ItemChanged { get; set; }
     public Action<bool> Toggled { get; set; }
     public Action ItemRemoved { get; set; }
-
-    public static Action NewItemActivated { get; set; }
+    public Action ActionStarted { get; set; }
+    public WearableItemActivator Activator { get; set; }
 
     public static WearableItemActivator CurrentItemActivator
     {
@@ -25,16 +21,10 @@ public abstract class WearableSlot : InventorySlot
             if (_currentItemActivator != null && _currentItemActivator != value)
             {
                 _currentItemActivator.SetItemActiveState(false);
-                NewItemActivated?.Invoke();
             }
 
             _currentItemActivator = value;
         }
-    }
-
-    protected void Awake()
-    {
-        ItemActionMaker = new ItemActionMaker(WearableItemActivator, _slotAudio);
     }
 
     public new void SetItem(ItemHandler item)
@@ -62,10 +52,12 @@ public abstract class WearableSlot : InventorySlot
 
     public override void Cleared()
     {
-        ItemActionMaker.StartEmptyItemActionWithAudioStop();
-
         ItemRemoved?.Invoke();
         _image.enabled = false;
+
+        if (CurrentItemActivator.Slot != this) { return; }
+
+        CurrentItemActivator = null;
     }
 
     public override void Clicked()

@@ -38,6 +38,6 @@ public abstract class WearableItemSaving : DataSaving
         ItemHandler = itemGameObject.GetComponent<WearableItemHandler>();
 
         ItemHandler.Interact();
-        SlotToSave.WearableItemActivator.SetItemActiveState(isActive);
+        SlotToSave.Activator.SetItemActiveState(isActive);
     }
 }

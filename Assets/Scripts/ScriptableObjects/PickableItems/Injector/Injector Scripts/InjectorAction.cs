@@ -5,6 +5,7 @@ public abstract class InjectorAction : ItemAction
 {
     [SerializeField] protected KeyCode _key;
 
+    [Inject] protected readonly ItemActionCreator _itemActionCreator;
     [Inject] protected readonly InjectorSlot _injectorSlot;
 
     protected InjectorHandler _injectorHandler;
@@ -21,7 +22,7 @@ public abstract class InjectorAction : ItemAction
 
     protected void Update()
     {
-        if (!Input.GetKeyDown(_key) || _injectorSlot.ItemActionMaker.IsGoing) { return; }
+        if (!Input.GetKeyDown(_key) || _itemActionCreator.IsGoing) { return; }
 
         DoAction();
     }

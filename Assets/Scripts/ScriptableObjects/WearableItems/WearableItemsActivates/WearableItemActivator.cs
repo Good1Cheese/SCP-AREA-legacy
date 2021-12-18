@@ -8,15 +8,16 @@ public class WearableItemActivator : MonoBehaviour
 
     [Inject] protected readonly WeaponSlot _wearableItemsInventory;
     [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
+    [Inject] private readonly ItemActionCreator _itemActionCreator;
 
     protected WearableItemHandler _wearableItemHandler;
 
-    public virtual WearableSlot WearableItemSlot { get; }
+    public virtual WearableSlot Slot { get; }
 
     protected void Start()
     {
-        WearableItemSlot.ItemChanged += SpawnGameObjectForPlayer;
-        WearableItemSlot.ItemRemoved += DeactivateWeapon;
+        Slot.ItemChanged += SpawnGameObjectForPlayer;
+        Slot.ItemRemoved += DeactivateWeapon;
         _inventoryAcviteStateSetter.ActiveStateChanged += SetActiveState;
     }
 
@@ -30,9 +31,12 @@ public class WearableItemActivator : MonoBehaviour
 
     public virtual void SetItemActiveState(bool itemActiveState)
     {
-        WearableItemSlot.ItemActionMaker.StartEmptyItemActionWithAudioStop();
         _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
-        WearableItemSlot.Toggled?.Invoke(itemActiveState);
+        Slot.Toggled?.Invoke(itemActiveState);
+
+        if (itemActiveState) { return; }
+
+        _itemActionCreator.StartEmptyItemActionWithAudioStop();
     }
 
     protected void SpawnGameObjectForPlayer(WearableItemHandler wearableItemHandler)
@@ -60,8 +64,8 @@ public class WearableItemActivator : MonoBehaviour
 
     protected void OnDestroy()
     {
-        WearableItemSlot.ItemChanged -= SpawnGameObjectForPlayer;
-        WearableItemSlot.ItemRemoved -= DeactivateWeapon;
+        Slot.ItemChanged -= SpawnGameObjectForPlayer;
+        Slot.ItemRemoved -= DeactivateWeapon;
         _inventoryAcviteStateSetter.ActiveStateChanged -= SetActiveState;
     }
 }

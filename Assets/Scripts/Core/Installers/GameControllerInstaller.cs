@@ -11,7 +11,9 @@ public class GameControllerInstaller : MonoInstaller
     [SerializeField] private WeaponSlot _weaponSlot;
     [SerializeField] private InjectorSlot _injectorSlot;
     [SerializeField] private Transform _propsHandler;
+    [SerializeField] private Transform ActivatorsParent;
 
+    private ItemActionCreator _itemActionCreator;
     private GameLoader _gameLoader;
     private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
     private AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
@@ -29,9 +31,10 @@ public class GameControllerInstaller : MonoInstaller
         }
 
         GetComponents();
-        SetActivatorsOnSlots();
+        SetItemActivatorsOnSlots();
 
         Container.BindInstance(_propsHandler).WithId("PropsHandler").AsCached();
+        Container.BindInstance(_itemActionCreator).AsSingle();
         Container.BindInstance(_gameLoader).AsSingle();
         Container.BindInstance(_pauseMenuEnablerDisabler).AsSingle();
         Container.BindInstance(_ammoUIEnablerDisabler).AsSingle();
@@ -42,7 +45,7 @@ public class GameControllerInstaller : MonoInstaller
         Container.BindInstance(_wearableItemsInventory).AsSingle();
         Container.BindInstance(_keyCardSlot).AsSingle();
         Container.BindInstance(_maskSlot).AsSingle();
-        Container.BindInstance(_utilitySlot).AsSingle();  
+        Container.BindInstance(_utilitySlot).AsSingle();
         Container.BindInstance(_weaponSlot).AsSingle();
         Container.BindInstance(_injectorSlot).AsSingle();
         Container.BindInstance(this).AsSingle();
@@ -50,6 +53,7 @@ public class GameControllerInstaller : MonoInstaller
 
     private void GetComponents()
     {
+        _itemActionCreator = GetComponent<ItemActionCreator>();
         _gameLoader = GetComponent<GameLoader>();
         _pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();
         _ammoUIEnablerDisabler = GetComponent<AmmoUIEnablerDisabler>();
@@ -60,12 +64,12 @@ public class GameControllerInstaller : MonoInstaller
         _wearableItemsInventory = GetComponent<WearableItemsInventory>();
     }
 
-    private void SetActivatorsOnSlots()
+    private void SetItemActivatorsOnSlots()
     {
-        _keyCardSlot.WearableItemActivator = GetComponent<KeyCardActivator>();
-        _maskSlot.WearableItemActivator = GetComponent<MaskActivator>();
-        _utilitySlot.WearableItemActivator = GetComponent<UtilityActivator>();
-        _weaponSlot.WearableItemActivator = GetComponent<WeaponActivator>();
-        _injectorSlot.WearableItemActivator = GetComponent<InjectorActivator>();
+        _keyCardSlot.Activator = ActivatorsParent.GetComponent<KeyCardActivator>();
+        _maskSlot.Activator = ActivatorsParent.GetComponent<MaskActivator>();
+        _utilitySlot.Activator = ActivatorsParent.GetComponent<UtilityActivator>();
+        _weaponSlot.Activator = ActivatorsParent.GetComponent<WeaponActivator>();
+        _injectorSlot.Activator = ActivatorsParent.GetComponent<InjectorActivator>();
     }
 }

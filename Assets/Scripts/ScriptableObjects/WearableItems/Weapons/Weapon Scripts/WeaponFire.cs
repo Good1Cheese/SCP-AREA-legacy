@@ -11,12 +11,13 @@ public class WeaponFire : WeaponAction
     [Inject] private readonly WeaponAim _weaponAim;
     [Inject] private readonly WeaponShot _weaponShot;
     [Inject] private readonly WeaponMiss _weaponMiss;
+    [Inject] private readonly ItemActionCreator _itemActionCreator;
 
     public Action Fired { get; set; }
 
     private void Update()
     {
-        if (!Input.GetKeyDown(FIRE_KEY) || _weaponSlot.ItemActionMaker.IsGoing) { return; }
+        if (!Input.GetKeyDown(FIRE_KEY) || _itemActionCreator.IsGoing) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {
@@ -29,7 +30,7 @@ public class WeaponFire : WeaponAction
 
     private void Fire()
     {
-        _weaponSlot.ItemActionMaker.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout, _weaponHandler.CurrentShotSound);
+        _itemActionCreator.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout, _weaponHandler.CurrentShotSound, false);
         _weaponHandler.ClipAmmo--;
 
         Fired?.Invoke();

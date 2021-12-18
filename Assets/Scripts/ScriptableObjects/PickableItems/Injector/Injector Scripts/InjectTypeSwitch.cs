@@ -16,7 +16,7 @@ public class InjectTypeSwitch : InjectorAction
 
     protected override void DoAction()
     {
-        _injectorSlot.ItemActionMaker.StartItemAction(_injectorHandler.Injector_SO.injectChangeTimeout, null);
+        _itemActionCreator.StartItemAction(_injectorHandler.Injector_SO.injectChangeTimeout, null);
 
         if (CurrentType == typeof(IHealthInjectable))
         {

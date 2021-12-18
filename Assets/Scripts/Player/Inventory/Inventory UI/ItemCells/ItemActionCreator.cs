@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
-public class ItemActionMaker
+public class ItemActionCreator : MonoBehaviour
 {
-    private readonly WearableItemActivator _wearableItemActivator;
-    private readonly AudioSource _slotAudio;
-    private CoroutineUser _currentItemAction;
+    [Inject(Id = "ItemsAudio")] private readonly AudioSource _slotAudio;
 
-    public ItemActionMaker(WearableItemActivator wearableItemActivator, AudioSource slotAudio)
-    {
-        _wearableItemActivator = wearableItemActivator;
-        _slotAudio = slotAudio;
-    }
+    private CoroutineUser _currentItemAction;
+    private bool _isSoundInterrupting = true;
 
     public bool IsGoing { get; set; }
-    public Action ActionStarted { get; set; }
 
-    public void StartItemAction(WaitForSeconds timeout, AudioClip actionSound)
+    public void StartItemAction(WaitForSeconds timeout, AudioClip actionSound, bool isSoundInterrupting = true)
     {
         Debug.Log("Начато непрерываемое действие");
 
         PlaySound(actionSound);
-        _wearableItemActivator.StartCoroutine(DoAction(timeout));
+        _isSoundInterrupting = isSoundInterrupting;
+         StartCoroutine(DoAction(timeout));
     }
 
     public void StartInterruptingItemAction(CoroutineUser coroutineUser, AudioClip actionSound)
@@ -30,8 +26,9 @@ public class ItemActionMaker
         Debug.Log("Начато прерывание действие");
 
         PlaySound(actionSound);
+        _isSoundInterrupting = true;
         _currentItemAction = coroutineUser;
-        ActionStarted?.Invoke();
+        RaiseActionStartedEvent();
     }
 
     private void PlaySound(AudioClip actionSound)
@@ -52,8 +49,8 @@ public class ItemActionMaker
 
     public void StartEmptyItemAction()
     {
-        ActionStarted?.Invoke();
-            
+        RaiseActionStartedEvent();
+
         if (_currentItemAction == null) { return; }
 
         _currentItemAction.StopAction();
@@ -64,7 +61,21 @@ public class ItemActionMaker
     {
         Debug.Log("Прерывание действия");
 
-        _slotAudio.Stop();
         StartEmptyItemAction();
+
+        if (!_isSoundInterrupting) { return; }
+
+        _slotAudio.Stop();
+    }
+
+    private static void RaiseActionStartedEvent()
+    {
+        WearableItemActivator currentItemActivator = WearableSlot.CurrentItemActivator;
+
+        if (currentItemActivator == null) { return; }
+
+        print("RaisedEvent on "+ currentItemActivator.Slot);
+
+        currentItemActivator.Slot.ActionStarted?.Invoke();
     }
 }

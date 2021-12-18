@@ -13,6 +13,6 @@ public class InjectorSaving : WearableItemSaving
 
         if (string.IsNullOrEmpty(itemName)) { return; }
 
-        SlotToSave.WearableItemActivator.SetItemActiveState(isActive);
+        SlotToSave.Activator.SetItemActiveState(isActive);
     }
 }

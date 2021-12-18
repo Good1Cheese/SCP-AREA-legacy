@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1.9133321, g: 2.0824852, b: 2.8995857, a: 1}
+  m_IndirectSpecularColor: {r: 1.9178349, g: 2.0864358, b: 2.9032001, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -825,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098461308746145469, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -28.852692
+      value: -28.8526
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
@@ -1140,6 +1140,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!4 &686410937 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 913925334, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
+  m_PrefabInstance: {fileID: 4504709228995589973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &692618301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,6 +2628,10 @@ PrefabInstance:
       propertyPath: _propsHandler
       value: 
       objectReference: {fileID: 6291869656025110872}
+    - target: {fileID: 4504709229982532499, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
+      propertyPath: ActivatorsParent
+      value: 
+      objectReference: {fileID: 686410937}
     - target: {fileID: 4504709229982532500, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
       propertyPath: m_Name
       value: GameController

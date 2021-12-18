@@ -10,6 +10,7 @@ public class WeaponReload : WeaponAction
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
+    [Inject] private readonly ItemActionCreator _itemActionCreator;
 
     private IEnumerable<AmmoHandler> _inventoryAmmoEnumarable;
     private int _calculatedClipAmmo;
@@ -20,14 +21,14 @@ public class WeaponReload : WeaponAction
     {
         if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
             || _weaponHandler.Ammo == 0
-            || _weaponSlot.ItemActionMaker.IsGoing) { return; }
+            || _itemActionCreator.IsGoing) { return; }
 
         _weaponReloadCoroutineUser.StartAction();
     }
 
     public IEnumerator Reload()
     {
-        _weaponSlot.ItemActionMaker.StartInterruptingItemAction(_weaponReloadCoroutineUser, _weaponHandler.Weapon_SO.reloadSound);
+        _itemActionCreator.StartInterruptingItemAction(_weaponReloadCoroutineUser, _weaponHandler.Weapon_SO.reloadSound);
 
         AddClipAmmoToInventoryAmmo();
         _weaponHandler.ClipAmmo = 0;

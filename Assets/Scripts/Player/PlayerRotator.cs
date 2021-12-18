@@ -7,12 +7,12 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] private float _xSensitivity;
 
     [SerializeField] private float _verticalLookLimit;
-
     [SerializeField] private float _smoothTime;
 
     [Inject] private readonly Camera _mainCamera;
     [Inject] private readonly InventoryEnablerDisabler _werableInventoryAcviteStateSetter;
     [Inject(Id = "Player")] private readonly Transform _playerTransform;
+
     private float _mouseY;
     private float _mouseX;
 

@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class DeviceSaving : WearableItemSaving
+public class UtilitySaving : WearableItemSaving
 {
     [Inject] private readonly UtilitySlot _utilitySlot;
 

@@ -4,5 +4,5 @@ public class UtilityActivator : WearableItemActivator
 {
     [Inject] private readonly UtilitySlot _utilitySlot;
 
-    public override WearableSlot WearableItemSlot => _utilitySlot;
+    public override WearableSlot Slot => _utilitySlot;
 }
