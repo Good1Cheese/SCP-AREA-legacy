@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponSway : WeaponAction
+public class WeaponSway : WeaponScriptBase
 {
     [SerializeField] private float _intensity;
     [SerializeField] private float _smooth;

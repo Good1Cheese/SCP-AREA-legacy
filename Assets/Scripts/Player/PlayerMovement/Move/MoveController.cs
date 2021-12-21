@@ -4,7 +4,7 @@ using Zenject;
 
 public abstract class MoveController : MonoBehaviour
 {
-    [SerializeField] protected KeyCode _key;
+    [SerializeField] protected KeyCode _moveKey;
     [SerializeField] private float _maxMoveTime;
 
     [Inject] protected readonly MovementController _movementController;
@@ -19,13 +19,14 @@ public abstract class MoveController : MonoBehaviour
 
     public virtual float GetMove()
     {
-        if (Input.GetKeyDown(_key))
+        if (Input.GetKeyDown(_moveKey))
         {
             UseStarted?.Invoke();
         }
 
-        if (Input.GetKey(_key))
+        if (Input.GetKey(_moveKey))
         {
+            IsMoving = true;
             return Move();
         }
 
@@ -35,7 +36,6 @@ public abstract class MoveController : MonoBehaviour
 
     protected float Move()
     {
-        IsMoving = true;
         Using?.Invoke();
 
         if (_movementController.MoveTime < MaxMoveTime)
@@ -48,10 +48,16 @@ public abstract class MoveController : MonoBehaviour
 
     public virtual void StopMove()
     {
-        if (Input.GetKeyUp(_key))
+        if (Input.GetKeyUp(_moveKey))
         {
             IsMoving = false;
             UseStopped?.Invoke();
         }
+    }
+
+    public virtual float GetSpeed()
+    {
+        StopMove();
+        return GetMove();
     }
 }

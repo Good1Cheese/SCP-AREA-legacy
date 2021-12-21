@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public abstract class WeaponAction : ItemAction
+public abstract class WeaponScriptBase : ItemScriptBase
 {
     [Inject] protected readonly WeaponSlot _weaponSlot;
 

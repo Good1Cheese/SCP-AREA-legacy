@@ -24,7 +24,7 @@ public class InteractionProvider : MonoBehaviour
 
     private void Start()
     {
-        _inventoryEnablerDisabler.ActiveStateChanged += SetActiveState;
+        _inventoryEnablerDisabler.EnabledDisabled += SetActiveState;
         _timeoutAfterInteraction = new WaitForSeconds(_delayAfterInteraction);
     }
 
@@ -79,6 +79,6 @@ public class InteractionProvider : MonoBehaviour
 
     private void OnDestroy()
     {
-        _inventoryEnablerDisabler.ActiveStateChanged -= SetActiveState;
+        _inventoryEnablerDisabler.EnabledDisabled -= SetActiveState;
     }
 }

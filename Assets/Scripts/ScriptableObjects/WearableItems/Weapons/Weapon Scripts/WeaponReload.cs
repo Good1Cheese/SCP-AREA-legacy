@@ -6,7 +6,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(WeaponReloadCoroutineUser))]
-public class WeaponReload : WeaponAction
+public class WeaponReload : WeaponScriptBase
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;

@@ -4,7 +4,7 @@ using Zenject;
 public abstract class MoveSound : SoundOnAction
 {
     [SerializeField] private AudioClip _clip;
-
+    
     [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
     [Inject] readonly private PlayerHealth _playerHealth;
 
@@ -37,14 +37,14 @@ public abstract class MoveSound : SoundOnAction
     {
         _moveController.Using += PlaySound;
         _moveController.UseStopped += StopSound;
-        _pauseMenu.PauseMenuButtonPressed += StopSound;
+        _pauseMenu.EnabledDisabled += StopSound;
     }
 
     protected override void UnscribeToAction()
     {
         _moveController.Using -= PlaySound;
         _moveController.UseStopped -= StopSound;
-        _pauseMenu.PauseMenuButtonPressed -= StopSound;
+        _pauseMenu.EnabledDisabled -= StopSound;
     }
 
     private new void OnDestroy()

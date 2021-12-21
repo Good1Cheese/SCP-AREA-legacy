@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(IRayProvider))]
-public class WeaponAim : WeaponAction
+public class WeaponAim : WeaponScriptBase
 {
     private const KeyCode AI_KEY = KeyCode.Mouse1;
 

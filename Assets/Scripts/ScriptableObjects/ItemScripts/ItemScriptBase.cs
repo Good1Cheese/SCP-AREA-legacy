@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public abstract class ItemAction : MonoBehaviour
+public abstract class ItemScriptBase : MonoBehaviour
 {
     [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
 
@@ -11,7 +11,7 @@ public abstract class ItemAction : MonoBehaviour
     protected void Start()
     {
         ItemSlot.Toggled += SetActiveState;
-        _inventoryAcviteStateSetter.ActiveStateChanged += ChangeActiveState;
+        _inventoryAcviteStateSetter.EnabledDisabled += ChangeActiveState;
         enabled = false;
     }
 
@@ -32,6 +32,6 @@ public abstract class ItemAction : MonoBehaviour
     protected void OnDestroy()
     {
         ItemSlot.Toggled -= SetActiveState;
-        _inventoryAcviteStateSetter.ActiveStateChanged -= ChangeActiveState;
+        _inventoryAcviteStateSetter.EnabledDisabled -= ChangeActiveState;
     }
 }

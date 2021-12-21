@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public abstract class InjectorAction : ItemAction
+public abstract class InjectorScriptBase : ItemScriptBase
 {
     [SerializeField] protected KeyCode _key;
 

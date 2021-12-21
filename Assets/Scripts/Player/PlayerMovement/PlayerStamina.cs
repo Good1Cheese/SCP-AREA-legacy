@@ -12,6 +12,7 @@ public class PlayerStamina : CoroutineUser
     [SerializeField] private int _burnSpeedMultipliyer;
 
     [Inject] private readonly RunController _runController;
+    [Inject] private readonly SlowWalkRunController _slowWalkRunController;
     [Inject] private readonly PlayerMovement _playerMovement;
 
     public float StaminaTime
@@ -34,9 +35,14 @@ public class PlayerStamina : CoroutineUser
 
     private void Awake()
     {
+        _slowWalkRunController.Using += Burn;
+        _slowWalkRunController.UseStarted += StopRegeneration;
+        _slowWalkRunController.UseStopped += StartAction;
+
         _runController.Using += Burn;
         _runController.UseStarted += StopRegeneration;
         _runController.UseStopped += StartAction;
+
         _playerMovement.StoppedMoving += StartAction;
     }
 
@@ -49,7 +55,7 @@ public class PlayerStamina : CoroutineUser
 
     private void Update()
     {
-        if (!IsTimeoutPassed) { return; }
+        if (!IsTimeoutPassed || StaminaTime >= MaxStaminaTime) { return; }
 
         StaminaTime += Time.deltaTime;
     }
@@ -78,9 +84,14 @@ public class PlayerStamina : CoroutineUser
 
     private void OnDestroy()
     {
+        _slowWalkRunController.Using -= Burn;
+        _slowWalkRunController.UseStarted -= StopRegeneration;
+        _slowWalkRunController.UseStopped -= StartAction;
+
         _runController.Using -= Burn;
         _runController.UseStarted -= StopRegeneration;
         _runController.UseStopped -= StartAction;
+
         _playerMovement.StoppedMoving -= StartAction;
     }
 }

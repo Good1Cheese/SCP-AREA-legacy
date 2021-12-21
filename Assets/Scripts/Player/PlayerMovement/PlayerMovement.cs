@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _pauseMenu.PauseMenuButtonPressed += ReverseEnableState;
+        _pauseMenu.EnabledDisabled += ReverseEnableState;
     }
 
     private void ReverseEnableState()
@@ -64,6 +64,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenu.PauseMenuButtonPressed -= ReverseEnableState;
+        _pauseMenu.EnabledDisabled -= ReverseEnableState;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class ReloadAndAmmoShowSwitcher : WeaponAction
+public class ReloadAndAmmoShowSwitcher : WeaponScriptBase
 {
     private const KeyCode RELOAD_KEY = KeyCode.R;
 

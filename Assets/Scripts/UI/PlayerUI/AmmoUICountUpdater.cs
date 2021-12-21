@@ -9,6 +9,7 @@ public class AmmoUICountUpdater : MonoBehaviour
     [Inject] private readonly WeaponSlot _weaponSlot;
 
     private WeaponHandler _weaponHandler;
+    private bool _wasAmmoUpdated;
 
     public TextMeshProUGUI TextMeshProUGUI => _textMeshProUGUI;
 
@@ -21,10 +22,21 @@ public class AmmoUICountUpdater : MonoBehaviour
     private void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weaponHandler = weaponHandler;
+
+        if (_wasAmmoUpdated) { return; }
+
+        _wasAmmoUpdated = true;
+        UpdateAmmoAndUI();
     }
 
     private void UpdateAmmoAndUI()
     {
+        if (_weaponHandler == null)
+        {
+            _wasAmmoUpdated = false;
+            return;
+        }
+
         _weaponHandler.UpdateAmmo();
         UpdateUI();
     }

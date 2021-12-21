@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 public abstract class UIEnablerDisabler : MonoBehaviour
@@ -6,7 +7,8 @@ public abstract class UIEnablerDisabler : MonoBehaviour
     [Inject] private readonly PlayerHealth _playerHealth;
     [Inject] private readonly GameLoader _gameLoader;
 
-    public bool IsUIActivated { get; set; }
+    public bool IsActivated { get; set; }
+    public Action EnabledDisabled { get; set; }
 
     private void Awake()
     {
@@ -16,7 +18,7 @@ public abstract class UIEnablerDisabler : MonoBehaviour
 
     private void DisableUI()
     {
-        if (IsUIActivated)
+        if (IsActivated)
         {
             EnableDisableUI();
         }

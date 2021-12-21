@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class InjectTypeSwitch : InjectorAction
+public class InjectTypeSwitch : InjectorScriptBase
 {
     private Type _defaultType = typeof(IHealthInjectable);
 
@@ -9,7 +9,7 @@ public class InjectTypeSwitch : InjectorAction
         get => _defaultType;
         set
         {
-            print(value);
+            print("Изменен тип инъекции " + value);
             _defaultType = value;
         }
     }

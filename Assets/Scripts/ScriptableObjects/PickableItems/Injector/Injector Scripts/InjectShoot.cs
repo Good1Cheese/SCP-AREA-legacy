@@ -1,4 +1,4 @@
-﻿public class InjectShoot : InjectorAction
+﻿public class InjectShoot : InjectorScriptBase
 {
     protected override void DoAction()
     {
@@ -6,7 +6,7 @@
 
         if (_injectorHandler.ClipInject == null) { return; }
 
-        print("Shooted " + _injectorHandler.ClipInject);
+        print("Вставлен в игрока " + _injectorHandler.ClipInject);
 
         _injectorHandler.ClipInject.Inject();
         _injectorHandler.ClipInject = null;

@@ -2,7 +2,7 @@
 using Zenject;
 
 [RequireComponent(typeof(InjectTypeSwitch), typeof(InjectShoot))]
-public class InjectorReload : InjectorAction
+public class InjectorReload : InjectorScriptBase
 {
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
 
@@ -14,7 +14,7 @@ public class InjectorReload : InjectorAction
         {
             if (value == null) { return; }
 
-            print(value);
+            print("Вставлен " + value);
             InjectableItemHandler injectableItemHandler = (InjectableItemHandler)value;
             injectableItemHandler.NumsOfUses--;
 

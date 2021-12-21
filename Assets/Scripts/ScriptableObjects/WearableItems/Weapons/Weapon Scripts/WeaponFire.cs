@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(WeaponMiss), typeof(WeaponAim))]
-public class WeaponFire : WeaponAction
+public class WeaponFire : WeaponScriptBase
 {
     private const KeyCode FIRE_KEY = KeyCode.Mouse0;
 

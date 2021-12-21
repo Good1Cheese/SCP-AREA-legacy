@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private MoveController[] _moveControllers;
 
     [Inject] private readonly WalkController _walkController;
+
     private MoveController _usingMoveController;
 
     public AnimationCurve MovementSpeed => _movementSpeed;
@@ -17,7 +18,7 @@ public class MovementController : MonoBehaviour
 
     public float GetPlayerSpeed()
     {
-        GetSpeedOfMoveControllers();
+        GetMoves();
 
         if (MoveTime > _usingMoveController.MaxMoveTime)
         {
@@ -27,18 +28,18 @@ public class MovementController : MonoBehaviour
         return Speed - SlowDownFactor;
     }
 
-    private void GetSpeedOfMoveControllers()
+    private void GetMoves()
     {
         Speed = 0;
 
-        foreach (MoveController controller in _moveControllers)
+        for (int i = 0; i < _moveControllers.Length; i++)
         {
-            if (Speed != 0) { break; }
+            float speed = _moveControllers[i].GetSpeed();
 
-            controller.StopMove();
-            Speed = controller.GetMove();
+            if (speed == 0) { continue; }
 
-            _usingMoveController = controller;
+            Speed = speed;
+            _usingMoveController = _moveControllers[i];
         }
 
         if (Speed == 0)

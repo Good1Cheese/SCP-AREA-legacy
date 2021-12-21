@@ -26,6 +26,13 @@ public class InjectorHandler : WearableItemHandler, IClickable
         _pickableItemsInventory.Add(this);
     }
 
+    public override void Interact()
+    {
+        if (!_pickableItemsInventory.HasInventoryEnoughSpace(1)) { return; }
+
+        base.Interact();
+    }
+
     public void Clicked(int slotIndex)
     {
         _injectorSlot.Used?.Invoke();
@@ -33,6 +40,6 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
     public override void Dropped()
     {
-        _injectorSlot.ClearWearableSlot();
+        _injectorSlot.ClearSlot();
     }
 }

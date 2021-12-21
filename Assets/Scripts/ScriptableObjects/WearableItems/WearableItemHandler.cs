@@ -12,5 +12,11 @@ public abstract class WearableItemHandler : ItemHandler
         GameObjectForPlayer.SetActive(false);
     }
 
+    public override void Interact()
+    {
+        Equiped();
+        base.Interact();
+    }
+
     public override Item_SO Item_SO => _wearableIte_SO;
 }

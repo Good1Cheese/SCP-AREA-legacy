@@ -32,9 +32,13 @@ public abstract class ItemHandler : IInteractable
 
     public override void Interact()
     {
+        Equip();
+    }
+
+    public void Equiped()
+    {
         IsInInventory = true;
         GameObject.SetActive(false);
-        Equip();
     }
 
     public abstract void Equip();

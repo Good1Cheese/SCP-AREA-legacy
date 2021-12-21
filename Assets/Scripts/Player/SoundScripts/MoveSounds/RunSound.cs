@@ -8,4 +8,3 @@ public class RunSound : MoveSound
         _moveController = runController;
     }
 }
-

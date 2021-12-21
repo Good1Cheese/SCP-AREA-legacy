@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -9,23 +8,41 @@ public class SlowWalkController : MoveController
 
     private void Start()
     {
-        _playerMovement.NotMoving += Da;
+        _playerMovement.NotMoving += MoveOnNotMoving;
     }
 
-    private void Da()
+    private void MoveOnNotMoving() => GetSpeed();
+
+    public override float GetSpeed()
     {
-        if (Input.GetKey(_key))
+        if (Input.GetKeyDown(_moveKey))
         {
-            Using?.Invoke();
-            return;
+            IsMoving = !IsMoving;
+            InvokeStartOrEndEvents();
+        }
+
+        if (IsMoving)
+        {
+            return Move();
         }
 
         NotUsing?.Invoke();
+        return 0;
     }
 
+    private void InvokeStartOrEndEvents()
+    {
+        if (IsMoving)
+        {
+            UseStarted?.Invoke();
+            return;
+        }
+
+        UseStopped?.Invoke();
+    }
 
     private void OnDestroy()
     {
-        _playerMovement.NotMoving -= Da;
+        _playerMovement.NotMoving -= MoveOnNotMoving;
     }
 }

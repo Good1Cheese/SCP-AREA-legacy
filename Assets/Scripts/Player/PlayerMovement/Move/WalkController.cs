@@ -2,6 +2,7 @@
 {
     public override float GetMove()
     {
+        IsMoving = true;
         return Move();
     }
 

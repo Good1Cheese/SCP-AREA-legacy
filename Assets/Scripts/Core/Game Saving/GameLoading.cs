@@ -7,7 +7,7 @@ public class GameLoading : MonoBehaviour
     [Inject] private readonly GameSaving _gameSaving;
     [Inject] private readonly SceneTransition _sceneTransition;
 
-    public bool WasGameLoadedFromMenu { get; set; } = false;
+    public bool WasGameLoadedFromMenu { get; set; }
 
     public void Load()
     {
@@ -22,11 +22,11 @@ public class GameLoading : MonoBehaviour
         PreLoadGame();
     }
 
-    public void PreLoadGame()
+    public void PreLoadGame(bool value = true)
     {
         _gameSaving.SaveData.Clear();
         _sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.ScpScene);
-        WasGameLoadedFromMenu = true;
+        WasGameLoadedFromMenu = value;
     }
 
     public void LoadGame()
@@ -42,4 +42,3 @@ public class GameLoading : MonoBehaviour
         reader.Close();
     }
 }
-

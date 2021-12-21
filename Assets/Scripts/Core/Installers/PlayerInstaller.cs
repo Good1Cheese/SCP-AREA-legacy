@@ -13,6 +13,7 @@ public class PlayerInstaller : MonoInstaller
     private StaminaDisabler _staminaUseDisabler;
     private MovementController _movementController;
     private RunController _runController;
+    private SlowWalkRunController _slowWalkRunController;
     private SlowWalkController _slowWalkController;
     private WalkController _walkController;
     private PlayerHealth _playerHealth;
@@ -34,6 +35,7 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(_staminaUseDisabler).AsSingle();
         Container.BindInstance(_movementController).AsSingle();
         Container.BindInstance(_runController).AsSingle();
+        Container.BindInstance(_slowWalkRunController).AsSingle();
         Container.BindInstance(_slowWalkController).AsSingle();
         Container.BindInstance(_walkController).AsSingle();
         Container.BindInstance(_playerHealth).AsSingle();
@@ -57,6 +59,7 @@ public class PlayerInstaller : MonoInstaller
         _staminaUseDisabler = GetComponent<StaminaDisabler>();
         _movementController = GetComponent<MovementController>();
         _runController = GetComponent<RunController>();
+        _slowWalkRunController = GetComponent<SlowWalkRunController>();
         _slowWalkController = GetComponent<SlowWalkController>();
         _walkController = GetComponent<WalkController>();
         _playerHealth = GetComponent<PlayerHealth>();

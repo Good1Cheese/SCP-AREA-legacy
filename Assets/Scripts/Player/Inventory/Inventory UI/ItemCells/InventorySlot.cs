@@ -18,6 +18,11 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
     public void Clear()
     {
         ItemHandler.Dropped();
+        ClearSlot();
+    }
+
+    public void ClearSlot()
+    {
         Cleared();
         ItemHandler = null;
         _image.sprite = null;

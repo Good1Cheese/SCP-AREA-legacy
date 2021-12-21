@@ -18,7 +18,9 @@ public abstract class WearableSlot : InventorySlot
         get => _currentItemActivator;
         set
         {
-            if (_currentItemActivator != null && _currentItemActivator != value)
+            if (value == _currentItemActivator) { return; }
+
+            if (_currentItemActivator != null)
             {
                 _currentItemActivator.SetItemActiveState(false);
             }
@@ -38,13 +40,6 @@ public abstract class WearableSlot : InventorySlot
         base.SetItem(item);
     }
 
-    public void ClearWearableSlot()
-    {
-        Cleared();
-        ItemHandler = null;
-        _image.sprite = null;
-    }
-
     public override void Setted()
     {
         _image.enabled = true;
@@ -55,9 +50,9 @@ public abstract class WearableSlot : InventorySlot
         ItemRemoved?.Invoke();
         _image.enabled = false;
 
-        if (CurrentItemActivator.Slot != this) { return; }
+        if (_currentItemActivator.Slot != this) { return; }
 
-        CurrentItemActivator = null;
+        _currentItemActivator = null;
     }
 
     public override void Clicked()
