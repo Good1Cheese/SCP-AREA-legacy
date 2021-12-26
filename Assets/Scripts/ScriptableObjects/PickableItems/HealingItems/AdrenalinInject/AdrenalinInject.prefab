@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1276126077214050914}
   - component: {fileID: 4057783630913834460}
   - component: {fileID: 1092259066584972986}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: adapter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 952317142881749329}
   - component: {fileID: 3592801964373404979}
   - component: {fileID: 1310625299429248211}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AdrenalinInject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 3660744801568334698}
   - component: {fileID: 8313035322386390711}
   - component: {fileID: 1220694734492909440}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 1374886484110090561}
   - component: {fileID: 5876568962262429620}
   - component: {fileID: 8153609928431429817}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: plunger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 8835401713088773932}
   - component: {fileID: 4907067504075379386}
   - component: {fileID: 7773118188095599170}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: plunger_rubber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 4347704016837853588}
   - component: {fileID: 8522715807564059498}
   - component: {fileID: 6323932271230815578}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: needle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

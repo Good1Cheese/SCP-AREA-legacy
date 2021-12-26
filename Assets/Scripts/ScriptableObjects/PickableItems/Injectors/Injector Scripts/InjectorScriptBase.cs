@@ -22,7 +22,9 @@ public abstract class InjectorScriptBase : ItemScriptBase
 
     protected void Update()
     {
-        if (!Input.GetKeyDown(_key) || _itemActionCreator.IsGoing) { return; }
+        if (!Input.GetKeyDown(_key)) { return; }
+
+        if (_itemActionCreator.IsGoing || _inventoryEnablerDisabler.IsActivated) { return; }
 
         DoAction();
     }

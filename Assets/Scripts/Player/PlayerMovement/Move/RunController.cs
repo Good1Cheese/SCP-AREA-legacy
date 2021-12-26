@@ -18,6 +18,7 @@ public class RunController : MoveController
 
         return Run();
     }
+    public override void CalculateFov() => _dynamicFov.SetFov(0.5f);
 
     protected float Run()
     {

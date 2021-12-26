@@ -5,6 +5,8 @@ using System.Linq;
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
+    [Inject] private readonly WeaponAim _weaponAim;
+    [Inject] private readonly Camera _mainCamera;
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     [Inject] private readonly WeaponSlot _weaponSlot;
 
@@ -12,6 +14,7 @@ public class WeaponHandler : WearableItemHandler
 
     public int Ammo => _ammoCount;
     public Weapon_SO Weapon_SO { get; private set; }
+    public ClippingMaker ClippingMaker { get; private set; }
     public SilencerHandler SilencerHandler { get; set; }
     public int ClipAmmo { get; set; }
     public AudioClip CurrentShotSound { get; set; }
@@ -32,6 +35,10 @@ public class WeaponHandler : WearableItemHandler
 
         Weapon_SO = (Weapon_SO)_wearableIte_SO;
         CurrentShotSound = Weapon_SO.shotSound;
+        ClippingMaker = GameObjectForPlayer.GetComponentInChildren<ClippingMaker>();
+        ClippingMaker.WeaponAim = _weaponAim;
+        ClippingMaker.ParentTransform = GameObjectForPlayer.transform;
+        ClippingMaker.MainCamera = _mainCamera.transform;
     }
 
     public override void Equip()

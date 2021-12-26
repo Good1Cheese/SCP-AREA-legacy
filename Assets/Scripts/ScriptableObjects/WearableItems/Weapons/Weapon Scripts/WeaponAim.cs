@@ -5,10 +5,11 @@ using Zenject;
 [RequireComponent(typeof(IRayProvider))]
 public class WeaponAim : WeaponScriptBase
 {
-    private const KeyCode AI_KEY = KeyCode.Mouse1;
+    private const KeyCode AIM_KEY = KeyCode.Mouse1;
 
     [Inject] private readonly Animator _weaponAnimator;
     [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
+
     public bool IsAiming { get; set; }
 
     public Action FiredWithAim { get; set; }
@@ -16,25 +17,36 @@ public class WeaponAim : WeaponScriptBase
 
     public Action Aimed { get; set; }
     public Action Unaimed { get; set; }
+    public bool WasAimed { get; set; }
 
     private void Update()
     {
-        if (Input.GetKeyDown(AI_KEY))
+        if (Input.GetKeyDown(AIM_KEY))
         {
-            SetAimState(true);
+            SetAimStateWithTriggerCheck(true);
         }
 
-        if (Input.GetKeyUp(AI_KEY))
+        if (Input.GetKeyUp(AIM_KEY))
         {
             if (!_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
 
             SetAimState(false);
-        }
+        }   
+    }
+
+    public void SetAimStateWithTriggerCheck(bool isAiming)
+    {
+        WasAimed = _weaponHandler.ClippingMaker.GameObjectTrigger.IsTriggered;
+
+        if (WasAimed) { return; }
+
+        SetAimState(isAiming);
     }
 
     public void SetAimState(bool isAiming)
     {
-        if (_weaponReloadCoroutineUser.IsActionGoing) { return; }
+        if (_weaponReloadCoroutineUser.IsActionGoing
+            || _inventoryEnablerDisabler.IsActivated) { return; }
 
         IsAiming = isAiming;
         _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);

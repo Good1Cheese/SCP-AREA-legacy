@@ -1,34 +1,34 @@
 using UnityEngine;
 using Zenject;
 
-public class PeekController : MonoBehaviour
+public class LeanController : MonoBehaviour
 {
-    [SerializeField] private KeyCode _peekKey;
+    [SerializeField] private KeyCode _key;
 
     [Inject] readonly private PlayerMovement _playerMovement;
     [Inject] readonly private MovementController _movementController;
     [Inject] readonly private SlowWalkController _slowWalkController;
 
-    private VerticalPeek _verticalPeek;
-    private HorizontalPeek _horizontalPeek;
+    private VerticalLean _verticalLean;
+    private HorizontalLean _horizontalLean;
     private bool _isPeekEnabled;
 
     private void Start()
     {
-        _horizontalPeek = GetComponent<HorizontalPeek>();
-        _verticalPeek = GetComponent<VerticalPeek>();
+        _horizontalLean = GetComponent<HorizontalLean>();
+        _verticalLean = GetComponent<VerticalLean>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(_peekKey)) 
+        if (Input.GetKeyDown(_key)) 
         { 
             _isPeekEnabled = !_isPeekEnabled;
             _playerMovement.enabled = !_isPeekEnabled;
             StopPlayer();
         }
 
-        if (Input.GetKeyUp(_peekKey))
+        if (Input.GetKeyUp(_key))
         {
             _isPeekEnabled = !_isPeekEnabled;
             _playerMovement.enabled = !_isPeekEnabled; 
@@ -40,20 +40,20 @@ public class PeekController : MonoBehaviour
         if (_isPeekEnabled)
         {
             _slowWalkController.GetSpeed();
-            _verticalPeek.Peek();
-            _horizontalPeek.Peek();
+            _verticalLean.Lean();
+            _horizontalLean.Lean();
 
             return;
         }
 
-        _verticalPeek.Restore();
-        _horizontalPeek.Restore();
+        _verticalLean.Restore();
+        _horizontalLean.Restore();
     }
 
     private void StopPlayer()
     {
-        _horizontalPeek.PeekTime = 0;
-        _verticalPeek.PeekTime = 0;
+        _horizontalLean.LeanTime = 0;
+        _verticalLean.LeanTime = 0;
         _playerMovement.HorizontalMove = 0;
         _playerMovement.VerticalMove = 0;
         _movementController.MoveTime = 0;

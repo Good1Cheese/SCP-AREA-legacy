@@ -7,6 +7,7 @@ using Zenject;
 [RequireComponent(typeof(InteractionMarkEnablerDisabler))]
 public class InteractionProvider : MonoBehaviour
 {
+    [SerializeField] private LayerMask _interactableLayerMask;
     [SerializeField] private float _maxInteractionDistance;
     [SerializeField] private float _interactionSphereRadious;
     [SerializeField] private float _delayAfterInteraction;
@@ -24,18 +25,12 @@ public class InteractionProvider : MonoBehaviour
 
     private void Start()
     {
-        _inventoryEnablerDisabler.EnabledDisabled += SetActiveState;
         _timeoutAfterInteraction = new WaitForSeconds(_delayAfterInteraction);
-    }
-
-    private void SetActiveState()
-    {
-        enabled = !enabled;
     }
 
     private void Update()
     {
-        if (_isDelayGoing) { return; }
+        if (_isDelayGoing || _inventoryEnablerDisabler.IsActivated) { return; }
 
         Collider raycastHit = GetRayCastHit();
 
@@ -51,7 +46,7 @@ public class InteractionProvider : MonoBehaviour
 
     private Collider GetRayCastHit()
     {
-        bool raycasted = Physics.SphereCast(_rayProvider.ProvideRay(), _interactionSphereRadious, out RaycastHit raycastHit, _maxInteractionDistance);
+        bool raycasted = Physics.SphereCast(_rayProvider.ProvideRay(), _interactionSphereRadious, out RaycastHit raycastHit, _maxInteractionDistance, _interactableLayerMask);
 
         Collider collider = raycastHit.collider;
 
@@ -65,7 +60,7 @@ public class InteractionProvider : MonoBehaviour
         _interactable.Interact();
         Interacted?.Invoke();
         StartCoroutine(StartInteractionDelay());
-    }   
+    }
 
     private IEnumerator StartInteractionDelay()
     {
@@ -75,10 +70,5 @@ public class InteractionProvider : MonoBehaviour
         yield return _timeoutAfterInteraction;
 
         _isDelayGoing = false;
-    }
-
-    private void OnDestroy()
-    {
-        _inventoryEnablerDisabler.EnabledDisabled -= SetActiveState;
     }
 }

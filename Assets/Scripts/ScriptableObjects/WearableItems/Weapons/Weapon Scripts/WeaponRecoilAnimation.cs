@@ -17,12 +17,12 @@ public class WeaponRecoilAnimation : MonoBehaviour
 
     private void ActivateRecoilInAim()
     {
-        //_weaponAnimator.SetTrigger("OnPlayerFiredWithAim");
+        //_weaponAnimator.SetTrigger("FiredWithAim");
     }
 
     private void ActivateRecoilWithoutAim()
     {
-        //_weaponAnimator.SetTrigger("OnPlayerFiredWithoutAim");
+        //_weaponAnimator.SetTrigger("FiredWithoutAim");
     }
 
     private void SetWeaponAnimator(WeaponHandler weaponHandler)

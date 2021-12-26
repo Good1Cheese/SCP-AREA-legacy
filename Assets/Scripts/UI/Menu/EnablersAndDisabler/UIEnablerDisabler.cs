@@ -22,6 +22,7 @@ public abstract class UIEnablerDisabler : MonoBehaviour
         {
             EnableDisableUI();
         }
+
         enabled = false;
     }
 

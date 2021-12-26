@@ -7,6 +7,7 @@ public abstract class MoveController : MonoBehaviour
     [SerializeField] protected KeyCode _moveKey;
     [SerializeField] private float _maxMoveTime;
 
+    [Inject] protected readonly DynamicFov _dynamicFov;
     [Inject] protected readonly MovementController _movementController;
 
     public bool IsMoving { get; set; }
@@ -60,4 +61,6 @@ public abstract class MoveController : MonoBehaviour
         StopMove();
         return GetMove();
     }
+
+    public abstract void CalculateFov();
 }

@@ -5,66 +5,54 @@ using Zenject;
 public class DynamicFov : MonoBehaviour
 {
     [SerializeField] private AnimationCurve _fov;
-
     [SerializeField] private float _startFov;
 
     [Inject] private readonly Camera _mainCamera;
-    [Inject] private readonly PlayerMovement _playerMovement;
-    [Inject] private readonly PlayerStamina _playerStamina;
-    [Inject] private readonly RunController _runController;
-    [Inject] private readonly SlowWalkRunController _slowWalkRunController;
-    [Inject] private readonly SlowWalkController _slowWalkController;
 
-    public float MoveTime { get; set; }
+    private float _targetTime = -1;
+    private Func<bool> _condition;
+    private sbyte _deltaTimeMultipliyer;
+    private bool _fovCalculated;
+
+    public float FovTime { get; set; }
 
     private void Awake()
     {
         _mainCamera.fieldOfView = _startFov;
     }
 
-    private void Start()
+    public void SetFov(float targerFovTime)
     {
-        _runController.Using += SetFovForRun;
-        _slowWalkController.Using += SetFovForSlowWalk;
-        _slowWalkRunController.Using += SetFovForSlowWalkRun;
+        CalculateFov(targerFovTime);
 
-        _slowWalkRunController.NotUsing += ResetFovAfterMoving;
-        _slowWalkController.NotUsing += ResetFovAfterSlowWalk;
-        _runController.NotUsing += ResetFovAfterMoving;
+        if (_fovCalculated) { return; }
 
-        _playerStamina.RanOut += ResetFovAfterMoving;
-        _playerMovement.NotMoving += ResetFovAfterMoving;
+        if (_condition.Invoke())
+        {
+            _fovCalculated = true;
+            return;
+        }
+
+        FovTime += Time.deltaTime * _deltaTimeMultipliyer;
+        _mainCamera.fieldOfView = _fov.Evaluate(FovTime);
     }
 
-    private void SetFovForRun() => SetFov(() => MoveTime >= 0.5f, 1);
-
-    private void SetFovForSlowWalkRun() => SetFov(() => MoveTime >= 0.25f, 1);
-
-    private void SetFovForSlowWalk() => SetFov(() => MoveTime <= -0.5f, -1);
-
-    private void ResetFovAfterSlowWalk() => SetFov(() => MoveTime >= 0, 1);
-
-    private void ResetFovAfterMoving() => SetFov(() => MoveTime <= 0, -1);
-
-    private void SetFov(Func<bool> func, in sbyte deltaTimeMultipliyer)
+    private void CalculateFov(float targerFovTime)
     {
-        if (func.Invoke()) { return; }
+        if (_targetTime == targerFovTime) { return; }
 
-        MoveTime += Time.deltaTime * deltaTimeMultipliyer;
-        _mainCamera.fieldOfView = _fov.Evaluate(MoveTime);
-    }
+        _fovCalculated = false;
+        _targetTime = targerFovTime;
 
-    private void OnDestroy()
-    {
-        _runController.Using -= SetFovForRun;
-        _slowWalkController.Using -= SetFovForSlowWalk;
-        _slowWalkRunController.Using -= SetFovForSlowWalkRun;
+        if (FovTime > targerFovTime)
+        {
+            _condition = () => FovTime <= targerFovTime;
+            _deltaTimeMultipliyer = -1;
 
-        _slowWalkRunController.Using -= ResetFovAfterMoving;
-        _slowWalkController.NotUsing -= ResetFovAfterSlowWalk;
-        _runController.NotUsing -= ResetFovAfterMoving;
+            return;
+        }
 
-        _playerStamina.RanOut -= ResetFovAfterMoving;
-        _playerMovement.NotMoving -= ResetFovAfterMoving;
+        _condition = () => FovTime >= targerFovTime;
+        _deltaTimeMultipliyer = 1;
     }
 }

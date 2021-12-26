@@ -4,6 +4,7 @@ public class WeaponSway : WeaponScriptBase
 {
     [SerializeField] private float _intensity;
     [SerializeField] private float _smooth;
+
     private Quaternion _originRotation;
 
     private void Awake()
@@ -13,6 +14,8 @@ public class WeaponSway : WeaponScriptBase
 
     private void Update()
     {
+        if (_inventoryEnablerDisabler.IsActivated) { return; } 
+
         float mouseY = Input.GetAxis("Mouse Y");
         float mouseX = Input.GetAxis("Mouse X");
 

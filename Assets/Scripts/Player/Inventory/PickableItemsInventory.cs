@@ -19,7 +19,7 @@ public class PickableItemsInventory : MonoBehaviour
 
     public void Add(ItemHandler item)
     {
-        if (!HasInventoryEnoughSpace()) { return; }
+        if (!HasEnoughSpaceForItem()) { return; }
 
         item.Equiped();
         Inventory[CurrentItemIndex] = item;
@@ -61,7 +61,8 @@ public class PickableItemsInventory : MonoBehaviour
 
         Remove(index);
     }
-    public bool HasInventoryEnoughSpace(int offset = 0) => CurrentItemIndex + offset <= _maxSlotsAmount;
+
+    public bool HasEnoughSpaceForItem() => CurrentItemIndex + 1 <= _maxSlotsAmount;
 
     public ItemHandler GetIem(Predicate<ItemHandler> condition)
     {

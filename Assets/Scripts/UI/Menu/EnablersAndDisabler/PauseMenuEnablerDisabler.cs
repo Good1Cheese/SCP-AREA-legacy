@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 
@@ -17,13 +16,14 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
         {
             _wearableInventoryActivator.EnableDisableUI();
         }
+
         EnableDisableUI();
     }
 
     public override void EnableDisableUI()
     {
         IsActivated = !IsActivated;
-        EnabledDisabled.Invoke();
+        EnabledDisabled?.Invoke();
         _wearableInventoryActivator.EnabledDisabled?.Invoke();
     }
 }

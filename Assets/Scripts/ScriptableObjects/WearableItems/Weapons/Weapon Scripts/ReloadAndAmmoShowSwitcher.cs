@@ -17,6 +17,8 @@ public class ReloadAndAmmoShowSwitcher : WeaponScriptBase
 
     private void Update()
     {
+        if (_inventoryEnablerDisabler.IsActivated) { return; }
+
         if (Input.GetKeyDown(RELOAD_KEY))
         {
             _isSwitched = true;
@@ -38,12 +40,16 @@ public class ReloadAndAmmoShowSwitcher : WeaponScriptBase
 
     private void LateUpdate()
     {
+        if (_inventoryEnablerDisabler.IsActivated) { return; }
+
         if (Input.GetKey(RELOAD_KEY))
         {
             _pressTime += Time.deltaTime * _deltaTimeMultipliyer;
         }
 
-        if (_pressTime < _pressTimeToActivate || _weaponReloadCoroutineUser.IsActionGoing) { return; }
+        if (_pressTime < _pressTimeToActivate) { return; }
+
+        if (_weaponReloadCoroutineUser.IsActionGoing) { return; }
 
         _deltaTimeMultipliyer = 0;
         _pressTime = 0;

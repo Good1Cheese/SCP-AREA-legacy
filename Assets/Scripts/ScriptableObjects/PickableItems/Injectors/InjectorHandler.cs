@@ -28,7 +28,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
     public override void Interact()
     {
-        if (!_pickableItemsInventory.HasInventoryEnoughSpace(1)) { return; }
+        if (!_pickableItemsInventory.HasEnoughSpaceForItem()) { return; }
 
         base.Interact();
     }

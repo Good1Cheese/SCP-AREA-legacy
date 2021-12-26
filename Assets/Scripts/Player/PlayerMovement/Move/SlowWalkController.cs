@@ -30,6 +30,8 @@ public class SlowWalkController : MoveController
         return 0;
     }
 
+    public override void CalculateFov() => _dynamicFov.SetFov(-0.5f);
+
     private void InvokeStartOrEndEvents()
     {
         if (IsMoving)

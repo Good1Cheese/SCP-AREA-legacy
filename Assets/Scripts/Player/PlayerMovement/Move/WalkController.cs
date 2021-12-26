@@ -11,4 +11,6 @@
         IsMoving = false;
         UseStopped?.Invoke();
     }
+
+    public override void CalculateFov() => _dynamicFov.SetFov(0);
 }

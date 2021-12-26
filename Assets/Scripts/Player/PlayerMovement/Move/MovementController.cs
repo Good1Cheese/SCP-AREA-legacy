@@ -19,6 +19,7 @@ public class MovementController : MonoBehaviour
     public float GetPlayerSpeed()
     {
         GetMoves();
+        _usingMoveController.CalculateFov();
 
         if (MoveTime > _usingMoveController.MaxMoveTime)
         {

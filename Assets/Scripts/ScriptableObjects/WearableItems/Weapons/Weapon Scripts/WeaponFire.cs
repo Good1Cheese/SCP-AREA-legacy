@@ -17,7 +17,9 @@ public class WeaponFire : WeaponScriptBase
 
     private void Update()
     {
-        if (!Input.GetKeyDown(FIRE_KEY) || _itemActionCreator.IsGoing) { return; }
+        if (!Input.GetKeyDown(FIRE_KEY)) { return; }
+
+        if (_itemActionCreator.IsGoing || _inventoryEnablerDisabler.IsActivated) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {

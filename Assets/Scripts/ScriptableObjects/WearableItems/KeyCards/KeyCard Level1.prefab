@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1659142972064340417}
   - component: {fileID: 5339126750779050952}
   - component: {fileID: 800160489703611887}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: KeyCard Level1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1659142972064340417
 MonoBehaviour:
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4432349611658455477}
   - component: {fileID: 4432349611658455482}
   - component: {fileID: 4432349611658455483}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

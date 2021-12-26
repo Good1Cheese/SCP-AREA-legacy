@@ -134,14 +134,6 @@ PrefabInstance:
       propertyPath: _markCanvas
       value: 
       objectReference: {fileID: 1082328399}
-    - target: {fileID: 1051959153436360280, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
-      propertyPath: _moveControllers.Array.data[1]
-      value: 
-      objectReference: {fileID: 1573344624}
-    - target: {fileID: 1051959153436360280, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
-      propertyPath: _moveControllers.Array.data[2]
-      value: 
-      objectReference: {fileID: 1573344625}
     - target: {fileID: 4490448435668429654, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -263,6 +255,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5640005224231194129, guid: e001c3df30c1899479ee997b20ab49c9, type: 3}
   m_PrefabInstance: {fileID: 330630532}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &364501049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3020858626032564497, guid: 08979e4386d81044bba495892bc36a9c, type: 3}
+  m_PrefabInstance: {fileID: 8066681024719546924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &364501054
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364501049}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!115 &385774973
 MonoScript:
   m_ObjectHideFlags: 0
@@ -1461,11 +1474,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &686410937 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 913925334, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
-  m_PrefabInstance: {fileID: 4504709228995589973}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &692618301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,28 +2274,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1573344624 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 752382766322954893, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
-  m_PrefabInstance: {fileID: 1902650}
+--- !u!1 &1588362193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3021452241386508047, guid: 08979e4386d81044bba495892bc36a9c, type: 3}
+  m_PrefabInstance: {fileID: 8066681024719546924}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a7c550479074854daf51f4db1df0a81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1573344625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1776069150420481382, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
-  m_PrefabInstance: {fileID: 1902650}
+--- !u!54 &1588362198
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528024485eb979f469a2866127427db2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_GameObject: {fileID: 1588362193}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1644156508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3049,10 +3056,6 @@ PrefabInstance:
       propertyPath: _propsHandler
       value: 
       objectReference: {fileID: 6291869656025110872}
-    - target: {fileID: 4504709229982532499, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
-      propertyPath: ActivatorsParent
-      value: 
-      objectReference: {fileID: 686410937}
     - target: {fileID: 4504709229982532500, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
       propertyPath: m_Name
       value: GameController
@@ -6550,6 +6553,7 @@ GameObject:
   - component: {fileID: 6291869656373282117}
   - component: {fileID: 6291869656373282116}
   - component: {fileID: 6291869656373282118}
+  - component: {fileID: 6291869656373282122}
   - component: {fileID: 6291869656373282119}
   m_Layer: 7
   m_Name: SCP-XXXX
@@ -6573,6 +6577,22 @@ Transform:
   m_Father: {fileID: 5050891032887706450}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6291869656373282122
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6291869656373282120}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &6291869656682622634
 PrefabInstance:
   m_ObjectHideFlags: 0

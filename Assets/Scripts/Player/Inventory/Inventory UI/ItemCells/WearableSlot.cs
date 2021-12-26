@@ -50,7 +50,7 @@ public abstract class WearableSlot : InventorySlot
         ItemRemoved?.Invoke();
         _image.enabled = false;
 
-        if (_currentItemActivator.Slot != this) { return; }
+        if (_currentItemActivator == null || _currentItemActivator.Slot != this) { return; }
 
         _currentItemActivator = null;
     }

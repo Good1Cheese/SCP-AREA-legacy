@@ -6,8 +6,7 @@ public class WearableItemActivator : MonoBehaviour
     [SerializeField] private KeyCode _key;
     [SerializeField] Transform _itemParent;
 
-    [Inject] protected readonly WeaponSlot _wearableItemsInventory;
-    [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
+    [Inject] protected readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
     [Inject] private readonly ItemActionCreator _itemActionCreator;
 
     protected WearableItemHandler _wearableItemHandler;
@@ -18,20 +17,26 @@ public class WearableItemActivator : MonoBehaviour
     {
         Slot.ItemChanged += SpawnGameObjectForPlayer;
         Slot.ItemRemoved += DeactivateWeapon;
-        _inventoryAcviteStateSetter.EnabledDisabled += SetActiveState;
     }
 
     private void Update()
     {
-        if (!Input.GetKeyDown(_key) || _wearableItemHandler == null) { return; }
+        if (!Input.GetKeyDown(_key)) { return; }
+
+        if (_wearableItemHandler == null || _inventoryEnablerDisabler.IsActivated) { return; }
 
         SetItemActiveState(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
     }
 
     public virtual void SetItemActiveState(bool itemActiveState)
     {
-        _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
         Slot.Toggled?.Invoke(itemActiveState);
+        SetWearableItemActiveState(itemActiveState);
+    }
+
+    protected void SetWearableItemActiveState(bool itemActiveState)
+    {
+        _wearableItemHandler.GameObjectForPlayer.SetActive(itemActiveState);
         WearableSlot.CurrentItemActivator = this;
 
         if (itemActiveState) { return; }
@@ -57,15 +62,9 @@ public class WearableItemActivator : MonoBehaviour
         _wearableItemHandler = null;
     }
 
-    private void SetActiveState()
-    {
-        enabled = !enabled;
-    }
-
     protected void OnDestroy()
     {
         Slot.ItemChanged -= SpawnGameObjectForPlayer;
         Slot.ItemRemoved -= DeactivateWeapon;
-        _inventoryAcviteStateSetter.EnabledDisabled -= SetActiveState;
     }
 }

@@ -15,4 +15,6 @@ public class SlowWalkRunController : RunController
 
         return Run();
     }
+
+    public override void CalculateFov() => _dynamicFov.SetFov(0.25f);
 }

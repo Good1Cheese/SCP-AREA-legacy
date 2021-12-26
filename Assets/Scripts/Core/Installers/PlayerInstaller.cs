@@ -43,9 +43,12 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(CharacterBleeding).AsSingle();
         Container.BindInstance(_rayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
-        Container.BindInstance(Camera.main).AsCached();
         Container.BindInstance(_playerTransform).WithId("Player").AsCached();
         Container.BindInstance(_playerGameObject).AsSingle();
+
+        Camera main = Camera.main;
+        Container.BindInstance(main).AsCached();
+        Container.BindInstance(main.GetComponent<GameObjectTrigger>()).AsSingle();
     }
 
     private void GetComponents()

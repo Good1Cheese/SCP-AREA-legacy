@@ -1,38 +1,68 @@
+using System;
 using UnityEngine;
 
 public class ClippingMaker : MonoBehaviour
 {
-    [SerializeField] private float _clippingRayMaxDistance;
-    [SerializeField] private float _riseForce;
-    [SerializeField] private float _climpForce;
-    private bool _isTriggerStaying;
+    [SerializeField] private GameObjectTrigger _gameObjectTrigger;
+    [SerializeField] private int _maxCameraXRotation;
+    [SerializeField] private float _clippingSmoothing;
+    [SerializeField] private float _clippingReturnSmoothing;
+    [SerializeField] private Vector3 _clippingPosition;
 
-    private Transform ParentTransform => transform.parent.transform;
+    private Transform _mainCamera;
+    private Vector3 _zero = Vector3.zero;
+    private bool _isTriggered;
+    private Transform _parentTransform;
 
-    public Transform PlayerTransform { get; set; }
+    public GameObjectTrigger GameObjectTrigger { get => _gameObjectTrigger; }
+    public Transform ParentTransform { set => _parentTransform = value; }
+    public Transform MainCamera { set => _mainCamera = value; }
+    public WeaponAim WeaponAim { get; set; }
+
+    private void Start()
+    {
+        GameObjectTrigger.TriggerExit += Aim;
+    }
+
+    private void Aim()
+    {
+        if (!WeaponAim.WasAimed) { return; }
+
+        _parentTransform.localPosition = _zero;
+        WeaponAim.SetAimState(true);
+        WeaponAim.WasAimed = false;
+    }
 
     private void Update()
     {
-        if (!_isTriggerStaying) { return; }
+        if (!_isTriggered || _mainCamera.rotation.eulerAngles.x >= _maxCameraXRotation) { return; }
 
-        Quaternion rotation = ParentTransform.rotation;
-        rotation.x -= _riseForce * Time.deltaTime;
-        rotation.x = Mathf.Clamp(rotation.x, -90, 0);
+        _parentTransform.localPosition = Vector3.Lerp(_parentTransform.localPosition, _clippingPosition, _clippingSmoothing * Time.deltaTime);
+    }
 
-        ParentTransform.rotation = rotation;
+    private void LateUpdate()
+    {
+        if (GameObjectTrigger.IsTriggered) { return; }
 
-        ParentTransform.Translate(_climpForce * -PlayerTransform.forward * Time.deltaTime);
+        _parentTransform.localPosition = Vector3.Lerp(_parentTransform.localPosition, _zero, _clippingReturnSmoothing * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_isTriggerStaying || other.transform == PlayerTransform) { return; }
+        if (other.CompareTag("Player")) { return; }
 
-        _isTriggerStaying = true;
+        _isTriggered = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _isTriggerStaying = false;
+        if (other.CompareTag("Player")) { return; }
+
+        _isTriggered = false;
+    }
+
+    private void OnDestroy()
+    {
+        GameObjectTrigger.TriggerExit -= Aim;
     }
 }

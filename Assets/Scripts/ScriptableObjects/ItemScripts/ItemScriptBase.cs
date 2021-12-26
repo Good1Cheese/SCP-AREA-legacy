@@ -3,7 +3,7 @@ using Zenject;
 
 public abstract class ItemScriptBase : MonoBehaviour
 {
-    [Inject] private readonly InventoryEnablerDisabler _inventoryAcviteStateSetter;
+    [Inject] protected readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
 
     protected abstract WearableSlot ItemSlot { get; }
     protected abstract WearableItemHandler WearableItemHandler { get; }
@@ -11,17 +11,7 @@ public abstract class ItemScriptBase : MonoBehaviour
     protected void Start()
     {
         ItemSlot.Toggled += SetActiveState;
-        _inventoryAcviteStateSetter.EnabledDisabled += ChangeActiveState;
         enabled = false;
-    }
-
-    private void ChangeActiveState()
-    {
-        if (WearableItemHandler == null
-            || !WearableItemHandler.GameObjectForPlayer.activeSelf
-            || !WearableItemHandler.IsInInventory) { return; }
-
-        SetActiveState(!enabled);
     }
 
     private void SetActiveState(bool activeState)
@@ -32,6 +22,5 @@ public abstract class ItemScriptBase : MonoBehaviour
     protected void OnDestroy()
     {
         ItemSlot.Toggled -= SetActiveState;
-        _inventoryAcviteStateSetter.EnabledDisabled -= ChangeActiveState;
     }
 }

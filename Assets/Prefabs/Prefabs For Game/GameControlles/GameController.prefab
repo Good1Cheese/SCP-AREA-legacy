@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b19b8639e468c4c80e20cf15c836c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _key: 99
+  _key: 118
   _itemParent: {fileID: 0}
 --- !u!114 &5102206068996807340
 MonoBehaviour:
@@ -232,6 +232,7 @@ MonoBehaviour:
   _weaponSlot: {fileID: 0}
   _injectorSlot: {fileID: 0}
   _propsHandler: {fileID: 0}
+  ActivatorsParent: {fileID: 913925334}
 --- !u!114 &4504709229982532498
 MonoBehaviour:
   m_ObjectHideFlags: 0
