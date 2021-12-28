@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 
 namespace TMPro.Examples
@@ -16,13 +16,12 @@ namespace TMPro.Examples
         public float CurveScale = 1.0f;
         public float ShearAmount = 1.0f;
 
-        void Awake()
+        private void Awake()
         {
             m_TextComponent = gameObject.GetComponent<TMP_Text>();
         }
 
-
-        void Start()
+        private void Start()
         {
             StartCoroutine(WarpText());
         }
@@ -43,7 +42,7 @@ namespace TMPro.Examples
         /// </summary>
         /// <param name="textComponent"></param>
         /// <returns></returns>
-        IEnumerator WarpText()
+        private IEnumerator WarpText()
         {
             VertexCurve.preWrapMode = WrapMode.Clamp;
             VertexCurve.postWrapMode = WrapMode.Clamp;
@@ -77,7 +76,10 @@ namespace TMPro.Examples
                 int characterCount = textInfo.characterCount;
 
 
-                if (characterCount == 0) continue;
+                if (characterCount == 0)
+                {
+                    continue;
+                }
 
                 //vertices = textInfo.meshInfo[0].vertices;
                 //int lastVertexIndex = textInfo.characterInfo[characterCount - 1].vertexIndex;
@@ -90,7 +92,9 @@ namespace TMPro.Examples
                 for (int i = 0; i < characterCount; i++)
                 {
                     if (!textInfo.characterInfo[i].isVisible)
+                    {
                         continue;
+                    }
 
                     int vertexIndex = textInfo.characterInfo[i].vertexIndex;
 

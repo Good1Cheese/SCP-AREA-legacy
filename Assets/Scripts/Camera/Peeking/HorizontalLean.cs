@@ -10,11 +10,11 @@ public class HorizontalLean : DirectionLean
 
     public override void Lean()
     {
-        GetLeanTime();
+        GetCurveTime();
 
         _leanPosition.y = transform.localPosition.y;
-        _leanPosition.x = _xLeanChange.Evaluate(_leanTime);
-        _leanRotation = Quaternion.Euler(0, 0, _peekCurve.Evaluate(_leanTime));
+        _leanPosition.x = _xLeanChange.Evaluate(_curveTime);
+        _leanRotation = Quaternion.Euler(0, 0, _curve.Evaluate(_curveTime));
 
         transform.localPosition = _leanPosition;
         transform.localRotation = Quaternion.Slerp(transform.localRotation, _leanRotation, _leanSmoothing * Time.deltaTime);

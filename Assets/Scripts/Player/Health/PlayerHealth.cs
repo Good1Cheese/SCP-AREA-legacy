@@ -2,46 +2,42 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(CharacterBleeding), typeof(PlayerDamageSound))]
+[RequireComponent(typeof(PlayerBlood), typeof(PlayerDamageSound))]
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
-    [SerializeField] private int _health;
+    [SerializeField] private int _amount;
 
-    [Inject] private readonly CharacterBleeding _characterBleeding;
+    [Inject] private readonly PlayerBlood _playerBlood;
 
-    public int Amount { get => _health; set => _health = value; }
+    public int Amount { get => _amount; set => _amount = value; }
     public int MaxAmount => _maxHealth;
 
     public Action Damaged { get; set; }
     public Action Healed { get; set; }
-    public Action GetsNonBleedDamage { get; set; }
+    public Action GotNonBleedDamage { get; set; }
     public Action Died { get; set; }
 
     public void Damage(int damage)
     {
-        DamageWithOutNotify(damage);
-        GetsNonBleedDamage?.Invoke();
-    }
-
-    public void DamageWithOutNotify(int damage)
-    {
-        if (_health - damage <= 0)
+        if (_amount - damage <= 0)
         {
-            _health = 0;
+            _amount = 0;
             Die();
         }
 
-        _health -= damage;
+        _amount -= damage;
         Damaged?.Invoke();
+
+        GotNonBleedDamage?.Invoke();
     }
 
     public void Heal(int healthToHeal)
     {
-        if (_characterBleeding.IsActionGoing) { return; }
+        if (_playerBlood.IsActionGoing) { return; }
 
-        _health += healthToHeal;
-        _health = Mathf.Clamp(_health, 0, _maxHealth);
+        _amount += healthToHeal;
+        _amount = Mathf.Clamp(_amount, 0, _maxHealth);
 
         Healed?.Invoke();
     }

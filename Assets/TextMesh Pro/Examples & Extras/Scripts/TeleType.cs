@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 
 namespace TMPro.Examples
 {
-    
+
     public class TeleType : MonoBehaviour
     {
 
@@ -18,8 +18,7 @@ namespace TMPro.Examples
 
         private TMP_Text m_textMeshPro;
 
-
-        void Awake()
+        private void Awake()
         {
             // Get Reference to TextMeshPro Component
             m_textMeshPro = GetComponent<TMP_Text>();
@@ -43,8 +42,7 @@ namespace TMPro.Examples
 
         }
 
-
-        IEnumerator Start()
+        private IEnumerator Start()
         {
 
             // Force and update of the mesh to get valid information.

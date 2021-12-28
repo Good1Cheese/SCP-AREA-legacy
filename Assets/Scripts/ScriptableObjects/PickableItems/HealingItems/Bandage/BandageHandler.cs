@@ -2,7 +2,7 @@
 
 public class BandageHandler : PickableItemHandler
 {
-    [Inject] private readonly CharacterBleeding _playerBleeding;
+    [Inject] private readonly PlayerBlood _playerBleeding;
 
     public override void Use()
     {

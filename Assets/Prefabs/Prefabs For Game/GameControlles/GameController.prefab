@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ef44aa0d9e8604cbd6a2b2eb10c3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInventoryUI: {fileID: 0}
+  _pickableItemssInventoryUIUpdater: {fileID: 0}
 --- !u!114 &973495705
 MonoBehaviour:
   m_ObjectHideFlags: 0

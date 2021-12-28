@@ -3,7 +3,7 @@
 public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 {
     [Inject] private readonly PlayerHealth _playerHealth;
-    [Inject] private readonly CharacterBleeding _playerBleeding;
+    [Inject] private readonly PlayerBlood _playerBleeding;
 
     private bool _isInjectUsed;
 

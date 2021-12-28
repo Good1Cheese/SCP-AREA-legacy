@@ -19,7 +19,7 @@ public class PlayerInstaller : MonoInstaller
     private PlayerHealth _playerHealth;
     private HealableHealth _healableHealth;
     private RayProvider _rayProvider;
-    private CharacterBleeding CharacterBleeding;
+    private PlayerBlood _playerBlood;
     private Transform _playerTransform;
     private GameObject _playerGameObject;
 
@@ -40,7 +40,7 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(_walkController).AsSingle();
         Container.BindInstance(_playerHealth).AsSingle();
         Container.BindInstance(_healableHealth).AsSingle();
-        Container.BindInstance(CharacterBleeding).AsSingle();
+        Container.BindInstance(_playerBlood).AsSingle();
         Container.BindInstance(_rayProvider).AsSingle();
         Container.BindInstance(this).AsSingle();
         Container.BindInstance(_playerTransform).WithId("Player").AsCached();
@@ -67,7 +67,7 @@ public class PlayerInstaller : MonoInstaller
         _walkController = GetComponent<WalkController>();
         _playerHealth = GetComponent<PlayerHealth>();
         _healableHealth = GetComponent<HealableHealth>();
-        CharacterBleeding = GetComponent<CharacterBleeding>();
+        _playerBlood = GetComponent<PlayerBlood>();
         _rayProvider = GetComponent<RayProvider>();
         _playerTransform = transform;
         _playerGameObject = gameObject;

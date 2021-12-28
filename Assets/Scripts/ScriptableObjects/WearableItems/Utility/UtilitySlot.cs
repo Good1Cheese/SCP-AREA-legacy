@@ -1,5 +1,3 @@
-﻿using UnityEngine;
-
-public class UtilitySlot : WearableSlot
+﻿public class UtilitySlot : WearableSlot
 {
 }

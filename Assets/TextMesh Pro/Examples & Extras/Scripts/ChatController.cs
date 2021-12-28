@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class ChatController : MonoBehaviour {
+public class ChatController : MonoBehaviour
+{
 
 
     public TMP_InputField ChatInputField;
@@ -11,18 +12,17 @@ public class ChatController : MonoBehaviour {
 
     public Scrollbar ChatScrollbar;
 
-    void OnEnable()
+    private void OnEnable()
     {
         ChatInputField.onSubmit.AddListener(AddToChatOutput);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         ChatInputField.onSubmit.RemoveListener(AddToChatOutput);
     }
 
-
-    void AddToChatOutput(string newText)
+    private void AddToChatOutput(string newText)
     {
         // Clear Input Field
         ChatInputField.text = string.Empty;
@@ -36,9 +36,13 @@ public class ChatController : MonoBehaviour {
             // No special formatting for first entry
             // Add line feed before each subsequent entries
             if (ChatDisplayOutput.text == string.Empty)
+            {
                 ChatDisplayOutput.text = formattedInput;
+            }
             else
+            {
                 ChatDisplayOutput.text += "\n" + formattedInput;
+            }
         }
 
         // Keep Chat input field active

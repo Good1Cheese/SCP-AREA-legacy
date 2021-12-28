@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 public class InventoryEnablerDisabler : UIEnablerDisabler
 {
     private const KeyCode INVENTORY_KEY = KeyCode.Tab;
 
-    [SerializeField] private PlayerInventoryUIUpdater _playerInventoryUI;
+    [SerializeField] private PickableItemsInventoryUIUpdater _pickableItemssInventoryUIUpdater;
 
     [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
 
@@ -23,6 +22,6 @@ public class InventoryEnablerDisabler : UIEnablerDisabler
 
         IsActivated = !IsActivated;
         EnabledDisabled?.Invoke();
-        _playerInventoryUI.ActivateOrClose();
+        _pickableItemssInventoryUIUpdater.ActivateOrClose();
     }
 }

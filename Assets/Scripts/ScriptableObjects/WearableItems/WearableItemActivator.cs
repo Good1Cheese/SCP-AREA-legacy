@@ -4,7 +4,7 @@ using Zenject;
 public class WearableItemActivator : MonoBehaviour
 {
     [SerializeField] private KeyCode _key;
-    [SerializeField] Transform _itemParent;
+    [SerializeField] private Transform _itemParent;
 
     [Inject] protected readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
     [Inject] private readonly ItemActionCreator _itemActionCreator;

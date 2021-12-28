@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public class GameObjectTrigger : MonoBehaviour
-{   
+{
     public bool IsTriggered { get; private set; }
     public Action TriggerStay { get; set; }
     public Action TriggerEnter { get; set; }

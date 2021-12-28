@@ -14,7 +14,7 @@ public class WeaponSway : WeaponScriptBase
 
     private void Update()
     {
-        if (_inventoryEnablerDisabler.IsActivated) { return; } 
+        if (_inventoryEnablerDisabler.IsActivated) { return; }
 
         float mouseY = Input.GetAxis("Mouse Y");
         float mouseX = Input.GetAxis("Mouse X");

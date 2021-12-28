@@ -4,6 +4,7 @@ using Zenject;
 
 public class HealableHealth : CoroutineUser
 {
+    [SerializeField] private float _coroutineDelay;
     [SerializeField] private int _healthBottomBorder;
     [SerializeField] private float _delayBeforeHeal;
     [SerializeField] private int _healAmount;
@@ -21,6 +22,7 @@ public class HealableHealth : CoroutineUser
     private new void Start()
     {
         base.Start();
+        _coroutineTimeout = new WaitForSeconds(_coroutineDelay);
         _timeoutBeforeHeal = new WaitForSeconds(_delayBeforeHeal);
     }
 
@@ -28,7 +30,7 @@ public class HealableHealth : CoroutineUser
     {
         if (_playerHealth.Amount >= _healthBottomBorder)
         {
-            StartAction();
+            StartActionWithInterrupt();
         }
     }
 

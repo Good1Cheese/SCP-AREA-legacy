@@ -1,5 +1,3 @@
-﻿using UnityEngine;
-
-public class MaskSlot : WearableSlot
+﻿public class MaskSlot : WearableSlot
 {
 }

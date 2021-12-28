@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.TextCore.LowLevel;
 
 
@@ -15,14 +14,12 @@ namespace TMPro.Examples
 
         public Font SourceFont;
 
-
-        void Awake()
+        private void Awake()
         {
 
         }
 
-
-        void Start()
+        private void Start()
         {
             TMP_FontAsset fontAsset = null;
 
@@ -65,8 +62,9 @@ namespace TMPro.Examples
                             textComponent.color = new Color32(255, 255, 0, 255);
 
                             if (Benchmark == BenchmarkType.TMP_BITMAP_MOBILE)
+                            {
                                 textComponent.fontSize = 132;
-
+                            }
                         }
                         break;
                     case BenchmarkType.TEXTMESH_BITMAP:

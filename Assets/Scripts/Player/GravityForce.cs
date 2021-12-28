@@ -4,6 +4,7 @@ public class GravityForce : MonoBehaviour
 {
     [SerializeField] private float _initialVelocityValue;
     [SerializeField] private float _gravity;
+
     private CharacterController _characterController;
     private Vector3 _velocity;
 

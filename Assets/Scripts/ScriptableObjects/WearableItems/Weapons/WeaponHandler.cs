@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Zenject;
-using System.Linq;
 
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler

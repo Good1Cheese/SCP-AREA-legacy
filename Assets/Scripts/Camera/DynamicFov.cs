@@ -5,7 +5,6 @@ using Zenject;
 public class DynamicFov : MonoBehaviour
 {
     [SerializeField] private AnimationCurve _fov;
-    [SerializeField] private float _startFov;
 
     [Inject] private readonly Camera _mainCamera;
 
@@ -15,11 +14,6 @@ public class DynamicFov : MonoBehaviour
     private bool _fovCalculated;
 
     public float FovTime { get; set; }
-
-    private void Awake()
-    {
-        _mainCamera.fieldOfView = _startFov;
-    }
 
     public void SetFov(float targerFovTime)
     {

@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac1df8682e4ecc4a81e31180cbffa9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coroutineDelay: 0
 --- !u!114 &1222460817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBleedingAcitonGoing: 0
+  curveTime: 0
 --- !u!114 &451768641149164666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,13 +777,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446813754cadcf64486dadec0ca054f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leanTimeSmoothing: 10
-  _leanTimeLimit: 0.2
-  _leanChangeTime: 0.5
+  _curveTimeSmoothing: 10
+  _curveTimeLimit: 0.2
+  _curveChangeTime: 0.5
   _positivKey: 100
   _negativKey: 97
   _leanSmoothing: 5
-  _peekCurve:
+  _curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -798,12 +798,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.2
       value: -15
-      inSlope: 1.3545055
-      outSlope: 1.3545055
-      tangentMode: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
       weightedMode: 0
-      inWeight: 0.041291922
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -843,13 +843,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5574a1386eb81c94bbfd24e7cf32ea2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leanTimeSmoothing: 10
-  _leanTimeLimit: 0.2
-  _leanChangeTime: 0.5
+  _curveTimeSmoothing: 10
+  _curveTimeLimit: 0.2
+  _curveChangeTime: 0.5
   _positivKey: 119
   _negativKey: 115
   _leanSmoothing: 5
-  _peekCurve:
+  _curve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -857,16 +857,7 @@ MonoBehaviour:
       value: -0.1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 1.8749999
-      outSlope: 1.8749999
-      tangentMode: 0
+      tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
@@ -940,11 +931,14 @@ GameObject:
   - component: {fileID: 4490448435668429653}
   - component: {fileID: 4490448435668429672}
   - component: {fileID: 6270262773568635950}
+  - component: {fileID: 4771069084059204165}
   - component: {fileID: 7529293685295383700}
+  - component: {fileID: 6866511145551757645}
+  - component: {fileID: 3232194393331746381}
   - component: {fileID: 8417302616954689806}
-  - component: {fileID: 4986046973850489624}
   - component: {fileID: 4490448435668429652}
   - component: {fileID: 4490448435668429650}
+  - component: {fileID: 8018911424283966577}
   - component: {fileID: 4958641543976159792}
   - component: {fileID: 1051959153436360280}
   - component: {fileID: 1902652}
@@ -1031,6 +1025,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 063eade44b797554b95a70aaec983306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxEffectTime: 1.6
+--- !u!114 &4771069084059204165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc46083973ad96b429a1dd9b6e1d2357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxEffectTime: 1.6
 --- !u!114 &7529293685295383700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,7 +1052,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _health: 100
+  _amount: 100
+--- !u!114 &6866511145551757645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622a8567bcf27674b874cc163ad05aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxAmount: 1.5
+  _amount: 1.5
+  _curveTime: 30
+  _maxCurveTime: 30
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.05
+      outSlope: 0.05
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 30
+      value: 1.5
+      inSlope: 0.05
+      outSlope: 0.05
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3232194393331746381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d232f7e96ac95449f90194b5af8006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bloodGainTime: 5
+  _key: 107
 --- !u!114 &8417302616954689806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,22 +1123,6 @@ MonoBehaviour:
   _healthBottomBorder: 80
   _delayBeforeHeal: 1.5
   _healAmount: 1
---- !u!114 &4986046973850489624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490448435668429674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d271a8d37299b4db37345b52dff895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _coroutineDelay: 0
-  _damage: 1
-  _maxDelay: 0.3
-  _minDelay: 0.5
 --- !u!114 &4490448435668429652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,6 +1148,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coroutineDelay: 1.5
+  _maxAmount: 100
+  _burnSpeedMultipliyer: 2
+  _curveTime: 90
+  _maxCurveTime: 90
   _staminaCurve:
     serializedVersion: 2
     m_Curve:
@@ -1126,9 +1176,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _stamina: 100
-  _staminaTime: 90
-  _burnSpeedMultipliyer: 2
+--- !u!114 &8018911424283966577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490448435668429674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcdf69489a4cc648852982bbc4a049d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _drainPower: 40
+  _recoveryTime: 300
 --- !u!114 &4958641543976159792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,6 +1274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveKey: 304
   _maxMoveTime: 1
+  _valueForFov: 0.5
 --- !u!114 &1776069150420481382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,6 +1289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveKey: 304
   _maxMoveTime: 0.45
+  _valueForFov: 0.25
 --- !u!114 &752382766322954893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,6 +1304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveKey: 99
   _maxMoveTime: 0
+  _valueForFov: -0.5
 --- !u!114 &6951859390169044810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1255,6 +1319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveKey: 0
   _maxMoveTime: 0.5
+  _valueForFov: 0
 --- !u!114 &-4375166956877939969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,7 +1814,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _startFov: 59
 --- !u!114 &374035222
 MonoBehaviour:
   m_ObjectHideFlags: 0

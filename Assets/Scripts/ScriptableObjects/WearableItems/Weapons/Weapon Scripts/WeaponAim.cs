@@ -31,7 +31,7 @@ public class WeaponAim : WeaponScriptBase
             if (!_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
 
             SetAimState(false);
-        }   
+        }
     }
 
     public void SetAimStateWithTriggerCheck(bool isAiming)

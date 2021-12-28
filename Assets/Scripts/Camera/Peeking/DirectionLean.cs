@@ -1,42 +1,41 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public abstract class DirectionLean : MonoBehaviour
 {
-    [SerializeField] private float _leanTimeSmoothing;
-    [SerializeField] private float _leanTimeLimit;
-    [SerializeField] private float _leanChangeTime;
+    [SerializeField] private float _curveTimeSmoothing;
+    [SerializeField] private float _curveTimeLimit;
+    [SerializeField] private float _curveChangeTime;
 
     [SerializeField] private KeyCode _positivKey;
     [SerializeField] private KeyCode _negativKey;
 
     [SerializeField] protected float _leanSmoothing;
-    [SerializeField] protected AnimationCurve _peekCurve;
+    [SerializeField] protected AnimationCurve _curve;
 
     [Inject] readonly protected GameObjectTrigger _cameraTrigger;
 
-    protected float _leanTime;
-    protected float _topLeanTimeLimit;
-    protected float _bottomLeanTimeLimit;
+    protected float _curveTime;
+    protected float _topCurveTimeLimit;
+    protected float _bottomCurveTimeLimit;
 
-    public float LeanTime { set => _leanTime = value; }
+    public float CurveTime { set => _curveTime = value; }
 
     private void Start()
     {
-        SetDefaultLeanLimit();
+        SetDefaultCurveLimit();
 
-        _cameraTrigger.TriggerEnter += ReduceLeanStrenght;
-        _cameraTrigger.TriggerStay += SetLeanLimit;
-        _cameraTrigger.TriggerExit += SetDefaultLeanLimit;
+        _cameraTrigger.TriggerEnter += ReduceCurveTimeStrenght;
+        _cameraTrigger.TriggerStay += SetCurveLimit;
+        _cameraTrigger.TriggerExit += SetDefaultCurveLimit;
     }
 
-    private void ReduceLeanStrenght()
+    private void ReduceCurveTimeStrenght()
     {
-        if (_leanTime == _leanTimeLimit || _leanTime == -_leanTimeLimit)
+        if (_curveTime == _curveTimeLimit || _curveTime == -_curveTimeLimit)
         {
-            StartCoroutine(Cocoroutine(_leanTime / 2));
+            StartCoroutine(Cocoroutine(_curveTime / 2));
         }
     }
 
@@ -44,52 +43,52 @@ public abstract class DirectionLean : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        while (elapsedTime < _leanChangeTime)
+        while (elapsedTime < _curveChangeTime)
         {
-            _leanTime = Mathf.Lerp(_leanTime, targetLeanTime, elapsedTime / _leanChangeTime);
+            _curveTime = Mathf.Lerp(_curveTime, targetLeanTime, elapsedTime / _curveChangeTime);
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
     }
 
-    private void SetLeanLimit()
+    private void SetCurveLimit()
     {
-        if (_leanTime > 0)
+        if (_curveTime > 0)
         {
-            _topLeanTimeLimit = _leanTime;
+            _topCurveTimeLimit = _curveTime;
             return;
         }
-        _bottomLeanTimeLimit = _leanTime;
+        _bottomCurveTimeLimit = _curveTime;
     }
 
-    protected void SetDefaultLeanLimit()
+    protected void SetDefaultCurveLimit()
     {
-        _topLeanTimeLimit = _leanTimeLimit;
-        _bottomLeanTimeLimit = -_leanTimeLimit;
+        _topCurveTimeLimit = _curveTimeLimit;
+        _bottomCurveTimeLimit = -_curveTimeLimit;
     }
 
-    protected void GetLeanTime()
+    protected void GetCurveTime()
     {
         bool isPositivKeyPressed = Input.GetKey(_positivKey);
         bool isNegativKeyPressed = Input.GetKey(_negativKey);
 
         if (isPositivKeyPressed)
         {
-            _leanTime += Time.deltaTime;
+            _curveTime += Time.deltaTime;
         }
 
         if (isNegativKeyPressed)
         {
-            _leanTime -= Time.deltaTime;
+            _curveTime -= Time.deltaTime;
         }
 
         if (!isPositivKeyPressed && !isNegativKeyPressed)
         {
-            _leanTime = Mathf.Lerp(_leanTime, 0, _leanTimeSmoothing * Time.deltaTime);
+            _curveTime = Mathf.Lerp(_curveTime, 0, _curveTimeSmoothing * Time.deltaTime);
         }
 
-        _leanTime = Mathf.Clamp(_leanTime, _bottomLeanTimeLimit, _topLeanTimeLimit);
+        _curveTime = Mathf.Clamp(_curveTime, _bottomCurveTimeLimit, _topCurveTimeLimit);
     }
 
     public abstract void Lean();
@@ -97,8 +96,8 @@ public abstract class DirectionLean : MonoBehaviour
 
     private void OnDestroy()
     {
-        _cameraTrigger.TriggerEnter -= ReduceLeanStrenght;
-        _cameraTrigger.TriggerStay -= SetLeanLimit;
-        _cameraTrigger.TriggerExit -= SetDefaultLeanLimit;
+        _cameraTrigger.TriggerEnter -= ReduceCurveTimeStrenght;
+        _cameraTrigger.TriggerStay -= SetCurveLimit;
+        _cameraTrigger.TriggerExit -= SetDefaultCurveLimit;
     }
 }

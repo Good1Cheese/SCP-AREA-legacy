@@ -23,7 +23,7 @@ public class WeaponReload : WeaponScriptBase
             || _weaponHandler.Ammo == 0
             || _itemActionCreator.IsGoing) { return; }
 
-        _weaponReloadCoroutineUser.StartAction();
+        _weaponReloadCoroutineUser.StartActionWithInterrupt();
     }
 
     public IEnumerator Reload()

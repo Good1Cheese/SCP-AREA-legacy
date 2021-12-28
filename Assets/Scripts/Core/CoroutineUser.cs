@@ -3,8 +3,6 @@ using UnityEngine;
 
 public abstract class CoroutineUser : MonoBehaviour
 {
-    [SerializeField] private float _coroutineDelay;
-
     protected WaitForSeconds _coroutineTimeout;
     private IEnumerator _actionCoroutine;
     protected virtual IEnumerator Action => Coroutine();
@@ -14,19 +12,23 @@ public abstract class CoroutineUser : MonoBehaviour
     protected void Start()
     {
         _actionCoroutine = Action;
-        _coroutineTimeout = new WaitForSeconds(_coroutineDelay);
     }
 
-    public void StartAction()
+    public void StartActionWithInterrupt()
     {
         if (IsActionGoing) { return; }
 
+        StartAction();
+    }
+
+    protected virtual void StartAction()
+    {
         IsActionGoing = true;
         _actionCoroutine = Action;
         StartCoroutine(_actionCoroutine);
     }
 
-    public void StopAction()
+    public virtual void StopAction()
     {
         IsActionGoing = false;
         StopCoroutine(_actionCoroutine);

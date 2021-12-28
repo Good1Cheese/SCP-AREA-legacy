@@ -12,9 +12,9 @@ public class VerticalLean : DirectionLean
     {
         if (!_slowWalkController.IsMoving) { return; }
 
-        GetLeanTime();
+        GetCurveTime();
 
-        _leanPosition.y = _peekCurve.Evaluate(_leanTime);
+        _leanPosition.y = _curve.Evaluate(_curveTime);
         transform.localPosition = _leanPosition;
     }
 

@@ -46,8 +46,8 @@ public class PickableItemsInventory : MonoBehaviour
         }
 
         CurrentItemIndex = !isIndexItemLast ? CurrentItemIndex - 1 : index - 1;
+        ItemRemoved?.Invoke();
         Changed?.Invoke();
-        ItemRemoved.Invoke();
     }
 
     public void Remove(ItemHandler itemHandler)

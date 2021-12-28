@@ -14,13 +14,13 @@ public class ItemActionStopper : MonoBehaviour
     {
         _interactionProvider = GetComponent<InteractionProvider>();
 
-        _pauseMenuEnablerDisabler.EnabledDisabled += Da;
+        _pauseMenuEnablerDisabler.EnabledDisabled += PauseUnpauseSound;
         _interactionProvider.Interacted += _itemActionCreator.StartEmptyItemActionWithAudioStop;
-        _wearableItemsInteraction.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop; 
-        _pickableItemsInventory.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop; 
+        _wearableItemsInteraction.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop;
+        _pickableItemsInventory.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop;
     }
 
-    private void Da()
+    private void PauseUnpauseSound()
     {
         if (_pauseMenuEnablerDisabler.IsActivated)
         {
@@ -33,7 +33,7 @@ public class ItemActionStopper : MonoBehaviour
     private void OnDestroy()
     {
         _interactionProvider.Interacted -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
-        _wearableItemsInteraction.ItemRemoved -= _itemActionCreator.StartEmptyItemActionWithAudioStop; 
+        _wearableItemsInteraction.ItemRemoved -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
         _pickableItemsInventory.ItemRemoved -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
     }
 }

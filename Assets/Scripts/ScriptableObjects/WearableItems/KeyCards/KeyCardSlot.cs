@@ -1,5 +1,3 @@
-﻿using UnityEngine;
-
-public class KeyCardSlot : WearableSlot
+﻿public class KeyCardSlot : WearableSlot
 {
 }

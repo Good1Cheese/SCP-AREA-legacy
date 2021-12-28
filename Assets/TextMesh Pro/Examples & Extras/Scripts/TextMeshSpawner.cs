@@ -1,10 +1,9 @@
 using UnityEngine;
-using System.Collections;
 
 
 namespace TMPro.Examples
 {
-    
+
     public class TextMeshSpawner : MonoBehaviour
     {
 
@@ -15,12 +14,12 @@ namespace TMPro.Examples
 
         private TextMeshProFloatingText floatingText_Script;
 
-        void Awake()
+        private void Awake()
         {
 
         }
 
-        void Start()
+        private void Start()
         {
 
             for (int i = 0; i < NumberOfNPC; i++)

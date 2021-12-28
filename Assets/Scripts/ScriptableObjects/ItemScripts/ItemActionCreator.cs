@@ -15,7 +15,7 @@ public class ItemActionCreator : MonoBehaviour
     {
         PlaySound(actionSound);
         _isSoundInterrupting = isSoundInterrupting;
-         StartCoroutine(DoAction(timeout));
+        StartCoroutine(DoAction(timeout));
     }
 
     public void StartInterruptingItemAction(CoroutineUser coroutineUser, AudioClip actionSound)

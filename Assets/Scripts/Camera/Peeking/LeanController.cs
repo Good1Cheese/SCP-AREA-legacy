@@ -21,8 +21,8 @@ public class LeanController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(_key)) 
-        { 
+        if (Input.GetKeyDown(_key))
+        {
             _isPeekEnabled = !_isPeekEnabled;
             _playerMovement.enabled = !_isPeekEnabled;
             StopPlayer();
@@ -31,7 +31,7 @@ public class LeanController : MonoBehaviour
         if (Input.GetKeyUp(_key))
         {
             _isPeekEnabled = !_isPeekEnabled;
-            _playerMovement.enabled = !_isPeekEnabled; 
+            _playerMovement.enabled = !_isPeekEnabled;
         }
     }
 
@@ -52,8 +52,8 @@ public class LeanController : MonoBehaviour
 
     private void StopPlayer()
     {
-        _horizontalLean.LeanTime = 0;
-        _verticalLean.LeanTime = 0;
+        _horizontalLean.CurveTime = 0;
+        _verticalLean.CurveTime = 0;
         _playerMovement.HorizontalMove = 0;
         _playerMovement.VerticalMove = 0;
         _movementController.MoveTime = 0;
