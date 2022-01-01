@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068587277e1388b49a62be9dfb8b189c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wearableIte_SO: {fileID: 11400000, guid: 7e3d6df162cff4a4a9b976dee66ff6e3, type: 2}
+  _wearableIte_SO: {fileID: 11400000, guid: e6ef3700ba2e1404b84a665470ad1c5a, type: 2}
 --- !u!114 &8831626321968618951
 MonoBehaviour:
   m_ObjectHideFlags: 0

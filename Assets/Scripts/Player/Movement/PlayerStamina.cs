@@ -1,22 +1,22 @@
-using System;
+    using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(StaminaDisabler))]
-public class PlayerStamina : CoroutineUser
+public class PlayerStamina : CoroutineWithDelayUser
 {
-    [SerializeField] private float _coroutineDelay;
     [SerializeField] private float _maxAmount;
-    [SerializeField] private int _burnSpeedMultipliyer;
-    [SerializeField] private float _curveTime;
     [SerializeField] private float _maxCurveTime;
+    [SerializeField] private int _burnSpeedMultipliyer;
 
     [SerializeField] private AnimationCurve _staminaCurve;
 
     [Inject] private readonly RunController _runController;
     [Inject] private readonly SlowWalkRunController _slowWalkRunController;
     [Inject] private readonly PlayerMovement _playerMovement;
+
+    private float _curveTime;
 
     public float CurveTime
     {
@@ -28,31 +28,35 @@ public class PlayerStamina : CoroutineUser
             Changed?.Invoke();
         }
     }
-
-    public float MaxCurveTime { get => _maxCurveTime; set => _maxCurveTime = value; }
+    public float MaxCurveTime
+    {
+        get => _maxCurveTime;
+        set
+        {
+            _maxCurveTime = value;
+            CurveTime = CurveTime;
+        }
+    }
     public int BurnSpeedMultipliyer { get => _burnSpeedMultipliyer; set => _burnSpeedMultipliyer = value; }
     public float Amount { get; set; }
-    public bool IsTimeoutPassed { get; set; }
     public Action Changed { get; set; }
 
     private void Awake()
     {
+        _curveTime = _maxCurveTime;
         Amount = _maxAmount;
-        _coroutineTimeout = new WaitForSeconds(_coroutineDelay);
     }
 
     private new void Start()
     {
         base.Start();
         _slowWalkRunController.Using += Burn;
-        _slowWalkRunController.UseStarted += StopAction;
-        _slowWalkRunController.UseStopped += StartActionWithInterrupt;
-
+        _slowWalkRunController.UseStarted += Stop;
+        _slowWalkRunController.UseStopped += StartWithoutInterrupt;
         _runController.Using += Burn;
-        _runController.UseStarted += StopAction;
-        _runController.UseStopped += StartActionWithInterrupt;
-
-        _playerMovement.StoppedMoving += StartActionWithInterrupt;
+        _runController.UseStarted += Stop;
+        _runController.UseStopped += StartWithoutInterrupt;
+        _playerMovement.StoppedMoving += StartWithoutInterrupt;
     }
 
     private void Burn()
@@ -60,37 +64,26 @@ public class PlayerStamina : CoroutineUser
         CurveTime -= Time.deltaTime * _burnSpeedMultipliyer;
     }
 
-    public override void StopAction()
-    {
-        _curveTime = (_curveTime > _maxCurveTime) ? _maxCurveTime : _curveTime;
-        IsTimeoutPassed = false;
-
-        base.StopAction();
-    }
-
     protected override IEnumerator Coroutine()
     {
-        yield return _coroutineTimeout;
-
-        IsTimeoutPassed = true;
         while (_curveTime < _maxCurveTime)
         {
             CurveTime += Time.deltaTime;
 
             yield return null;
         }
+
+        IsCoroutineGoing = false;
     }
 
     private void OnDestroy()
     {
         _slowWalkRunController.Using -= Burn;
-        _slowWalkRunController.UseStarted -= StopAction;
-        _slowWalkRunController.UseStopped -= StartActionWithInterrupt;
-
+        _slowWalkRunController.UseStarted -= Stop;
+        _slowWalkRunController.UseStopped -= StartWithoutInterrupt;
         _runController.Using -= Burn;
-        _runController.UseStarted -= StopAction;
-        _runController.UseStopped -= StartActionWithInterrupt;
-
-        _playerMovement.StoppedMoving -= StartActionWithInterrupt;
+        _runController.UseStarted -= Stop;
+        _runController.UseStopped -= StartWithoutInterrupt;
+        _playerMovement.StoppedMoving -= StartWithoutInterrupt;
     }
 }

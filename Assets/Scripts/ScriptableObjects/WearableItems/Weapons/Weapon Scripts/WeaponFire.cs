@@ -19,7 +19,9 @@ public class WeaponFire : WeaponScriptBase
     {
         if (!Input.GetKeyDown(FIRE_KEY)) { return; }
 
-        if (_itemActionCreator.IsGoing || _inventoryEnablerDisabler.IsActivated) { return; }
+        if (_itemActionCreator.IsGoing
+            || _inventoryEnablerDisabler.IsActivated
+            || _pauseMenuEnablerDisabler.IsActivated) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {

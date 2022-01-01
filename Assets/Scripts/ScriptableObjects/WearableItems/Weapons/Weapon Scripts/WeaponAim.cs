@@ -45,8 +45,9 @@ public class WeaponAim : WeaponScriptBase
 
     public void SetAimState(bool isAiming)
     {
-        if (_weaponReloadCoroutineUser.IsActionGoing
-            || _inventoryEnablerDisabler.IsActivated) { return; }
+        if (_weaponReloadCoroutineUser.IsCoroutineGoing
+            || _inventoryEnablerDisabler.IsActivated
+            || _pauseMenuEnablerDisabler.IsActivated) { return; }
 
         IsAiming = isAiming;
         _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);

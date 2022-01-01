@@ -4,6 +4,7 @@ using Zenject;
 public class WeaponSaving : ItemSaving
 {
     [Inject(Id = "PropsHandler")] protected readonly Transform PropsHandler;
+
     private WeaponHandler _weaponHandler;
 
     public string silencerName;

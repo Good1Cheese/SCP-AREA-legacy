@@ -2,57 +2,53 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class HealableHealth : CoroutineUser
+public class HealableHealth : CoroutineWithDelayUser
 {
-    [SerializeField] private float _coroutineDelay;
+    [SerializeField] private float _delayDuringCoroutine;
     [SerializeField] private int _healthBottomBorder;
-    [SerializeField] private float _delayBeforeHeal;
     [SerializeField] private int _healAmount;
 
     [Inject] private readonly PlayerHealth _playerHealth;
-    private WaitForSeconds _timeoutBeforeHeal;
+
+    private WaitForSeconds _timeoutDuringCoroutine;
 
     private void Awake()
     {
-        _playerHealth.Damaged += StopAction;
-        _playerHealth.Damaged += Heal;
-        _playerHealth.Healed += Heal;
+        _timeoutDuringCoroutine = new WaitForSeconds(_delayDuringCoroutine);
     }
 
     private new void Start()
     {
         base.Start();
-        _coroutineTimeout = new WaitForSeconds(_coroutineDelay);
-        _timeoutBeforeHeal = new WaitForSeconds(_delayBeforeHeal);
+        _playerHealth.Damaged += Stop;
+        _playerHealth.Damaged += StartWithoutInterrupt;
+        _playerHealth.Healed += StartWithoutInterrupt;
     }
 
-    private void Heal()
+    public override void StartWithoutInterrupt()
     {
-        if (_playerHealth.Amount >= _healthBottomBorder)
-        {
-            StartActionWithInterrupt();
-        }
+        if (_playerHealth.Amount < _healthBottomBorder) { return; }
+
+        base.StartWithoutInterrupt();
     }
 
     protected override IEnumerator Coroutine()
     {
-        yield return _timeoutBeforeHeal;
-
         while (_playerHealth.Amount <= _playerHealth.MaxAmount)
         {
             _playerHealth.Amount += _healAmount;
             _playerHealth.Healed?.Invoke();
 
-            yield return _coroutineTimeout;
+            yield return _timeoutDuringCoroutine;
         }
 
-        IsActionGoing = false;
+        IsCoroutineGoing = false;
     }
 
     private void OnDestroy()
     {
-        _playerHealth.Damaged -= StopAction;
-        _playerHealth.Damaged -= Heal;
-        _playerHealth.Healed -= Heal;
+        _playerHealth.Damaged -= Stop;
+        _playerHealth.Damaged -= StartWithoutInterrupt;
+        _playerHealth.Healed -= StartWithoutInterrupt;
     }
 }

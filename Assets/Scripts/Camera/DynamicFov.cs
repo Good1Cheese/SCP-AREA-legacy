@@ -40,13 +40,13 @@ public class DynamicFov : MonoBehaviour
 
         if (FovTime > targerFovTime)
         {
-            _condition = () => FovTime <= targerFovTime;
+            _condition = () => FovTime < targerFovTime;
             _deltaTimeMultipliyer = -1;
 
             return;
         }
 
-        _condition = () => FovTime >= targerFovTime;
+        _condition = () => FovTime > targerFovTime;
         _deltaTimeMultipliyer = 1;
     }
 }

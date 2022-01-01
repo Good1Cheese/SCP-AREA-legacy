@@ -49,7 +49,7 @@ public class ReloadAndAmmoShowSwitcher : WeaponScriptBase
 
         if (_pressTime < _pressTimeToActivate) { return; }
 
-        if (_weaponReloadCoroutineUser.IsActionGoing) { return; }
+        if (_weaponReloadCoroutineUser.IsCoroutineGoing) { return; }
 
         _deltaTimeMultipliyer = 0;
         _pressTime = 0;

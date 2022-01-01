@@ -1,37 +1,40 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class CoroutineUser : MonoBehaviour
 {
-    protected WaitForSeconds _coroutineTimeout;
-    private IEnumerator _actionCoroutine;
-    protected virtual IEnumerator Action => Coroutine();
+    private IEnumerator _coroutine;
 
-    public bool IsActionGoing { get; set; }
+    protected virtual IEnumerator Method => Coroutine();
+
+    public bool IsCoroutineGoing { get; set; }
+    public Action CoroutineStarted { get; set; }
 
     protected void Start()
     {
-        _actionCoroutine = Action;
+        _coroutine = Method;
     }
 
-    public void StartActionWithInterrupt()
+    public virtual void StartWithoutInterrupt()
     {
-        if (IsActionGoing) { return; }
+        if (IsCoroutineGoing) { return; }
 
-        StartAction();
+        StartCoroutine(Method);
     }
 
-    protected virtual void StartAction()
+    protected new void StartCoroutine(IEnumerator enumerator)
     {
-        IsActionGoing = true;
-        _actionCoroutine = Action;
-        StartCoroutine(_actionCoroutine);
+        IsCoroutineGoing = true;
+        _coroutine = enumerator;
+        base.StartCoroutine(_coroutine);
+        CoroutineStarted?.Invoke();
     }
 
-    public virtual void StopAction()
+    public virtual void Stop()
     {
-        IsActionGoing = false;
-        StopCoroutine(_actionCoroutine);
+        IsCoroutineGoing = false;
+        StopCoroutine(_coroutine);
     }
 
     protected abstract IEnumerator Coroutine();

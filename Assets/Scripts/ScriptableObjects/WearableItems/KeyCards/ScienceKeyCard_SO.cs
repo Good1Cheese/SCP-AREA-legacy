@@ -9,6 +9,7 @@ public class ScienceKeyCard_SO : KeyCard_SO
     {
         First,
         Second,
+        Third
     }
 
     public override int KeyCardLevel => (int)_scienceKeyCardLevel;
@@ -17,4 +18,3 @@ public class ScienceKeyCard_SO : KeyCard_SO
         return KeyCardType.ScienceKeyCard;
     }
 }
-

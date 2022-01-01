@@ -3,6 +3,7 @@
 public abstract class WeaponScriptBase : ItemScriptBase
 {
     [Inject] protected readonly WeaponSlot _weaponSlot;
+    [Inject] protected readonly PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
 
     protected WeaponHandler _weaponHandler;
 

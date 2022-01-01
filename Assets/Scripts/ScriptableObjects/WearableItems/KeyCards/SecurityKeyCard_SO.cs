@@ -9,7 +9,6 @@ public class SecurityKeyCard_SO : KeyCard_SO
     {
         First,
         Second,
-        Third,
     }
 
     public override int KeyCardLevel => (int)_securityKeyCardLevel;

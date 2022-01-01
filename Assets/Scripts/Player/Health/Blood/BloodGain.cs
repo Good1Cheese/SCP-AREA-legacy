@@ -3,41 +3,59 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class BloodGain : CoroutineUser
+public class BloodGain : CoroutineWithDelayUser
 {
     [SerializeField] private float _bloodGainTime;
     [SerializeField] private KeyCode _key;
 
     [Inject] readonly private PlayerBlood _playerBlood;
 
+    private bool _isCoolDownDone = true;
+
     public Action Gained { get; set; }
     public Action GainStarted { get; set; }
+    public float GainPerSecond { get; set; }
+
+    private void Awake()
+    {
+        _playerBlood.BleedingStarted += Stop;
+    }
 
     private void Update()
     {
         if (!Input.GetKeyDown(_key)) { return; }
 
-        StartAction();
+        StartWithoutInterrupt();
     }
 
-    protected override void StartAction()
+    public override void StartWithoutInterrupt()
     {
-        base.StartAction();
-        GainStarted?.Invoke();
+        if (_playerBlood.IsCoroutineGoing || !_isCoolDownDone) { return; }
+
+        base.StartWithoutInterrupt();
+        StartCoroutine(StartCoolDown());
+        GainPerSecond = (_playerBlood.MaxCurveTime - _playerBlood.CurveTime) / _bloodGainTime;
     }
 
     protected override IEnumerator Coroutine()
     {
-        float gainPerSecond = (_playerBlood.MaxCurveTime - _playerBlood.CurveTime) / _bloodGainTime;
-
         while (_playerBlood.CurveTime < _playerBlood.MaxCurveTime)
         {
-            _playerBlood.CurveTime += Time.deltaTime * gainPerSecond;
+            _playerBlood.CurveTime += Time.deltaTime * GainPerSecond;
             Gained?.Invoke();
 
             yield return null;
         }
 
-        IsActionGoing = false;
+        IsCoroutineGoing = false;
+    }
+
+    private IEnumerator StartCoolDown()
+    {
+        _isCoolDownDone = false;
+
+        yield return _timeoutBeforeCoroutine;
+
+        _isCoolDownDone = true;
     }
 }

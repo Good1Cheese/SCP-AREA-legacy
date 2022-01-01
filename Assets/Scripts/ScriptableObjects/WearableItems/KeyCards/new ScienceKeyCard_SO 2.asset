@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71626629593a3b645998dcda53af0d10, type: 3}
-  m_Name: new ScienceKeyCard_SO
+  m_Name: new ScienceKeyCard_SO 2
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: 

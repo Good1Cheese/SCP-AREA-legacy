@@ -6,11 +6,13 @@ public class BloodSaving : DataSaving
 
     public bool isBleedingAcitonGoing;
     public float curveTime;
+    public float lossMultipliyer;
 
     public override void Save()
     {
         curveTime = _playerBlood.CurveTime;
-        isBleedingAcitonGoing = _playerBlood.IsActionGoing;
+        lossMultipliyer = _playerBlood.LossMultipliyer;
+        isBleedingAcitonGoing = _playerBlood.IsCoroutineGoing;
     }
 
     public override void LoadData()
@@ -19,6 +21,6 @@ public class BloodSaving : DataSaving
 
         if (!isBleedingAcitonGoing) { return; }
 
-        _playerBlood.StartActionWithInterrupt();
+        _playerBlood.StartBleeding(0, lossMultipliyer);
     }
 }

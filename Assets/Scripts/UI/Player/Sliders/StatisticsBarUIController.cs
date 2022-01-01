@@ -7,7 +7,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
 {
     [Inject] protected readonly GameLoader _gameLoader;
 
-    private Slider _slider;
+    protected Slider _slider;
 
     private void Start()
     {
@@ -21,7 +21,7 @@ public abstract class StatisticsBarUIController : MonoBehaviour
         Subscribe();
     }
 
-    public void UpdateUI()
+    public virtual void UpdateUI()
     {
         _slider.value = GetValue();
     }

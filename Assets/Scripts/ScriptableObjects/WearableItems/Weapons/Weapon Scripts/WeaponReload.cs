@@ -21,9 +21,10 @@ public class WeaponReload : WeaponScriptBase
     {
         if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
             || _weaponHandler.Ammo == 0
-            || _itemActionCreator.IsGoing) { return; }
+            || _itemActionCreator.IsGoing
+            || _pauseMenuEnablerDisabler.IsActivated) { return; }
 
-        _weaponReloadCoroutineUser.StartActionWithInterrupt();
+        _weaponReloadCoroutineUser.StartWithoutInterrupt();
     }
 
     public IEnumerator Reload()
@@ -40,7 +41,7 @@ public class WeaponReload : WeaponScriptBase
         CalculateCurrentClipAmmo();
 
         _weaponHandler.ClipAmmo = _calculatedClipAmmo;
-        _weaponReloadCoroutineUser.IsActionGoing = false;
+        _weaponReloadCoroutineUser.IsCoroutineGoing = false;
     }
 
     private void CalculateCurrentClipAmmo()

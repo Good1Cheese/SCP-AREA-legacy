@@ -6,10 +6,12 @@ public class PlayerInstaller : MonoInstaller
 {
     private SlowWalkEffect _slowWalkEffect;
     private DynamicFov _dynamicFov;
+    private BloodGain _bloodGain;
     private InjuryEffectsController _injuryEffectsController;
     private PlayerMovement _playerMovement;
     private PlayerRotator _playerRotator;
     private PlayerStamina _playerStamina;
+    private StaminaDrain _staminaDrain;
     private StaminaDisabler _staminaUseDisabler;
     private MovementController _movementController;
     private RunController _runController;
@@ -28,10 +30,12 @@ public class PlayerInstaller : MonoInstaller
         GetComponents();
         Container.BindInstance(_slowWalkEffect).AsSingle();
         Container.BindInstance(_dynamicFov).AsSingle();
+        Container.BindInstance(_bloodGain).AsSingle();
         Container.BindInstance(_injuryEffectsController).AsSingle();
         Container.BindInstance(_playerMovement).AsSingle();
         Container.BindInstance(_playerRotator).AsSingle();
         Container.BindInstance(_playerStamina).AsSingle();
+        Container.BindInstance(_staminaDrain).AsSingle();
         Container.BindInstance(_staminaUseDisabler).AsSingle();
         Container.BindInstance(_movementController).AsSingle();
         Container.BindInstance(_runController).AsSingle();
@@ -55,10 +59,12 @@ public class PlayerInstaller : MonoInstaller
     {
         _slowWalkEffect = GetComponent<SlowWalkEffect>();
         _dynamicFov = GetComponent<DynamicFov>();
+        _bloodGain = GetComponent<BloodGain>();
         _injuryEffectsController = GetComponent<InjuryEffectsController>();
         _playerMovement = GetComponent<PlayerMovement>();
         _playerRotator = GetComponent<PlayerRotator>();
         _playerStamina = GetComponent<PlayerStamina>();
+        _staminaDrain = GetComponent<StaminaDrain>();
         _staminaUseDisabler = GetComponent<StaminaDisabler>();
         _movementController = GetComponent<MovementController>();
         _runController = GetComponent<RunController>();

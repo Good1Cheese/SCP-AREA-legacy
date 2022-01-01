@@ -15,7 +15,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 
     public override void Use()
     {
-        _playerBleeding.StopAction();
+        _playerBleeding.Stop();
 
         var medkit = (Medkit_SO)Item_SO;
         _playerHealth.Heal(medkit.healthToHeal);

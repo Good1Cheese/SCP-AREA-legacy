@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c833ac445a1157440b1096b88acf7545, type: 3}
-  m_Name: new SecurityKeyCard_SO
+  m_Script: {fileID: 11500000, guid: 71626629593a3b645998dcda53af0d10, type: 3}
+  m_Name: new ScienceKeyCard_SO 3
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: 
   playerGameObjectSpawnOffset: {x: 0.363, y: -0.173, z: 0.431}
-  playerGameObjectPrefab: {fileID: 277353614761163988, guid: 91616b0a69a9d494ba1ee17b19db701b, type: 3}
-  _securityKeyCardLevel: 2
+  playerGameObjectPrefab: {fileID: 277353614761163988, guid: 84c332729f00cec488902d74d488e9da, type: 3}
+  _scienceKeyCardLevel: 2
