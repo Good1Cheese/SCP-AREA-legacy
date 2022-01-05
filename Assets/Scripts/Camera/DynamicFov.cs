@@ -13,7 +13,7 @@ public class DynamicFov : MonoBehaviour
     private sbyte _deltaTimeMultipliyer;
     private bool _fovCalculated;
 
-    public float FovTime { get; set; }
+    public float CurveTime { get; set; }
 
     public void SetFov(float targerFovTime)
     {
@@ -27,8 +27,8 @@ public class DynamicFov : MonoBehaviour
             return;
         }
 
-        FovTime += Time.deltaTime * _deltaTimeMultipliyer;
-        _mainCamera.fieldOfView = _fov.Evaluate(FovTime);
+        CurveTime += Time.deltaTime * _deltaTimeMultipliyer;
+        _mainCamera.fieldOfView = _fov.Evaluate(CurveTime);
     }
 
     private void CalculateFov(float targerFovTime)
@@ -38,15 +38,15 @@ public class DynamicFov : MonoBehaviour
         _fovCalculated = false;
         _targetTime = targerFovTime;
 
-        if (FovTime > targerFovTime)
+        if (CurveTime > targerFovTime)
         {
-            _condition = () => FovTime < targerFovTime;
+            _condition = () => CurveTime < targerFovTime;
             _deltaTimeMultipliyer = -1;
 
             return;
         }
 
-        _condition = () => FovTime > targerFovTime;
+        _condition = () => CurveTime > targerFovTime;
         _deltaTimeMultipliyer = 1;
     }
 }

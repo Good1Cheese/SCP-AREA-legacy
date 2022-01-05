@@ -3,19 +3,16 @@ using Zenject;
 
 public class PlayerDeathCloneActivator : MonoBehaviour
 {
+    [SerializeField] private GameObject _gameObject;
+
     [Inject] private readonly PlayerHealth _playerHealth;
     [Inject(Id = "Player")] private readonly Transform _playerTransform;
-    private DeathAnimationPlayer _playerDeathAnimation;
-    private GameObject _gameObject;
 
-    private void Awake()
-    {
-        _gameObject = transform.parent.gameObject;
-        _playerDeathAnimation = GetComponent<DeathAnimationPlayer>();
-    }
+    private DeathAnimationPlayer _playerDeathAnimation;
 
     private void Start()
     {
+        _playerDeathAnimation = GetComponent<DeathAnimationPlayer>();
         _playerHealth.Died += ActivateDeathAnimation;
         _gameObject.SetActive(false);
     }

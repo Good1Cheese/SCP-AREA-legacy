@@ -11,13 +11,13 @@ public class FovSaving : DataSaving
 
     public override void Save()
     {
-        moveTime = _dynamicFov.FovTime;
+        moveTime = _dynamicFov.CurveTime;
         fov = _mainCamera.fieldOfView;
     }
 
     public override void LoadData()
     {
-        _dynamicFov.FovTime = moveTime;
+        _dynamicFov.CurveTime = moveTime;
         _mainCamera.fieldOfView = fov;
     }
 }

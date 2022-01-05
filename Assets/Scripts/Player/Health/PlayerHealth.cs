@@ -6,10 +6,11 @@ using Zenject;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
-    [SerializeField] private float _amount;
     [SerializeField] private AnimationCurve _bloodDamageMultipliyer;
 
     [Inject] private readonly PlayerBlood _playerBlood;
+
+    private float _amount;
 
     public float Amount
     {
@@ -20,13 +21,18 @@ public class PlayerHealth : MonoBehaviour
             Changed?.Invoke();
         }
     }
-
     public float MaxAmount => _maxHealth;
 
     public Action Damaged { get; set; }
     public Action Changed { get; set; }
     public Action Healed { get; set; }
     public Action Died { get; set; }
+    public float CurrentPercentage => (MaxAmount - Amount) / 100;
+
+    private void Awake()
+    {
+        _amount = MaxAmount;
+    }
 
     public void Damage(float damage)
     {

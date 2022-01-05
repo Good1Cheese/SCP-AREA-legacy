@@ -14,10 +14,25 @@ public abstract class MoveController : MonoBehaviour
     public bool IsMoving { get; set; }
     public float MaxMoveTime => _maxMoveTime;
 
+    public int MoveIndex { get; set; }
     public Action Using { get; set; }
     public Action NotUsing { get; set; }
     public Action UseStarted { get; set; }
     public Action UseStopped { get; set; }
+
+    protected float Move()
+    {
+        Using?.Invoke();
+
+        if (_movementController.MoveTime < MaxMoveTime)
+        {
+            _movementController.MoveTime += Time.deltaTime;
+        }
+
+        return _movementController.MovementSpeed.Evaluate(_movementController.MoveTime);
+    }
+
+    public void UpdateFov() => _dynamicFov.SetFov(_valueForFov);
 
     public virtual float GetMove()
     {
@@ -36,18 +51,6 @@ public abstract class MoveController : MonoBehaviour
         return 0;
     }
 
-    protected float Move()
-    {
-        Using?.Invoke();
-
-        if (_movementController.MoveTime < MaxMoveTime)
-        {
-            _movementController.MoveTime += Time.deltaTime;
-        }
-
-        return _movementController.MovementSpeed.Evaluate(_movementController.MoveTime);
-    }
-
     public virtual void StopMove()
     {
         if (Input.GetKeyUp(_moveKey))
@@ -62,6 +65,4 @@ public abstract class MoveController : MonoBehaviour
         StopMove();
         return GetMove();
     }
-
-    public void CalculateFov() => _dynamicFov.SetFov(_valueForFov);
 }

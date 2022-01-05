@@ -18,7 +18,7 @@ public class BloodGain : CoroutineWithDelayUser
 
     private void Awake()
     {
-        _playerBlood.BleedingStarted += Stop;
+        _playerBlood.BleedingStarted += StopCoroutine;
     }
 
     private void Update()
@@ -57,5 +57,10 @@ public class BloodGain : CoroutineWithDelayUser
         yield return _timeoutBeforeCoroutine;
 
         _isCoolDownDone = true;
+    }
+
+    private void OnDestroy()
+    {
+        _playerBlood.BleedingStarted -= StopCoroutine;
     }
 }

@@ -48,7 +48,7 @@ public class ItemActionCreator : MonoBehaviour
 
         if (_currentItemAction == null) { return; }
 
-        _currentItemAction.Stop();
+        _currentItemAction.StopCoroutine();
         _currentItemAction = null;
     }
 

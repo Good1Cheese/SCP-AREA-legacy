@@ -6,7 +6,7 @@ public class BandageHandler : PickableItemHandler
 
     public override void Use()
     {
-        _playerBleeding.Stop();
+        _playerBleeding.StopCoroutine();
     }
 
     public override bool ShouldItemNotBeUsed => _playerBleeding.IsCoroutineGoing;

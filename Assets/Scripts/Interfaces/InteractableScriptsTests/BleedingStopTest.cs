@@ -6,6 +6,6 @@ public class BleedingStopTest : IInteractable
 
     public override void Interact()
     {
-        _playerBlood.Stop();
+        _playerBlood.StopCoroutine();
     }
 }

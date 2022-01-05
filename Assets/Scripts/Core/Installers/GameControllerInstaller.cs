@@ -2,7 +2,7 @@
 using UnityEngine.Rendering;
 using Zenject;
 
-[RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler), typeof(InjuryLensDistortionEffect))]
+[RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler))]
 public class GameControllerInstaller : MonoInstaller
 {
     [SerializeField] private KeyCardSlot _keyCardSlot;
@@ -18,7 +18,6 @@ public class GameControllerInstaller : MonoInstaller
     private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
     private AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
     private InventoryEnablerDisabler _inventoryEnablerDisabler;
-    private InjuryLensDistortionEffect _injuryState;
     private Volume _volume;
     private PickableItemsInventory _pickableItemsInventory;
     private WearableItemsInventory _wearableItemsInventory;
@@ -39,7 +38,6 @@ public class GameControllerInstaller : MonoInstaller
         Container.BindInstance(_pauseMenuEnablerDisabler).AsSingle();
         Container.BindInstance(_ammoUIEnablerDisabler).AsSingle();
         Container.BindInstance(_inventoryEnablerDisabler).AsSingle();
-        Container.BindInstance(_injuryState).AsSingle();
         Container.BindInstance(_volume).AsSingle();
         Container.BindInstance(_pickableItemsInventory).AsSingle();
         Container.BindInstance(_wearableItemsInventory).AsSingle();
@@ -58,7 +56,6 @@ public class GameControllerInstaller : MonoInstaller
         _pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();
         _ammoUIEnablerDisabler = GetComponent<AmmoUIEnablerDisabler>();
         _inventoryEnablerDisabler = GetComponent<InventoryEnablerDisabler>();
-        _injuryState = GetComponent<InjuryLensDistortionEffect>();
         _volume = GetComponent<Volume>();
         _pickableItemsInventory = GetComponent<PickableItemsInventory>();
         _wearableItemsInventory = GetComponent<WearableItemsInventory>();

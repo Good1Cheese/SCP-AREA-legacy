@@ -1,34 +1,16 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
 public class HealthBarUIController : StatisticsBarUIController
 {
-    [SerializeField] private AnimationCurve _healthCurve;
-    [SerializeField] private float _maxCurveTime;
-
     [Inject] private readonly PlayerHealth _playerHealth;
 
-    private float _curveTime;
-    private Func<bool> _condition;
-    private sbyte _deltaTimeMultipliyer;
+    private HealthBarUpdater _healthBarUpdater;
 
-    private float CurrentHealth => _healthCurve.Evaluate(_curveTime);
-
-    public float CurveTime
+    protected new void Start()
     {
-        get => _curveTime;
-        set
-        {
-            _curveTime = value;
-            _slider.value = CurrentHealth;
-        }
-    }
-
-    private void Awake()
-    {
-        _curveTime = _maxCurveTime;
+        base.Start();
+        _healthBarUpdater = GetComponent<HealthBarUpdater>();
+        _healthBarUpdater.HealthBarUIController = this;
     }
 
     protected override float GetValue()
@@ -38,31 +20,7 @@ public class HealthBarUIController : StatisticsBarUIController
 
     public override void UpdateUI()
     {
-        GetConditionAndDeltaTimeMuitipliyer();
-        StartCoroutine(UpdateUICoroutine());
-    }
-
-    private void GetConditionAndDeltaTimeMuitipliyer()
-    {
-        float health = GetValue();
-        if (CurrentHealth > health)
-        {
-            _condition = () => CurrentHealth > health;
-            _deltaTimeMultipliyer = -1;
-            return;
-        }
-
-        _condition = () => CurrentHealth < health;
-        _deltaTimeMultipliyer = 1;
-    }
-
-    public IEnumerator UpdateUICoroutine()
-    {
-        while (_condition())
-        {
-            CurveTime += Time.deltaTime * _deltaTimeMultipliyer;
-            yield return null;
-        }
+        _healthBarUpdater.UpdateCoroutine();
     }
 
     protected override void Subscribe()

@@ -31,7 +31,7 @@ public abstract class CoroutineUser : MonoBehaviour
         CoroutineStarted?.Invoke();
     }
 
-    public virtual void Stop()
+    public virtual void StopCoroutine()
     {
         IsCoroutineGoing = false;
         StopCoroutine(_coroutine);

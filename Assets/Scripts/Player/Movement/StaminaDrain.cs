@@ -16,7 +16,7 @@ public class StaminaDrain : CoroutineUser
     private new void Start()
     {
         base.Start();
-        _bloodGain.GainStarted += Stop;
+        _bloodGain.GainStarted += StopCoroutine;
         _bloodGain.GainStarted += StartWithoutInterrupt;
     }
 
@@ -54,7 +54,7 @@ public class StaminaDrain : CoroutineUser
 
     private void OnDestroy()
     {
-        _bloodGain.GainStarted -= Stop;
+        _bloodGain.GainStarted -= StopCoroutine;
         _bloodGain.GainStarted -= StartWithoutInterrupt;
     }
 }

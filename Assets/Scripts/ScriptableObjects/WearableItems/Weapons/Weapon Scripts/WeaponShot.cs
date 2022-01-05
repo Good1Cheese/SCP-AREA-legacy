@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponRecoilAnimation))]
 public class WeaponShot : MonoBehaviour
 {
     private const float NORMAL_MULTYPLIER = 0.001f;

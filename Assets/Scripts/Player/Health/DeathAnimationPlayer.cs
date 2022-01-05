@@ -12,6 +12,7 @@ public class DeathAnimationPlayer : MonoBehaviour
     [SerializeField] private float _blackoutSpeed;
 
     [Inject] private readonly SceneTransition _sceneTransition;
+
     private Animator _playerDeathAnimator;
     private ColorAdjustments _colorAdjustments;
     private Vignette _vignette;
@@ -37,7 +38,7 @@ public class DeathAnimationPlayer : MonoBehaviour
         Time.timeScale = _timeScaleOnDeath;
         _colorAdjustments.saturation.value = _colorAdjustments.saturation.min;
 
-        _playerDeathAnimator.SetTrigger("OnPlayerDeath");
+        _playerDeathAnimator.SetTrigger("Died");
         StartCoroutine(PlayDeathAnimationCoroutine());
     }
 

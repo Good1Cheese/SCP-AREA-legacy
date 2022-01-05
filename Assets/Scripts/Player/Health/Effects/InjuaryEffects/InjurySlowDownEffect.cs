@@ -4,7 +4,7 @@ public class InjurySlowDownEffect : InjuryEffect
 {
     [Inject] private readonly MovementController _movementController;
 
-    protected override float EffectIntensity
+    protected override float EffectValue
     {
         set => _movementController.SlowDownFactor = value;
     }

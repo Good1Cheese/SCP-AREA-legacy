@@ -7,9 +7,11 @@ public abstract class StatisticsBarUIController : MonoBehaviour
 {
     [Inject] protected readonly GameLoader _gameLoader;
 
-    protected Slider _slider;
+    private Slider _slider;
 
-    private void Start()
+    public Slider Slider { get => _slider; }
+
+    protected void Start()
     {
         _slider = GetComponent<Slider>();
         float startBarValue = GetValue();

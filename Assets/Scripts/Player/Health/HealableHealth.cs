@@ -20,7 +20,7 @@ public class HealableHealth : CoroutineWithDelayUser
     private new void Start()
     {
         base.Start();
-        _playerHealth.Damaged += Stop;
+        _playerHealth.Damaged += StopCoroutine;
         _playerHealth.Damaged += StartWithoutInterrupt;
         _playerHealth.Healed += StartWithoutInterrupt;
     }
@@ -47,7 +47,7 @@ public class HealableHealth : CoroutineWithDelayUser
 
     private void OnDestroy()
     {
-        _playerHealth.Damaged -= Stop;
+        _playerHealth.Damaged -= StopCoroutine;
         _playerHealth.Damaged -= StartWithoutInterrupt;
         _playerHealth.Healed -= StartWithoutInterrupt;
     }

@@ -22,7 +22,7 @@ public abstract class DirectionLean : MonoBehaviour
 
     public float CurveTime { set => _curveTime = value; }
 
-    private void Start()
+    protected void Start()
     {
         SetDefaultCurveLimit();
 
@@ -94,7 +94,7 @@ public abstract class DirectionLean : MonoBehaviour
     public abstract void Lean();
     public abstract void Restore();
 
-    private void OnDestroy()
+    protected void OnDestroy()
     {
         _cameraTrigger.TriggerEnter -= ReduceCurveTimeStrenght;
         _cameraTrigger.TriggerStay -= SetCurveLimit;

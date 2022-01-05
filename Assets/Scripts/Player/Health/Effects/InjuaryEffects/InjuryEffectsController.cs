@@ -6,20 +6,18 @@ public class InjuryEffectsController : EffectsController
 
     protected override void SubscribeToActions()
     {
-        _playerHealth.Damaged += SetEffectTimeAfterDamage;
-        _playerHealth.Healed += SetEffectTimeAfterHeal;
+        _playerHealth.Changed += UpdateCoroutine;
         _playerHealth.Died += OnDestroy;
     }
 
     protected override float GetEffectTargetTime()
     {
-        return _maxEffectTime * (_playerHealth.MaxAmount - _playerHealth.Amount) / 100;
+        return _maxEffectTime * _playerHealth.CurrentPercentage;
     }
 
     protected override void UnsubscribeFromActions()
     {
-        _playerHealth.Damaged -= SetEffectTimeAfterDamage;
-        _playerHealth.Healed -= SetEffectTimeAfterHeal;
+        _playerHealth.Changed += UpdateCoroutine;
         _playerHealth.Died -= OnDestroy;
     }
 }

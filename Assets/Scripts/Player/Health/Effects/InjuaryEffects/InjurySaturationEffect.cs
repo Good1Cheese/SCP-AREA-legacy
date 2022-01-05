@@ -12,7 +12,7 @@ public class InjurySaturationEffect : InjuryEffect
         volume.profile.TryGet(out _colorAdjustments);
     }
 
-    protected override float EffectIntensity
+    protected override float EffectValue
     {
         set => _colorAdjustments.saturation.value = value;
     }

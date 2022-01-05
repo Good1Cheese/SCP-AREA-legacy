@@ -1,50 +1,33 @@
 ﻿using System;
 using UnityEngine;
 
-public abstract class EffectsController : MonoBehaviour
+public abstract class EffectsController : CoroutineInsteadUpdateUser
 {
     [SerializeField] protected float _maxEffectTime;
 
-    private sbyte _curveTimeMultiplayer;
-    private Func<bool> _timeChangeCondition;
+    public Action<float> CurveTimeChanged { get; set; }
 
-    public Action<float> EffectsTimeChanged { get; set; }
-    public float CurveTargetTime { get; set; }
-    public float CurveCurrentTime { get; set; }
-
-    private void Start()
+    public override float CurveTime
     {
-        SetEffectTimeAfterDamage();
-
-        SubscribeToActions();
-    }
-
-    private void Update()
-    {
-        if (_timeChangeCondition.Invoke())
+        get => _curveTime;
+        set
         {
-            CurveCurrentTime += Time.deltaTime * _curveTimeMultiplayer;
-            EffectsTimeChanged?.Invoke(CurveCurrentTime);
+            _curveTime = value;
+            CurveTimeChanged.Invoke(_curveTime);
         }
     }
 
-    public void SetEffectTimeAfterDamage()
-    {
-        SetCurveTimeData(() => CurveCurrentTime < CurveTargetTime, 1);
-    }
-
-    public void SetEffectTimeAfterHeal()
-    {
-        SetCurveTimeData(() => CurveCurrentTime > CurveTargetTime, -1);
-    }
-
-    private void SetCurveTimeData(Func<bool> func, sbyte value)
+    public override void UpdateCoroutine()
     {
         CurveTargetTime = GetEffectTargetTime();
-        _timeChangeCondition = func;
-        _curveTimeMultiplayer = value;
+        base.UpdateCoroutine();
     }
 
+    private new void Start()
+    {
+        base.Start();
+        SubscribeToActions();
+    }
 
     protected void OnDestroy()
     {

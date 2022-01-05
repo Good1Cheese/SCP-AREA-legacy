@@ -28,7 +28,7 @@ public class WeaponAim : WeaponScriptBase
 
         if (Input.GetKeyUp(AIM_KEY))
         {
-            if (!_weaponAnimator.GetBool("IsPlayerTakedAim")) { return; }
+            if (!_weaponAnimator.GetBool("Aimed")) { return; }
 
             SetAimState(false);
         }
@@ -50,7 +50,7 @@ public class WeaponAim : WeaponScriptBase
             || _pauseMenuEnablerDisabler.IsActivated) { return; }
 
         IsAiming = isAiming;
-        _weaponAnimator.SetBool("IsPlayerTakedAim", isAiming);
+        _weaponAnimator.SetBool("Aimed", isAiming);
 
         if (IsAiming)
         {
