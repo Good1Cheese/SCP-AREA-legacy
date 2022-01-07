@@ -39,8 +39,8 @@ public class PlayerHealth : MonoBehaviour
         damage += GetBloodDamageMultipliyer(damage);
         if (_amount - damage <= 0)
         {
-            Amount = 0;
             Die();
+            Amount = 0;
         }
 
         Amount -= damage;

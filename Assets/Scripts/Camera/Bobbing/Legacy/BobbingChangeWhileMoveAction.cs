@@ -28,4 +28,3 @@ public abstract class BobbingChangeWhileMoveAction : MonoBehaviour
         _moveController.UseStopped -= _cameraBobbing.ResetBobbingValues;
     }
 }
-

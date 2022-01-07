@@ -2101,8 +2101,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeadPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 4005657293202142547, guid: dd6fc42a580734f458304ab8b5a49999, type: 3}
+      propertyPath: _blackoutSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6fc42a580734f458304ab8b5a49999, type: 3}
+--- !u!114 &1316222830 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4647165264631844847, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
+  m_PrefabInstance: {fileID: 1902650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937913f4f117cde4ab08247451658325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1316222831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2150797163725670393, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
+  m_PrefabInstance: {fileID: 1902650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4606e14c9aef84b43b27523398c4850d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1385412597 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7456343255525301587, guid: 5d93c29d9a4d54e44a217ecd591152ed, type: 3}
@@ -3024,6 +3050,10 @@ PrefabInstance:
       propertyPath: _ammoUICountUpdater
       value: 
       objectReference: {fileID: 962899289}
+    - target: {fileID: 3476612386587923562, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
+      propertyPath: _idleHeadbob
+      value: 
+      objectReference: {fileID: 1316222830}
     - target: {fileID: 4504709228895964004, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
       propertyPath: _monoInstallers.Array.data[0]
       value: 
@@ -3119,7 +3149,7 @@ PrefabInstance:
     - target: {fileID: 7498397190715125362, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
       propertyPath: _idleHeadbob
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1316222831}
     - target: {fileID: 8100339062313219172, guid: 2d392242a71bdbb4bafbe6782f0aad7f, type: 3}
       propertyPath: _itemParent
       value: 

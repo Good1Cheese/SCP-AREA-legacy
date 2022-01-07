@@ -306,8 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeScaleOnDeath: 0.5
   _delayAfterDeathAnimation: 0.7
-  _delayDuringBlackout: 0.025
-  _blackoutSpeed: 0.05
+  _blackoutSpeed: 5
 --- !u!114 &279487251
 MonoBehaviour:
   m_ObjectHideFlags: 0

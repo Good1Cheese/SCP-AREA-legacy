@@ -7,14 +7,20 @@ public abstract class MoveController : MonoBehaviour
     [SerializeField] protected KeyCode _moveKey;
     [SerializeField] private float _maxMoveTime;
     [SerializeField] private float _valueForFov;
+    [SerializeField] protected float _targetStepTime;
 
     [Inject] protected readonly DynamicFov _dynamicFov;
     [Inject] protected readonly MovementController _movementController;
 
+    protected float _currentStepTime;
+    protected bool _leftIsLastStep;
+
     public bool IsMoving { get; set; }
     public float MaxMoveTime => _maxMoveTime;
 
-    public int MoveIndex { get; set; }
+    public Action Stepped { get; set; }
+    public Action OnLeftStep { get; set; }
+    public Action OnRightStep { get; set; }
     public Action Using { get; set; }
     public Action NotUsing { get; set; }
     public Action UseStarted { get; set; }

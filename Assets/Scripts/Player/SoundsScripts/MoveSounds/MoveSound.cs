@@ -35,14 +35,14 @@ public abstract class MoveSound : SoundOnAction
 
     protected override void SubscribeToAction()
     {
-        _moveController.Using += PlaySound;
+        _moveController.Stepped += PlaySound;
         _moveController.UseStopped += StopSound;
         _pauseMenu.EnabledDisabled += StopSound;
     }
 
     protected override void UnscribeToAction()
     {
-        _moveController.Using -= PlaySound;
+        _moveController.Stepped -= PlaySound;
         _moveController.UseStopped -= StopSound;
         _pauseMenu.EnabledDisabled -= StopSound;
     }
