@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class IdleRotationHeadbob : CameraHeadbob
+public class IdleRotationHeadbob : IdleCameraHeadbob
 {
     private Quaternion _newRotation = Quaternion.identity;
 

@@ -2,23 +2,15 @@
 using UnityEngine;
 using Zenject;
 
-public abstract class DirectionLean : MonoBehaviour
+public abstract class DirectionLean : CurveInputUser
 {
-    [SerializeField] private float _curveTimeSmoothing;
     [SerializeField] private float _curveTimeLimit;
     [SerializeField] private float _curveChangeTime;
-
-    [SerializeField] private KeyCode _positivKey;
-    [SerializeField] private KeyCode _negativKey;
 
     [SerializeField] protected float _leanSmoothing;
     [SerializeField] protected AnimationCurve _curve;
 
     [Inject] readonly protected GameObjectTrigger _cameraTrigger;
-
-    protected float _curveTime;
-    protected float _topCurveTimeLimit;
-    protected float _bottomCurveTimeLimit;
 
     public float CurveTime { set => _curveTime = value; }
 
@@ -66,29 +58,6 @@ public abstract class DirectionLean : MonoBehaviour
     {
         _topCurveTimeLimit = _curveTimeLimit;
         _bottomCurveTimeLimit = -_curveTimeLimit;
-    }
-
-    protected void GetCurveTime()
-    {
-        bool isPositivKeyPressed = Input.GetKey(_positivKey);
-        bool isNegativKeyPressed = Input.GetKey(_negativKey);
-
-        if (isPositivKeyPressed)
-        {
-            _curveTime += Time.deltaTime;
-        }
-
-        if (isNegativKeyPressed)
-        {
-            _curveTime -= Time.deltaTime;
-        }
-
-        if (!isPositivKeyPressed && !isNegativKeyPressed)
-        {
-            _curveTime = Mathf.Lerp(_curveTime, 0, _curveTimeSmoothing * Time.deltaTime);
-        }
-
-        _curveTime = Mathf.Clamp(_curveTime, _bottomCurveTimeLimit, _topCurveTimeLimit);
     }
 
     public abstract void Lean();

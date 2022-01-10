@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class IdlePositionHeadbob : CameraHeadbob
+public class IdlePositionHeadbob : IdleCameraHeadbob
 {
     protected Vector3 _newPosition = Vector3.zero;
 

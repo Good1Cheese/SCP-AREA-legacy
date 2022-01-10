@@ -3,44 +3,82 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class MovementHeadbob : IdlePositionHeadbob
+public abstract class MovementHeadbob : CameraHeadbob
 {
-    [SerializeField] private int _positionReturnSmoothing;
-    [SerializeField] private float _targetTime;
+    [SerializeField] protected MovementHeadbobCurve _leftStepXAxis;
+    [SerializeField] protected MovementHeadbobCurve _rightStepXAxis;
+    [SerializeField] protected MovementHeadbobCurve _yAxis;
 
-    [Inject] private readonly Camera _mainCamera;
+    [Inject(Id = "Camera")] private readonly Transform _mainCamera;
 
-    private bool _isCoroutineGoing;
-    private Vector3 _zero = Vector3.zero;
+    IEnumerator _enumerator;
+    private float _targetTime;
+    private MovementHeadbobCurve _currentStepXAxis;
+    protected Vector3 _newPosition = Vector3.zero;
 
-    protected new void Awake()
+    protected abstract MoveController MoveController { get; }
+
+    private void Start()
+    {
+        MoveController.OnLeftStep += ActivateLeftStepHeadbob;
+        MoveController.OnRightStep += ActivateRightStepHeadbob;
+        MoveController.UseStopped += StopActivating;
+    }
+
+    private void Awake()
     {
         _transform = _mainCamera.transform;
+        _targetTime = _leftStepXAxis.curve.GetLastKeyFrame().time;
     }
 
-    protected new void Update()
+    private void ActivateLeftStepHeadbob()
     {
-        if (_isCoroutineGoing) { return; }
-
-        _transform.localPosition = Vector3.Lerp(_transform.localPosition, _zero, _positionReturnSmoothing * Time.deltaTime);
+        _currentStepXAxis = _leftStepXAxis;
+        ActivateHeadbob();
     }
 
-    protected override void ActivateHeadbob()
+    private void ActivateRightStepHeadbob()
     {
-        StartCoroutine(ActivateHeadbobCoroutine());
+        _currentStepXAxis = _rightStepXAxis;
+        ActivateHeadbob();
+    }
+
+    private void StopActivating()
+    {
+        StopCoroutine(_enumerator);
+    }
+
+    protected void ActivateHeadbob()
+    {
+        float x = _transform.localPosition.x;
+        float y = _transform.localPosition.y;
+
+        _currentStepXAxis.SetFirstPointValue(in x);
+        _yAxis.SetFirstPointValue(in y);
+
+        _enumerator = ActivateHeadbobCoroutine();
+        StartCoroutine(_enumerator);
     }
 
     private IEnumerator ActivateHeadbobCoroutine()
     {
-        _isCoroutineGoing = true;
         while (_curveTime < _targetTime)
         {
-            base.ActivateHeadbob();
+            _curveTime += Time.deltaTime;
+
+            _newPosition.x = GetCurveValue(_currentStepXAxis);
+            _newPosition.y = GetCurveValue(_yAxis);
+            _transform.localPosition = _newPosition;
+
             yield return null;
         }
 
-        Randomized?.Invoke();
-        _isCoroutineGoing = false;
         _curveTime = 0;
+    }
+
+    private void OnDestroy()
+    {
+        MoveController.OnLeftStep -= ActivateLeftStepHeadbob;
+        MoveController.OnRightStep -= ActivateRightStepHeadbob;
     }
 }

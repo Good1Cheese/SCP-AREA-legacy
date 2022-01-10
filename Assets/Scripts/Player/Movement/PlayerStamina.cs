@@ -7,7 +7,6 @@ using Zenject;
 public class PlayerStamina : CoroutineWithDelayUser
 {
     [SerializeField] private int _burnSpeedMultipliyer;
-
     [SerializeField] private AnimationCurve _curve;
 
     [Inject] private readonly RunController _runController;
@@ -55,10 +54,10 @@ public class PlayerStamina : CoroutineWithDelayUser
     {
         base.Start();
         _slowWalkRunController.Using += Burn;
-        _slowWalkRunController.UseStarted += StopCoroutine;
-        _slowWalkRunController.UseStopped += StartWithoutInterrupt;
         _runController.Using += Burn;
+        _slowWalkRunController.UseStarted += StopCoroutine;
         _runController.UseStarted += StopCoroutine;
+        _slowWalkRunController.UseStopped += StartWithoutInterrupt;
         _runController.UseStopped += StartWithoutInterrupt;
         _playerMovement.StoppedMoving += StartWithoutInterrupt;
     }
@@ -83,10 +82,10 @@ public class PlayerStamina : CoroutineWithDelayUser
     private void OnDestroy()
     {
         _slowWalkRunController.Using -= Burn;
-        _slowWalkRunController.UseStarted -= StopCoroutine;
-        _slowWalkRunController.UseStopped -= StartWithoutInterrupt;
         _runController.Using -= Burn;
+        _slowWalkRunController.UseStarted -= StopCoroutine;
         _runController.UseStarted -= StopCoroutine;
+        _slowWalkRunController.UseStopped -= StartWithoutInterrupt;
         _runController.UseStopped -= StartWithoutInterrupt;
         _playerMovement.StoppedMoving -= StartWithoutInterrupt;
     }

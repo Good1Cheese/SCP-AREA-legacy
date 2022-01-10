@@ -12,7 +12,6 @@ public abstract class MoveController : MonoBehaviour
     [Inject] protected readonly DynamicFov _dynamicFov;
     [Inject] protected readonly MovementController _movementController;
 
-    protected float _currentStepTime;
     protected bool _leftIsLastStep;
 
     public bool IsMoving { get; set; }
@@ -21,6 +20,7 @@ public abstract class MoveController : MonoBehaviour
     public Action Stepped { get; set; }
     public Action OnLeftStep { get; set; }
     public Action OnRightStep { get; set; }
+
     public Action Using { get; set; }
     public Action NotUsing { get; set; }
     public Action UseStarted { get; set; }
@@ -36,6 +36,27 @@ public abstract class MoveController : MonoBehaviour
         }
 
         return _movementController.MovementSpeed.Evaluate(_movementController.MoveTime);
+    }
+
+    public void InvokeStepInvoke()
+    {
+        _movementController.СurrentStepTime += Time.deltaTime;
+
+        if (_movementController.СurrentStepTime < _targetStepTime) { return; }
+
+        Stepped?.Invoke();
+
+        _movementController.СurrentStepTime = 0;
+
+        if (_leftIsLastStep)
+        {
+            OnLeftStep?.Invoke();
+            _leftIsLastStep = !_leftIsLastStep;
+            return;
+        }
+
+        _leftIsLastStep = !_leftIsLastStep;
+        OnRightStep?.Invoke();
     }
 
     public void UpdateFov() => _dynamicFov.SetFov(_valueForFov);

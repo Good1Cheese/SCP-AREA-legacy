@@ -4,7 +4,6 @@ using Zenject;
 [RequireComponent(typeof(SlowWalkEffect))]
 public class SlowWalkController : MoveController
 {
-    [Inject] private readonly SlowWalkRunController _slowWalkRunController;
     [Inject] private readonly PlayerMovement _playerMovement;
 
     private void Start()

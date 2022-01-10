@@ -52,6 +52,7 @@ public class PlayerInstaller : MonoInstaller
 
         Camera main = Camera.main;
         Container.BindInstance(main).AsCached();
+        Container.BindInstance(main.transform).WithId("Camera").AsCached();
         Container.BindInstance(main.GetComponent<GameObjectTrigger>()).AsSingle();
     }
 

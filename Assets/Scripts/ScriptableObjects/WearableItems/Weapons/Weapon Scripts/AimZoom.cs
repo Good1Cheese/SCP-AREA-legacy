@@ -7,7 +7,7 @@ public class AimZoom : MonoBehaviour
 {
     [SerializeField] private AnimationCurve _curve;
 
-    [Inject] private Camera _mainCamera;
+    [Inject] private readonly Camera _mainCamera;
     [Inject] private readonly WeaponAim _weaponAim;
 
     private IEnumerator _enumerator;

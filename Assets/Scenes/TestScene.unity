@@ -1079,6 +1079,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4946365242609000728, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4946365242908492700, guid: ef7ce777abe1ea4469c0cb0db103b75b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2113,7 +2117,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1902650}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 937913f4f117cde4ab08247451658325, type: 3}
   m_Name: 
@@ -2124,7 +2128,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1902650}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4606e14c9aef84b43b27523398c4850d, type: 3}
   m_Name: 

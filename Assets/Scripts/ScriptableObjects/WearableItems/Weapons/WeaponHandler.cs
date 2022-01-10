@@ -6,7 +6,7 @@ using Zenject;
 public class WeaponHandler : WearableItemHandler
 {
     [Inject] private readonly WeaponAim _weaponAim;
-    [Inject] private readonly Camera _mainCamera;
+    [Inject(Id = "Camera")] private readonly Transform _mainCamera;
     [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
     [Inject] private readonly WeaponSlot _weaponSlot;
 
@@ -38,7 +38,7 @@ public class WeaponHandler : WearableItemHandler
         ClippingMaker = GameObjectForPlayer.GetComponentInChildren<ClippingMaker>();
         ClippingMaker.WeaponAim = _weaponAim;
         ClippingMaker.ParentTransform = GameObjectForPlayer.transform;
-        ClippingMaker.MainCamera = _mainCamera.transform;
+        ClippingMaker.MainCamera = _mainCamera;
     }
 
     public override void Equip()

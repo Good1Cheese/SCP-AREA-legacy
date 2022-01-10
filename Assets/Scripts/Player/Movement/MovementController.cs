@@ -15,6 +15,7 @@ public class MovementController : MonoBehaviour
     public float SlowDownFactor { get; set; }
     public float MoveTime { get; set; }
     public float Speed { get; set; }
+    public float СurrentStepTime { get; set; }
 
     public float GetPlayerSpeed()
     {
@@ -48,5 +49,7 @@ public class MovementController : MonoBehaviour
             _usingMoveController = _walkController;
             Speed = _walkController.GetMove();
         }
+
+        _usingMoveController.InvokeStepInvoke();
     }
 }
