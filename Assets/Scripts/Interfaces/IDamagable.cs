@@ -1,4 +1,4 @@
-﻿internal interface IDamagable
+﻿public interface IDamagable
 {
     public void Damage(int damageAmout);
 }

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class SideHeadbob : CurveInputUser
+public class SideHeadBob : CurveInputUser
 {
     [SerializeField] private AnimationCurve _curve;
     [SerializeField] private Transform _transform;
 
     private Quaternion _newRotation = Quaternion.identity;
 
-    private void Start()
+    private void Awake()
     {
         _topCurveTimeLimit = _curve.GetLastKeyFrame().time;
         _bottomCurveTimeLimit = -_topCurveTimeLimit;
@@ -15,7 +15,7 @@ public class SideHeadbob : CurveInputUser
 
     private void Update()
     {
-        CustomUpdate();
+        CalculateCurveTime();
 
         _newRotation = Quaternion.Euler(0, 0, _curve.Evaluate(_curveTime));
         _transform.localRotation = _newRotation;

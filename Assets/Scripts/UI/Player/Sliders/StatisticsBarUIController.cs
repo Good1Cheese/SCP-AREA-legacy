@@ -5,11 +5,16 @@ using Zenject;
 [RequireComponent(typeof(Slider))]
 public abstract class StatisticsBarUIController : MonoBehaviour
 {
-    [Inject] protected readonly GameLoader _gameLoader;
-
+    protected GameLoader _gameLoader;
     private Slider _slider;
 
     public Slider Slider { get => _slider; }
+
+    [Inject]
+    private void Construct(GameLoader gameLoader)
+    {
+        _gameLoader = gameLoader;
+    }
 
     protected void Start()
     {

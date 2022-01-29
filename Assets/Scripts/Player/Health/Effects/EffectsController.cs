@@ -13,14 +13,14 @@ public abstract class EffectsController : CoroutineInsteadUpdateUser
         set
         {
             _curveTime = value;
-            CurveTimeChanged.Invoke(_curveTime);
+            CurveTimeChanged?.Invoke(_curveTime);
         }
     }
 
-    public override void UpdateCoroutine()
+    public override void InvokeCoroutine()
     {
         CurveTargetTime = GetEffectTargetTime();
-        base.UpdateCoroutine();
+        base.InvokeCoroutine();
     }
 
     private new void Start()

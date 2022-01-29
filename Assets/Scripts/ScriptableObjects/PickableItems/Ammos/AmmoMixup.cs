@@ -3,7 +3,13 @@ using Zenject;
 
 public class AmmoMixup : MonoBehaviour
 {
-    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
+    private PickableItemsInventory _pickableItemsInventory;
+
+    [Inject]
+    private void Inject(PickableItemsInventory pickableItemsInventory)
+    {
+        _pickableItemsInventory = pickableItemsInventory;
+    }
 
     public void MixUpAmmo(AmmoHandler ammoHandler)
     {

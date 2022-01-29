@@ -4,79 +4,87 @@ using Zenject;
 [RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerRotator))]
 public class PlayerInstaller : MonoInstaller
 {
-    private SlowWalkEffect _slowWalkEffect;
-    private DynamicFov _dynamicFov;
-    private BloodGain _bloodGain;
-    private InjuryEffectsController _injuryEffectsController;
-    private PlayerMovement _playerMovement;
-    private PlayerRotator _playerRotator;
-    private PlayerStamina _playerStamina;
-    private StaminaDrain _staminaDrain;
-    private StaminaDisabler _staminaUseDisabler;
-    private MovementController _movementController;
-    private RunController _runController;
-    private SlowWalkRunController _slowWalkRunController;
-    private SlowWalkController _slowWalkController;
-    private WalkController _walkController;
-    private PlayerHealth _playerHealth;
-    private HealableHealth _healableHealth;
-    private RayProvider _rayProvider;
-    private PlayerBlood _playerBlood;
-    private Transform _playerTransform;
-    private GameObject _playerGameObject;
-
     public override void InstallBindings()
     {
-        GetComponents();
-        Container.BindInstance(_slowWalkEffect).AsSingle();
-        Container.BindInstance(_dynamicFov).AsSingle();
-        Container.BindInstance(_bloodGain).AsSingle();
-        Container.BindInstance(_injuryEffectsController).AsSingle();
-        Container.BindInstance(_playerMovement).AsSingle();
-        Container.BindInstance(_playerRotator).AsSingle();
-        Container.BindInstance(_playerStamina).AsSingle();
-        Container.BindInstance(_staminaDrain).AsSingle();
-        Container.BindInstance(_staminaUseDisabler).AsSingle();
-        Container.BindInstance(_movementController).AsSingle();
-        Container.BindInstance(_runController).AsSingle();
-        Container.BindInstance(_slowWalkRunController).AsSingle();
-        Container.BindInstance(_slowWalkController).AsSingle();
-        Container.BindInstance(_walkController).AsSingle();
-        Container.BindInstance(_playerHealth).AsSingle();
-        Container.BindInstance(_healableHealth).AsSingle();
-        Container.BindInstance(_playerBlood).AsSingle();
-        Container.BindInstance(_rayProvider).AsSingle();
-        Container.BindInstance(this).AsSingle();
-        Container.BindInstance(_playerTransform).WithId("Player").AsCached();
-        Container.BindInstance(_playerGameObject).AsSingle();
+        BindPlayerMovement();
+        BindPlayerHealth();
 
-        Camera main = Camera.main;
-        Container.BindInstance(main).AsCached();
-        Container.BindInstance(main.transform).WithId("Camera").AsCached();
-        Container.BindInstance(main.GetComponent<GameObjectTrigger>()).AsSingle();
+        BindPlayer();
+        BindCamera();
+
+        Container.BindInstance(GetComponent<CharacterController>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<RayProvider>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<PlayerRotator>())
+            .AsSingle();
     }
 
-    private void GetComponents()
+    private void BindPlayerMovement()
     {
-        _slowWalkEffect = GetComponent<SlowWalkEffect>();
-        _dynamicFov = GetComponent<DynamicFov>();
-        _bloodGain = GetComponent<BloodGain>();
-        _injuryEffectsController = GetComponent<InjuryEffectsController>();
-        _playerMovement = GetComponent<PlayerMovement>();
-        _playerRotator = GetComponent<PlayerRotator>();
-        _playerStamina = GetComponent<PlayerStamina>();
-        _staminaDrain = GetComponent<StaminaDrain>();
-        _staminaUseDisabler = GetComponent<StaminaDisabler>();
-        _movementController = GetComponent<MovementController>();
-        _runController = GetComponent<RunController>();
-        _slowWalkRunController = GetComponent<SlowWalkRunController>();
-        _slowWalkController = GetComponent<SlowWalkController>();
-        _walkController = GetComponent<WalkController>();
-        _playerHealth = GetComponent<PlayerHealth>();
-        _healableHealth = GetComponent<HealableHealth>();
-        _playerBlood = GetComponent<PlayerBlood>();
-        _rayProvider = GetComponent<RayProvider>();
-        _playerTransform = transform;
-        _playerGameObject = gameObject;
+        Container.BindInstance(GetComponent<PlayerMovement>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<SlowWalkEffect>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<PlayerStamina>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<StaminaDisabler>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<MovementController>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<RunController>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<SlowWalkRunController>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<SlowWalkController>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<WalkController>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<StaminaDrain>())
+            .AsSingle();
+    }
+
+    private void BindPlayerHealth()
+    {
+        Container.BindInstance(GetComponent<PlayerHealth>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<BloodGain>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<HealableHealth>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<PlayerBlood>())
+            .AsSingle();
+        Container.BindInstance(GetComponent<InjuryEffectsController>())
+            .AsSingle();
+    }
+
+    private void BindPlayer()
+    {
+        Container.BindInstance(transform)
+            .WithId("Player").
+            AsCached();
+
+        Container.BindInstance(gameObject)
+            .AsSingle();
+    }
+
+    private void BindCamera()
+    {
+        Camera main = Camera.main;
+
+        Container.BindInstance(main)
+            .AsCached();
+
+        Container.BindInstance(main.transform)
+            .WithId("Camera")
+            .AsCached();
+
+        Container.BindInstance(main.GetComponent<GameObjectTrigger>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<DynamicFov>())
+            .AsSingle();
     }
 }

@@ -7,8 +7,7 @@ public class PlayerBlood : CoroutineUser
 {
     [SerializeField] private AnimationCurve _curve;
 
-    [Inject] readonly private PlayerHealth _playerHealth;
-
+    private PlayerHealth _playerHealth;
     private float _curveTime;
     private float _lossMultipliyer;
 
@@ -32,6 +31,12 @@ public class PlayerBlood : CoroutineUser
     public Action Changed { get; set; }
     public float LossMultipliyer { get => _lossMultipliyer; }
     public float CurrentPercentage => (MaxAmount - Amount) / 100;
+
+    [Inject]
+    private void Construct(PlayerHealth playerHealth)
+    {
+        _playerHealth = playerHealth;
+    }
 
     private void Awake()
     {

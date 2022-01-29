@@ -8,8 +8,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private AnimationCurve _bloodDamageMultipliyer;
 
-    [Inject] private readonly PlayerBlood _playerBlood;
-
+    private PlayerBlood _playerBlood;
     private float _amount;
 
     public float Amount
@@ -28,6 +27,12 @@ public class PlayerHealth : MonoBehaviour
     public Action Healed { get; set; }
     public Action Died { get; set; }
     public float CurrentPercentage => (MaxAmount - Amount) / 100;
+
+    [Inject]
+    private void Construct(PlayerBlood playerBlood)
+    {
+        _playerBlood = playerBlood;
+    }
 
     private void Awake()
     {

@@ -9,9 +9,9 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] private float _verticalLookLimit;
     [SerializeField] private float _smoothTime;
 
-    [Inject(Id = "Camera")] private readonly Transform _mainCamera;
-    [Inject] private readonly InventoryEnablerDisabler _werableInventoryAcviteStateSetter;
-    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private Transform _mainCamera;
+    private PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    private Transform _playerTransform;
 
     private float _mouseY;
     private float _mouseX;
@@ -19,10 +19,20 @@ public class PlayerRotator : MonoBehaviour
     public float YRotation { get; set; }
     public float XRotation { get; set; }
 
+    [Inject]
+    private void Construct([Inject(Id = "Camera")] Transform mainCamera,
+                           PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler,
+                           [Inject(Id = "Player")] Transform playerTransform)
+    {
+        _mainCamera = mainCamera;
+        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+        _playerTransform = playerTransform;
+    }
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        _werableInventoryAcviteStateSetter.EnabledDisabled += DisableRotation;
+        _pickableInventoryEnablerDisabler.EnabledDisabled += DisableRotation;
     }
 
     private void Update()
@@ -61,6 +71,6 @@ public class PlayerRotator : MonoBehaviour
 
     private void OnDestroy()
     {
-        _werableInventoryAcviteStateSetter.EnabledDisabled -= DisableRotation;
+        _pickableInventoryEnablerDisabler.EnabledDisabled -= DisableRotation;
     }
 }

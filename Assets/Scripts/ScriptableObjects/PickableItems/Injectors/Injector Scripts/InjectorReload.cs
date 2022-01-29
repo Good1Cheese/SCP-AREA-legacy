@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(InjectTypeSwitch), typeof(InjectShoot))]
@@ -15,8 +16,7 @@ public class InjectorReload : InjectorScriptBase
             if (value == null) { return; }
 
             print("Вставлен " + value);
-            InjectableItemHandler injectableItemHandler = (InjectableItemHandler)value;
-            injectableItemHandler.NumsOfUses--;
+            var injectableItemHandler = (IInjectable)value;
 
             _injectorHandler.ClipInject = injectableItemHandler;
         }
@@ -35,10 +35,26 @@ public class InjectorReload : InjectorScriptBase
 
         if (_injectTypeSwitcher.CurrentType == typeof(IHealthInjectable))
         {
-            CurrentInject = _pickableItemsInventory.GetIem(item => item as IHealthInjectable != null);
+            CurrentInject = GetInject(item => item as IHealthInjectable != null);
             return;
         }
 
-        CurrentInject = _pickableItemsInventory.GetIem(item => item as IAdrenalinInjectable != null);
+        CurrentInject = GetInject(item => item as IAdrenalinInjectable != null);
+    }
+
+    public ItemHandler GetInject(Predicate<ItemHandler> condition)
+    {
+        var injectables = Array.FindAll(_pickableItemsInventory.Inventory,
+                                        injectable => condition.Invoke(injectable));
+        for (int i = 0; i < injectables.Length; i++)
+        {
+            var itemHandler = (StackableItemHandler)injectables[i];
+            StackableItemSlot slotWithItem = Array.Find(itemHandler.StackSlots.Slots, slot => slot.HasItem);
+
+            if (slotWithItem == null) { continue; }
+
+            return slotWithItem.GetItem();
+        }
+        return null;
     }
 }

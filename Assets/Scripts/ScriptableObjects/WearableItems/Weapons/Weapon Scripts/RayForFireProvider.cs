@@ -6,10 +6,20 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
     [SerializeField] private float _multyplierOfBulletSpawnPointRadious;
     [SerializeField] private Transform _bulletSpawnPoint;
 
-    [Inject] private readonly WeaponSlot _weaponSlot;
-    [Inject] private readonly WeaponAim _weaponAim;
-    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private WeaponSlot _weaponSlot;
+    private WeaponAim _weaponAim;
+    private Transform _playerTransform;
     private Ray ray;
+
+    [Inject]
+    private void Inject(WeaponSlot weaponSlot,
+                        WeaponAim weaponAim,
+                        [Inject(Id = "Player")] Transform playerTransform)
+    {
+        _weaponSlot = weaponSlot;
+        _weaponAim = weaponAim;
+        _playerTransform = playerTransform;
+    }
 
     private void Awake()
     {
@@ -27,16 +37,11 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
         {
             return ray = ProvideRayForAimedShot();
         }
-        else
-        {
-            return ray = ProvideRayForShot();
-        }
+
+        return ray = ProvideRayForShot();
     }
 
-    public Ray ProvideRayForAimedShot()
-    {
-        return ProvideRay(_bulletSpawnPoint.position);
-    }
+    public Ray ProvideRayForAimedShot() => ProvideRay(_bulletSpawnPoint.position);
 
     public Ray ProvideRayForShot()
     {
@@ -60,5 +65,4 @@ public class RayForFireProvider : MonoBehaviour, IRayProvider
     {
         _weaponSlot.Changed -= SetWeaponBulletSpawnPoint;
     }
-
 }

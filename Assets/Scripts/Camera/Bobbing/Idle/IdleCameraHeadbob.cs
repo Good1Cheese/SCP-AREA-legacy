@@ -1,42 +1,27 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class IdleCameraHeadbob : CameraHeadbob
+public abstract class IdleCameraHeadBob : CameraHeadBob
 {
-    [SerializeField] protected IdleHeadbobCurve _xAxis;
-    [SerializeField] protected IdleHeadbobCurve _yAxis;
-    [SerializeField] protected IdleHeadbobCurve _zAxis;
+    [SerializeField] protected RandomizableIdleHeadBobCurve xAxis;
+    [SerializeField] protected RandomizableIdleHeadBobCurve yAxis;
+    [SerializeField] protected RandomizableIdleHeadBobCurve zAxis;
 
-    WaitForSeconds _timeoutBeforeRandomize;
-    private float _curveValueMultipliyer = 1;
+    public float CurveMultipliyer { get; set; }
 
-    public float CurveMultipliyer { set => _curveValueMultipliyer = value; }
-    private float DelayBeforeRandomize { get => _xAxis.curve.GetLastKeyFrame().time / 2; }
+    public RandomizableIdleHeadBobCurve XAxis => xAxis;
+    public RandomizableIdleHeadBobCurve YAxis => yAxis;
+    public RandomizableIdleHeadBobCurve ZAxis => zAxis;
 
-    protected void Awake()
+    private void Update()
     {
-        _timeoutBeforeRandomize = new WaitForSeconds(DelayBeforeRandomize);
-        StartCoroutine(RandomizeCoroutine());
+        _curveTime = Time.time;
+        ActivateHeadbob();
     }
 
-    protected void Start()
+    public override float GetCurveValue(HeadboBCurve HeadBobCurve)
     {
-        _xAxis.CameraHeadbob = this;
-        _yAxis.CameraHeadbob = this;
-        _zAxis.CameraHeadbob = this;
-
-        CurveChanged?.Invoke();
+        return base.GetCurveValue(HeadBobCurve) * CurveMultipliyer;
     }
 
-    private IEnumerator RandomizeCoroutine()
-    {
-        yield return _timeoutBeforeRandomize;
-
-        Randomized?.Invoke();
-    }
-
-    public override float GetCurveValue(HeadbobCurve HeadBobCurve)
-    {
-        return base.GetCurveValue(HeadBobCurve) * _curveValueMultipliyer;
-    }
+    protected abstract void ActivateHeadbob();
 }

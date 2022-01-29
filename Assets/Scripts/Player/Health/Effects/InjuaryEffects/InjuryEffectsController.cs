@@ -2,11 +2,17 @@
 
 public class InjuryEffectsController : EffectsController
 {
-    [Inject] protected readonly PlayerHealth _playerHealth;
+    protected PlayerHealth _playerHealth;
+
+    [Inject]
+    private void Construct(PlayerHealth playerHealth)
+    {
+        _playerHealth = playerHealth;
+    }
 
     protected override void SubscribeToActions()
     {
-        _playerHealth.Changed += UpdateCoroutine;
+        _playerHealth.Changed += InvokeCoroutine;
         _playerHealth.Died += OnDestroy;
     }
 
@@ -17,7 +23,7 @@ public class InjuryEffectsController : EffectsController
 
     protected override void UnsubscribeFromActions()
     {
-        _playerHealth.Changed += UpdateCoroutine;
+        _playerHealth.Changed += InvokeCoroutine;
         _playerHealth.Died -= OnDestroy;
     }
 }

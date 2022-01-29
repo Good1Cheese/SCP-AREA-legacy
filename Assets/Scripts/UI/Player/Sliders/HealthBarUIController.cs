@@ -2,13 +2,17 @@
 
 public class HealthBarUIController : StatisticsBarUIController
 {
-    [Inject] private readonly PlayerHealth _playerHealth;
-
+    private PlayerHealth _playerHealth;
     private HealthBarUpdater _healthBarUpdater;
 
-    protected new void Start()
+    [Inject]
+    private void Construct(PlayerHealth playerHealth)
     {
-        base.Start();
+        _playerHealth = playerHealth;
+    }
+
+    private void Awake()
+    {
         _healthBarUpdater = GetComponent<HealthBarUpdater>();
         _healthBarUpdater.HealthBarUIController = this;
     }
@@ -20,7 +24,7 @@ public class HealthBarUIController : StatisticsBarUIController
 
     public override void UpdateUI()
     {
-        _healthBarUpdater.UpdateCoroutine();
+        _healthBarUpdater.InvokeCoroutine();
     }
 
     protected override void Subscribe()

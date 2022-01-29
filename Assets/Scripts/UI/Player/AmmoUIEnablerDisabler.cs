@@ -5,9 +5,14 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
 {
     [SerializeField] private AmmoUICountUpdater _ammoUICountUpdater;
 
-    [Inject] private readonly WeaponSlot _weaponSlot;
-
+    private WeaponSlot _weaponSlot;
     private GameObject _textMeshProGameObject;
+
+    [Inject]
+    private void Construct(WeaponSlot weaponSlot)
+    {
+        _weaponSlot = weaponSlot;
+    }
 
     private void Start()
     {

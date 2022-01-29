@@ -3,14 +3,18 @@ using Zenject;
 
 public abstract class ItemScriptBase : MonoBehaviour
 {
-    [Inject] protected readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
+    protected PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    protected WearableSlot _itemSlot;
 
-    protected abstract WearableSlot ItemSlot { get; }
-    protected abstract WearableItemHandler WearableItemHandler { get; }
+    [Inject]
+    private void Inject(PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler)
+    {
+        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+    }
 
     protected void Start()
     {
-        ItemSlot.Toggled += SetActiveState;
+        _itemSlot.Toggled += SetActiveState;
         enabled = false;
     }
 
@@ -21,6 +25,6 @@ public abstract class ItemScriptBase : MonoBehaviour
 
     protected void OnDestroy()
     {
-        ItemSlot.Toggled -= SetActiveState;
+        _itemSlot.Toggled -= SetActiveState;
     }
 }

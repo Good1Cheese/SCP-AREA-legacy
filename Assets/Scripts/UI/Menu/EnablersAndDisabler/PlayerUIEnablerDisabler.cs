@@ -3,22 +3,25 @@ using Zenject;
 
 public class PlayerUIEnablerDisabler : MonoBehaviour
 {
-    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
+    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
     private GameObject _gameObject;
+
+    [Inject]
+    private void Construct(PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+    {
+        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+    }
 
     private void Start()
     {
         _gameObject = gameObject;
-        _pauseMenu.EnabledDisabled += SetActive;
+        _pauseMenuEnablerDisabler.EnabledDisabled += SetActive;
     }
 
-    private void SetActive()
-    {
-        _gameObject.SetActive(_gameObject.activeSelf);
-    }
+    private void SetActive() => _gameObject.SetActive(_gameObject.activeSelf);
 
     private void OnDestroy()
     {
-        _pauseMenu.EnabledDisabled -= SetActive;
+        _pauseMenuEnablerDisabler.EnabledDisabled -= SetActive;
     }
 }

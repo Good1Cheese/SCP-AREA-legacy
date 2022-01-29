@@ -1,27 +1,21 @@
 ﻿using UnityEngine;
 
-public class IdlePositionHeadbob : IdleCameraHeadbob
+public class IdlePositionHeadBob : IdleCameraHeadBob
 {
+    private Transform _transform;
     protected Vector3 _newPosition = Vector3.zero;
 
-    protected new void Awake()
+    private void Awake()
     {
-        base.Awake();
         _transform = transform;
     }
 
-    protected void Update()
+    protected override void ActivateHeadbob()
     {
-        ActivateHeadbob();
-    }
+        _newPosition.x = GetCurveValue(xAxis);
+        _newPosition.y = GetCurveValue(yAxis);
+        _newPosition.z = GetCurveValue(zAxis);
 
-    protected virtual void ActivateHeadbob()
-    {
-        _curveTime += Time.deltaTime;
-
-        _newPosition.x = GetCurveValue(_xAxis);
-        _newPosition.y = GetCurveValue(_yAxis);
-        _newPosition.z = GetCurveValue(_zAxis);
         _transform.localPosition = _newPosition;
     }
 }

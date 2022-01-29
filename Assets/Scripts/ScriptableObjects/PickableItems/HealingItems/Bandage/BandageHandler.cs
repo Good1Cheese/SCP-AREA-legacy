@@ -1,13 +1,19 @@
 ﻿using Zenject;
 
-public class BandageHandler : PickableItemHandler
+public class BandageHandler : StackableItemHandler
 {
-    [Inject] private readonly PlayerBlood _playerBleeding;
+    private PlayerBlood _playerBlood;
+
+    [Inject]
+    private void Inject(PlayerBlood playerBlood)
+    {
+        _playerBlood = playerBlood;
+    }
 
     public override void Use()
     {
-        _playerBleeding.StopCoroutine();
+        _playerBlood.StopCoroutine();
     }
 
-    public override bool ShouldItemNotBeUsed => _playerBleeding.IsCoroutineGoing;
+    public override bool ShouldItemNotBeUsed => _playerBlood.IsCoroutineGoing;
 }

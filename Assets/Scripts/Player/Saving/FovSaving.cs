@@ -15,7 +15,7 @@ public class FovSaving : DataSaving
         fov = _mainCamera.fieldOfView;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _dynamicFov.CurveTime = moveTime;
         _mainCamera.fieldOfView = fov;

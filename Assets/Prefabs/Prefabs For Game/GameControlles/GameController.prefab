@@ -188,10 +188,10 @@ GameObject:
   - component: {fileID: 3476612386587923562}
   - component: {fileID: 7071613214550454115}
   - component: {fileID: 28724566}
-  - component: {fileID: 4504709228995589975}
-  - component: {fileID: 9213037342631800206}
-  - component: {fileID: 973495705}
   - component: {fileID: 541240084}
+  - component: {fileID: 1113230667219139216}
+  - component: {fileID: 4504709228995589975}
+  - component: {fileID: 973495705}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -422,6 +422,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSlotsAmount: 8
+--- !u!114 &541240084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78af487156769f949adcbe9556579c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1113230667219139216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306098329a079a74f969ccee262481c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickableItemssInventoryUIUpdater: {fileID: 0}
 --- !u!114 &4504709228995589975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,19 +459,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5027b336f489f5846bd47b739a6b9aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9213037342631800206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504709229982532500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ef44aa0d9e8604cbd6a2b2eb10c3a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pickableItemssInventoryUIUpdater: {fileID: 0}
 --- !u!114 &973495705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,15 +472,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ammoUICountUpdater: {fileID: 0}
---- !u!114 &541240084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504709229982532500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78af487156769f949adcbe9556579c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

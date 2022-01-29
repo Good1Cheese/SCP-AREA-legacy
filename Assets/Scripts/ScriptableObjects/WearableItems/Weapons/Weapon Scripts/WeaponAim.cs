@@ -7,8 +7,8 @@ public class WeaponAim : WeaponScriptBase
 {
     private const KeyCode AIM_KEY = KeyCode.Mouse1;
 
-    [Inject] private readonly Animator _weaponAnimator;
-    [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
+    private Animator _weaponAnimator;
+    private WeaponReload _weaponReload;
 
     public bool IsAiming { get; set; }
 
@@ -18,6 +18,13 @@ public class WeaponAim : WeaponScriptBase
     public Action Aimed { get; set; }
     public Action Unaimed { get; set; }
     public bool WasAimed { get; set; }
+
+    [Inject]
+    private void Inject(Animator weaponAnimator, WeaponReload weaponReload)
+    {
+        _weaponAnimator = weaponAnimator;
+        _weaponReload = weaponReload;
+    }
 
     private void Update()
     {
@@ -36,6 +43,8 @@ public class WeaponAim : WeaponScriptBase
 
     public void SetAimStateWithTriggerCheck(bool isAiming)
     {
+        if (_weaponHandler == null) { return; }
+
         WasAimed = _weaponHandler.ClippingMaker.GameObjectTrigger.IsTriggered;
 
         if (WasAimed) { return; }
@@ -45,9 +54,8 @@ public class WeaponAim : WeaponScriptBase
 
     public void SetAimState(bool isAiming)
     {
-        if (_weaponReloadCoroutineUser.IsCoroutineGoing
-            || _inventoryEnablerDisabler.IsActivated
-            || _pauseMenuEnablerDisabler.IsActivated) { return; }
+        if (_weaponReload.IsCoroutineGoing
+            || CanNotWeaponDoAction()) { return; }
 
         IsAiming = isAiming;
         _weaponAnimator.SetBool("Aimed", isAiming);
@@ -60,8 +68,9 @@ public class WeaponAim : WeaponScriptBase
         Unaimed?.Invoke();
     }
 
-    protected new void SetWeaponHandler(WeaponHandler weaponHandler)
+    protected override void SetWeaponHandler(WeaponHandler weaponHandler)
     {
+        base.SetWeaponHandler(weaponHandler);
         _weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 }

@@ -4,16 +4,21 @@ using Zenject;
 
 public class DynamicFov : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve _fov;
+    [SerializeField] private AnimationCurve _fovCurve;
 
-    [Inject] private readonly Camera _mainCamera;
-
-    private float _targetTime = -1;
+    private Camera _mainCamera;
+    private float _currentTargetFovTime = -1;
     private Func<bool> _condition;
     private sbyte _deltaTimeMultipliyer;
     private bool _fovCalculated;
 
     public float CurveTime { get; set; }
+
+    [Inject]
+    private void Construct(Camera mainCamera)
+    {
+        _mainCamera = mainCamera;
+    }
 
     public void SetFov(float targerFovTime)
     {
@@ -28,15 +33,15 @@ public class DynamicFov : MonoBehaviour
         }
 
         CurveTime += Time.deltaTime * _deltaTimeMultipliyer;
-        _mainCamera.fieldOfView = _fov.Evaluate(CurveTime);
+        _mainCamera.fieldOfView = _fovCurve.Evaluate(CurveTime);
     }
 
     private void CalculateFov(float targerFovTime)
     {
-        if (_targetTime == targerFovTime) { return; }
+        if (_currentTargetFovTime == targerFovTime) { return; }
 
         _fovCalculated = false;
-        _targetTime = targerFovTime;
+        _currentTargetFovTime = targerFovTime;
 
         if (CurveTime > targerFovTime)
         {

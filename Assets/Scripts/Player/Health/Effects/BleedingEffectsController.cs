@@ -2,12 +2,19 @@
 
 public class BleedingEffectsController : EffectsController
 {
-    [Inject] protected readonly PlayerBlood _playerBlood;
-    [Inject] protected readonly PlayerHealth _playerHealth;
+    protected PlayerBlood _playerBlood;
+    protected PlayerHealth _playerHealth;
+
+    [Inject]
+    private void Construct(PlayerHealth playerHealth, PlayerBlood playerBlood)
+    {
+        _playerHealth = playerHealth;
+        _playerBlood = playerBlood;
+    }
 
     protected override void SubscribeToActions()
     {
-        _playerBlood.Changed += UpdateCoroutine;
+        _playerBlood.Changed += InvokeCoroutine;
         _playerHealth.Died += OnDestroy;
     }
 
@@ -18,7 +25,7 @@ public class BleedingEffectsController : EffectsController
 
     protected override void UnsubscribeFromActions()
     {
-        _playerBlood.Changed -= UpdateCoroutine;
+        _playerBlood.Changed -= InvokeCoroutine;
         _playerHealth.Died -= OnDestroy;
     }
 }

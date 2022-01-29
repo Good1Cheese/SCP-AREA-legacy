@@ -15,7 +15,7 @@ public class ItemSaveableStateChanger : MonoBehaviour
 
     private void Start()
     {
-        ItemHandler.InventoryChanged += SetSaveableState;
+        ItemHandler.IsInventoryChanged += SetSaveableState;
     }
 
     public void SetSaveableState(bool isInventory)
@@ -25,6 +25,6 @@ public class ItemSaveableStateChanger : MonoBehaviour
 
     private void OnDestroy()
     {
-        ItemHandler.InventoryChanged -= SetSaveableState;
+        ItemHandler.IsInventoryChanged -= SetSaveableState;
     }
 }

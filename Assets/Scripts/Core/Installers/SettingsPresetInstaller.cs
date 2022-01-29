@@ -10,5 +10,4 @@ public class SettingsPresetInstaller : ScriptableObjectInstaller<SettingsPresetI
     {
         Container.BindInstance(this);
     }
-
 }

@@ -11,10 +11,9 @@ public class InteractionProvider : MonoBehaviour
     [SerializeField] private float _interactionSphereRadious;
     [SerializeField] private float _delayAfterInteraction;
 
-    [Inject] private readonly RayProvider _rayProvider;
-    [Inject] private readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
-
-    private IInteractable _interactable;
+    private RayProvider _rayProvider;
+    private PickableInventoryEnablerDisabler _inventoryEnablerDisabler;
+    private Interactable _interactable;
     private bool _isDelayGoing;
     private WaitForSeconds _timeoutAfterInteraction;
 
@@ -22,7 +21,14 @@ public class InteractionProvider : MonoBehaviour
     public Action<Collider> InteractableFound { get; set; }
     public Action Interacted { get; set; }
 
-    private void Start()
+    [Inject]
+    private void Construct(RayProvider rayProvider, PickableInventoryEnablerDisabler inventoryEnablerDisabler)
+    {
+        _rayProvider = rayProvider;
+        _inventoryEnablerDisabler = inventoryEnablerDisabler;
+    }
+
+    private void Awake()
     {
         _timeoutAfterInteraction = new WaitForSeconds(_delayAfterInteraction);
     }

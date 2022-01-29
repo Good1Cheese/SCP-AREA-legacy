@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class HeadbobCurve
+public class HeadboBCurve
 {
     public AnimationCurve curve;
 }

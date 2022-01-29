@@ -1,14 +1,20 @@
 using UnityEngine;
 using Zenject;
 
-public class BleedingTest : IInteractable
+public class BleedingTest : Interactable
 {
-    [Inject] private readonly PlayerBlood _playerBleeding;
-
     [SerializeField] private float _startBloodTimeLoss;
+
+    private PlayerBlood _playerBlood;
+
+    [Inject]
+    private void Construct(PlayerBlood playerBlood)
+    {
+        _playerBlood = playerBlood;
+    }
 
     public override void Interact()
     {
-        _playerBleeding.StartBleeding(_startBloodTimeLoss, 1);
+        _playerBlood.StartBleeding(_startBloodTimeLoss, 1);
     }
 }

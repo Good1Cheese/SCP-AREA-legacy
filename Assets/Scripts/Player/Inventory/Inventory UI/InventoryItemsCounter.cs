@@ -5,13 +5,22 @@ using Zenject;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class InventoryItemsCounter : MonoBehaviour
 {
-    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-
+    private PickableItemsInventory _pickableItemsInventory;
     private TextMeshProUGUI _textMesh;
+
+    [Inject]
+    private void Construct(PickableItemsInventory pickableItemsInventory)
+    {
+        _pickableItemsInventory = pickableItemsInventory;
+    }
 
     private void Awake()
     {
         _textMesh = GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
         _pickableItemsInventory.Changed += UpdateItemsCount;
     }
 

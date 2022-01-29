@@ -6,10 +6,16 @@ public class ItemActionCreator : MonoBehaviour
 {
     private CoroutineUser _currentItemAction;
     private bool _isSoundInterrupting = true;
+    private AudioSource _slotAudio;
 
     public bool IsGoing { get; set; }
+    public AudioSource SlotAudio => _slotAudio;
 
-    [Inject(Id = "ItemsAudio")] public AudioSource SlotAudio { get; set; }
+    [Inject]
+    private void Inject([Inject(Id = "ItemsAudio")] AudioSource slotAudio)
+    {
+        _slotAudio = slotAudio;
+    }
 
     public void StartItemAction(WaitForSeconds timeout, AudioClip actionSound, bool isSoundInterrupting = true)
     {
@@ -67,6 +73,6 @@ public class ItemActionCreator : MonoBehaviour
 
         if (currentItemActivator == null) { return; }
 
-        currentItemActivator.Slot.ActionStarted?.Invoke();
+        currentItemActivator.ItemSlot.ActionStarted?.Invoke();
     }
 }

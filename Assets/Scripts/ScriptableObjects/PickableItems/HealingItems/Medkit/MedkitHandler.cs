@@ -1,13 +1,20 @@
 ﻿using Zenject;
 
-public class MedkitHandler : InjectableItemHandler, IHealthInjectable
+public class MedkitHandler : StackableItemHandler, IHealthInjectable
 {
-    [Inject] private readonly PlayerHealth _playerHealth;
-    [Inject] private readonly PlayerBlood _playerBleeding;
+    private PlayerHealth _playerHealth;
+    private PlayerBlood _playerBlood;
 
     private bool _isInjectUsed;
 
-    public override void Inject()
+    [Inject]
+    private void Inject(PlayerHealth playerHealth, PlayerBlood playerBlood)
+    {
+        _playerHealth = playerHealth;
+        _playerBlood = playerBlood;
+    }
+
+    public void Inject()
     {
         _isInjectUsed = true;
         Use();
@@ -15,7 +22,7 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
 
     public override void Use()
     {
-        _playerBleeding.StopCoroutine();
+        _playerBlood.StopCoroutine();
 
         var medkit = (Medkit_SO)Item_SO;
         _playerHealth.Heal(medkit.healthToHeal);
@@ -26,6 +33,5 @@ public class MedkitHandler : InjectableItemHandler, IHealthInjectable
         if (_isInjectUsed) { return; }
 
         base.Clicked(slotIndex);
-        _numOfUses -= _numOfUses;
     }
 }

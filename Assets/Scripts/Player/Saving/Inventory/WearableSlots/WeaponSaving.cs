@@ -25,9 +25,9 @@ public class WeaponSaving : ItemSaving
         silencerName = _weaponHandler.SilencerHandler.GameObject.name;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
-        base.LoadData();
+        base.Load();
 
         _weaponHandler.ClipAmmo = clipAmmo;
 

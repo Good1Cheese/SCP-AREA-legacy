@@ -17,7 +17,7 @@ public class HealthSaving : CoroutineUserSaving
         isCoroutineGoing = _healableHealth.IsCoroutineGoing;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _playerHealth.Amount = healthAmount;
 

@@ -1,8 +1,10 @@
 ﻿using Zenject;
 
-public class HeadbobWhileSlowRunWalk : MovementHeadbob
+public class HeadBobWhileSlowRunWalk : MovementHeadBob
 {
-    [Inject] private readonly SlowWalkRunController _slowWalkRunController;
-
-    protected override MoveController MoveController => _slowWalkRunController;
+    [Inject]
+    private void Construct(SlowWalkRunController slowWalkRunController)
+    {
+        _moveController = slowWalkRunController;
+    }
 }

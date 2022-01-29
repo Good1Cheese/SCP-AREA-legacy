@@ -1,35 +1,46 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponReloadCoroutineUser))]
-public class WeaponReload : WeaponScriptBase
+public class WeaponReload : CoroutineUser
 {
-    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-    [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
-    [Inject] private readonly ItemActionCreator _itemActionCreator;
-
-    private IEnumerable<AmmoHandler> _inventoryAmmoEnumarable;
+    private AmmoHandler[] _inventoryAmmo;
     private int _calculatedClipAmmo;
+    private WeaponHandler _weaponHandler;
+    protected WeaponSlot _weaponSlot;
+    private PickableItemsInventory _pickableItemsInventory;
+    private ItemActionCreator _itemActionCreator;
 
+    protected override IEnumerator Method => Reload();
+    protected override IEnumerator Coroutine() { yield break; }
     public Action Reloaded { get; set; }
+
+    [Inject]
+    private void Inject(WeaponSlot weaponSlot, PickableItemsInventory pickableItemsInventory, ItemActionCreator itemActionCreator)
+    {
+        _weaponSlot = weaponSlot;
+        _pickableItemsInventory = pickableItemsInventory;
+        _itemActionCreator = itemActionCreator;
+    }
+
+    private new void Start()
+    {
+        base.Start();
+        _weaponSlot.Changed += SetWeaponHandler;
+    }
 
     public void ActivateReload()
     {
         if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
             || _weaponHandler.Ammo == 0
-            || _itemActionCreator.IsGoing
-            || _pauseMenuEnablerDisabler.IsActivated) { return; }
+            || _itemActionCreator.IsGoing) { return; }
 
-        _weaponReloadCoroutineUser.StartWithoutInterrupt();
+        StartWithoutInterrupt();
     }
 
     public IEnumerator Reload()
     {
-        _itemActionCreator.StartInterruptingItemAction(_weaponReloadCoroutineUser, _weaponHandler.Weapon_SO.reloadSound);
+        _itemActionCreator.StartInterruptingItemAction(this, _weaponHandler.Weapon_SO.reloadSound);
 
         AddClipAmmoToInventoryAmmo();
         _weaponHandler.ClipAmmo = 0;
@@ -41,18 +52,17 @@ public class WeaponReload : WeaponScriptBase
         CalculateCurrentClipAmmo();
 
         _weaponHandler.ClipAmmo = _calculatedClipAmmo;
-        _weaponReloadCoroutineUser.IsCoroutineGoing = false;
+        IsCoroutineGoing = false;
     }
 
     private void CalculateCurrentClipAmmo()
     {
-        AmmoHandler[] ammos = GetInventoryAmmo();
         int clipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo;
 
-        for (int i = 0; i < ammos.Length; i++)
+        for (int i = 0; i < _inventoryAmmo.Length; i++)
         {
-            var currentAmmo = ammos[i].Ammo;
-            ammos[i].Ammo -= clipAmmo;
+            var currentAmmo = _inventoryAmmo[i].Ammo;
+            _inventoryAmmo[i].Ammo -= clipAmmo;
 
             if (currentAmmo > clipAmmo) { clipAmmo = 0; break; }
 
@@ -63,20 +73,20 @@ public class WeaponReload : WeaponScriptBase
         _calculatedClipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo - clipAmmo;
     }
 
-    private AmmoHandler[] GetInventoryAmmo()
-    {
-        return _inventoryAmmoEnumarable.ToArray();
-    }
-
     private void AddClipAmmoToInventoryAmmo()
     {
-        _inventoryAmmoEnumarable = _pickableItemsInventory.Inventory.TakeWhile(item => item != null).Where(item =>
+        _inventoryAmmo = (AmmoHandler[])Array.FindAll(_pickableItemsInventory.Inventory, item =>
         {
             var ammo = item as AmmoHandler;
             return ammo != null && ammo.Ammo != 0;
-        }).Select(item => (AmmoHandler)item);
+        });
 
-        var ammo = _inventoryAmmoEnumarable.FirstOrDefault(ammo => ammo.Ammo + _weaponHandler.ClipAmmo <= AmmoHandler.MAX_SLOT_AMMO);
-        ammo.Ammo += _weaponHandler.ClipAmmo;
+        AmmoHandler freeAmmoHandler = Array.Find(_inventoryAmmo, ammo => ammo.Ammo + _weaponHandler.ClipAmmo <= AmmoHandler.MAX_SLOT_AMMO);
+        freeAmmoHandler.Ammo += _weaponHandler.ClipAmmo;
+    }
+
+    protected void SetWeaponHandler(WeaponHandler weaponHandler)
+    {
+        _weaponHandler = weaponHandler;
     }
 }

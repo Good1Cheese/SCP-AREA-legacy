@@ -1,13 +1,19 @@
 using UnityEngine;
 using Zenject;
 
-public class InjectorHandler : WearableItemHandler, IClickable
+public class InjectorHandler : WearableItemHandler
 {
-    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-    [Inject] private readonly InjectorSlot _injectorSlot;
+    private PickableItemsInventory _pickableItemsInventory;
 
     public IInjectable ClipInject { get; set; }
     public Injector_SO Injector_SO => (Injector_SO)Item_SO;
+
+    [Inject]
+    private void Construct(InjectorSlot injectorSlot, PickableItemsInventory pickableItemsInventory)
+    {
+        _wearableSlot = injectorSlot;
+        _pickableItemsInventory = pickableItemsInventory;
+    }
 
     private new void Awake()
     {
@@ -22,7 +28,7 @@ public class InjectorHandler : WearableItemHandler, IClickable
 
     public override void Equip()
     {
-        _injectorSlot.SetItem(this);
+        _wearableSlot.SetItem(this);
         _pickableItemsInventory.Add(this);
     }
 
@@ -33,13 +39,8 @@ public class InjectorHandler : WearableItemHandler, IClickable
         base.Interact();
     }
 
-    public void Clicked(int slotIndex)
-    {
-        _injectorSlot.Used?.Invoke();
-    }
-
     public override void Dropped()
     {
-        _injectorSlot.ClearSlot();
+        _wearableSlot.ClearSlot();
     }
 }

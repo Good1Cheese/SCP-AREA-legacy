@@ -13,7 +13,7 @@ public class StaminaDrainSaving : DataSaving
         drainPerSecond = _staminaDrain.DrainPerSecond;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _staminaDrain.DrainPerSecond = drainPerSecond;
         _staminaDrain.PassedTime = passedTime;

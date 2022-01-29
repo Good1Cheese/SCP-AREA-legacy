@@ -2,7 +2,7 @@
 
 public class IdleHeadbobEffect : InjuryEffect
 {
-    [SerializeField] private IdleCameraHeadbob _idleHeadbob;
+    [SerializeField] private IdleCameraHeadBob _idleHeadbob;
 
     protected override float EffectValue
     {

@@ -2,19 +2,27 @@
 
 public class ItemsInteractionInstaller : MonoInstaller
 {
-    private PickableItemsInteraction _pickableItemsInteraction;
-    private WearableItemsInteraction _wearableItemsInteraction;
-
     public override void InstallBindings()
     {
-        GetComponents();
-        Container.BindInstance(_pickableItemsInteraction).AsSingle();
-        Container.BindInstance(_wearableItemsInteraction).AsSingle();
+        BindPickableItemsInteraction();
+        BindWearableItemsInteraction();
     }
 
-    private void GetComponents()
+    private void BindPickableItemsInteraction()
     {
-        _pickableItemsInteraction = GetComponent<PickableItemsInteraction>();
-        _wearableItemsInteraction = GetComponent<WearableItemsInteraction>();
+        Container.BindInstance(GetComponent<PickableItemsUse>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<PickabeItemsDrop>())
+            .AsSingle();
+    }
+
+    private void BindWearableItemsInteraction()
+    {
+        Container.BindInstance(GetComponent<WearableItemsUse>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<WearableItemsDrop>())
+            .AsSingle();
     }
 }

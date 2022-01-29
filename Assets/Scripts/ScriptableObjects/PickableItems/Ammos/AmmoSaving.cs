@@ -16,9 +16,9 @@ public class AmmoSaving : ItemSaving
         ammoCount = _ammoHandler.Ammo;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
-        base.LoadData();
+        base.Load();
 
         _ammoHandler.Ammo = ammoCount;
     }

@@ -5,11 +5,9 @@ using Zenject;
 [RequireComponent(typeof(WeaponSaving))]
 public class WeaponHandler : WearableItemHandler
 {
-    [Inject] private readonly WeaponAim _weaponAim;
-    [Inject(Id = "Camera")] private readonly Transform _mainCamera;
-    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-    [Inject] private readonly WeaponSlot _weaponSlot;
-
+    private WeaponAim _weaponAim;
+    private Transform _mainCamera;
+    private PickableItemsInventory _pickableItemsInventory;
     private int _ammoCount;
 
     public int Ammo => _ammoCount;
@@ -18,6 +16,18 @@ public class WeaponHandler : WearableItemHandler
     public SilencerHandler SilencerHandler { get; set; }
     public int ClipAmmo { get; set; }
     public AudioClip CurrentShotSound { get; set; }
+
+    [Inject]
+    private void Construct(WeaponSlot weaponSlot,
+                           WeaponAim weaponAim,
+                           [Inject(Id = "Camera")] Transform mainCamera,
+                           PickableItemsInventory pickableItemsInventory)
+    {
+        _wearableSlot = weaponSlot;
+        _weaponAim = weaponAim;
+        _mainCamera = mainCamera;
+        _pickableItemsInventory = pickableItemsInventory;
+    }
 
     private new void Start()
     {
@@ -36,6 +46,7 @@ public class WeaponHandler : WearableItemHandler
         Weapon_SO = (Weapon_SO)_wearableIte_SO;
         CurrentShotSound = Weapon_SO.shotSound;
         ClippingMaker = GameObjectForPlayer.GetComponentInChildren<ClippingMaker>();
+
         ClippingMaker.WeaponAim = _weaponAim;
         ClippingMaker.ParentTransform = GameObjectForPlayer.transform;
         ClippingMaker.MainCamera = _mainCamera;
@@ -43,7 +54,7 @@ public class WeaponHandler : WearableItemHandler
 
     public override void Equip()
     {
-        _weaponSlot.SetItem(this);
+        _wearableSlot.SetItem(this);
     }
 
     public void UpdateAmmo()

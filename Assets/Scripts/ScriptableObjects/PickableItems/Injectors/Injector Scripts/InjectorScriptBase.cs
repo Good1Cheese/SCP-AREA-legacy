@@ -5,34 +5,37 @@ public abstract class InjectorScriptBase : ItemScriptBase
 {
     [SerializeField] protected KeyCode _key;
 
-    [Inject] protected readonly ItemActionCreator _itemActionCreator;
-    [Inject] protected readonly InjectorSlot _injectorSlot;
-
+    protected InjectorSlot _injectorSlot;
+    protected ItemActionCreator _itemActionCreator;
     protected InjectorHandler _injectorHandler;
 
-    protected override WearableSlot ItemSlot => _injectorSlot;
-    protected override WearableItemHandler WearableItemHandler => _injectorHandler;
+    [Inject]
+    private void Inject(InjectorSlot injectorSlot, ItemActionCreator itemActionCreator)
+    {
+        _itemSlot = injectorSlot;
+        _injectorSlot = injectorSlot;
+        _itemActionCreator = itemActionCreator;
+    }
 
     protected new void Start()
     {
         base.Start();
 
         _injectorSlot.Changed += SetInjector;
+        _injectorSlot.ItemRemoved += SetInjectorToNull;
     }
 
     protected void Update()
     {
         if (!Input.GetKeyDown(_key)) { return; }
 
-        if (_itemActionCreator.IsGoing || _inventoryEnablerDisabler.IsActivated) { return; }
+        if (_itemActionCreator.IsGoing || _pickableInventoryEnablerDisabler.IsActivated) { return; }
 
         DoAction();
     }
 
-    private void SetInjector(InjectorHandler injectorHandler)
-    {
-        _injectorHandler = injectorHandler;
-    }
+    private void SetInjector(InjectorHandler injectorHandler) => _injectorHandler = injectorHandler;
+    private void SetInjectorToNull() => _injectorHandler = null;
 
     protected abstract void DoAction();
 
@@ -40,6 +43,7 @@ public abstract class InjectorScriptBase : ItemScriptBase
     {
         base.OnDestroy();
 
-        _injectorSlot.Changed -= SetInjector;
+        _injectorSlot.Changed -= SetInjector; 
+        _injectorSlot.ItemRemoved -= SetInjectorToNull;
     }
 }

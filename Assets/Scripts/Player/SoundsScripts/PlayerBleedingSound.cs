@@ -2,16 +2,21 @@
 
 public class PlayerBleedingSound : SoundOnAction
 {
-    [Inject] private readonly PlayerBlood _playerBleeding;
+    private PlayerBlood _playerBlood;
+
+    [Inject]
+    private void Construct(PlayerBlood playerBlood)
+    {
+        _playerBlood = playerBlood;
+    }
 
     protected override void SubscribeToAction()
     {
-        _playerBleeding.Bled += PlaySound;
+        _playerBlood.Bled += PlaySound;
     }
 
     protected override void UnscribeToAction()
     {
-        _playerBleeding.Bled -= PlaySound;
+        _playerBlood.Bled -= PlaySound;
     }
-
 }

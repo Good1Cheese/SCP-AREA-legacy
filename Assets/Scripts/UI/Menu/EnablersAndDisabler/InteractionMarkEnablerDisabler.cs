@@ -5,9 +5,15 @@ public class InteractionMarkEnablerDisabler : MonoBehaviour
 {
     [SerializeField] private RectTransform _markCanvas;
 
-    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+    private Transform _playerTransform;
     private InteractionProvider _interactionProvider;
     private GameObject _canvasGameObject;
+
+    [Inject]
+    private void Construct([Inject(Id = "Player")] Transform playerTransfrom)
+    {
+        _playerTransform = playerTransfrom;
+    }
 
     private void Awake()
     {

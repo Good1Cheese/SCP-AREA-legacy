@@ -3,7 +3,13 @@ using Zenject;
 
 public class SettingsMenuControls : MonoBehaviour
 {
-    [Inject] private readonly SceneTransition _sceneTransition;
+    private SceneTransition _sceneTransition;
+
+    [Inject]
+    private void Construct(SceneTransition sceneTransition)
+    {
+        _sceneTransition = sceneTransition;
+    }
 
     public void ReturnToMainMenu()
     {

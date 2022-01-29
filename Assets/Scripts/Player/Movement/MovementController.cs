@@ -7,8 +7,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private AnimationCurve _movementSpeed;
     [SerializeField] private MoveController[] _moveControllers;
 
-    [Inject] private readonly WalkController _walkController;
-
+    private WalkController _walkController;
     private MoveController _usingMoveController;
 
     public AnimationCurve MovementSpeed => _movementSpeed;
@@ -17,9 +16,15 @@ public class MovementController : MonoBehaviour
     public float Speed { get; set; }
     public float СurrentStepTime { get; set; }
 
+    [Inject]
+    private void Construct(WalkController walkController)
+    {
+        _walkController = walkController;
+    }
+
     public float GetPlayerSpeed()
     {
-        GetMoves();
+        GetPlayerMoves();
         _usingMoveController.UpdateFov();
 
         if (MoveTime > _usingMoveController.MaxMoveTime)
@@ -30,10 +35,23 @@ public class MovementController : MonoBehaviour
         return Speed - SlowDownFactor;
     }
 
-    private void GetMoves()
+    private void GetPlayerMoves()
     {
         Speed = 0;
 
+        GetArrayMoves();
+
+        if (Speed == 0)
+        {
+            _usingMoveController = _walkController;
+            Speed = _walkController.GetMove();
+        }
+
+        _usingMoveController.InvokeStepInvoke();
+    }
+
+    private void GetArrayMoves()
+    {
         for (int i = 0; i < _moveControllers.Length; i++)
         {
             float speed = _moveControllers[i].GetSpeed();
@@ -43,13 +61,5 @@ public class MovementController : MonoBehaviour
             Speed = speed;
             _usingMoveController = _moveControllers[i];
         }
-
-        if (Speed == 0)
-        {
-            _usingMoveController = _walkController;
-            Speed = _walkController.GetMove();
-        }
-
-        _usingMoveController.InvokeStepInvoke();
     }
 }

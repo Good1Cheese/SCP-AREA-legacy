@@ -3,12 +3,20 @@ using Zenject;
 
 public class SaveDataScriptGetter : MonoBehaviour
 {
-    [Inject] private readonly GameSaving _gameSaver;
+    private GameSaving _gameSaving;
+
+    [Inject]
+    private void Construct(GameSaving gameSaver)
+    {
+        _gameSaving = gameSaver;
+    }
 
     private void Start()
     {
-        DataSaving[] collection = GetComponentsInChildren<DataSaving>();
-        _gameSaver.SaveData.AddRange(collection);
-        _gameSaver.SaveData.Add(GetComponentInParent<GameObjectSaving>());
+        var dataSavings = GetComponentsInChildren<DataSaving>();
+        _gameSaving.SaveData.AddRange(dataSavings);
+
+        var gameObjectSaving = GetComponentInParent<GameObjectSaving>();
+        _gameSaving.SaveData.Add(gameObjectSaving);
     }
 }

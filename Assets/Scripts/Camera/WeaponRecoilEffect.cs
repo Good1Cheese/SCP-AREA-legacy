@@ -3,13 +3,20 @@ using Zenject;
 
 public class WeaponRecoilEffect : MonoBehaviour
 {
-    [Inject] private readonly WeaponAim _weaponAim;
-    [Inject] private readonly WeaponSlot _weaponSlot;
+    private WeaponAim _weaponAim;
+    private WeaponSlot _weaponSlot;
 
     private Weapon_SO _weapon_SO;
     private Vector3 _currentRotation;
     private Vector3 _targetRotation;
     private Vector3 _recoilRotation = new Vector3();
+
+    [Inject]
+    private void Construct(WeaponAim weaponAim, WeaponSlot weaponSlot)
+    {
+        _weaponAim = weaponAim;
+        _weaponSlot = weaponSlot;
+    }
 
     private void Start()
     {
@@ -28,17 +35,10 @@ public class WeaponRecoilEffect : MonoBehaviour
         transform.localRotation = Quaternion.Euler(_currentRotation);
     }
 
-    private void ActivateRecoilInAim()
-    {
-        SetRecoil(_weapon_SO.recoil);
-    }
+    private void ActivateRecoilInAim() => GenerateRecoil(_weapon_SO.recoil);
+    private void ActivateRecoilWithoutAim() => GenerateRecoil(_weapon_SO.aimRecoil);
 
-    private void ActivateRecoilWithoutAim()
-    {
-        SetRecoil(_weapon_SO.aimRecoil);
-    }
-
-    private void SetRecoil(Vector3 recoilRotation)
+    private void GenerateRecoil(Vector3 recoilRotation)
     {
         _recoilRotation.x = recoilRotation.x;
         _recoilRotation.y = Random.Range(-recoilRotation.y, recoilRotation.y);
@@ -54,8 +54,8 @@ public class WeaponRecoilEffect : MonoBehaviour
 
     private void OnDestroy()
     {
-        _weaponAim.FiredWithAim += ActivateRecoilInAim;
-        _weaponAim.FiredWithoutAim += ActivateRecoilWithoutAim;
+        _weaponAim.FiredWithAim -= ActivateRecoilInAim;
+        _weaponAim.FiredWithoutAim -= ActivateRecoilWithoutAim;
         _weaponSlot.Changed -= SetWeaponHandler;
     }
 }

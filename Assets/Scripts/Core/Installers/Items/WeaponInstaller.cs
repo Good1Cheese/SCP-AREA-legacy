@@ -4,43 +4,38 @@ using Zenject;
 [RequireComponent(typeof(WeaponShot), typeof(WeaponShot))]
 public class WeaponInstaller : MonoInstaller
 {
-    private AmmoMixup _ammoMixup;
-    private WeaponFire _weaponFire;
-    private WeaponShot _weaponShot;
-    private WeaponReload _weaponReload;
-    private WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
-    private WeaponAim _weaponAiming;
-    private Animator _weaponAnimator;
-    private AudioSource _weaponAudio;
-    private WeaponMiss _weaponAmmoController;
-    private RayForFireProvider _rayForShootingProvider;
-
     public override void InstallBindings()
     {
-        GetComponents();
-        Container.BindInstance(_ammoMixup).AsSingle();
-        Container.BindInstance(_weaponFire).AsSingle();
-        Container.BindInstance(_weaponShot).AsSingle();
-        Container.BindInstance(_weaponReload).AsSingle();
-        Container.BindInstance(_weaponReloadCoroutineUser).AsSingle();
-        Container.BindInstance(_weaponAiming).AsSingle();
-        Container.BindInstance(_weaponAudio).WithId("ItemsAudio").AsCached();
-        Container.BindInstance(_weaponAnimator).AsSingle();
-        Container.BindInstance(_weaponAmmoController).AsSingle();
-        Container.BindInstance(_rayForShootingProvider).AsSingle();
+        BindWeapon();
+
+        Container.BindInstance(GetComponent<RayForFireProvider>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<AmmoMixup>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<AudioSource>())
+            .WithId("ItemsAudio").AsCached();
+
+        Container.BindInstance(GetComponent<Animator>())
+            .AsSingle();
     }
 
-    private void GetComponents()
+    private void BindWeapon()
     {
-        _ammoMixup = GetComponent<AmmoMixup>();
-        _weaponFire = GetComponent<WeaponFire>();
-        _weaponShot = GetComponent<WeaponShot>();
-        _weaponReload = GetComponent<WeaponReload>();
-        _weaponReloadCoroutineUser = GetComponent<WeaponReloadCoroutineUser>();
-        _weaponAiming = GetComponent<WeaponAim>();
-        _weaponAudio = GetComponent<AudioSource>();
-        _weaponAnimator = GetComponent<Animator>();
-        _weaponAmmoController = GetComponent<WeaponMiss>();
-        _rayForShootingProvider = GetComponent<RayForFireProvider>();
+        Container.BindInstance(GetComponent<WeaponFire>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<WeaponShot>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<WeaponReload>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<WeaponAim>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<WeaponMiss>())
+            .AsSingle();
     }
 }

@@ -1,14 +1,20 @@
 ﻿using Zenject;
 
-public class AdrenalinInjectHandler : InjectableItemHandler, IAdrenalinInjectable
+public class AdrenalinInjectHandler : StackableItemHandler, IAdrenalinInjectable
 {
-    [Inject] private readonly StaminaDisabler _staminaUseDisabler;
+    private StaminaDisabler _staminaDisabler;
 
     public AdrenalinInject_SO AdrenalinInject_SO => _pickableItem_SO as AdrenalinInject_SO;
 
-    public override void Inject()
+    [Inject]
+    private void Inject(StaminaDisabler staminaDisabler)
     {
-        _staminaUseDisabler.Disable(AdrenalinInject_SO.adrenalineEffectTime);
+        _staminaDisabler = staminaDisabler;
+    }
+
+    public void Inject()
+    {
+        _staminaDisabler.Disable(AdrenalinInject_SO.adrenalineEffectTime);
     }
 
     public override bool ShouldItemNotBeUsed => false;

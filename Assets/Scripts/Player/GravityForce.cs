@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class GravityForce : MonoBehaviour
 {
@@ -8,9 +9,10 @@ public class GravityForce : MonoBehaviour
     private CharacterController _characterController;
     private Vector3 _velocity;
 
-    private void Start()
+    [Inject]
+    private void Construct(CharacterController characterController)
     {
-        _characterController = GetComponent<CharacterController>();
+        _characterController = characterController;
     }
 
     private void FixedUpdate()

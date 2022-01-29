@@ -5,11 +5,17 @@ public class WeaponShot : MonoBehaviour
 {
     private const float NORMAL_MULTYPLIER = 0.001f;
 
-    [Inject] private readonly GameObject _playerGameObject;
-    [Inject] private readonly WeaponSlot _weaponSlot;
-
+    private GameObject _playerGameObject;
+    private WeaponSlot _weaponSlot;
     private IDamagable _damagable;
     private Weapon_SO _weapon;
+
+    [Inject]
+    private void Inject(GameObject playerGameObject, WeaponSlot weaponSlot)
+    {
+        _playerGameObject = playerGameObject;
+        _weaponSlot = weaponSlot;
+    }
 
     private void Start()
     {

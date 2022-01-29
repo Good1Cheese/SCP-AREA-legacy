@@ -9,7 +9,13 @@ public class LoadingSceneUIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _progressText;
     [SerializeField] private GameObject _gameObject;
 
-    [Inject] private readonly SceneTransition _sceneTransition;
+    private SceneTransition _sceneTransition;
+
+    [Inject]
+    private void Construct(SceneTransition sceneTransition)
+    {
+        _sceneTransition = sceneTransition;
+    }
 
     public bool IsActiveStateConstant { get; set; }
 

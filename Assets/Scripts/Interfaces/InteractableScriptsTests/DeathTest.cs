@@ -1,8 +1,14 @@
 using Zenject;
 
-public class DeathTest : IInteractable
+public class DeathTest : Interactable
 {
-    [Inject] private readonly PlayerHealth _playerHealth;
+    private PlayerHealth _playerHealth;
+
+    [Inject]
+    private void Construct(PlayerHealth playerHealth)
+    {
+        _playerHealth = playerHealth;
+    }
 
     public override void Interact()
     {

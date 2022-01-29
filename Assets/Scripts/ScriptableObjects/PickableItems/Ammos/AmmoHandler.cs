@@ -8,8 +8,15 @@ public class AmmoHandler : PickableItemHandler
 
     [SerializeField] private int _ammoCount;
 
-    [Inject] private readonly WeaponSlot _weaponSlot;
-    [Inject] private readonly AmmoMixup _ammoMixup;
+    private WeaponSlot _weaponSlot;
+    private AmmoMixup _ammoMixup;
+
+    [Inject]
+    private void Inject(WeaponSlot weaponSlot, AmmoMixup ammoMixup)
+    {
+        _weaponSlot = weaponSlot;
+        _ammoMixup = ammoMixup;
+    }
 
     public Ammo_SO Ammo_SO => (Ammo_SO)_pickableItem_SO;
 

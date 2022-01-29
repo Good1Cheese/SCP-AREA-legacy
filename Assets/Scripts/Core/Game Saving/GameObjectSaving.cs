@@ -29,7 +29,7 @@ public class GameObjectSaving : DataSaving
         isActive = _gameObject.activeInHierarchy;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _transform.SetPositionAndRotation(position, rotation);
         _gameObject.SetActive(isActive);
@@ -39,6 +39,6 @@ public class GameObjectSaving : DataSaving
     {
         JsonUtility.FromJsonOverwrite(json, this);
         _transform = _cachedTransform;
-        LoadData();
+        Load();
     }
 }

@@ -7,12 +7,12 @@ public abstract class DataSaving : MonoBehaviour
 
     public abstract void Save();
 
-    public virtual void LoadData() { }
+    public virtual void Load() { }
 
     public virtual void Load(string json)
     {
         JsonUtility.FromJsonOverwrite(json, this);
-        LoadData();
+        Load();
     }
 
     public virtual string ToJson()

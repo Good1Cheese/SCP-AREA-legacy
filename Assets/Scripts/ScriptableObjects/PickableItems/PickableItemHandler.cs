@@ -3,25 +3,29 @@ using Zenject;
 
 public abstract class PickableItemHandler : ItemHandler, IClickable
 {
-    [SerializeField] protected PickableIte_SO _pickableItem_SO;
+    [SerializeField] protected PickableItem_SO _pickableItem_SO;
 
-    [Inject] protected readonly PickableItemsInventory _pickableItemsInventory;
+    protected PickableItemsInventory _pickableItemsInventory;
 
     public virtual bool ShouldItemNotBeUsed => false;
     public override Item_SO Item_SO => _pickableItem_SO;
 
-    public virtual void Use() { }
+    [Inject]
+    private void Inject(PickableItemsInventory pickableItemsInventory)
+    {
+        _pickableItemsInventory = pickableItemsInventory;
+    }
 
     public override void Equip()
     {
         _pickableItemsInventory.Add(this);
     }
 
-    public virtual void Clicked(int slotIndex)
+    public override void Clicked(int slotIndex)
     {
         if (!ShouldItemNotBeUsed) { return; }
 
-        Use();
+        Clicked(slotIndex);
         _pickableItemsInventory.Remove(slotIndex);
     }
 }

@@ -3,12 +3,23 @@ using Zenject;
 
 public class ItemActionStopper : MonoBehaviour
 {
-    [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
-    [Inject] private readonly PickableItemsInventory _pickableItemsInventory;
-    [Inject] private readonly ItemActionCreator _itemActionCreator;
-    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
-
+    private WearableItemsDrop _wearableItemsDrop;
+    private PickableItemsInventory _pickableItemsInventory;
+    private ItemActionCreator _itemActionCreator;
+    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
     private InteractionProvider _interactionProvider;
+
+    [Inject]
+    private void Inject(WearableItemsDrop wearableItemsDrop,
+                        PickableItemsInventory pickableItemsInventory,
+                        ItemActionCreator itemActionCreator,
+                        PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+    {
+        _wearableItemsDrop = wearableItemsDrop;
+        _pickableItemsInventory = pickableItemsInventory;
+        _itemActionCreator = itemActionCreator;
+        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+    }
 
     private void Start()
     {
@@ -16,7 +27,7 @@ public class ItemActionStopper : MonoBehaviour
 
         _pauseMenuEnablerDisabler.EnabledDisabled += PauseUnpauseSound;
         _interactionProvider.Interacted += _itemActionCreator.StartEmptyItemActionWithAudioStop;
-        _wearableItemsInteraction.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop;
+        _wearableItemsDrop.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop;
         _pickableItemsInventory.ItemRemoved += _itemActionCreator.StartEmptyItemActionWithAudioStop;
     }
 
@@ -33,7 +44,7 @@ public class ItemActionStopper : MonoBehaviour
     private void OnDestroy()
     {
         _interactionProvider.Interacted -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
-        _wearableItemsInteraction.ItemRemoved -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
+        _wearableItemsDrop.ItemRemoved -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
         _pickableItemsInventory.ItemRemoved -= _itemActionCreator.StartEmptyItemActionWithAudioStop;
     }
 }

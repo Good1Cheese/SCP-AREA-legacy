@@ -22,7 +22,7 @@ public class ItemsSaving : DataSaving
         }
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         for (int i = 0; i < _itemDataControllerss.Length; i++)
         {
@@ -37,6 +37,6 @@ public class ItemsSaving : DataSaving
         ItemSaveableStateChanger[] itemDataHandlers = _itemDataControllerss;
         JsonUtility.FromJsonOverwrite(json, this);
         _itemDataControllerss = itemDataHandlers;
-        LoadData();
+        Load();
     }
 }

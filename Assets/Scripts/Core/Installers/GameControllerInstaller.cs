@@ -13,15 +13,6 @@ public class GameControllerInstaller : MonoInstaller
     [SerializeField] private Transform _propsHandler;
     [SerializeField] private Transform ActivatorsParent;
 
-    private ItemActionCreator _itemActionCreator;
-    private GameLoader _gameLoader;
-    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
-    private AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
-    private InventoryEnablerDisabler _inventoryEnablerDisabler;
-    private Volume _volume;
-    private PickableItemsInventory _pickableItemsInventory;
-    private WearableItemsInventory _wearableItemsInventory;
-
     public override void InstallBindings()
     {
         if (_propsHandler == null)
@@ -29,36 +20,58 @@ public class GameControllerInstaller : MonoInstaller
             Debug.LogError("Props Hadnler Field ist's serialized");
         }
 
-        GetComponents();
         SetItemActivatorsOnSlots();
+        BindWearableSlots();
+        BindPickableItemsInventory();
 
-        Container.BindInstance(_propsHandler).WithId("PropsHandler").AsCached();
-        Container.BindInstance(_itemActionCreator).AsSingle();
-        Container.BindInstance(_gameLoader).AsSingle();
-        Container.BindInstance(_pauseMenuEnablerDisabler).AsSingle();
-        Container.BindInstance(_ammoUIEnablerDisabler).AsSingle();
-        Container.BindInstance(_inventoryEnablerDisabler).AsSingle();
-        Container.BindInstance(_volume).AsSingle();
-        Container.BindInstance(_pickableItemsInventory).AsSingle();
-        Container.BindInstance(_wearableItemsInventory).AsSingle();
-        Container.BindInstance(_keyCardSlot).AsSingle();
-        Container.BindInstance(_maskSlot).AsSingle();
-        Container.BindInstance(_utilitySlot).AsSingle();
-        Container.BindInstance(_weaponSlot).AsSingle();
-        Container.BindInstance(_injectorSlot).AsSingle();
-        Container.BindInstance(this).AsSingle();
+        Container.BindInstance(GetComponent<WearableItemsInventory>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<PauseMenuEnablerDisabler>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<AmmoUIEnablerDisabler>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<GameLoader>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<ItemActionCreator>()).
+            AsSingle();
+
+        Container.BindInstance(_propsHandler)
+            .WithId("PropsHandler")
+            .AsCached();
+
+        Container.BindInstance(GetComponent<Volume>())
+            .AsSingle();
     }
 
-    private void GetComponents()
+    private void BindWearableSlots()
     {
-        _itemActionCreator = GetComponent<ItemActionCreator>();
-        _gameLoader = GetComponent<GameLoader>();
-        _pauseMenuEnablerDisabler = GetComponent<PauseMenuEnablerDisabler>();
-        _ammoUIEnablerDisabler = GetComponent<AmmoUIEnablerDisabler>();
-        _inventoryEnablerDisabler = GetComponent<InventoryEnablerDisabler>();
-        _volume = GetComponent<Volume>();
-        _pickableItemsInventory = GetComponent<PickableItemsInventory>();
-        _wearableItemsInventory = GetComponent<WearableItemsInventory>();
+        Container.BindInstance(_keyCardSlot)
+            .AsSingle();
+
+        Container.BindInstance(_maskSlot)
+            .AsSingle();
+
+        Container.BindInstance(_utilitySlot)
+            .AsSingle();
+
+        Container.BindInstance(_weaponSlot)
+            .AsSingle();
+
+        Container.BindInstance(_injectorSlot)
+            .AsSingle();
+    }
+
+    private void BindPickableItemsInventory()
+    {
+        Container.BindInstance(GetComponent<PickableItemsInventory>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<PickableInventoryEnablerDisabler>())
+            .AsSingle();
     }
 
     private void SetItemActivatorsOnSlots()

@@ -6,17 +6,27 @@ public class WearableItemActivator : MonoBehaviour
     [SerializeField] private KeyCode _key;
     [SerializeField] private Transform _itemParent;
 
-    [Inject] protected readonly InventoryEnablerDisabler _inventoryEnablerDisabler;
-    [Inject] private readonly ItemActionCreator _itemActionCreator;
-
+    private ItemActionCreator _itemActionCreator;
+    private bool _activatedFromInventory;
+    protected PickableInventoryEnablerDisabler _inventoryEnablerDisabler;
     protected WearableItemHandler _wearableItemHandler;
+    protected WearableSlot _itemSlot;
 
-    public virtual WearableSlot Slot { get; }
+    public WearableSlot ItemSlot => _itemSlot;
+
+    [Inject]
+    private void Inject(PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler, ItemActionCreator itemActionCreator)
+    {
+        _inventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+        _itemActionCreator = itemActionCreator;
+    }
 
     protected void Start()
     {
-        Slot.ItemChanged += SpawnGameObjectForPlayer;
-        Slot.ItemRemoved += DeactivateWeapon;
+        _itemSlot.ItemChanged += SpawnGameObjectForPlayer;
+        _itemSlot.ItemRemoved += DeactivateWeapon;
+        _itemSlot.Used += ActivateItemFromInventory;
+        _inventoryEnablerDisabler.EnabledDisabled += ActivateItemIfActivated;
     }
 
     private void Update()
@@ -30,7 +40,7 @@ public class WearableItemActivator : MonoBehaviour
 
     public virtual void SetItemActiveState(bool itemActiveState)
     {
-        Slot.Toggled?.Invoke(itemActiveState);
+        _itemSlot.Toggled?.Invoke(itemActiveState);
         SetWearableItemActiveState(itemActiveState);
     }
 
@@ -49,9 +59,11 @@ public class WearableItemActivator : MonoBehaviour
         _wearableItemHandler = wearableItemHandler;
         WearableIte_SO item_SO = (WearableIte_SO)_wearableItemHandler.Item_SO;
 
-        _wearableItemHandler.GameObjectForPlayer.transform.SetParent(_itemParent);
-        _wearableItemHandler.GameObjectForPlayer.transform.localPosition = item_SO.playerGameObjectSpawnOffset;
-        _wearableItemHandler.GameObjectForPlayer.transform.localRotation = Quaternion.identity;
+        Transform itemHandlerTransform = _wearableItemHandler.GameObjectForPlayer.transform;
+
+        itemHandlerTransform.SetParent(_itemParent);
+        itemHandlerTransform.localPosition = item_SO.playerGameObjectSpawnOffset;
+        itemHandlerTransform.localRotation = Quaternion.identity;
 
         _wearableItemHandler.GameObjectForPlayer.SetActive(false);
     }
@@ -62,9 +74,25 @@ public class WearableItemActivator : MonoBehaviour
         _wearableItemHandler = null;
     }
 
+    private void ActivateItemFromInventory()
+    {
+        _activatedFromInventory = true;
+        _wearableItemHandler.GameObjectForPlayer.SetActive(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+    }
+
+    private void ActivateItemIfActivated()
+    {
+        if (!_activatedFromInventory) { return; }
+
+        SetItemActiveState(!!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        _activatedFromInventory = false;
+    }
+
     protected void OnDestroy()
     {
-        Slot.ItemChanged -= SpawnGameObjectForPlayer;
-        Slot.ItemRemoved -= DeactivateWeapon;
+        _itemSlot.ItemChanged -= SpawnGameObjectForPlayer;
+        _itemSlot.ItemRemoved -= DeactivateWeapon;
+        _itemSlot.Used -= ActivateItemFromInventory;
+        _inventoryEnablerDisabler.EnabledDisabled -= ActivateItemIfActivated;
     }
 }

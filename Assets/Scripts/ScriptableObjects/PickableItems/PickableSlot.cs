@@ -5,38 +5,22 @@ using Zenject;
 
 public class PickableSlot : InventorySlot, IPointerClickHandler
 {
-    private const int CLICK_COUNT_TO_USE = 2;
-
     [SerializeField] private TextMeshProUGUI _itemDescription;
 
-    [Inject] private readonly PickableItemsInteraction _pickableItemsInteraction;
     private GameObject _gameObject;
 
     public int SlotIndex { get; set; }
 
+    [Inject]
+    private void Construct(PickableItemsUse pickableItemsUse, PickabeItemsDrop pickableItemsDrop)
+    {
+        _inventoryItemsUse = pickableItemsUse;
+        _inventoryItemsDrop = pickableItemsDrop;
+    }
+
     private void Awake()
     {
         _gameObject = gameObject;
-    }
-
-    public new void OnPointerClick(PointerEventData eventData)
-    {
-        base.OnPointerClick(eventData);
-
-        if (eventData.clickCount == CLICK_COUNT_TO_USE)
-        {
-            OnDoubleLeftClick();
-        }
-    }
-
-    public void OnDoubleLeftClick()
-    {
-        _pickableItemsInteraction.UseItem(this);
-    }
-
-    public override void Clicked()
-    {
-        _pickableItemsInteraction.DropItem(this);
     }
 
     public override void Setted()

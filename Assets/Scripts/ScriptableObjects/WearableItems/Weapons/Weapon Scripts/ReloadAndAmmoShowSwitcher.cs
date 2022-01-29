@@ -7,24 +7,33 @@ public class ReloadAndAmmoShowSwitcher : WeaponScriptBase
 
     [SerializeField] private float _pressTimeToActivate;
 
-    [Inject] private readonly WeaponReload _weaponReload;
-    [Inject] private readonly AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
-    [Inject] private readonly WeaponReloadCoroutineUser _weaponReloadCoroutineUser;
+    private WeaponReload _weaponReload;
+    private AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
 
     private bool _isSwitched;
     private float _pressTime;
     private sbyte _deltaTimeMultipliyer = 1;
 
+
+    [Inject]
+    private void Inject(WeaponReload weaponReload, AmmoUIEnablerDisabler ammoUIEnablerDisabler)
+    {
+        _weaponReload = weaponReload;
+        _ammoUIEnablerDisabler = ammoUIEnablerDisabler;
+    }
+
     private void Update()
     {
-        if (_inventoryEnablerDisabler.IsActivated) { return; }
-
         if (Input.GetKeyDown(RELOAD_KEY))
         {
+            if (CanNotWeaponDoAction()) { return; }
+
             _isSwitched = true;
         }
 
         if (!Input.GetKeyUp(RELOAD_KEY)) { return; }
+
+        if (CanNotWeaponDoAction()) { return; }
 
         _pressTime = 0;
         _deltaTimeMultipliyer = 1;
@@ -40,16 +49,16 @@ public class ReloadAndAmmoShowSwitcher : WeaponScriptBase
 
     private void LateUpdate()
     {
-        if (_inventoryEnablerDisabler.IsActivated) { return; }
-
         if (Input.GetKey(RELOAD_KEY))
         {
+            if (CanNotWeaponDoAction()) { return; }
+
             _pressTime += Time.deltaTime * _deltaTimeMultipliyer;
         }
 
-        if (_pressTime < _pressTimeToActivate) { return; }
+        if (_pressTime < _pressTimeToActivate || _weaponReload.IsCoroutineGoing) { return; }
 
-        if (_weaponReloadCoroutineUser.IsCoroutineGoing) { return; }
+        if (CanNotWeaponDoAction()) { return; }
 
         _deltaTimeMultipliyer = 0;
         _pressTime = 0;

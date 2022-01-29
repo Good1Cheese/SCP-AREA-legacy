@@ -2,7 +2,13 @@
 
 public class StaminaBarUIController : StatisticsBarUIController
 {
-    [Inject] private readonly PlayerStamina _playerStamina;
+    private PlayerStamina _playerStamina;
+
+    [Inject]
+    private void Construct(PlayerStamina playerStamina)
+    {
+        _playerStamina = playerStamina;
+    }
 
     protected override float GetValue()
     {

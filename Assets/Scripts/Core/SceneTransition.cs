@@ -14,10 +14,7 @@ public class SceneTransition : MonoBehaviour
         ScpScene = 3
     }
 
-    public void LoadScene(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
+    public void LoadScene(int index) => SceneManager.LoadScene(index);
 
     public void LoadSceneAsynchronously(int index)
     {

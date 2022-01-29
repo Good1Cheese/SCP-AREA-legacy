@@ -5,10 +5,16 @@ public class PlayerDeathCloneActivator : MonoBehaviour
 {
     [SerializeField] private GameObject _gameObject;
 
-    [Inject] private readonly PlayerHealth _playerHealth;
-    [Inject(Id = "Player")] private readonly Transform _playerTransform;
-
+    private PlayerHealth _playerHealth;
+    private Transform _playerTransform;
     private DeathAnimationPlayer _playerDeathAnimation;
+
+    [Inject]
+    private void Construct(PlayerHealth playerHealth, [Inject(Id = "Player")] Transform playerTransform)
+    {
+        _playerHealth = playerHealth;
+        _playerTransform = playerTransform;
+    }
 
     private void Start()
     {

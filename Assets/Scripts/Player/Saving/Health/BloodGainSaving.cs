@@ -16,7 +16,7 @@ public class BloodGainSaving : CoroutineUserSaving
         gainPerSecond = _bloodGain.GainPerSecond;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         if (!isActionGoing) { return; }
 

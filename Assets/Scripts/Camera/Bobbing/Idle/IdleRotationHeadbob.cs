@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 
-public class IdleRotationHeadbob : IdleCameraHeadbob
+public class IdleRotationHeadBob : IdleCameraHeadBob
 {
     private Quaternion _newRotation = Quaternion.identity;
 
-    private void Update()
+    protected override void ActivateHeadbob()
     {
-        _curveTime += Time.deltaTime;
+        _newRotation = Quaternion.Euler(GetCurveValue(xAxis),
+                                        GetCurveValue(yAxis),
+                                        GetCurveValue(zAxis));
 
-        _newRotation = Quaternion.Euler(GetCurveValue(_xAxis),
-                                        GetCurveValue(_yAxis),
-                                        GetCurveValue(_zAxis));
         transform.localRotation = _newRotation;
     }
 }

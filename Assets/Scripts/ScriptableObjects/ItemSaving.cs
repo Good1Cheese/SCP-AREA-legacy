@@ -11,12 +11,12 @@
         base.Save();
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         ItemHandler.SetIsInventotyState(isItemInInventory);
 
         if (!IsSaveable) { return; }
 
-        base.LoadData();
+        base.Load();
     }
 }

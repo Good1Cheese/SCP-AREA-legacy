@@ -2,12 +2,16 @@
 
 public class KeyCardHandler : WearableItemHandler
 {
-    [Inject] private readonly KeyCardSlot _keyCardSlot;
-
     public KeyCard_SO KeyCard_SO => (KeyCard_SO)_wearableIte_SO;
+
+    [Inject]
+    private void Construct(KeyCardSlot keyCardSlot)
+    {
+        _wearableSlot = keyCardSlot;
+    }
 
     public override void Equip()
     {
-        _keyCardSlot.SetItem(this);
+        _wearableSlot.SetItem(this);
     }
 }

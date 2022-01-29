@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
 using Zenject;
 
-
 public class PauseMenuEnablerDisabler : UIEnablerDisabler
 {
     private const KeyCode PAUSE_KEY = KeyCode.Escape;
+    private PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
 
-    [Inject] private readonly InventoryEnablerDisabler _wearableInventoryActivator;
+    [Inject]
+    private void Construct(PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler)
+    {
+        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+    }
 
     private void Update()
     {
         if (!Input.GetKeyDown(PAUSE_KEY)) { return; }
 
-        if (_wearableInventoryActivator.IsActivated)
+        if (_pickableInventoryEnablerDisabler.IsActivated)
         {
-            _wearableInventoryActivator.EnableDisableUI();
+            _pickableInventoryEnablerDisabler.EnableDisableUI();
         }
 
         EnableDisableUI();
@@ -24,6 +28,6 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
     {
         IsActivated = !IsActivated;
         EnabledDisabled?.Invoke();
-        _wearableInventoryActivator.EnabledDisabled?.Invoke();
+        _pickableInventoryEnablerDisabler.EnabledDisabled?.Invoke();
     }
 }

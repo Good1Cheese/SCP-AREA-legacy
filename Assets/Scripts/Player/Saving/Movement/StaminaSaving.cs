@@ -18,7 +18,7 @@ public class StaminaSaving : CoroutineUserSaving
         isCoroutineGoing = _playerStamina.IsCoroutineGoing;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _playerStamina.CurveTime = curveTime;
         _playerStamina.MaxCurveTime = maxCurveTime;

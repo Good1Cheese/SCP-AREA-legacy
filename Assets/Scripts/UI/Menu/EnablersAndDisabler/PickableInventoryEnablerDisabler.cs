@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class InventoryEnablerDisabler : UIEnablerDisabler
+public class PickableInventoryEnablerDisabler : UIEnablerDisabler
 {
     private const KeyCode INVENTORY_KEY = KeyCode.Tab;
 
     [SerializeField] private PickableItemsInventoryUIUpdater _pickableItemssInventoryUIUpdater;
 
-    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
+    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+
+    [Inject]
+    private void Construct(PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+    {
+        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+    }
 
     private void Update()
     {
@@ -18,7 +24,7 @@ public class InventoryEnablerDisabler : UIEnablerDisabler
 
     public override void EnableDisableUI()
     {
-        if (_pauseMenu.IsActivated) { return; }
+        if (_pauseMenuEnablerDisabler.IsActivated) { return; }
 
         IsActivated = !IsActivated;
         EnabledDisabled?.Invoke();

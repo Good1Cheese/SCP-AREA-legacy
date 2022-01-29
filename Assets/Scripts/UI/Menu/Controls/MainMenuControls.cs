@@ -3,8 +3,15 @@ using Zenject;
 
 public class MainMenuControls : MonoBehaviour
 {
-    [Inject] private readonly SceneTransition _sceneTransition;
-    [Inject] private readonly GameLoading _gameLoading;
+    private SceneTransition _sceneTransition;
+    private GameLoading _gameLoading;
+
+    [Inject]
+    private void Construct(SceneTransition sceneTransition, GameLoading gameLoading)
+    {
+        _sceneTransition = sceneTransition;
+        _gameLoading = gameLoading;
+    }
 
     public void Play()
     {

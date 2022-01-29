@@ -6,12 +6,17 @@ public class AmmoUICountUpdater : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _textMeshProUGUI;
 
-    [Inject] private readonly WeaponSlot _weaponSlot;
-
+    private WeaponSlot _weaponSlot;
     private WeaponHandler _weaponHandler;
     private bool _wasAmmoUpdated;
 
     public TextMeshProUGUI TextMeshProUGUI => _textMeshProUGUI;
+
+    [Inject]
+    private void Construct(WeaponSlot weaponSlot)
+    {
+        _weaponSlot = weaponSlot;
+    }
 
     private void Awake()
     {

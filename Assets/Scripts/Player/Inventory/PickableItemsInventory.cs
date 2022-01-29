@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(InventoryEnablerDisabler))]
+[RequireComponent(typeof(PickableInventoryEnablerDisabler))]
 public class PickableItemsInventory : MonoBehaviour
 {
     [SerializeField, Range(0, 8)] private int _maxSlotsAmount;
@@ -27,7 +26,6 @@ public class PickableItemsInventory : MonoBehaviour
 
         Changed?.Invoke();
     }
-
 
     public void Remove(int index)
     {
@@ -66,6 +64,6 @@ public class PickableItemsInventory : MonoBehaviour
 
     public ItemHandler GetIem(Predicate<ItemHandler> condition)
     {
-        return Inventory.TakeWhile(item => item != null).FirstOrDefault(item => condition.Invoke(item));
+        return Array.Find(Inventory, item => condition.Invoke(item));
     }
 }

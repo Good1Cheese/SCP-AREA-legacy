@@ -2,10 +2,14 @@
 
 public class MaskHandler : WearableItemHandler
 {
-    [Inject] private readonly MaskSlot _maskSlot;
+    [Inject]
+    private void Construct(MaskSlot maskSlot)
+    {
+        _wearableSlot = maskSlot;
+    }
 
     public override void Equip()
     {
-        _maskSlot.SetItem(this);
+        _wearableSlot.SetItem(this);
     }
 }

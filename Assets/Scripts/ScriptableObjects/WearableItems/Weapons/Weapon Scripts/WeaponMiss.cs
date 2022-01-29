@@ -3,11 +3,17 @@ using Zenject;
 
 public class WeaponMiss : MonoBehaviour
 {
-    [Inject] private readonly ItemActionCreator _itemActionCreator;
-    [Inject] private readonly WeaponSlot _weaponSlot;
-
+    private WeaponSlot _weaponSlot;
+    private ItemActionCreator _itemActionCreator;
     private WaitForSeconds _timeoutAfterShot;
     private WeaponHandler _weaponHandler;
+
+    [Inject]
+    private void Inject(WeaponSlot weaponSlot, ItemActionCreator itemActionCreator)
+    {
+        _weaponSlot = weaponSlot;
+        _itemActionCreator = itemActionCreator;
+    }
 
     private void Start()
     {

@@ -5,9 +5,15 @@ public abstract class InjuryEffect : MonoBehaviour
 {
     [SerializeField] private AnimationCurve _intensityCurve;
 
-    [Inject] private readonly InjuryEffectsController _injuryEffectsController;
+    private InjuryEffectsController _injuryEffectsController;
 
     protected abstract float EffectValue { set; }
+
+    [Inject]
+    private void Construct(InjuryEffectsController injuryEffectsController)
+    {
+        _injuryEffectsController = injuryEffectsController;
+    }
 
     private void Start()
     {

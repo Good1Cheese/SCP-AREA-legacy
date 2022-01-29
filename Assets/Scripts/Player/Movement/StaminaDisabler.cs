@@ -5,14 +5,19 @@ using Zenject;
 
 public class StaminaDisabler : MonoBehaviour
 {
-    [Inject] private readonly PlayerStamina _playerStamina;
-
+    private PlayerStamina _playerStamina;
     private int _startBurnSpeedMultipliyer;
     private IEnumerator _disableCoroutine;
 
     public Action<float> Disabled { get; set; }
 
-    private void Start()
+    [Inject]
+    private void Construct(PlayerStamina playerStamina)
+    {
+        _playerStamina = playerStamina;
+    }
+
+    private void Awake()
     {
         _disableCoroutine = DisableCoroutine(0);
         _startBurnSpeedMultipliyer = _playerStamina.BurnSpeedMultipliyer;

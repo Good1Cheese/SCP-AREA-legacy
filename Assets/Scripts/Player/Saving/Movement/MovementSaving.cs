@@ -16,7 +16,7 @@ public class MovementSaving : DataSaving
         isSlowWalkUsing = _slowWalkController.IsMoving;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _movementController.Speed = speed;
         _movementController.MoveTime = moveTime;

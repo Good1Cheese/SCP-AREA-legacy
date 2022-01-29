@@ -2,10 +2,22 @@
 
 public class RunController : MoveController
 {
-    [Inject] private readonly PlayerStamina _playerStamina;
-    [Inject] protected readonly SlowWalkController _slowWalkController;
-    [Inject] protected readonly SlowWalkRunController _slowWalkRunController;
-    [Inject] private readonly PlayerMovement _playerMovement;
+    private PlayerStamina _playerStamina;
+    protected SlowWalkController _slowWalkController;
+    protected SlowWalkRunController _slowWalkRunController;
+    private PlayerMovement _playerMovement;
+
+    [Inject]
+    private void Construct(PlayerStamina playerStamina,
+                           SlowWalkController slowWalkController,
+                           SlowWalkRunController slowWalkRunController,
+                           PlayerMovement playerMovement)
+    {
+        _playerStamina = playerStamina;
+        _slowWalkController = slowWalkController;
+        _slowWalkRunController = slowWalkRunController;
+        _playerMovement = playerMovement;
+    }
 
     public override float GetMove()
     {

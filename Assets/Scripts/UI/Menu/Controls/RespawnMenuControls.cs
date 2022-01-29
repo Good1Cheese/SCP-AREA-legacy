@@ -3,13 +3,12 @@ using Zenject;
 
 public class RespawnMenuControls : MonoBehaviour
 {
-    [Inject] private readonly SceneTransition _sceneTransition;
+    private SceneTransition _sceneTransition;
 
-    private void Start()
+    [Inject]
+    private void Construct(SceneTransition sceneTransition)
     {
-        Time.timeScale = 1;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        _sceneTransition = sceneTransition;
     }
 
     public void ReturnToMainMenu()

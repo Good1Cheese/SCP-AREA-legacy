@@ -2,7 +2,13 @@
 
 public class SlowWalkRunController : RunController
 {
-    [Inject] readonly private RunController _runController;
+    private RunController _runController;
+
+    [Inject]
+    private void Construct(RunController runController)
+    {
+        _runController = runController;
+    }
 
     public override float GetMove()
     {

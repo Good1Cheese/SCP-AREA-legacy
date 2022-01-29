@@ -7,11 +7,18 @@ public class StaminaDrain : CoroutineUser
     [SerializeField] private float _drainPower;
     [SerializeField] private float _recoveryTime;
 
-    [Inject] readonly private BloodGain _bloodGain;
-    [Inject] readonly private PlayerStamina _playerStamina;
+    private BloodGain _bloodGain;
+    private PlayerStamina _playerStamina;
 
     public float DrainPerSecond { get; set; }
     public float PassedTime { get; set; }
+
+    [Inject]
+    private void Construct(PlayerStamina playerStamina, BloodGain bloodGain)
+    {
+        _bloodGain = bloodGain;
+        _playerStamina = playerStamina;
+    }
 
     private new void Start()
     {

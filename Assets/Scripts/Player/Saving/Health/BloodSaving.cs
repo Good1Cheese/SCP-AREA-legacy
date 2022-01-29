@@ -15,7 +15,7 @@ public class BloodSaving : DataSaving
         isBleedingAcitonGoing = _playerBlood.IsCoroutineGoing;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _playerBlood.CurveTime = curveTime;
 

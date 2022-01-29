@@ -3,17 +3,23 @@ using Zenject;
 
 public class PickableItemsInventoryUIUpdater : MonoBehaviour
 {
-    [Inject] private readonly PickableItemsInventory _playerInventory;
-    [Inject] private readonly PlayerHealth _playerHealth;
-
+    private PickableItemsInventory _pickableItemsInventory;
+    private PlayerHealth _playerHealth;
     private GameObject _gameObject;
 
     public PickableSlot[] InventoryCells { get; set; }
 
+    [Inject]
+    private void Construct(PlayerHealth playerHealth, PickableItemsInventory pickableItemsInventory)
+    {
+        _playerHealth = playerHealth;
+        _pickableItemsInventory = pickableItemsInventory;
+    }
+
     private void Awake()
     {
         _gameObject = gameObject;
-        _playerInventory.Changed += Renew;
+        _pickableItemsInventory.Changed += Renew;
         _playerHealth.Died += DisableUI;
     }
 
@@ -32,12 +38,13 @@ public class PickableItemsInventoryUIUpdater : MonoBehaviour
 
     private void Renew()
     {
-        for (int i = 0; i < _playerInventory.Inventory.Length; i++)
+        for (int i = 0; i < _pickableItemsInventory.Inventory.Length; i++)
         {
-            ItemHandler item = _playerInventory.Inventory[i];
+            ItemHandler item = _pickableItemsInventory.Inventory[i];
 
             if (item != null)
             {
+                print(i);
                 InventoryCells[i].SetItem(item);
                 continue;
             }
@@ -64,7 +71,7 @@ public class PickableItemsInventoryUIUpdater : MonoBehaviour
 
     private void OnDestroy()
     {
-        _playerInventory.Changed -= Renew;
+        _pickableItemsInventory.Changed -= Renew;
         _playerHealth.Died -= DisableUI;
     }
 }

@@ -1,11 +1,18 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
-public abstract class DoorInteractable : IInteractable
+public abstract class DoorInteractable : Interactable
 {
+    private KeyCardSlot _keyCardSlot;
+
     public abstract int KeyCardType { get; }
     public abstract int KeyCardLevelToOpen { get; }
 
-    [Inject] private readonly KeyCardSlot _keyCardSlot;
+    [Inject]
+    private void Inject(KeyCardSlot keyCardSlot)
+    {
+        _keyCardSlot = keyCardSlot;
+    }
 
     public override void Interact()
     {

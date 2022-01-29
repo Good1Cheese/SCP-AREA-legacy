@@ -1,52 +1,56 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 public class PauseMenuControls : MonoBehaviour
 {
-    [Inject] private readonly SceneTransition sceneTransition;
-    [Inject] private readonly GameSaving _gameSaver;
-    [Inject] private readonly GameLoading _gameLoader;
-    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
+    private SceneTransition _sceneTransition;
+    private GameSaving _gameSaving;
+    private GameLoading _gameLoading;
+    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+
     private GameObject _gameObject;
+
+    public Action Exited { get; set; }
+
+    [Inject]
+    private void Construct(SceneTransition sceneTransition,
+                           GameSaving gameSaving,
+                           GameLoading gameLoading,
+                           PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+    {
+        _sceneTransition = sceneTransition;
+        _gameSaving = gameSaving;
+        _gameLoading = gameLoading;
+        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+    }
 
     private void Start()
     {
         _gameObject = gameObject;
         _gameObject.SetActive(false);
-        _pauseMenu.EnabledDisabled += ActivateOrDeacrivateUI;
     }
 
-    public void ActivateOrDeacrivateUI()
+    public void PauseUnpauseGame()
     {
-        Time.timeScale = (_gameObject.activeSelf) ? 1 : 0;
-        _gameObject.SetActive(!_gameObject.activeSelf);
-    }
-
-    public void UnpauseGame()
-    {
-        _pauseMenu.EnableDisableUI();
+        _pauseMenuEnablerDisabler.EnableDisableUI();
     }
 
     public void SaveGame()
     {
-        _pauseMenu.EnableDisableUI();
-        _gameSaver.Save();
+        PauseUnpauseGame();
+        _gameSaving.Save();
     }
 
     public void LoadGame()
     {
-        _pauseMenu.EnableDisableUI();
-        _gameLoader.Load();
+        PauseUnpauseGame();
+        _gameLoading.Load();
     }
 
     public void Exit()
     {
-        sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
-        Time.timeScale = 1;
-    }
-
-    private void OnDestroy()
-    {
-        _pauseMenu.EnabledDisabled -= ActivateOrDeacrivateUI;
+        Exited?.Invoke();
+        _sceneTransition.LoadSceneAsynchronously((int)SceneTransition.Scenes.StartScene);
     }
 }

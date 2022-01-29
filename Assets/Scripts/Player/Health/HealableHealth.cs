@@ -8,9 +8,14 @@ public class HealableHealth : CoroutineWithDelayUser
     [SerializeField] private int _healthBottomBorder;
     [SerializeField] private int _healAmount;
 
-    [Inject] private readonly PlayerHealth _playerHealth;
-
+    private PlayerHealth _playerHealth;
     private WaitForSeconds _timeoutDuringCoroutine;
+
+    [Inject]
+    private void Construct(PlayerHealth playerHealth)
+    {
+        _playerHealth = playerHealth;
+    }
 
     private void Awake()
     {

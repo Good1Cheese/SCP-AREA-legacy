@@ -11,7 +11,7 @@ public abstract class CoroutineInsteadUpdateUser : CoroutineUser
     public float CurveTargetTime { get; set; }
     public abstract float CurveTime { get; set; }
 
-    public virtual void UpdateCoroutine()
+    public virtual void InvokeCoroutine()
     {
         GetConditionAndDeltaTimeMuitipliyer();
         StopCoroutine();

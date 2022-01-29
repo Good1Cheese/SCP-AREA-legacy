@@ -5,4 +5,3 @@ public class Silencer_SO : WearableIte_SO
 {
 
 }
-

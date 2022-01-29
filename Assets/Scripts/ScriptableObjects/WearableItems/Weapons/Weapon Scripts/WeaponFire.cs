@@ -7,21 +7,34 @@ public class WeaponFire : WeaponScriptBase
 {
     private const KeyCode FIRE_KEY = KeyCode.Mouse0;
 
-    [Inject] private readonly RayForFireProvider _rayForFireProvider;
-    [Inject] private readonly WeaponAim _weaponAim;
-    [Inject] private readonly WeaponShot _weaponShot;
-    [Inject] private readonly WeaponMiss _weaponMiss;
-    [Inject] private readonly ItemActionCreator _itemActionCreator;
+    private RayForFireProvider _rayForFireProvider;
+    private WeaponAim _weaponAim;
+    private WeaponShot _weaponShot;
+    private WeaponMiss _weaponMiss;
+    private ItemActionCreator _itemActionCreator;
 
     public Action Fired { get; set; }
+
+    [Inject]
+    private void Inject(RayForFireProvider rayForFireProvider,
+                        WeaponAim weaponAim,
+                        WeaponShot weaponShot,
+                        WeaponMiss weaponMiss,
+                        ItemActionCreator itemActionCreator)
+    {
+        _rayForFireProvider = rayForFireProvider;
+        _weaponAim = weaponAim;
+        _weaponShot = weaponShot;
+        _weaponMiss = weaponMiss;
+        _itemActionCreator = itemActionCreator;
+    }
 
     private void Update()
     {
         if (!Input.GetKeyDown(FIRE_KEY)) { return; }
 
         if (_itemActionCreator.IsGoing
-            || _inventoryEnablerDisabler.IsActivated
-            || _pauseMenuEnablerDisabler.IsActivated) { return; }
+            || CanNotWeaponDoAction()) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {

@@ -2,14 +2,13 @@
 using System;
 
 [Serializable]
-public class MovementHeadbobCurve : HeadbobCurve 
+public class MovementHeadBobCurve : HeadboBCurve 
 {
-    private Keyframe _firstkeyframe = new Keyframe();
+    private Keyframe _keyFrameForContinue = new Keyframe();
 
     public void SetFirstPointValue(in float value)
     {
-        _firstkeyframe.value = value;
-
-        curve.MoveKey(0, _firstkeyframe);
+        _keyFrameForContinue.value = value;
+        curve.MoveKey(0, _keyFrameForContinue);
     }
 }

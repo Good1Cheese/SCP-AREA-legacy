@@ -1,19 +1,10 @@
 ﻿using System;
 
 [Serializable]
-public class IdleHeadbobCurve : HeadbobCurve
+public class RandomizableIdleHeadBobCurve : HeadboBCurve
 {
     public float Min { get; set; }
     public float Max { get; set; }
-
-    public CameraHeadbob CameraHeadbob
-    {
-        set
-        {
-            value.CurveChanged += FindFirstAndLastPoints;
-            value.Randomized += Randomize;
-        }
-    }
 
     public void FindFirstAndLastPoints()
     {

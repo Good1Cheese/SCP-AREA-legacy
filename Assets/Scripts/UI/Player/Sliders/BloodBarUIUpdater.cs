@@ -2,7 +2,13 @@
 
 public class BloodBarUIUpdater : StatisticsBarUIController
 {
-    [Inject] private readonly PlayerBlood _playerBlood;
+    private PlayerBlood _playerBlood;
+
+    [Inject]
+    private void Construct(PlayerBlood playerBlood)
+    {
+        _playerBlood = playerBlood;
+    }
 
     protected override float GetValue()
     {

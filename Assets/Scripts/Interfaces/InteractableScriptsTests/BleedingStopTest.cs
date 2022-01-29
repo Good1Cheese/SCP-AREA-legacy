@@ -1,8 +1,15 @@
+using UnityEngine;
 using Zenject;
 
-public class BleedingStopTest : IInteractable
+public class BleedingStopTest : Interactable
 {
-    [Inject] private readonly PlayerBlood _playerBlood;
+    private PlayerBlood _playerBlood;
+
+    [Inject]
+    private void Construct(PlayerBlood playerBlood)
+    {
+        _playerBlood = playerBlood;
+    }
 
     public override void Interact()
     {

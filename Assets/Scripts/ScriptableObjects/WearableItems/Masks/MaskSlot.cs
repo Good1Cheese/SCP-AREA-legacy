@@ -1,3 +1,4 @@
 ﻿public class MaskSlot : WearableSlot
 {
+
 }

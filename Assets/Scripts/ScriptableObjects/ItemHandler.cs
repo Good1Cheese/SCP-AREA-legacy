@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(ItemSaveableStateChanger))]
-public abstract class ItemHandler : IInteractable
+public abstract class ItemHandler : Interactable, IClickable
 {
+    [Inject(Id = "Player")] private readonly Transform _playerTransform;
+
     private bool _isInInventory;
 
     public bool IsInInventory
@@ -12,13 +15,13 @@ public abstract class ItemHandler : IInteractable
         set
         {
             _isInInventory = value;
-            InventoryChanged?.Invoke(_isInInventory);
+            IsInventoryChanged?.Invoke(_isInInventory);
         }
     }
 
-    public abstract Item_SO Item_SO { get; }
-    public Action<bool> InventoryChanged { get; set; }
+    public Action<bool> IsInventoryChanged { get; set; }
     public GameObject GameObject { get; set; }
+    public abstract Item_SO Item_SO { get; }
 
     protected void Start()
     {
@@ -30,18 +33,32 @@ public abstract class ItemHandler : IInteractable
         _isInInventory = value;
     }
 
-    public override void Interact()
-    {
-        Equip();
-    }
-
     public void Equiped()
     {
         IsInInventory = true;
         GameObject.SetActive(false);
     }
 
-    public abstract void Equip();
+    public override void Interact()
+    {
+        Equip();
+    }
 
-    public virtual void Dropped() { }
+    public virtual void Clicked(int slotIndex)
+    {
+        Use();
+    }
+
+    public virtual void Use() 
+    {
+        print("Used in " + this);
+    }
+
+    public virtual void Dropped() 
+    {
+        GameObject.SetActive(true);
+        GameObject.transform.position = _playerTransform.position + _playerTransform.forward;
+    }
+
+    public abstract void Equip();
 }

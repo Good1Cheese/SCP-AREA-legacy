@@ -1,63 +1,53 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using Zenject;
 
-public abstract class MovementHeadbob : CameraHeadbob
+public abstract class MovementHeadBob : CameraHeadBob
 {
-    [SerializeField] protected MovementHeadbobCurve _leftStepXAxis;
-    [SerializeField] protected MovementHeadbobCurve _rightStepXAxis;
-    [SerializeField] protected MovementHeadbobCurve _yAxis;
+    [SerializeField] protected Transform _transform;
+    [SerializeField] protected MovementHeadBobCurve _stepXAxis;
+    [SerializeField] protected MovementHeadBobCurve _yAxis;
 
-    [Inject(Id = "Camera")] private readonly Transform _mainCamera;
-
-    IEnumerator _enumerator;
-    private float _targetTime;
-    private MovementHeadbobCurve _currentStepXAxis;
+    protected float _targetTime;
+    protected sbyte _curveValueMultipliyer;
     protected Vector3 _newPosition = Vector3.zero;
-
-    protected abstract MoveController MoveController { get; }
+    protected MoveController _moveController;
 
     private void Start()
     {
-        MoveController.OnLeftStep += ActivateLeftStepHeadbob;
-        MoveController.OnRightStep += ActivateRightStepHeadbob;
-        MoveController.UseStopped += StopActivating;
+        _moveController.OnLeftStep += ActivateLeftStepHeadbob;
+        _moveController.OnRightStep += ActivateRightStepHeadbob;
     }
 
     private void Awake()
     {
-        _transform = _mainCamera.transform;
-        _targetTime = _leftStepXAxis.curve.GetLastKeyFrame().time;
+        _targetTime = _stepXAxis.curve.GetLastKeyFrame().time;
     }
 
     private void ActivateLeftStepHeadbob()
     {
-        _currentStepXAxis = _leftStepXAxis;
+        _curveValueMultipliyer = 1;
         ActivateHeadbob();
     }
 
     private void ActivateRightStepHeadbob()
     {
-        _currentStepXAxis = _rightStepXAxis;
+        _curveValueMultipliyer = -1;
         ActivateHeadbob();
-    }
-
-    private void StopActivating()
-    {
-        StopCoroutine(_enumerator);
     }
 
     protected void ActivateHeadbob()
     {
-        float x = _transform.localPosition.x;
+        ContinueFromLastKey();
+        StartCoroutine(ActivateHeadbobCoroutine());
+    }
+
+    protected virtual void ContinueFromLastKey()
+    {
+        float x = _transform.localPosition.x * _curveValueMultipliyer;
         float y = _transform.localPosition.y;
 
-        _currentStepXAxis.SetFirstPointValue(in x);
+        _stepXAxis.SetFirstPointValue(in x);
         _yAxis.SetFirstPointValue(in y);
-
-        _enumerator = ActivateHeadbobCoroutine();
-        StartCoroutine(_enumerator);
     }
 
     private IEnumerator ActivateHeadbobCoroutine()
@@ -65,20 +55,23 @@ public abstract class MovementHeadbob : CameraHeadbob
         while (_curveTime < _targetTime)
         {
             _curveTime += Time.deltaTime;
-
-            _newPosition.x = GetCurveValue(_currentStepXAxis);
-            _newPosition.y = GetCurveValue(_yAxis);
-            _transform.localPosition = _newPosition;
+            OnCurveTimeChanged();
 
             yield return null;
         }
-
         _curveTime = 0;
+    }
+
+    protected virtual void OnCurveTimeChanged()
+    {
+        _newPosition.x = GetCurveValue(_stepXAxis) * _curveValueMultipliyer;
+        _newPosition.y = GetCurveValue(_yAxis);
+        _transform.localPosition = _newPosition;
     }
 
     private void OnDestroy()
     {
-        MoveController.OnLeftStep -= ActivateLeftStepHeadbob;
-        MoveController.OnRightStep -= ActivateRightStepHeadbob;
+        _moveController.OnLeftStep -= ActivateLeftStepHeadbob;
+        _moveController.OnRightStep -= ActivateRightStepHeadbob;
     }
 }

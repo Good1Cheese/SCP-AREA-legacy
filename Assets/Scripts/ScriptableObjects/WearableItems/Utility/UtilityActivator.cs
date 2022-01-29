@@ -2,7 +2,9 @@ using Zenject;
 
 public class UtilityActivator : WearableItemActivator
 {
-    [Inject] private readonly UtilitySlot _utilitySlot;
-
-    public override WearableSlot Slot => _utilitySlot;
+    [Inject]
+    private void Inject(UtilitySlot utilitySlot)
+    {
+        _itemSlot = utilitySlot;
+    }
 }

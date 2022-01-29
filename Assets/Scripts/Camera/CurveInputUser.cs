@@ -10,7 +10,7 @@ public abstract class CurveInputUser : MonoBehaviour
     protected float _topCurveTimeLimit;
     protected float _bottomCurveTimeLimit;
 
-    protected void CustomUpdate()
+    protected void CalculateCurveTime()
     {
         GetCurveTime();
         _curveTime = Mathf.Clamp(_curveTime, _bottomCurveTimeLimit, _topCurveTimeLimit);

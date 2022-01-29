@@ -3,10 +3,18 @@ using Zenject;
 
 public class CrosshairEnablerDisabler : MonoBehaviour
 {
-    [Inject] private readonly WeaponAim _weaponAim;
-    [Inject] private readonly WeaponSlot _weaponSlot;
-    [Inject] private readonly GameLoader _gameLoader;
+    private WeaponAim _weaponAim;
+    private WeaponSlot _weaponSlot;
+    private GameLoader _gameLoader;
     private GameObject _gameObject;
+
+    [Inject]
+    private void Construct(WeaponAim weaponAim, WeaponSlot weaponSlot, GameLoader gameLoader)
+    {
+        _weaponAim = weaponAim;
+        _weaponSlot = weaponSlot;
+        _gameLoader = gameLoader;
+    }
 
     private void Awake()
     {

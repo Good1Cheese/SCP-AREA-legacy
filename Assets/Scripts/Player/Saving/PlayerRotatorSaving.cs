@@ -14,7 +14,7 @@ public class PlayerRotatorSaving : DataSaving
         _xRotation = _playerRotator.XRotation;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _playerRotator.XRotation = _xRotation;
         _playerRotator.YRotation = _yRotation;

@@ -4,14 +4,18 @@ using Zenject;
 [RequireComponent(typeof(SlowWalkEffect))]
 public class SlowWalkController : MoveController
 {
-    [Inject] private readonly PlayerMovement _playerMovement;
+    private PlayerMovement _playerMovement;
 
     private void Start()
     {
         _playerMovement.NotMoving += MoveOnNotMoving;
     }
 
-    private void MoveOnNotMoving() => GetSpeed();
+    [Inject]
+    private void Construct(PlayerMovement playerMovement)
+    {
+        _playerMovement = playerMovement;
+    }
 
     public override float GetSpeed()
     {
@@ -29,6 +33,7 @@ public class SlowWalkController : MoveController
         NotUsing?.Invoke();
         return 0;
     }
+    private void MoveOnNotMoving() => GetSpeed();
 
     private void InvokeStartOrEndEvents()
     {

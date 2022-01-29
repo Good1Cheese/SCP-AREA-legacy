@@ -5,18 +5,8 @@ public class HealthBarUpdater : CoroutineInsteadUpdateUser
 {
     [SerializeField] private AnimationCurve _curve;
 
-    [Inject] private readonly PlayerHealth _playerHealth;
-
+    private PlayerHealth _playerHealth;
     private float _health;
-
-    public HealthBarUIController HealthBarUIController { get; set; }
-
-    private void Awake()
-    {
-        _curveTime = _curve.GetLastKeyFrame().time;
-    }
-
-    private float CurrentHealth => _curve.Evaluate(_curveTime);
 
     public override float CurveTime
     {
@@ -27,11 +17,24 @@ public class HealthBarUpdater : CoroutineInsteadUpdateUser
             HealthBarUIController.Slider.value = CurrentHealth;
         }
     }
+    public HealthBarUIController HealthBarUIController { get; set; }
+    private float CurrentHealth => _curve.Evaluate(_curveTime);
 
-    public override void UpdateCoroutine()
+    [Inject]
+    private void Construct(PlayerHealth playerHealth)
+    {
+        _playerHealth = playerHealth;
+    }
+
+    private void Awake()
+    {
+        _curveTime = _curve.GetLastKeyFrame().time;
+    }
+
+    public override void InvokeCoroutine()
     {
         _health = _playerHealth.Amount;
-        base.UpdateCoroutine();
+        base.InvokeCoroutine();
     }
 
     protected override void GetConditionAndDeltaTimeMuitipliyer()

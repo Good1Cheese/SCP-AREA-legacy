@@ -5,10 +5,16 @@ public abstract class MoveSound : SoundOnAction
 {
     [SerializeField] private AudioClip _clip;
 
-    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
-    [Inject] readonly private PlayerHealth _playerHealth;
-
+    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    private PlayerHealth _playerHealth;
     protected MoveController _moveController;
+
+    [Inject]
+    private void Construct(PauseMenuEnablerDisabler pauseMenuEnablerDisabler, PlayerHealth playerHealth)
+    {
+        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _playerHealth = playerHealth;
+    }
 
     private void Start()
     {
@@ -37,14 +43,14 @@ public abstract class MoveSound : SoundOnAction
     {
         _moveController.Stepped += PlaySound;
         _moveController.UseStopped += StopSound;
-        _pauseMenu.EnabledDisabled += StopSound;
+        _pauseMenuEnablerDisabler.EnabledDisabled += StopSound;
     }
 
     protected override void UnscribeToAction()
     {
         _moveController.Stepped -= PlaySound;
         _moveController.UseStopped -= StopSound;
-        _pauseMenu.EnabledDisabled -= StopSound;
+        _pauseMenuEnablerDisabler.EnabledDisabled -= StopSound;
     }
 
     private new void OnDestroy()

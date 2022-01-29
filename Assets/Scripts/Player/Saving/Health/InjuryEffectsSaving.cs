@@ -13,7 +13,7 @@ public class InjuryEffectsSaving : DataSaving
         curveCurrentTime = _injuryEffectsController.CurveTime;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         _injuryEffectsController.CurveTargetTime = curveTargetTime;
         _injuryEffectsController.CurveTime = curveCurrentTime;

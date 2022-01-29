@@ -3,45 +3,51 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class AimZoom : MonoBehaviour
+public class AimZoom : CoroutineInsteadUpdateUser
 {
     [SerializeField] private AnimationCurve _curve;
 
-    [Inject] private readonly Camera _mainCamera;
-    [Inject] private readonly WeaponAim _weaponAim;
+    private Camera _playerCamera;
+    private WeaponAim _weaponAim;
 
-    private IEnumerator _enumerator;
-    private float _curveTime;
     private float _maxCurveTime;
 
-    private void Start()
+    public override float CurveTime
     {
+        get => _curveTime;
+        set
+        {
+            _curveTime = value;
+            _playerCamera.fieldOfView = _curve.Evaluate(_curveTime);
+        }
+    }
+
+    [Inject]
+    private void Inject(Camera playerCamera, WeaponAim weaponAim)
+    {
+        _playerCamera = playerCamera;
+        _weaponAim = weaponAim;
+    }
+
+    private new void Start()
+    {
+        base.Start();
         _maxCurveTime = _curve.GetLastKeyFrame().time;
-        _enumerator = ZoomCoroutine(() => _curveTime > 0, -1);
 
         _weaponAim.Aimed += Zoom;
         _weaponAim.Unaimed += Unzoom;
     }
 
-    private void Zoom() => Zoom(() => _curveTime < _maxCurveTime, 1);
-    private void Unzoom() => Zoom(() => _curveTime > 0, -1);
-
-    private void Zoom(Func<bool> condition, sbyte deltaTimeMultipliyer)
+    private void Zoom()
     {
-        StopCoroutine(_enumerator);
-        _enumerator = ZoomCoroutine(condition, deltaTimeMultipliyer);
-        StartCoroutine(_enumerator);
+        CurveTargetTime = _maxCurveTime;
+        InvokeCoroutine();
     }
 
-    private IEnumerator ZoomCoroutine(Func<bool> condition, sbyte deltaTimeMultipliyer)
+    private void Unzoom()
     {
-        while (condition())
-        {
-            _curveTime += Time.deltaTime * deltaTimeMultipliyer;
-            _mainCamera.fieldOfView = _curve.Evaluate(_curveTime);
-
-            yield return null;
-        }
+        CurveTargetTime = 0;
+        InvokeCoroutine();
     }
 
     private void OnDestroy()

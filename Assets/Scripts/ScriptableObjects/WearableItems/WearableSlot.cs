@@ -3,14 +3,13 @@ using Zenject;
 
 public abstract class WearableSlot : InventorySlot
 {
-    [Inject] private readonly WearableItemsInteraction _wearableItemsInteraction;
-
     private static WearableItemActivator _currentItemActivator;
 
     public Action<WearableItemHandler> ItemChanged { get; set; }
     public Action<bool> Toggled { get; set; }
     public Action ItemRemoved { get; set; }
     public Action ActionStarted { get; set; }
+    public Action Used { get; set; }
     public WearableItemActivator Activator { get; set; }
 
     public static WearableItemActivator CurrentItemActivator
@@ -29,11 +28,18 @@ public abstract class WearableSlot : InventorySlot
         }
     }
 
+    [Inject]
+    private void Construct(WearableItemsUse wearableItemsUse, WearableItemsDrop wearableItemsDrop)
+    {
+        _inventoryItemsUse = wearableItemsUse;
+        _inventoryItemsDrop = wearableItemsDrop;
+    }
+
     public new void SetItem(ItemHandler item)
     {
         if (ItemHandler != null)
         {
-            _wearableItemsInteraction.DropItem(this);
+            _inventoryItemsDrop.CallFunction(this);
         }
 
         ItemChanged?.Invoke((WearableItemHandler)item);
@@ -50,13 +56,8 @@ public abstract class WearableSlot : InventorySlot
         ItemRemoved?.Invoke();
         _image.enabled = false;
 
-        if (_currentItemActivator == null || _currentItemActivator.Slot != this) { return; }
+        if (_currentItemActivator == null || _currentItemActivator.ItemSlot != this) { return; }
 
         _currentItemActivator = null;
-    }
-
-    public override void Clicked()
-    {
-        _wearableItemsInteraction.DropItem(this);
     }
 }

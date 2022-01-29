@@ -4,7 +4,12 @@ using UnityEngine.UI;
 
 public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
+    private const int CLICK_COUNT_TO_USE = 2;
+
     [SerializeField] protected Image _image;
+
+    protected ItemsInteraction _inventoryItemsUse;
+    protected ItemsInteraction _inventoryItemsDrop;
 
     public ItemHandler ItemHandler { get; set; }
 
@@ -35,11 +40,15 @@ public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             eventData.clickCount = 0;
-            Clicked();
+            _inventoryItemsDrop.CallFunction(this);
+        }
+
+        if (eventData.clickCount == CLICK_COUNT_TO_USE)
+        {
+            _inventoryItemsUse.CallFunction(this);
         }
     }
 
     public abstract void Setted();
     public abstract void Cleared();
-    public abstract void Clicked();
 }

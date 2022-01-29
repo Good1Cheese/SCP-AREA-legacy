@@ -9,9 +9,9 @@ public class PlayerStamina : CoroutineWithDelayUser
     [SerializeField] private int _burnSpeedMultipliyer;
     [SerializeField] private AnimationCurve _curve;
 
-    [Inject] private readonly RunController _runController;
-    [Inject] private readonly SlowWalkRunController _slowWalkRunController;
-    [Inject] private readonly PlayerMovement _playerMovement;
+    private RunController _runController;
+    private SlowWalkRunController _slowWalkRunController;
+    private PlayerMovement _playerMovement;
 
     private float _maxAmount;
     private float _curveTime;
@@ -27,6 +27,7 @@ public class PlayerStamina : CoroutineWithDelayUser
             Changed?.Invoke();
         }
     }
+
     public float MaxCurveTime
     {
         get => _maxCurveTime;
@@ -36,9 +37,20 @@ public class PlayerStamina : CoroutineWithDelayUser
             CurveTime = CurveTime;
         }
     }
+
     public int BurnSpeedMultipliyer { get => _burnSpeedMultipliyer; set => _burnSpeedMultipliyer = value; }
     public float Amount { get; set; }
     public Action Changed { get; set; }
+
+    [Inject]
+    private void Construct(RunController runController,
+                           SlowWalkRunController slowWalkRunController,
+                           PlayerMovement playerMovement)
+    {
+        _runController = runController;
+        _slowWalkRunController = slowWalkRunController;
+        _playerMovement = playerMovement;
+    }
 
     private void Awake()
     {

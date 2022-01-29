@@ -3,9 +3,14 @@ using Zenject;
 
 public class SilencerHandler : WearableItemHandler
 {
-    [Inject] private readonly WeaponSlot _weaponSlot;
-
+    private WeaponSlot _weaponSlot;
     private GameObject _silencerForWorldWeapon;
+
+    [Inject]
+    private void Inject(WeaponSlot weaponSlot)
+    {
+        _weaponSlot = weaponSlot;
+    }
 
     private new void Awake()
     {

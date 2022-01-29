@@ -8,16 +8,22 @@ public class BloodGain : CoroutineWithDelayUser
     [SerializeField] private float _bloodGainTime;
     [SerializeField] private KeyCode _key;
 
-    [Inject] readonly private PlayerBlood _playerBlood;
-
+    private PlayerBlood _playerBlood;
     private bool _isCoolDownDone = true;
 
     public Action Gained { get; set; }
     public Action GainStarted { get; set; }
     public float GainPerSecond { get; set; }
 
-    private void Awake()
+    [Inject]
+    private void Construct(PlayerBlood playerBlood)
     {
+        _playerBlood = playerBlood;
+    }
+
+    private new void Start()
+    {
+        base.Start();
         _playerBlood.BleedingStarted += StopCoroutine;
     }
 

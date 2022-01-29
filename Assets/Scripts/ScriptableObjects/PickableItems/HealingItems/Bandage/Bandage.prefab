@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1954986874671301864}
   - component: {fileID: 1954986874671301867}
   - component: {fileID: 4195151461293861509}
-  - component: {fileID: 7955752443782435845}
   - component: {fileID: 4893755872016731257}
   m_Layer: 7
   m_Name: Bandage
@@ -128,23 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickableItem_SO: {fileID: 11400000, guid: 098e0dcc0d2133b45a806a6fde235213, type: 2}
---- !u!114 &7955752443782435845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954986874671301865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dadfca9e22b79e46842e499f5d9221f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transform: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 0}
-  isActive: 0
-  isItemInInventory: 0
+  _stackSize: 5
 --- !u!114 &4893755872016731257
 MonoBehaviour:
   m_ObjectHideFlags: 0

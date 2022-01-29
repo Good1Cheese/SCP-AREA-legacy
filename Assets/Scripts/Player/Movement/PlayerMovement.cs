@@ -7,11 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private const float MOVE_MAGNUTUDE_MAX_LENGHT = 1f;
 
-    [Inject] private readonly MovementController _movementController;
-    [Inject] private readonly WalkController _walkController;
-    [Inject] private readonly PauseMenuEnablerDisabler _pauseMenu;
-    [Inject(Id = "Player")] private readonly Transform _playerTransform;
-
+    private MovementController _movementController;
+    private WalkController _walkController;
+    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    private Transform _playerTransform;
     private CharacterController _characterController;
     private bool _isPlayerMoving;
 
@@ -20,10 +19,23 @@ public class PlayerMovement : MonoBehaviour
     public float HorizontalMove { get; set; }
     public float VerticalMove { get; set; }
 
-    private void Start()
+    [Inject]
+    private void Construct(MovementController movementController,
+                           WalkController walkController,
+                           PauseMenuEnablerDisabler pauseMenuEnablerDisabler,
+                           [Inject(Id = "Player")] Transform playerTransform,
+                           CharacterController characterController)
     {
-        _characterController = GetComponent<CharacterController>();
-        _pauseMenu.EnabledDisabled += ReverseEnableState;
+        _movementController = movementController;
+        _walkController = walkController;
+        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _playerTransform = playerTransform;
+        _characterController = characterController;
+    }
+
+    private void Awake()
+    {
+        _pauseMenuEnablerDisabler.EnabledDisabled += ReverseEnableState;
     }
 
     private void ReverseEnableState()
@@ -40,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         {
             NotMoving?.Invoke();
             _movementController.MoveTime = 0;
+            _movementController.ÑurrentStepTime = 0;
 
             if (_isPlayerMoving)
             {
@@ -64,6 +77,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenu.EnabledDisabled -= ReverseEnableState;
+        _pauseMenuEnablerDisabler.EnabledDisabled -= ReverseEnableState;
     }
 }

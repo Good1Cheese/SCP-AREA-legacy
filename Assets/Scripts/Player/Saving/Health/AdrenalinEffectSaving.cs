@@ -38,7 +38,7 @@ public class AdrenalinEffectSaving : DataSaving
         _isEffectGoing = false;
     }
 
-    public override void LoadData()
+    public override void Load()
     {
         if (effectTime > 0)
         {
