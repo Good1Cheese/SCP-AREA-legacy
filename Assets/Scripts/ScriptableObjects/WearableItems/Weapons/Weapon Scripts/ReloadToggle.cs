@@ -19,7 +19,7 @@ public class ReloadToggle : WeaponScriptBase, IInteractable
 
     public void Interact()
     {
-        _weaponReload.ActivateReload();
+        _weaponReload.StartWithoutInterrupt();
         _reloadOrAmmoCountToggler.PressTime = 0;
     }
 }

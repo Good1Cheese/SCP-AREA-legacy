@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickableItem_SO: {fileID: 11400000, guid: d331c2e0ac5892647ae9017dd5a9954a, type: 2}
-  _ammoCount: 50
+  _ammoCount: 8
 --- !u!114 &1594463683838979028
 MonoBehaviour:
   m_ObjectHideFlags: 0

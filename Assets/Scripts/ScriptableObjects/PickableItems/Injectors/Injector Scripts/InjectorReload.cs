@@ -47,7 +47,7 @@ public class InjectorReload : InjectorScriptBase
         for (int i = 0; i < injectables.Length; i++)
         {
             var itemHandler = (StackableItemHandler)injectables[i];
-            StackableItemSlot slotWithItem = Array.Find(itemHandler.StackSlots.Slots, slot => slot.HasItem);
+            var slotWithItem = Array.Find(itemHandler.StackSlots.Slots, slot => slot.HasItem);
 
             if (slotWithItem == null) { continue; }
 

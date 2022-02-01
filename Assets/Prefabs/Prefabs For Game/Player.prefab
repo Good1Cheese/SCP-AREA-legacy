@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 86165868}
   - component: {fileID: 1276332682}
   - component: {fileID: 1276332688}
-  - component: {fileID: 4556526946664556794}
   - component: {fileID: 6060864682555567595}
   - component: {fileID: 7664690676299266539}
   - component: {fileID: 3257499977802637299}
@@ -21,6 +20,7 @@ GameObject:
   - component: {fileID: 719478325580480186}
   - component: {fileID: 4906315331970770613}
   - component: {fileID: 8978784784395419828}
+  - component: {fileID: 922381950583017636}
   - component: {fileID: 2034084654}
   m_Layer: 0
   m_Name: WeaponSlot
@@ -89,18 +89,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4556526946664556794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589210396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8b37b8516135f74ab26999018527caf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6060864682555567595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +186,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6db23f2716abc1742b710e4f6402860d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &922381950583017636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589210396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139f90f743c81164f88976b79315e5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!82 &2034084654
@@ -1525,7 +1525,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2710253056199812226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 225f728717d4ce045b18ff9d531f2b58, type: 3}
   m_Name: 

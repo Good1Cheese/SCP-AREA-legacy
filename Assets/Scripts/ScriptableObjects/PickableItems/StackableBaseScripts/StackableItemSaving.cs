@@ -1,11 +1,11 @@
 ﻿public class StackableItemSaving : ItemSaving
 {
-    private StackableItemSlots _stackableItemSlots;
+    private ItemSlots<StackableItemHandler> _stackableItemSlots;
 
     private void Start()
     {
         var itemHandler = (StackableItemHandler)ItemHandler;
-        _stackableItemSlots = new StackableItemSlots(itemHandler.StackSize);
+        _stackableItemSlots = new ItemSlots<StackableItemHandler>(itemHandler.StackSize);
     }
 
     public override void Save()
@@ -13,7 +13,7 @@
         var b = (StackableItemHandler)ItemHandler;
         for (int i = 0; i < b.StackSlots.Slots.Length; i++)
         {
-            _stackableItemSlots.Slots[i].StackableItemHandler = b.StackSlots.Slots[i].StackableItemHandler;
+            _stackableItemSlots.Slots[i].Item = b.StackSlots.Slots[i].Item;
         }
 
         base.Save();
@@ -24,7 +24,7 @@
         var b = (StackableItemHandler)ItemHandler;
         for (int i = 0; i < b.StackSlots.Slots.Length; i++)
         {
-            b.StackSlots.Slots[i].StackableItemHandler = _stackableItemSlots.Slots[i].StackableItemHandler;
+            b.StackSlots.Slots[i].Item = _stackableItemSlots.Slots[i].Item;
         }
 
         base.Load();

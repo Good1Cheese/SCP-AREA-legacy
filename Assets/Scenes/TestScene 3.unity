@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: _markCanvas
       value: 
       objectReference: {fileID: 1082328399}
+    - target: {fileID: 922381950583017636, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
+      propertyPath: _capacity
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4490448435668429654, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -181,10 +185,6 @@ PrefabInstance:
     - target: {fileID: 4490448435668429674, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7631851268131137968, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98ee5f25ab334a64387990a0013d5070, type: 3}
@@ -896,14 +896,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6291869656025110872}
     m_Modifications:
-    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: ammoCount
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: _ammoCount
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5126512978939992522, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
       propertyPath: m_RootOrder
       value: 22
@@ -1128,14 +1120,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6291869656025110872}
     m_Modifications:
-    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: ammoCount
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: _ammoCount
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5126512978939992522, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
       propertyPath: m_RootOrder
       value: 21
@@ -8504,14 +8488,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6291869656025110872}
     m_Modifications:
-    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: ammoCount
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5019126763319737872, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
-      propertyPath: _ammoCount
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 5126512978939992522, guid: cdad2b8cf32ac6e4c844dd255b8cf59b, type: 3}
       propertyPath: m_RootOrder
       value: 11

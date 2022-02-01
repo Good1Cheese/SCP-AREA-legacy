@@ -8,14 +8,12 @@ public class AmmoHandler : PickableItemHandler
 
     [SerializeField] private int _ammoCount;
 
-    private WeaponSlot _weaponSlot;
-    private AmmoMixup _ammoMixup;
+    private AmmoPackage _ammoPackage;
 
     [Inject]
-    private void Inject(WeaponSlot weaponSlot, AmmoMixup ammoMixup)
+    private void Inject(AmmoPackage ammoStorage)
     {
-        _weaponSlot = weaponSlot;
-        _ammoMixup = ammoMixup;
+        _ammoPackage = ammoStorage;
     }
 
     public Ammo_SO Ammo_SO => (Ammo_SO)_pickableItem_SO;
@@ -32,9 +30,8 @@ public class AmmoHandler : PickableItemHandler
 
     public override void Equip()
     {
-        _ammoMixup.MixUpAmmo(this);
-        base.Equip();
+        if (!_ammoPackage.Store(this)) return;
 
-        _weaponSlot.AmmoAdded?.Invoke();
+        Equiped();
     }
 }

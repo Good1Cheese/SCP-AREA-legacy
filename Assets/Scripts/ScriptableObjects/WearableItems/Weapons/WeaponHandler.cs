@@ -56,11 +56,4 @@ public class WeaponHandler : WearableItemHandler
     {
         _wearableSlot.SetItem(this);
     }
-
-    public void UpdateAmmo()
-    {
-        _ammoCount = _pickableItemsInventory.Inventory.TakeWhile(item => item != null)
-            .Where(item => item as AmmoHandler != null)
-            .Sum(item => ((AmmoHandler)item).Ammo);
-    }
 }

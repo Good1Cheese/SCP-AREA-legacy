@@ -6,17 +6,17 @@ public abstract class StackableItemHandler : PickableItemHandler
 {
     [SerializeField] private int _stackSize;
 
-    private StackableItemSlots _stackableItemSlots;
-    private StackableItemSlot _freeSlot;
+    private ItemSlots<StackableItemHandler> _stackableItemSlots;
+    private ItemSlot<StackableItemHandler> _freeSlot;
 
-    public StackableItemSlots StackSlots => _stackableItemSlots;
+    public ItemSlots<StackableItemHandler> StackSlots => _stackableItemSlots;
     public int StackSize => _stackSize;
 
     protected new void Start()
     {   
         base.Start();
 
-        _stackableItemSlots = new StackableItemSlots(StackSize);
+        _stackableItemSlots = new ItemSlots<StackableItemHandler>(StackSize);
         _stackableItemSlots.Slots[0].Set(this);
     }
 

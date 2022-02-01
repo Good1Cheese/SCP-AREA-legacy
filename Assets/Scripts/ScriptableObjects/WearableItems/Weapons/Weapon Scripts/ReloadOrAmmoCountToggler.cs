@@ -40,9 +40,12 @@ public class ReloadOrAmmoCountToggler : WeaponScriptBase
             return;
         }
 
+
+        if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo) { return; }
+
         _weaponRequestsHandler.Handle(ReloadToggle, _weaponHandler.Weapon_SO.reloadTimeout);
     }
-        
+
     private void ShowAmmoCount()
     {
         if (PressTime <= _pressTimeToActivate) { return; }

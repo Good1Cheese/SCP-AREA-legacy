@@ -11,9 +11,6 @@ public class WeaponInstaller : MonoInstaller
         Container.BindInstance(GetComponent<RayForFireProvider>())
             .AsSingle();
 
-        Container.BindInstance(GetComponent<AmmoMixup>())
-            .AsSingle();
-
         Container.BindInstance(GetComponent<AudioSource>())
             .WithId("ItemsAudio").AsCached();
 
@@ -36,6 +33,9 @@ public class WeaponInstaller : MonoInstaller
             .AsSingle();
 
         Container.BindInstance(GetComponent<WeaponNoAmmo>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<AmmoPackage>())
             .AsSingle();
     }
 }

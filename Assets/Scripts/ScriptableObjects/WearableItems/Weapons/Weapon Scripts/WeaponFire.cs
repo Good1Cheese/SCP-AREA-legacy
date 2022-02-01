@@ -11,17 +11,20 @@ public class WeaponFire : WeaponScriptBase, IInteractable
     private WeaponAim _weaponAim;
     private WeaponShot _weaponShot;
     private WeaponNoAmmo _weaponNoAmmo;
+    private WeaponReload _weaponReload;
 
     [Inject]
     private void Inject(RayForFireProvider rayForFireProvider,
                         WeaponAim weaponAim,
                         WeaponShot weaponShot,
-                        WeaponNoAmmo weaponMiss)
+                        WeaponNoAmmo weaponMiss,
+                        WeaponReload weaponReload)
     {
         _rayForFireProvider = rayForFireProvider;
         _weaponAim = weaponAim;
         _weaponShot = weaponShot;
         _weaponNoAmmo = weaponMiss;
+        _weaponReload = weaponReload;
     }
 
     private void Update()
@@ -41,7 +44,7 @@ public class WeaponFire : WeaponScriptBase, IInteractable
 
     private void Fire()
     {
-        _weaponHandler.ClipAmmo--;
+        _weaponReload.CurrentClip.Item.Ammo--;
 
         Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
         _weaponShot.Shoot(raycastHit);

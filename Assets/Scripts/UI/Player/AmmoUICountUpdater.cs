@@ -8,44 +8,36 @@ public class AmmoUICountUpdater : MonoBehaviour
 
     private WeaponSlot _weaponSlot;
     private WeaponHandler _weaponHandler;
-    private bool _wasAmmoUpdated;
+    private WeaponReload _weaponReload;
 
     public TextMeshProUGUI TextMeshProUGUI => _textMeshProUGUI;
 
     [Inject]
-    private void Construct(WeaponSlot weaponSlot)
+    private void Construct(WeaponSlot weaponSlot, WeaponReload weaponReload)
     {
         _weaponSlot = weaponSlot;
+        _weaponReload = weaponReload;
     }
 
     private void Awake()
     {
         _weaponSlot.Changed += SetWeaponHandler;
-        _weaponSlot.AmmoAdded += UpdateAmmoAndUI;
+        _weaponReload.Reloaded += UpdateUI;
     }
 
     private void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weaponHandler = weaponHandler;
-        UpdateAmmoAndUI();
-    }
-
-    private void UpdateAmmoAndUI()
-    {
-        if (_weaponHandler == null) { return; }
-
-        _weaponHandler.UpdateAmmo();
-        UpdateUI();
     }
 
     public void UpdateUI()
     {
-        TextMeshProUGUI.text = string.Format($"{_weaponHandler.ClipAmmo}/{_weaponHandler.Ammo}");
+        TextMeshProUGUI.text = string.Format($"{_weaponHandler.ClipAmmo}/{_weaponHandler.Weapon_SO.clipMaxAmmo}");
     }
 
     private void OnDestroy()
     {
         _weaponSlot.Changed -= SetWeaponHandler;
-        _weaponSlot.AmmoAdded -= UpdateAmmoAndUI;
+        _weaponReload.Reloaded -= UpdateUI;
     }
 }
