@@ -19,10 +19,10 @@ public class PickableInventoryEnablerDisabler : UIEnablerDisabler
     {
         if (!Input.GetKeyDown(INVENTORY_KEY)) { return; }
 
-        EnableDisableUI();
+        TryInteract();
     }
 
-    public override void EnableDisableUI()
+    private void EnableDisable()
     {
         if (_pauseMenuEnablerDisabler.IsActivated) { return; }
 
@@ -30,4 +30,6 @@ public class PickableInventoryEnablerDisabler : UIEnablerDisabler
         EnabledDisabled?.Invoke();
         _pickableItemssInventoryUIUpdater.ActivateOrClose();
     }
+
+    public override void Interact() => EnableDisable();
 }

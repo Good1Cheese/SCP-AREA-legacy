@@ -1,23 +1,28 @@
-﻿using Zenject;
+﻿using UnityEngine;
+using Zenject;
 
-public abstract class WeaponScriptBase : ItemScriptBase
+public abstract class WeaponScriptBase : MonoBehaviour
 {
     protected WeaponSlot _weaponSlot;
     protected PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    protected PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    protected WeaponRequestsHandler _weaponRequestsHandler;
     protected WeaponHandler _weaponHandler;
 
     [Inject]
-    private void Inject(WeaponSlot weaponSlot, PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+    private void Inject(WeaponSlot weaponSlot,
+                        PauseMenuEnablerDisabler pauseMenuEnablerDisabler,
+                        PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler,
+                        WeaponRequestsHandler weaponRequestsHandler)
     {
-        _itemSlot = weaponSlot;
         _weaponSlot = weaponSlot;
+        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
         _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _weaponRequestsHandler = weaponRequestsHandler;
     }
 
-    protected new void Start()
+    protected void Start()
     {
-        base.Start();
-
         _weaponSlot.Changed += SetWeaponHandler;
         _weaponSlot.ItemRemoved += SetWeaponHandlerToNull;
     }
@@ -29,13 +34,12 @@ public abstract class WeaponScriptBase : ItemScriptBase
     {
         return _pickableInventoryEnablerDisabler.IsActivated
             || _pauseMenuEnablerDisabler.IsActivated
-            || _weaponHandler == null;
+            || _weaponHandler == null
+            || !_weaponHandler.GameObjectForPlayer.activeSelf;
     }
 
-    protected new void OnDestroy()
+    protected void OnDestroy()
     {
-        base.OnDestroy();
-
         _weaponSlot.Changed -= SetWeaponHandler;
         _weaponSlot.ItemRemoved -= SetWeaponHandlerToNull;
     }

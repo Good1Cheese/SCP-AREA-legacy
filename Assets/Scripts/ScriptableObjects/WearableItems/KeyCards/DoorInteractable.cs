@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public abstract class DoorInteractable : Interactable
+public abstract class DoorInteractable : MonoBehaviour, IInteractable
 {
     private KeyCardSlot _keyCardSlot;
 
@@ -14,11 +14,11 @@ public abstract class DoorInteractable : Interactable
         _keyCardSlot = keyCardSlot;
     }
 
-    public override void Interact()
+    public void Interact()
     {
-        KeyCardHandler keycardHandler = _keyCardSlot.ItemHandler as KeyCardHandler;
-
-        if (keycardHandler == null || !keycardHandler.GameObjectForPlayer.activeSelf || (int)keycardHandler.KeyCard_SO.GetKeyCardType() != KeyCardType) { return; }
+        if (!(_keyCardSlot.ItemHandler is KeyCardHandler keycardHandler)
+            || !keycardHandler.GameObjectForPlayer.activeSelf
+            || (int)keycardHandler.KeyCard_SO.GetKeyCardType() != KeyCardType) { return; }
 
         if (keycardHandler.KeyCard_SO.KeyCardLevel >= KeyCardLevelToOpen)
         {

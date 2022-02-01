@@ -18,16 +18,18 @@ public class PauseMenuEnablerDisabler : UIEnablerDisabler
 
         if (_pickableInventoryEnablerDisabler.IsActivated)
         {
-            _pickableInventoryEnablerDisabler.EnableDisableUI();
+            _pickableInventoryEnablerDisabler.Interact();
         }
 
-        EnableDisableUI();
+        Interact();
     }
 
-    public override void EnableDisableUI()
+    private void EnableDisable()
     {
         IsActivated = !IsActivated;
         EnabledDisabled?.Invoke();
         _pickableInventoryEnablerDisabler.EnabledDisabled?.Invoke();
     }
+
+    public override void Interact() => EnableDisable();
 }

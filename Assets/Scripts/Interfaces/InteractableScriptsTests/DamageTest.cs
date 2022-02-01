@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class DamageTest : Interactable
+public class DamageTest : MonoBehaviour, IInteractable
 {
     [SerializeField] private int _damage;
 
@@ -13,7 +13,7 @@ public class DamageTest : Interactable
         _playerHealth = playerHealth;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         _playerHealth.Damage(_damage);
     }

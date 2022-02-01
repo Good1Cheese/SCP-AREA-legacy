@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class BleedingStopTest : Interactable
+public class BleedingStopTest : MonoBehaviour, IInteractable
 {
     private PlayerBlood _playerBlood;
 
@@ -11,7 +11,7 @@ public class BleedingStopTest : Interactable
         _playerBlood = playerBlood;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         _playerBlood.StopCoroutine();
     }

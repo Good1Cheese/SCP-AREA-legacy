@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class HealTest : Interactable
+public class HealTest : MonoBehaviour, IInteractable
 {
     [SerializeField] private int _healthToHeal;
 
@@ -13,7 +13,7 @@ public class HealTest : Interactable
         _playerHealth = playerHealth;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         _playerHealth.Heal(_healthToHeal);
     }

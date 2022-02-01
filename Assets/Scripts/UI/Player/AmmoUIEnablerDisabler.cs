@@ -33,7 +33,7 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
         _textMeshProGameObject.SetActive(false);
     }
 
-    public void ActiveOrDisableUI(bool activeState)
+    public void EnableDisable(bool activeState)
     {
         _ammoUICountUpdater.UpdateUI();
         _textMeshProGameObject.SetActive(activeState);

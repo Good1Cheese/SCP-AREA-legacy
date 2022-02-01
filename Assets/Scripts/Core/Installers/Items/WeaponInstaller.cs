@@ -35,7 +35,7 @@ public class WeaponInstaller : MonoInstaller
         Container.BindInstance(GetComponent<WeaponAim>())
             .AsSingle();
 
-        Container.BindInstance(GetComponent<WeaponMiss>())
+        Container.BindInstance(GetComponent<WeaponNoAmmo>())
             .AsSingle();
     }
 }

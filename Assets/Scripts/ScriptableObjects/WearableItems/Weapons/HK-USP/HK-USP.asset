@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   description: "\u0422\u0443\u0434\u0430 \u0435\u0433\u043E"
-  playerGameObjectspawnOffset: {x: 0, y: 0, z: 0}
+  playerGameObjectSpawnOffset: {x: 0, y: 0, z: 0}
   playerGameObjectPrefab: {fileID: 7735998174741333828, guid: 4d2c2bace596775438bf021a0216552f, type: 3}
   damagePerShot: 10
   ammoType: 0
@@ -23,8 +23,8 @@ MonoBehaviour:
   aimRecoil: {x: -1.5, y: 1, z: 0.3}
   recoilReturnSpeed: 2
   snappiness: 6
-  shotDelay: 0.25
-  reloadDelay: 2.74
+  shotDelay: 0.3
+  reloadDelay: 0.5
   bulletSpawnPoint: {x: 0.0018, y: 0.0983, z: 0.196}
   bulletHolePrefab: {fileID: 5088676403618374141, guid: 3e7fda179aea8d64fa703584d4992b74, type: 3}
   weaponAnimationContoller: {fileID: 9100000, guid: 4b9fd3655a02a4b4ca10361a850a019e, type: 2}

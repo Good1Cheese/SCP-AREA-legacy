@@ -27,20 +27,12 @@ public class AmmoUICountUpdater : MonoBehaviour
     private void SetWeaponHandler(WeaponHandler weaponHandler)
     {
         _weaponHandler = weaponHandler;
-
-        if (_wasAmmoUpdated) { return; }
-
-        _wasAmmoUpdated = true;
         UpdateAmmoAndUI();
     }
 
     private void UpdateAmmoAndUI()
     {
-        if (_weaponHandler == null)
-        {
-            _wasAmmoUpdated = false;
-            return;
-        }
+        if (_weaponHandler == null) { return; }
 
         _weaponHandler.UpdateAmmo();
         UpdateUI();

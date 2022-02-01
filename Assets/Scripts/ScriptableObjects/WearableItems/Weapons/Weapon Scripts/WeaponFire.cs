@@ -2,55 +2,46 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WeaponMiss), typeof(WeaponAim))]
-public class WeaponFire : WeaponScriptBase
+[RequireComponent(typeof(WeaponNoAmmo), typeof(WeaponAim))]
+public class WeaponFire : WeaponScriptBase, IInteractable
 {
     private const KeyCode FIRE_KEY = KeyCode.Mouse0;
 
     private RayForFireProvider _rayForFireProvider;
     private WeaponAim _weaponAim;
     private WeaponShot _weaponShot;
-    private WeaponMiss _weaponMiss;
-    private ItemActionCreator _itemActionCreator;
-
-    public Action Fired { get; set; }
+    private WeaponNoAmmo _weaponNoAmmo;
 
     [Inject]
     private void Inject(RayForFireProvider rayForFireProvider,
                         WeaponAim weaponAim,
                         WeaponShot weaponShot,
-                        WeaponMiss weaponMiss,
-                        ItemActionCreator itemActionCreator)
+                        WeaponNoAmmo weaponMiss)
     {
         _rayForFireProvider = rayForFireProvider;
         _weaponAim = weaponAim;
         _weaponShot = weaponShot;
-        _weaponMiss = weaponMiss;
-        _itemActionCreator = itemActionCreator;
+        _weaponNoAmmo = weaponMiss;
     }
 
     private void Update()
     {
         if (!Input.GetKeyDown(FIRE_KEY)) { return; }
 
-        if (_itemActionCreator.IsGoing
-            || CanNotWeaponDoAction()) { return; }
+        if (CanNotWeaponDoAction()) { return; }
 
         if (_weaponHandler.ClipAmmo == 0)
         {
-            _weaponMiss.ActivateMissSound();
+            _weaponNoAmmo.ShootWithNoAmmo();
             return;
         }
 
-        Fire();
+        _weaponRequestsHandler.Handle(this, _weaponHandler.Weapon_SO.shotTimeout);
     }
 
     private void Fire()
     {
-        _itemActionCreator.StartItemAction(_weaponHandler.Weapon_SO.shotTimeout, _weaponHandler.CurrentShotSound, false);
         _weaponHandler.ClipAmmo--;
-
-        Fired?.Invoke();
 
         Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
         _weaponShot.Shoot(raycastHit);
@@ -62,4 +53,6 @@ public class WeaponFire : WeaponScriptBase
         }
         _weaponAim.FiredWithoutAim?.Invoke();
     }
+
+    public void Interact() => Fire();
 }

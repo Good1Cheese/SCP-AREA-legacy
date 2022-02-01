@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using Zenject;
 
 public class WeaponReload : CoroutineUser
@@ -9,18 +10,15 @@ public class WeaponReload : CoroutineUser
     private WeaponHandler _weaponHandler;
     protected WeaponSlot _weaponSlot;
     private PickableItemsInventory _pickableItemsInventory;
-    private ItemActionCreator _itemActionCreator;
 
     protected override IEnumerator Method => Reload();
     protected override IEnumerator Coroutine() { yield break; }
-    public Action Reloaded { get; set; }
 
     [Inject]
-    private void Inject(WeaponSlot weaponSlot, PickableItemsInventory pickableItemsInventory, ItemActionCreator itemActionCreator)
+    private void Inject(WeaponSlot weaponSlot, PickableItemsInventory pickableItemsInventory)
     {
         _weaponSlot = weaponSlot;
         _pickableItemsInventory = pickableItemsInventory;
-        _itemActionCreator = itemActionCreator;
     }
 
     private new void Start()
@@ -32,32 +30,27 @@ public class WeaponReload : CoroutineUser
     public void ActivateReload()
     {
         if (_weaponHandler.ClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
-            || _weaponHandler.Ammo == 0
-            || _itemActionCreator.IsGoing) { return; }
+            || _weaponHandler.Ammo == 0) { return; }
 
         StartWithoutInterrupt();
     }
 
     public IEnumerator Reload()
     {
-        _itemActionCreator.StartInterruptingItemAction(this, _weaponHandler.Weapon_SO.reloadSound);
-
-        AddClipAmmoToInventoryAmmo();
-        _weaponHandler.ClipAmmo = 0;
-
-        Reloaded?.Invoke();
-
         yield return _weaponHandler.Weapon_SO.reloadTimeout;
 
+        GetAllWeaponAmmo();
         CalculateCurrentClipAmmo();
 
         _weaponHandler.ClipAmmo = _calculatedClipAmmo;
         IsCoroutineGoing = false;
+        print("da");
     }
 
     private void CalculateCurrentClipAmmo()
     {
         int clipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo;
+        clipAmmo -= _weaponHandler.ClipAmmo;
 
         for (int i = 0; i < _inventoryAmmo.Length; i++)
         {
@@ -70,19 +63,21 @@ public class WeaponReload : CoroutineUser
 
             if (clipAmmo < 0) { break; }
         }
+
         _calculatedClipAmmo = _weaponHandler.Weapon_SO.clipMaxAmmo - clipAmmo;
+        _weaponHandler.UpdateAmmo();
     }
 
-    private void AddClipAmmoToInventoryAmmo()
+    private void GetAllWeaponAmmo()
     {
-        _inventoryAmmo = (AmmoHandler[])Array.FindAll(_pickableItemsInventory.Inventory, item =>
+        var itemHandlers = _pickableItemsInventory.Inventory.Where(item =>
         {
-            var ammo = item as AmmoHandler;
-            return ammo != null && ammo.Ammo != 0;
+            return item is AmmoHandler ammo
+                   && ammo.Ammo > 0
+                   && ammo.Ammo_SO.ammoType == _weaponHandler.Weapon_SO.ammoType;
         });
 
-        AmmoHandler freeAmmoHandler = Array.Find(_inventoryAmmo, ammo => ammo.Ammo + _weaponHandler.ClipAmmo <= AmmoHandler.MAX_SLOT_AMMO);
-        freeAmmoHandler.Ammo += _weaponHandler.ClipAmmo;
+        _inventoryAmmo = itemHandlers.Select(ammo => (AmmoHandler)ammo).ToArray();
     }
 
     protected void SetWeaponHandler(WeaponHandler weaponHandler)

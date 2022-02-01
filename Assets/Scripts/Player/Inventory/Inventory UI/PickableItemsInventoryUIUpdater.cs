@@ -44,7 +44,6 @@ public class PickableItemsInventoryUIUpdater : MonoBehaviour
 
             if (item != null)
             {
-                print(i);
                 InventoryCells[i].SetItem(item);
                 continue;
             }

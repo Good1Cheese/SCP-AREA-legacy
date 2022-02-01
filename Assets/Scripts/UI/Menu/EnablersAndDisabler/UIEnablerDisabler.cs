@@ -1,8 +1,7 @@
 ﻿using System;
-using UnityEngine;
 using Zenject;
 
-public abstract class UIEnablerDisabler : MonoBehaviour
+public abstract class UIEnablerDisabler : InteractableWithDelay
 {
     private PlayerHealth _playerHealth;
     private GameLoader _gameLoader;
@@ -17,8 +16,9 @@ public abstract class UIEnablerDisabler : MonoBehaviour
         _gameLoader = gameLoader;
     }
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         _playerHealth.Died += DisableUI;
         _gameLoader.UILoading += SetScriptActiveState;
     }
@@ -27,7 +27,7 @@ public abstract class UIEnablerDisabler : MonoBehaviour
     {
         if (IsActivated)
         {
-            EnableDisableUI();
+            Interact();
         }
 
         enabled = false;
@@ -43,6 +43,4 @@ public abstract class UIEnablerDisabler : MonoBehaviour
         _playerHealth.Died -= DisableUI;
         _gameLoader.UILoading -= SetScriptActiveState;
     }
-
-    public abstract void EnableDisableUI();
 }

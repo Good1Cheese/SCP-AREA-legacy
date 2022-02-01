@@ -1,5 +1,116 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &598773154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 598773155}
+  - component: {fileID: 598773160}
+  - component: {fileID: 598773159}
+  - component: {fileID: 598773158}
+  - component: {fileID: 598773157}
+  - component: {fileID: 598773156}
+  m_Layer: 5
+  m_Name: ItemsInteractions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &598773155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598773154}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 547.5, y: 262.5, z: 0}
+  m_LocalScale: {x: 0.52652997, y: 0.52652997, z: 0.52652997}
+  m_Children: []
+  m_Father: {fileID: 4504709229982532503}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &598773160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598773154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a0dfd0515882245b6f69edb20375c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &598773159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598773154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c030c50a77b7148aec0923e2d9370a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.4
+  _timeoutAfterInteraction:
+    _delay: 0.5
+--- !u!114 &598773158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598773154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f70e71aae9b544daa01004f9d06338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
+--- !u!114 &598773157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598773154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5079cadd6f7e74488528995de83cca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.4
+  _timeoutAfterInteraction:
+    _delay: 0.5
+--- !u!114 &598773156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598773154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192d102c0c8c0ae43939a32af5aab63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
 --- !u!1 &913925333
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +126,7 @@ GameObject:
   - component: {fileID: 8945649243256697510}
   - component: {fileID: 8100339062313219172}
   m_Layer: 0
-  m_Name: Activators
+  m_Name: ItemsActivators
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +158,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b08941efe89c1747a8a91ac144c2a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
   _key: 0
   _itemParent: {fileID: 0}
 --- !u!114 &5822067860005010682
@@ -61,6 +176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b19b8639e468c4c80e20cf15c836c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
   _key: 118
   _itemParent: {fileID: 0}
 --- !u!114 &5102206068996807340
@@ -75,6 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a4da3b8e27afd4fa04ac717523a86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
   _key: 102
   _itemParent: {fileID: 0}
 --- !u!114 &8945649243256697510
@@ -89,6 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd984f24e0f4d7948ad2f13013ab2f06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
   _key: 103
   _itemParent: {fileID: 0}
 --- !u!114 &8100339062313219172
@@ -103,6 +230,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62563c7abf998d44d95400fbd0126532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0.1
+  _timeoutAfterInteraction:
+    _delay: 0.2
   _key: 116
   _itemParent: {fileID: 0}
 --- !u!1 &4504709228895964005
@@ -152,7 +283,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 598773160}
   - {fileID: 4504709229982532499}
   _installerPrefabs: []
   _autoRun: 1
@@ -188,10 +319,11 @@ GameObject:
   - component: {fileID: 3476612386587923562}
   - component: {fileID: 7071613214550454115}
   - component: {fileID: 28724566}
-  - component: {fileID: 541240084}
   - component: {fileID: 1113230667219139216}
   - component: {fileID: 4504709228995589975}
   - component: {fileID: 973495705}
+  - component: {fileID: 1787342607}
+  - component: {fileID: 1451561399891976491}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -212,6 +344,7 @@ Transform:
   m_Children:
   - {fileID: 4504709228895964007}
   - {fileID: 913925334}
+  - {fileID: 598773155}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -422,18 +555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSlotsAmount: 8
---- !u!114 &541240084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504709229982532500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78af487156769f949adcbe9556579c36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1113230667219139216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +567,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306098329a079a74f969ccee262481c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0
+  _timeoutAfterInteraction:
+    _delay: 0.2
   _pickableItemssInventoryUIUpdater: {fileID: 0}
 --- !u!114 &4504709228995589975
 MonoBehaviour:
@@ -459,6 +584,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5027b336f489f5846bd47b739a6b9aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeoutBeforeInteraction:
+    _delay: 0
+  _timeoutAfterInteraction:
+    _delay: 0
 --- !u!114 &973495705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,3 +601,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ammoUICountUpdater: {fileID: 0}
+--- !u!114 &1787342607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffdf703249f558745b1bf1fbfef3beb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1451561399891976491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4504709229982532500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14f06f5f94426e7429d1214b7a078567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

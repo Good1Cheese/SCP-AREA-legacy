@@ -1,6 +1,7 @@
+using UnityEngine;
 using Zenject;
 
-public class DeathTest : Interactable
+public class DeathTest : MonoBehaviour, IInteractable
 {
     private PlayerHealth _playerHealth;
 
@@ -10,7 +11,7 @@ public class DeathTest : Interactable
         _playerHealth = playerHealth;
     }
 
-    public override void Interact()
+    public void Interact()
     {
         _playerHealth.Damage(_playerHealth.Amount);
     }

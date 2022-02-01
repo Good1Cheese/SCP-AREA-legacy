@@ -6,15 +6,13 @@ public abstract class InjectorScriptBase : ItemScriptBase
     [SerializeField] protected KeyCode _key;
 
     protected InjectorSlot _injectorSlot;
-    protected ItemActionCreator _itemActionCreator;
     protected InjectorHandler _injectorHandler;
 
     [Inject]
-    private void Inject(InjectorSlot injectorSlot, ItemActionCreator itemActionCreator)
+    private void Inject(InjectorSlot injectorSlot)
     {
         _itemSlot = injectorSlot;
         _injectorSlot = injectorSlot;
-        _itemActionCreator = itemActionCreator;
     }
 
     protected new void Start()
@@ -29,15 +27,13 @@ public abstract class InjectorScriptBase : ItemScriptBase
     {
         if (!Input.GetKeyDown(_key)) { return; }
 
-        if (_itemActionCreator.IsGoing || _pickableInventoryEnablerDisabler.IsActivated) { return; }
+        if (_pickableInventoryEnablerDisabler.IsActivated) { return; }
 
-        DoAction();
+        TryInteract();
     }
 
     private void SetInjector(InjectorHandler injectorHandler) => _injectorHandler = injectorHandler;
     private void SetInjectorToNull() => _injectorHandler = null;
-
-    protected abstract void DoAction();
 
     protected new void OnDestroy()
     {

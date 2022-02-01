@@ -14,10 +14,8 @@ public class InjectTypeSwitch : InjectorScriptBase
         }
     }
 
-    protected override void DoAction()
+    private void Switch()
     {
-        _itemActionCreator.StartItemAction(_injectorHandler.Injector_SO.injectChangeTimeout, null);
-
         if (CurrentType == typeof(IHealthInjectable))
         {
             CurrentType = typeof(IAdrenalinInjectable);
@@ -26,4 +24,6 @@ public class InjectTypeSwitch : InjectorScriptBase
 
         CurrentType = typeof(IHealthInjectable);
     }
+
+    public override void Interact() => Switch();
 }

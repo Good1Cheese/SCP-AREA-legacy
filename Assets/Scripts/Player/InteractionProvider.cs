@@ -4,18 +4,16 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(InteractionMarkEnablerDisabler))]
-public class InteractionProvider : MonoBehaviour
+public class InteractionProvider : InteractableWithDelay
 {
     [SerializeField] private LayerMask _interactableLayerMask;
     [SerializeField] private float _maxInteractionDistance;
     [SerializeField] private float _interactionSphereRadious;
-    [SerializeField] private float _delayAfterInteraction;
 
     private RayProvider _rayProvider;
     private PickableInventoryEnablerDisabler _inventoryEnablerDisabler;
-    private Interactable _interactable;
+    private IInteractable _interactable;
     private bool _isDelayGoing;
-    private WaitForSeconds _timeoutAfterInteraction;
 
     public Action UnInteractableFound { get; set; }
     public Action<Collider> InteractableFound { get; set; }
@@ -26,11 +24,6 @@ public class InteractionProvider : MonoBehaviour
     {
         _rayProvider = rayProvider;
         _inventoryEnablerDisabler = inventoryEnablerDisabler;
-    }
-
-    private void Awake()
-    {
-        _timeoutAfterInteraction = new WaitForSeconds(_delayAfterInteraction);
     }
 
     private void Update()
@@ -46,7 +39,7 @@ public class InteractionProvider : MonoBehaviour
         }
 
         InteractableFound?.Invoke(raycastHit);
-        Interact();
+        TryInteract();
     }
 
     private Collider GetRayCastHit()
@@ -58,22 +51,16 @@ public class InteractionProvider : MonoBehaviour
         return raycasted && collider.TryGetComponent(out _interactable) ? collider : null;
     }
 
-    private void Interact()
+    public new void TryInteract()
     {
         if (!Input.GetButtonDown("Interaction")) { return; }
 
-        _interactable.Interact();
-        Interacted?.Invoke();
-        StartCoroutine(StartInteractionDelay());
+        base.TryInteract();
     }
 
-    private IEnumerator StartInteractionDelay()
+    public override void Interact()
     {
-        UnInteractableFound?.Invoke();
-        _isDelayGoing = true;
-
-        yield return _timeoutAfterInteraction;
-
-        _isDelayGoing = false;
+        _interactable.Interact();
+        Interacted?.Invoke();
     }
 }

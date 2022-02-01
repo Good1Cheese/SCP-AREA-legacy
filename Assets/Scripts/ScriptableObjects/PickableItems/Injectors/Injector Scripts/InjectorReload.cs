@@ -29,10 +29,8 @@ public class InjectorReload : InjectorScriptBase
         _injectTypeSwitcher = GetComponent<InjectTypeSwitch>();
     }
 
-    protected override void DoAction()
+    private void Reload()
     {
-        _itemActionCreator.StartItemAction(_injectorHandler.Injector_SO.reloadTimeout, null);
-
         if (_injectTypeSwitcher.CurrentType == typeof(IHealthInjectable))
         {
             CurrentInject = GetInject(item => item as IHealthInjectable != null);
@@ -57,4 +55,6 @@ public class InjectorReload : InjectorScriptBase
         }
         return null;
     }
+
+    public override void Interact() => Reload();
 }

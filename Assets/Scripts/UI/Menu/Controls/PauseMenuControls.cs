@@ -33,7 +33,7 @@ public class PauseMenuControls : MonoBehaviour
 
     public void PauseUnpauseGame()
     {
-        _pauseMenuEnablerDisabler.EnableDisableUI();
+        _pauseMenuEnablerDisabler.Interact();
     }
 
     public void SaveGame()
