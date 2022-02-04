@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(InteractionMarkEnablerDisabler))]
+[RequireComponent(typeof(InteractionMarkToggler))]
 public class InteractionProvider : InteractableWithDelay
 {
     [SerializeField] private LayerMask _interactableLayerMask;
@@ -11,7 +11,7 @@ public class InteractionProvider : InteractableWithDelay
     [SerializeField] private float _interactionSphereRadious;
 
     private RayProvider _rayProvider;
-    private PickableInventoryEnablerDisabler _inventoryEnablerDisabler;
+    private PickableInventoryToggler _inventoryEnablerDisabler;
     private IInteractable _interactable;
     private bool _isDelayGoing;
 
@@ -20,7 +20,7 @@ public class InteractionProvider : InteractableWithDelay
     public Action Interacted { get; set; }
 
     [Inject]
-    private void Construct(RayProvider rayProvider, PickableInventoryEnablerDisabler inventoryEnablerDisabler)
+    private void Construct(RayProvider rayProvider, PickableInventoryToggler inventoryEnablerDisabler)
     {
         _rayProvider = rayProvider;
         _inventoryEnablerDisabler = inventoryEnablerDisabler;
@@ -28,7 +28,7 @@ public class InteractionProvider : InteractableWithDelay
 
     private void Update()
     {
-        if (_isDelayGoing || _inventoryEnablerDisabler.IsActivated) { return; }
+        if (_isDelayGoing || _inventoryEnablerDisabler.IsToggled) { return; }
 
         Collider raycastHit = GetRayCastHit();
 

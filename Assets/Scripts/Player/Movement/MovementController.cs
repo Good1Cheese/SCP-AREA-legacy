@@ -8,18 +8,20 @@ public class MovementController : MonoBehaviour
     [SerializeField] private MoveController[] _moveControllers;
 
     private WalkController _walkController;
+    private MovementController _movementController;
     private MoveController _usingMoveController;
 
     public AnimationCurve MovementSpeed => _movementSpeed;
     public float SlowDownFactor { get; set; }
     public float MoveTime { get; set; }
     public float Speed { get; set; }
-    public float СurrentStepTime { get; set; }
+    public float StepTime { get; set; }
 
     [Inject]
-    private void Construct(WalkController walkController)
+    private void Construct(WalkController walkController, MovementController movementController)
     {
         _walkController = walkController;
+        _movementController = movementController;
     }
 
     public float GetPlayerSpeed()

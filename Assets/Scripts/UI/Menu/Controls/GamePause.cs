@@ -4,14 +4,14 @@ using Zenject;
 [RequireComponent(typeof(PauseMenuControls))]
 public class GamePause : MonoBehaviour
 {
-    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    private PauseMenuToggler _pauseMenuToggler;
     private GameObject _gameObject;
     private PauseMenuControls _pauseMenuControls;
 
     [Inject]
-    private void Construct(PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+    private void Construct(PauseMenuToggler pauseMenuToggler)
     {
-        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _pauseMenuToggler = pauseMenuToggler;
     }
 
     private void Awake()
@@ -19,7 +19,7 @@ public class GamePause : MonoBehaviour
         _gameObject = gameObject;
         _pauseMenuControls = GetComponent<PauseMenuControls>();
 
-        _pauseMenuEnablerDisabler.EnabledDisabled += ActivateOrDeacrivateUI;
+        _pauseMenuToggler.Toggled += ActivateOrDeacrivateUI;
         _pauseMenuControls.Exited += OnExited;
     }
 
@@ -36,7 +36,7 @@ public class GamePause : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenuEnablerDisabler.EnabledDisabled -= ActivateOrDeacrivateUI;
+        _pauseMenuToggler.Toggled -= ActivateOrDeacrivateUI;
         _pauseMenuControls.Exited -= OnExited;
     }
 }

@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     private MovementController _movementController;
     private WalkController _walkController;
-    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    private PauseMenuToggler _pauseMenuToggler;
     private Transform _playerTransform;
     private CharacterController _characterController;
     private bool _isPlayerMoving;
@@ -22,20 +22,20 @@ public class PlayerMovement : MonoBehaviour
     [Inject]
     private void Construct(MovementController movementController,
                            WalkController walkController,
-                           PauseMenuEnablerDisabler pauseMenuEnablerDisabler,
+                           PauseMenuToggler pauseMenuToggler,
                            [Inject(Id = "Player")] Transform playerTransform,
                            CharacterController characterController)
     {
         _movementController = movementController;
         _walkController = walkController;
-        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _pauseMenuToggler = pauseMenuToggler;
         _playerTransform = playerTransform;
         _characterController = characterController;
     }
 
     private void Awake()
     {
-        _pauseMenuEnablerDisabler.EnabledDisabled += ReverseEnableState;
+        _pauseMenuToggler.Toggled += ReverseEnableState;
     }
 
     private void ReverseEnableState()
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         {
             NotMoving?.Invoke();
             _movementController.MoveTime = 0;
-            _movementController.ÑurrentStepTime = 0;
+            _movementController.StepTime = 0;
 
             if (_isPlayerMoving)
             {
@@ -77,6 +77,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pauseMenuEnablerDisabler.EnabledDisabled -= ReverseEnableState;
+        _pauseMenuToggler.Toggled -= ReverseEnableState;
     }
 }

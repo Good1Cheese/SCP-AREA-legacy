@@ -6,9 +6,7 @@ public class WeaponSaving : ItemSaving
     [Inject(Id = "PropsHandler")] protected readonly Transform PropsHandler;
 
     private WeaponHandler _weaponHandler;
-
     public string silencerName;
-    public int clipAmmo;
 
     private void Start()
     {
@@ -18,7 +16,6 @@ public class WeaponSaving : ItemSaving
     public override void Save()
     {
         base.Save();
-        clipAmmo = _weaponHandler.ClipAmmo;
 
         if (_weaponHandler.SilencerHandler == null) { return; }
 
@@ -28,8 +25,6 @@ public class WeaponSaving : ItemSaving
     public override void Load()
     {
         base.Load();
-
-        _weaponHandler.ClipAmmo = clipAmmo;
 
         if (string.IsNullOrEmpty(silencerName)) { return; }
 

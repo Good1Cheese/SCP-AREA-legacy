@@ -22,7 +22,6 @@ public class AmmoUICountUpdater : MonoBehaviour
     private void Awake()
     {
         _weaponSlot.Changed += SetWeaponHandler;
-        _weaponReload.Reloaded += UpdateUI;
     }
 
     private void SetWeaponHandler(WeaponHandler weaponHandler)
@@ -32,12 +31,11 @@ public class AmmoUICountUpdater : MonoBehaviour
 
     public void UpdateUI()
     {
-        TextMeshProUGUI.text = string.Format($"{_weaponHandler.ClipAmmo}/{_weaponHandler.Weapon_SO.clipMaxAmmo}");
+        TextMeshProUGUI.text = string.Format($"{_weaponReload.CurrentClipAmmo}/{_weaponHandler.Weapon_SO.clipMaxAmmo}");
     }
 
     private void OnDestroy()
     {
         _weaponSlot.Changed -= SetWeaponHandler;
-        _weaponReload.Reloaded -= UpdateUI;
     }
 }

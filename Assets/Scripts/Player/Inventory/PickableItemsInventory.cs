@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PickableInventoryEnablerDisabler))]
+[RequireComponent(typeof(PickableInventoryToggler))]
 public class PickableItemsInventory : MonoBehaviour
 {
     [SerializeField, Range(0, 8)] private int _maxSlotsAmount;

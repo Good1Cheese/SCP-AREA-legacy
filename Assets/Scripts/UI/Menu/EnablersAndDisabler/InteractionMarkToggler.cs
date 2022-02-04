@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class InteractionMarkEnablerDisabler : MonoBehaviour
+public class InteractionMarkToggler : MonoBehaviour
 {
     [SerializeField] private RectTransform _markCanvas;
 

@@ -10,7 +10,7 @@ public class PlayerRotator : MonoBehaviour
     [SerializeField] private float _smoothTime;
 
     private Transform _mainCamera;
-    private PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    private PickableInventoryToggler _pickableInventoryToggler;
     private Transform _playerTransform;
 
     private float _mouseY;
@@ -21,18 +21,18 @@ public class PlayerRotator : MonoBehaviour
 
     [Inject]
     private void Construct([Inject(Id = "Camera")] Transform mainCamera,
-                           PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler,
+                           PickableInventoryToggler pickableInventoryToggler,
                            [Inject(Id = "Player")] Transform playerTransform)
     {
         _mainCamera = mainCamera;
-        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+        _pickableInventoryToggler = pickableInventoryToggler;
         _playerTransform = playerTransform;
     }
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        _pickableInventoryEnablerDisabler.EnabledDisabled += DisableRotation;
+        _pickableInventoryToggler.Toggled += DisableRotation;
     }
 
     private void Update()
@@ -71,6 +71,6 @@ public class PlayerRotator : MonoBehaviour
 
     private void OnDestroy()
     {
-        _pickableInventoryEnablerDisabler.EnabledDisabled -= DisableRotation;
+        _pickableInventoryToggler.Toggled -= DisableRotation;
     }
 }

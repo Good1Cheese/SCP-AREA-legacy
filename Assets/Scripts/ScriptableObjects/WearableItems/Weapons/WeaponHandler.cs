@@ -7,26 +7,20 @@ public class WeaponHandler : WearableItemHandler
 {
     private WeaponAim _weaponAim;
     private Transform _mainCamera;
-    private PickableItemsInventory _pickableItemsInventory;
-    private int _ammoCount;
 
-    public int Ammo => _ammoCount;
     public Weapon_SO Weapon_SO { get; private set; }
     public ClippingMaker ClippingMaker { get; private set; }
     public SilencerHandler SilencerHandler { get; set; }
-    public int ClipAmmo { get; set; }
     public AudioClip CurrentShotSound { get; set; }
 
     [Inject]
     private void Construct(WeaponSlot weaponSlot,
                            WeaponAim weaponAim,
-                           [Inject(Id = "Camera")] Transform mainCamera,
-                           PickableItemsInventory pickableItemsInventory)
+                           [Inject(Id = "Camera")] Transform mainCamera)
     {
         _wearableSlot = weaponSlot;
         _weaponAim = weaponAim;
         _mainCamera = mainCamera;
-        _pickableItemsInventory = pickableItemsInventory;
     }
 
     private new void Start()

@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(WeaponNoAmmo), typeof(WeaponAim))]
-public class WeaponFire : WeaponScriptBase, IInteractable
+public class WeaponFire : WeaponScriptBase
 {
     private const KeyCode FIRE_KEY = KeyCode.Mouse0;
 
@@ -12,6 +12,10 @@ public class WeaponFire : WeaponScriptBase, IInteractable
     private WeaponShot _weaponShot;
     private WeaponNoAmmo _weaponNoAmmo;
     private WeaponReload _weaponReload;
+
+    public override WaitForSeconds RequestTimeout => _weaponHandler.Weapon_SO.shotTimeout;
+
+    public override AudioClip RequestClip => _weaponHandler.Weapon_SO.shotSound;
 
     [Inject]
     private void Inject(RayForFireProvider rayForFireProvider,
@@ -33,18 +37,18 @@ public class WeaponFire : WeaponScriptBase, IInteractable
 
         if (CanNotWeaponDoAction()) { return; }
 
-        if (_weaponHandler.ClipAmmo == 0)
+        if (_weaponReload.CurrentClipAmmo == 0)
         {
             _weaponNoAmmo.ShootWithNoAmmo();
             return;
         }
 
-        _weaponRequestsHandler.Handle(this, _weaponHandler.Weapon_SO.shotTimeout);
+        _weaponRequestsHandler.Handle(this);
     }
 
     private void Fire()
     {
-        _weaponReload.CurrentClip.Item.Ammo--;
+        _weaponReload.CurrentClipAmmo--;
 
         Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
         _weaponShot.Shoot(raycastHit);
@@ -57,5 +61,5 @@ public class WeaponFire : WeaponScriptBase, IInteractable
         _weaponAim.FiredWithoutAim?.Invoke();
     }
 
-    public void Interact() => Fire();
+    public override void Interact() => Fire();
 }

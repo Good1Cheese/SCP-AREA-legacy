@@ -12,7 +12,7 @@ public class WeaponInstaller : MonoInstaller
             .AsSingle();
 
         Container.BindInstance(GetComponent<AudioSource>())
-            .WithId("ItemsAudio").AsCached();
+            .WithId("Weapon").AsCached();
 
         Container.BindInstance(GetComponent<Animator>())
             .AsSingle();

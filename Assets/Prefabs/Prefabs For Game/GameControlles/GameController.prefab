@@ -319,8 +319,8 @@ GameObject:
   - component: {fileID: 3476612386587923562}
   - component: {fileID: 7071613214550454115}
   - component: {fileID: 28724566}
-  - component: {fileID: 1113230667219139216}
-  - component: {fileID: 4504709228995589975}
+  - component: {fileID: 4647549556785317829}
+  - component: {fileID: 3431791440854551778}
   - component: {fileID: 973495705}
   - component: {fileID: 1787342607}
   - component: {fileID: 1451561399891976491}
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSlotsAmount: 8
---- !u!114 &1113230667219139216
+--- !u!114 &4647549556785317829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -564,15 +564,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4504709229982532500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306098329a079a74f969ccee262481c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 16652f1a4a6a0cc46ae105d96c55594e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _timeoutBeforeInteraction:
     _delay: 0
   _timeoutAfterInteraction:
-    _delay: 0.2
+    _delay: 0
   _pickableItemssInventoryUIUpdater: {fileID: 0}
---- !u!114 &4504709228995589975
+--- !u!114 &3431791440854551778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -581,7 +581,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4504709229982532500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5027b336f489f5846bd47b739a6b9aa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cfcb335f6ae5874fb76cad644d90c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _timeoutBeforeInteraction:

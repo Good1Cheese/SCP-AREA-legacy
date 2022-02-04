@@ -27,7 +27,7 @@ public abstract class InjectorScriptBase : ItemScriptBase
     {
         if (!Input.GetKeyDown(_key)) { return; }
 
-        if (_pickableInventoryEnablerDisabler.IsActivated) { return; }
+        if (_pickableInventoryToggler.IsToggled) { return; }
 
         TryInteract();
     }

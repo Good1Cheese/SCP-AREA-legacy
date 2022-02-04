@@ -3,14 +3,14 @@ using Zenject;
 
 public class WeaponSway : MonoBehaviour
 {
-    private PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    private PickableInventoryToggler _pickableInventoryToggler;
     private WeaponSlot _weaponSlot;
 
     [Inject]
-    private void Inject(PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler,
+    private void Inject(PickableInventoryToggler pickableInventoryToggler,
                         WeaponSlot weaponSlot)
     {
-        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+        _pickableInventoryToggler = pickableInventoryToggler;
         _weaponSlot = weaponSlot;
     }
 
@@ -26,7 +26,7 @@ public class WeaponSway : MonoBehaviour
 
     private void Update()
     {
-        if (_pickableInventoryEnablerDisabler.IsActivated
+        if (_pickableInventoryToggler.IsToggled
             || _weaponSlot.ItemHandler == null) { return; }
 
         float mouseY = Input.GetAxis("Mouse Y");

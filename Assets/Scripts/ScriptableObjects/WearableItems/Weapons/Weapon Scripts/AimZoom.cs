@@ -1,26 +1,12 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-public class AimZoom : CoroutineInsteadUpdateUser
+public class AimZoom : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve _curve;
+    [SerializeField] private RiseableCurve _fovCurve;
 
     private Camera _playerCamera;
     private WeaponAim _weaponAim;
-
-    private float _maxCurveTime;
-
-    public override float CurveTime
-    {
-        get => _curveTime;
-        set
-        {
-            _curveTime = value;
-            _playerCamera.fieldOfView = _curve.Evaluate(_curveTime);
-        }
-    }
 
     [Inject]
     private void Inject(Camera playerCamera, WeaponAim weaponAim)
@@ -29,30 +15,27 @@ public class AimZoom : CoroutineInsteadUpdateUser
         _weaponAim = weaponAim;
     }
 
-    private new void Start()
+    private void Awake()
     {
-        base.Start();
-        _maxCurveTime = _curve.GetLastKeyFrame().time;
-
-        _weaponAim.Aimed += Zoom;
-        _weaponAim.Unaimed += Unzoom;
+        _fovCurve.Initialize();
     }
 
-    private void Zoom()
+    private void Start()
     {
-        CurveTargetTime = _maxCurveTime;
-        InvokeCoroutine();
+        _weaponAim.Aimed += _fovCurve.Rise;
+        _weaponAim.Unaimed += _fovCurve.Decrease;
+        _fovCurve.Changed += UpdateFOV;
     }
 
-    private void Unzoom()
+    private void UpdateFOV()
     {
-        CurveTargetTime = 0;
-        InvokeCoroutine();
+        _playerCamera.fieldOfView = _fovCurve.Evaluate();
     }
 
     private void OnDestroy()
     {
-        _weaponAim.Aimed -= Zoom;
-        _weaponAim.Unaimed -= Unzoom;
+        _weaponAim.Aimed -= _fovCurve.Rise;
+        _weaponAim.Unaimed -= _fovCurve.Decrease;
+        _fovCurve.Changed -= UpdateFOV;
     }
 }

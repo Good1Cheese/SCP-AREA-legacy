@@ -6,7 +6,10 @@ public abstract class IdleCameraHeadBob : CameraHeadBob
     [SerializeField] protected RandomizableIdleHeadBobCurve yAxis;
     [SerializeField] protected RandomizableIdleHeadBobCurve zAxis;
 
-    public float CurveMultipliyer { get; set; }
+    private float _curveTime;
+
+    public float CurveMultipliyer { get; set; } = 1;
+    protected override float СurveTime => _curveTime;
 
     public RandomizableIdleHeadBobCurve XAxis => xAxis;
     public RandomizableIdleHeadBobCurve YAxis => yAxis;
@@ -20,7 +23,7 @@ public abstract class IdleCameraHeadBob : CameraHeadBob
 
     public override float GetCurveValue(HeadboBCurve HeadBobCurve)
     {
-        return base.GetCurveValue(HeadBobCurve) * CurveMultipliyer;
+        return HeadBobCurve.curve.Evaluate(_curveTime) * CurveMultipliyer;
     }
 
     protected abstract void ActivateHeadbob();

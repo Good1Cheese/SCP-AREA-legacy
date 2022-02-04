@@ -1,25 +1,60 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Zenject;
 
-public class WeaponRequestsHandler : CoroutineUser
+public class WeaponRequestsHandler : RequestsHandler
 {
-    private WaitForSeconds _timeout;
-    private IInteractable _interactable;
+    private AudioSource _audioSource;
+    private bool _canInterrupt;
 
-    public void Handle(IInteractable interactable, WaitForSeconds timeout)
+    private WeaponScriptBase _weaponScript;
+
+    [Inject]
+    private void Construct([Inject(Id = "Weapon")] AudioSource audioSource)
     {
-        _interactable = interactable;
-        _timeout = timeout;
+        _audioSource = audioSource;
+    }
+
+    public void Handle(WeaponScriptBase weaponScriptBase)
+    {
+        if (CanNotHandle) { return; }
+
+        _weaponScript = weaponScriptBase;
+
+        if (_canInterrupt)
+        {
+            StartWithInterrupt();
+            _canInterrupt = false;
+            return;
+        }
+
         StartWithoutInterrupt();
+        _canInterrupt = _weaponScript.Interuppable;
+    }
+
+    protected override void StartCoroutine(IEnumerator enumerator)
+    {
+        _audioSource.PlayOneShot(_weaponScript.RequestClip);
+        base.StartCoroutine(enumerator);
+    }
+
+    public override void StopCoroutine()
+    {
+        _audioSource.Stop();
+        base.StopCoroutine();
     }
 
     protected override IEnumerator Coroutine()
     {
-        print($"Weapon Action Started {_interactable}");
-        _interactable.Interact();
+        print($"Weapon Action Started {_weaponScript}");
 
-        yield return _timeout;
+        _weaponScript.Interact();
+
+        yield return _weaponScript.RequestTimeout;
+        
+        _weaponScript.OnSuccesRequest();
         IsCoroutineGoing = false;
-        print($"Weapon Action Ended {_interactable}");
+
+        print($"Weapon Action Ended {_weaponScript}");
     }
 }

@@ -24,7 +24,7 @@ public class HealthBarUIController : StatisticsBarUIController
 
     public override void UpdateUI()
     {
-        _healthBarUpdater.InvokeCoroutine();
+        _healthBarUpdater.UpdateUI();
     }
 
     protected override void Subscribe()

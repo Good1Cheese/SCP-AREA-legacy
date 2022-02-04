@@ -7,15 +7,16 @@ public class WearableItemActivator : InteractableWithDelay
     [SerializeField] private Transform _itemParent;
 
     private bool _activatedFromInventory;
-    protected PickableInventoryEnablerDisabler _inventoryEnablerDisabler;
+    protected PickableInventoryToggler _inventoryEnablerDisabler;
     protected WearableItemHandler _wearableItemHandler;
     protected WearableSlot _itemSlot;
     private bool _itemActiveState;
 
     public WearableSlot ItemSlot => _itemSlot;
+    public virtual bool CanItemActivateDeactivate => _wearableItemHandler != null && !_inventoryEnablerDisabler.IsToggled;
 
     [Inject]
-    private void Inject(PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler)
+    private void Inject(PickableInventoryToggler pickableInventoryEnablerDisabler)
     {
         _inventoryEnablerDisabler = pickableInventoryEnablerDisabler;
     }
@@ -25,16 +26,17 @@ public class WearableItemActivator : InteractableWithDelay
         _itemSlot.ItemChanged += SpawnGameObjectForPlayer;
         _itemSlot.ItemRemoved += DeactivateWeapon;
         _itemSlot.Used += ActivateItemFromInventory;
-        _inventoryEnablerDisabler.EnabledDisabled += ActivateItemIfActivated;
+        _inventoryEnablerDisabler.Toggled += ActivateItemIfActivated;
     }
 
     private void Update()
     {
         if (!Input.GetKeyDown(_key)) { return; }
 
-        if (_wearableItemHandler == null || _inventoryEnablerDisabler.IsActivated) { return; }
-
-        SetItemActiveState(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        if (CanItemActivateDeactivate)
+        {
+            SetItemActiveState(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        }
     }
 
     public void SetItemActiveState(bool itemActiveState)
@@ -97,6 +99,6 @@ public class WearableItemActivator : InteractableWithDelay
         _itemSlot.ItemChanged -= SpawnGameObjectForPlayer;
         _itemSlot.ItemRemoved -= DeactivateWeapon;
         _itemSlot.Used -= ActivateItemFromInventory;
-        _inventoryEnablerDisabler.EnabledDisabled -= ActivateItemIfActivated;
+        _inventoryEnablerDisabler.Toggled -= ActivateItemIfActivated;
     }
 }

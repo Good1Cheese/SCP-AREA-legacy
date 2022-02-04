@@ -1,5 +1,4 @@
 ﻿using System;
-using Zenject;
 
 public class WearableItemsDrop : ItemsInteraction
 {
@@ -9,6 +8,12 @@ public class WearableItemsDrop : ItemsInteraction
     {
         ItemRemoved?.Invoke();
         _inventorySlot.Clear();
+    }
+
+    public void Drop(InventorySlot inventorySlot)
+    {
+        ItemRemoved?.Invoke();
+        inventorySlot.Clear();
     }
 
     public override void Interact() => Drop();

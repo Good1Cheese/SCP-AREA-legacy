@@ -7,7 +7,7 @@ public class PauseMenuControls : MonoBehaviour
     private SceneTransition _sceneTransition;
     private GameSaving _gameSaving;
     private GameLoading _gameLoading;
-    private PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
+    private PauseMenuToggler _pauseMenuToggler;
 
     private GameObject _gameObject;
 
@@ -17,12 +17,12 @@ public class PauseMenuControls : MonoBehaviour
     private void Construct(SceneTransition sceneTransition,
                            GameSaving gameSaving,
                            GameLoading gameLoading,
-                           PauseMenuEnablerDisabler pauseMenuEnablerDisabler)
+                           PauseMenuToggler pauseMenuToggler)
     {
         _sceneTransition = sceneTransition;
         _gameSaving = gameSaving;
         _gameLoading = gameLoading;
-        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _pauseMenuToggler = pauseMenuToggler;
     }
 
     private void Start()
@@ -33,7 +33,7 @@ public class PauseMenuControls : MonoBehaviour
 
     public void PauseUnpauseGame()
     {
-        _pauseMenuEnablerDisabler.Interact();
+        _pauseMenuToggler.Interact();
     }
 
     public void SaveGame()

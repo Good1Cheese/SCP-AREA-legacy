@@ -13,8 +13,8 @@ public abstract class MoveController : MonoBehaviour
     protected MovementController _movementController;
     protected bool _leftIsLastStep;
 
-    public bool IsMoving { get; set; }
     public float MaxMoveTime => _maxMoveTime;
+    public bool IsMoving { get; set; }
 
     public Action Stepped { get; set; }
     public Action OnLeftStep { get; set; }
@@ -46,22 +46,22 @@ public abstract class MoveController : MonoBehaviour
 
     public void InvokeStepInvoke()
     {
-        _movementController.СurrentStepTime += Time.deltaTime;
+        _movementController.StepTime += Time.deltaTime;
 
-        if (_movementController.СurrentStepTime < _targetStepTime) { return; }
+        if (_movementController.StepTime < _targetStepTime) { return; }
 
         Stepped?.Invoke();
 
-        _movementController.СurrentStepTime = 0;
+        _movementController.StepTime = 0;
 
         if (_leftIsLastStep)
         {
             OnLeftStep?.Invoke();
-            _leftIsLastStep = !_leftIsLastStep;
+            _leftIsLastStep = false;
             return;
         }
 
-        _leftIsLastStep = !_leftIsLastStep;
+        _leftIsLastStep = true;
         OnRightStep?.Invoke();
     }
 

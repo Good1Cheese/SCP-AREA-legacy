@@ -32,13 +32,13 @@ public abstract class CoroutineInsteadUpdateUser : CoroutineUser
 
     protected virtual void GetConditionAndDeltaTimeMuitipliyer()
     {
-        if (CurveTargetTime < CurveTime)
+        if (CurveTime > CurveTargetTime)
         {
-            DecreaseCurveTime();
+            IncreaseCurveTime();
             return;
         }
 
-        IncreaseCurveTime();
+        DecreaseCurveTime();
     }
 
     protected void IncreaseCurveTime()

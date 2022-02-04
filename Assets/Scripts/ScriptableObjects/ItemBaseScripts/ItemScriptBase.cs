@@ -2,13 +2,13 @@
 
 public abstract class ItemScriptBase : InteractableWithDelay
 {
-    protected PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    protected PickableInventoryToggler _pickableInventoryToggler;
     protected WearableSlot _itemSlot;
 
     [Inject]
-    private void Inject(PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler)
+    private void Inject(PickableInventoryToggler pickableInventoryToggler)
     {
-        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
+        _pickableInventoryToggler = pickableInventoryToggler;
     }
 
     protected void Start()

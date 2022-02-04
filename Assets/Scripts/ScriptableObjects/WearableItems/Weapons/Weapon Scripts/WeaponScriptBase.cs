@@ -1,23 +1,27 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public abstract class WeaponScriptBase : MonoBehaviour
+public abstract class WeaponScriptBase : MonoBehaviour, IInteractable
 {
     protected WeaponSlot _weaponSlot;
-    protected PauseMenuEnablerDisabler _pauseMenuEnablerDisabler;
-    protected PickableInventoryEnablerDisabler _pickableInventoryEnablerDisabler;
+    protected PauseMenuToggler _pauseMenuToggler;
+    protected PickableInventoryToggler _pickableInventoryToggler;
     protected WeaponRequestsHandler _weaponRequestsHandler;
     protected WeaponHandler _weaponHandler;
 
+    public abstract WaitForSeconds RequestTimeout { get; }
+    public abstract AudioClip RequestClip { get; }
+    public virtual bool Interuppable => false;
+
     [Inject]
     private void Inject(WeaponSlot weaponSlot,
-                        PauseMenuEnablerDisabler pauseMenuEnablerDisabler,
-                        PickableInventoryEnablerDisabler pickableInventoryEnablerDisabler,
+                        PauseMenuToggler pauseMenuToggler,
+                        PickableInventoryToggler pickableInventoryToggler,
                         WeaponRequestsHandler weaponRequestsHandler)
     {
         _weaponSlot = weaponSlot;
-        _pickableInventoryEnablerDisabler = pickableInventoryEnablerDisabler;
-        _pauseMenuEnablerDisabler = pauseMenuEnablerDisabler;
+        _pickableInventoryToggler = pickableInventoryToggler;
+        _pauseMenuToggler = pauseMenuToggler;
         _weaponRequestsHandler = weaponRequestsHandler;
     }
 
@@ -32,9 +36,7 @@ public abstract class WeaponScriptBase : MonoBehaviour
 
     protected bool CanNotWeaponDoAction()
     {
-        return _pickableInventoryEnablerDisabler.IsActivated
-            || _pauseMenuEnablerDisabler.IsActivated
-            || _weaponHandler == null
+        return _weaponHandler == null
             || !_weaponHandler.GameObjectForPlayer.activeSelf;
     }
 
@@ -43,4 +45,7 @@ public abstract class WeaponScriptBase : MonoBehaviour
         _weaponSlot.Changed -= SetWeaponHandler;
         _weaponSlot.ItemRemoved -= SetWeaponHandlerToNull;
     }
+
+    public virtual void Interact() { }
+    public virtual void OnSuccesRequest() { }
 }

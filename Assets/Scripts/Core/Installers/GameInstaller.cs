@@ -2,7 +2,7 @@
 using UnityEngine.Rendering;
 using Zenject;
 
-[RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuEnablerDisabler))]
+[RequireComponent(typeof(PickableItemsInventory), typeof(PauseMenuToggler))]
 public class GameInstaller : MonoInstaller
 {
     [SerializeField] private KeyCardSlot _keyCardSlot;
@@ -25,7 +25,7 @@ public class GameInstaller : MonoInstaller
         BindPickableItemsInventory();
         BindRequestsHandlers();
 
-        Container.BindInstance(GetComponent<PauseMenuEnablerDisabler>())
+        Container.BindInstance(GetComponent<PauseMenuToggler>())
             .AsSingle();
 
         Container.BindInstance(GetComponent<AmmoUIEnablerDisabler>())
@@ -73,7 +73,7 @@ public class GameInstaller : MonoInstaller
         Container.BindInstance(GetComponent<PickableItemsInventory>())
             .AsSingle();
 
-        Container.BindInstance(GetComponent<PickableInventoryEnablerDisabler>())
+        Container.BindInstance(GetComponent<PickableInventoryToggler>())
             .AsSingle();
     }
 

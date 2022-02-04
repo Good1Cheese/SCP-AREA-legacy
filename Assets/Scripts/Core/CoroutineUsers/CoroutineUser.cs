@@ -23,6 +23,12 @@ public abstract class CoroutineUser : MonoBehaviour
         StartCoroutine(Method);
     }
 
+    public void StartWithInterrupt()
+    {
+        StopCoroutine();
+        StartCoroutine(Method);
+    }
+
     protected virtual new void StartCoroutine(IEnumerator enumerator)
     {
         IsCoroutineGoing = true;

@@ -1,24 +1,14 @@
 ﻿using UnityEngine;
 using Zenject;
+using System;
 
-public class HealthBarUpdater : CoroutineInsteadUpdateUser
+public class HealthBarUpdater : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve _curve;
+    [SerializeField] private RiseableCurve _healthCurve;
 
     private PlayerHealth _playerHealth;
-    private float _health;
 
-    public override float CurveTime
-    {
-        get => _curveTime;
-        set
-        {
-            _curveTime = value;
-            HealthBarUIController.Slider.value = CurrentHealth;
-        }
-    }
     public HealthBarUIController HealthBarUIController { get; set; }
-    private float CurrentHealth => _curve.Evaluate(_curveTime);
 
     [Inject]
     private void Construct(PlayerHealth playerHealth)
@@ -28,25 +18,36 @@ public class HealthBarUpdater : CoroutineInsteadUpdateUser
 
     private void Awake()
     {
-        _curveTime = _curve.GetLastKeyFrame().time;
+        Func<float, bool> decreaseCondition = curveValue => curveValue > _playerHealth.Amount;
+        Func<float, bool> riseCondition = curveValue => curveValue < _playerHealth.Amount;
+
+        _healthCurve.Initialize(riseCondition, decreaseCondition);
+        _healthCurve.CurveTime = _healthCurve.Curve.GetLastKeyFrame().time;
     }
 
-    public override void InvokeCoroutine()
+    private void Start()
     {
-        _health = _playerHealth.Amount;
-        base.InvokeCoroutine();
+        _healthCurve.Changed += UpdateHealthAmount;
     }
 
-    protected override void GetConditionAndDeltaTimeMuitipliyer()
+    private void UpdateHealthAmount()
     {
-        if (CurrentHealth > _health)
+        HealthBarUIController.Slider.value = _healthCurve.Evaluate();
+    }
+
+    public void UpdateUI()
+    {
+        if (_healthCurve.Evaluate() > _playerHealth.Amount)
         {
-            DecreaseCurveTime();
-            _condition = () => CurrentHealth > _health;
+            _healthCurve.Decrease();
             return;
         }
 
-        IncreaseCurveTime();
-        _condition = () => CurrentHealth < _health;
+        _healthCurve.Rise();
+    }
+
+    private void OnDestroy()
+    {
+        _healthCurve.Changed -= UpdateHealthAmount;
     }
 }

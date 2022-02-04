@@ -8,6 +8,8 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
     private WeaponSlot _weaponSlot;
     private GameObject _textMeshProGameObject;
 
+    public bool IsActivated { get; private set; }
+
     [Inject]
     private void Construct(WeaponSlot weaponSlot)
     {
@@ -35,8 +37,9 @@ public class AmmoUIEnablerDisabler : MonoBehaviour
 
     public void EnableDisable(bool activeState)
     {
+        IsActivated = activeState;
         _ammoUICountUpdater.UpdateUI();
-        _textMeshProGameObject.SetActive(activeState);
+        _textMeshProGameObject.SetActive(IsActivated);
     }
 
     private void OnDestroy()

@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(IRayProvider))]
-public class WeaponAim : WeaponScriptBase, IInteractable
+public class WeaponAim : WeaponScriptBase
 {
     private const KeyCode AIM_KEY = KeyCode.Mouse1;
 
@@ -11,7 +11,6 @@ public class WeaponAim : WeaponScriptBase, IInteractable
 
     private WaitForSeconds _aimTimeout;
     private Animator _weaponAnimator;
-    private WeaponReload _weaponReload;
     private bool _isAiming;
 
     public bool IsAiming { get; set; }
@@ -23,11 +22,14 @@ public class WeaponAim : WeaponScriptBase, IInteractable
     public Action Unaimed { get; set; }
     public bool WasAimed { get; set; }
 
+    public override WaitForSeconds RequestTimeout => _aimTimeout;
+    public override AudioClip RequestClip => null;
+
+
     [Inject]
-    private void Inject(Animator weaponAnimator, WeaponReload weaponReload)
+    private void Inject(Animator weaponAnimator)
     {
         _weaponAnimator = weaponAnimator;
-        _weaponReload = weaponReload;
     }
 
     private void Awake()
@@ -64,13 +66,12 @@ public class WeaponAim : WeaponScriptBase, IInteractable
     public void SetAimState(bool isAiming)
     {
         _isAiming = isAiming;
-        _weaponRequestsHandler.Handle(this, _aimTimeout);
+        _weaponRequestsHandler.Handle(this);
     }
 
     private void Aim()
     {
-        if (_weaponReload.IsCoroutineGoing
-            || CanNotWeaponDoAction()) { return; }
+        if (CanNotWeaponDoAction()) { return; }
 
         IsAiming = _isAiming;
         _weaponAnimator.SetBool("Aimed", _isAiming);
@@ -89,5 +90,5 @@ public class WeaponAim : WeaponScriptBase, IInteractable
         _weaponAnimator.runtimeAnimatorController = weaponHandler.Weapon_SO.weaponAnimationContoller;
     }
 
-    public void Interact() => Aim();
+    public override void Interact() => Aim();
 }

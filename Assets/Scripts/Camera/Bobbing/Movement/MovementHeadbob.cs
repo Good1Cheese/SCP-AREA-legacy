@@ -7,20 +7,23 @@ public abstract class MovementHeadBob : CameraHeadBob
     [SerializeField] protected MovementHeadBobCurve _stepXAxis;
     [SerializeField] protected MovementHeadBobCurve _yAxis;
 
-    protected float _targetTime;
+    private static float _curveTime;
+    private float _targetTime;
+    private Vector3 _newPosition = Vector3.zero;
     protected sbyte _curveValueMultipliyer;
-    protected Vector3 _newPosition = Vector3.zero;
     protected MoveController _moveController;
+
+    protected override float СurveTime => _curveTime;
+
+    private void Awake()
+    {
+        _targetTime = _stepXAxis.curve.GetLastKeyFrame().time;
+    }
 
     private void Start()
     {
         _moveController.OnLeftStep += ActivateLeftStepHeadbob;
         _moveController.OnRightStep += ActivateRightStepHeadbob;
-    }
-
-    private void Awake()
-    {
-        _targetTime = _stepXAxis.curve.GetLastKeyFrame().time;
     }
 
     private void ActivateLeftStepHeadbob()
@@ -52,14 +55,17 @@ public abstract class MovementHeadBob : CameraHeadBob
 
     private IEnumerator ActivateHeadbobCoroutine()
     {
+        print("Started");
         while (_curveTime < _targetTime)
         {
-            _curveTime += Time.deltaTime;
+            _curveTime += Time.fixedDeltaTime;
             OnCurveTimeChanged();
 
             yield return null;
         }
+
         _curveTime = 0;
+        print("Ended");
     }
 
     protected virtual void OnCurveTimeChanged()

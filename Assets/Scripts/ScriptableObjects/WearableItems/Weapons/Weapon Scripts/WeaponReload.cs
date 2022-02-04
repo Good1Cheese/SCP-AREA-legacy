@@ -1,52 +1,56 @@
-﻿using System;
-using System.Linq;
-using System.Collections;
+﻿using System.Linq;
+using UnityEngine;
 using Zenject;
 
-public class WeaponReload : CoroutineUser
+public class WeaponReload : WeaponScriptBase
 {
-    private WeaponHandler _weaponHandler;
-    protected WeaponSlot _weaponSlot;
     private AmmoPackage _ammoPackage;
+    private ItemSlot<AmmoHandler> _currentClip;
 
-    public Action Reloaded { get; set; }
-    public ItemSlot<AmmoHandler> CurrentClip { get; set; }
+    public int CurrentClipAmmo
+    {
+        get => _currentClip == null ? 0 : _currentClip.Item.Ammo;
+        set => _currentClip.Item.Ammo = value;
+    }
+
     public ItemSlot<AmmoHandler> NextClipAmmo
     {
         get
         {
-            return CurrentClip = _ammoPackage.Сlips.Slots
+            return _currentClip = _ammoPackage.Сlips.Slots
                 .Where(slot => slot.HasItem)
                 .OrderByDescending(slot => slot.Item.Ammo)
                 .FirstOrDefault();
         }
     }
 
-    [Inject]
-    private void Inject(WeaponSlot weaponSlot, AmmoPackage ammoPackage)
+    public bool HasAmmo
     {
-        _weaponSlot = weaponSlot;
+        get
+        {
+            return _ammoPackage.Сlips.Slots
+                .TakeWhile(slot => slot.Item != null)
+                .Sum(slot => slot.Item.Ammo) > 0;
+        }
+    }
+
+    public override WaitForSeconds RequestTimeout => _weaponHandler.Weapon_SO.reloadTimeout;
+    public override AudioClip RequestClip => _weaponHandler.Weapon_SO.reloadSound;
+    public override bool Interuppable => true;
+
+    [Inject]
+    private void Inject(AmmoPackage ammoPackage)
+    {
         _ammoPackage = ammoPackage;
     }
 
-    private new void Start()
+    public override void Interact()
     {
-        base.Start();
-        _weaponSlot.Changed += SetWeaponHandler;
+        _currentClip = null;
     }
 
-    protected override IEnumerator Coroutine()
+    public override void OnSuccesRequest()
     {
-        yield return _weaponHandler.Weapon_SO.reloadTimeout;
-
-        CurrentClip = NextClipAmmo;
-        _weaponHandler.ClipAmmo = CurrentClip.Item.Ammo;
-
-        IsCoroutineGoing = false;
-    }
-
-    protected void SetWeaponHandler(WeaponHandler weaponHandler)
-    {
-        _weaponHandler = weaponHandler;
+        _currentClip = NextClipAmmo;
     }
 }

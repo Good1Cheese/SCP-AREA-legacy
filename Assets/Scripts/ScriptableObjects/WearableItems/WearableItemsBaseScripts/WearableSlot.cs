@@ -4,6 +4,7 @@ using Zenject;
 public abstract class WearableSlot : InventorySlot
 {
     private static WearableItemActivator _currentItemActivator;
+    private WearableItemsDrop _wearableItemsDrop;
 
     public Action<WearableItemHandler> ItemChanged { get; set; }
     public Action<bool> Toggled { get; set; }
@@ -33,17 +34,23 @@ public abstract class WearableSlot : InventorySlot
     {
         _inventoryItemsUse = wearableItemsUse;
         _inventoryItemsDrop = wearableItemsDrop;
+        _wearableItemsDrop = wearableItemsDrop;
     }
 
     public new void SetItem(ItemHandler item)
     {
         if (ItemHandler != null)
         {
-            _inventoryItemsDrop.CallFunction(this);
+            ReplaceOldItem(item);
         }
 
         ItemChanged?.Invoke((WearableItemHandler)item);
         base.SetItem(item);
+    }
+
+    protected virtual void ReplaceOldItem(ItemHandler newItem)
+    {
+        _wearableItemsDrop.Drop(this);
     }
 
     public override void Setted()
