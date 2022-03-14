@@ -14,8 +14,8 @@ public class ReloadOrAmmoCountToggler : WeaponScriptBase
     public float PressTime { get; set; }
     public bool AmmoShowed { get; set; }
 
-    public override WaitForSeconds RequestTimeout => null;
-    public override AudioClip RequestClip => null;
+    public override WaitForSeconds InteractionTimeout => null;
+    public override AudioClip Sound => null;
 
     [Inject]
     private void Inject(AmmoUIEnablerDisabler ammoUIEnablerDisabler, WeaponReload weaponReload)
@@ -26,7 +26,7 @@ public class ReloadOrAmmoCountToggler : WeaponScriptBase
 
     private void Update()
     {
-        if (CanNotWeaponDoAction()) { return; }
+        if (IsWeaponNotAvailable()) { return; }
 
         if (Input.GetKey(RELOAD_KEY))
         {
@@ -47,7 +47,7 @@ public class ReloadOrAmmoCountToggler : WeaponScriptBase
             return;
         }
 
-        if (_weaponReload.CurrentClipAmmo == _weaponHandler.Weapon_SO.clipMaxAmmo
+        if (_weaponHandler.Weapon_SO.clipMaxAmmo == _weaponHandler.CurrentClipAmmo
             || !_weaponReload.HasAmmo) { return; }
 
         Reload();
@@ -55,7 +55,7 @@ public class ReloadOrAmmoCountToggler : WeaponScriptBase
 
     private void Reload()
     {
-        _weaponRequestsHandler.Handle(_weaponReload);
+        _weaponReload.Reload();
         PressTime = 0;
     }
 
@@ -69,6 +69,8 @@ public class ReloadOrAmmoCountToggler : WeaponScriptBase
 
     public void ToggleAmmoCount(bool value)
     {
+        if (_weaponRequestsHandler.IsCoroutineGoing) { return; }
+
         _ammoUIEnablerDisabler.EnableDisable(value);
         AmmoShowed = value;
         _deltaTimeMultiplier = value ? 0 : 1;

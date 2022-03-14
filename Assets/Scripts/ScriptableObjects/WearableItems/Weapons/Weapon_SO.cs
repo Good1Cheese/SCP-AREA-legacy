@@ -17,8 +17,13 @@ public class Weapon_SO : WearableIte_SO
     public float shotDelay;
     public WaitForSeconds shotTimeout;
 
-    public float reloadDelay;
-    public WaitForSeconds reloadTimeout;
+    public float firstReloadStageDelay;
+    public float secondReloadStageDelay;
+    public float thirdReloadStageDelay;
+
+    public WaitForSeconds firstReloadStageTimeout;
+    public WaitForSeconds secondReloadStageTimeout;
+    public WaitForSeconds thirdReloadStageTimeout;
 
     public Vector3 bulletSpawnPoint;
     public GameObject bulletHolePrefab;
@@ -28,5 +33,7 @@ public class Weapon_SO : WearableIte_SO
     public AudioClip shotSound;
     public AudioClip missFireSound;
     public AudioClip shotSoundWithSilencer;
-    public AudioClip reloadSound;
+    public AudioClip firstReloadStageSound;
+    public AudioClip secondReloadStageSound;
+    public AudioClip thirdReloadStageSound;
 }

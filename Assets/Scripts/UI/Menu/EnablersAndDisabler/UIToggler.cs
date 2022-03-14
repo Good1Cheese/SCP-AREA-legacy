@@ -1,7 +1,7 @@
 ﻿using System;
 using Zenject;
 
-public abstract class UIToggler : InteractableWithDelay
+public abstract class UIToggler : UIInteractable
 {
     private PlayerHealth _playerHealth;
     private GameLoader _gameLoader;

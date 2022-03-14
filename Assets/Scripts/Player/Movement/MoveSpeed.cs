@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(WalkSound), typeof(RunSound), typeof(WalkController))]
-public class MovementController : MonoBehaviour
+public class MoveSpeed : MonoBehaviour
 {
     [SerializeField] private AnimationCurve _movementSpeed;
     [SerializeField] private MoveController[] _moveControllers;
 
     private WalkController _walkController;
-    private MovementController _movementController;
+    private MovementInputLink _movementInputLink;
     private MoveController _usingMoveController;
 
     public AnimationCurve MovementSpeed => _movementSpeed;
@@ -18,10 +18,21 @@ public class MovementController : MonoBehaviour
     public float StepTime { get; set; }
 
     [Inject]
-    private void Construct(WalkController walkController, MovementController movementController)
+    private void Construct(WalkController walkController, MovementInputLink movementInputLink)
     {
         _walkController = walkController;
-        _movementController = movementController;
+        _movementInputLink = movementInputLink;
+    }
+
+    private void Start()
+    {
+        _movementInputLink.NotMoving += StopMove;
+    }
+
+    private void StopMove()
+    {
+        MoveTime = 0;
+        StepTime = 0;
     }
 
     public float GetPlayerSpeed()
@@ -63,5 +74,10 @@ public class MovementController : MonoBehaviour
             Speed = speed;
             _usingMoveController = _moveControllers[i];
         }
+    }
+
+    private void OnDestroy()
+    {
+        _movementInputLink.NotMoving -= StopMove;
     }
 }

@@ -1,10 +1,10 @@
-﻿public abstract class ItemsInteraction : InteractableWithDelay
+﻿public abstract class ItemsInteraction : UIInteractable
 {
-    protected InventorySlot _inventorySlot;
+    protected ItemSlot _itemSlot;
 
-    public void CallFunction(InventorySlot inventorySlot)
+    public void CallFunction(ItemSlot itemSlot)
     {
-        _inventorySlot = inventorySlot;
+        _itemSlot = itemSlot;
         TryInteract();
     }
 }

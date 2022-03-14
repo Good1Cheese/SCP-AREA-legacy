@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(PlayerBlood), typeof(PlayerDamageSound))]
+[RequireComponent(typeof(PlayerBlood))]
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;

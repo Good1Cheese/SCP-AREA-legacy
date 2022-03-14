@@ -1,16 +1,17 @@
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(PlayerMovement), typeof(PlayerHealth), typeof(PlayerRotator))]
+[RequireComponent(typeof(MovementInputLink), typeof(PlayerHealth), typeof(PlayerRotator))]
 public class PlayerInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        BindPlayerMovement();
-        BindPlayerHealth();
-
-        BindPlayer();
+        BindMovement();
+        BindHealth();
+        BindGameObjectAndTransform();
         BindCamera();
+
+        BindInput();
 
         Container.BindInstance(GetComponent<CharacterController>())
             .AsSingle();
@@ -22,9 +23,9 @@ public class PlayerInstaller : MonoInstaller
             .AsSingle();
     }
 
-    private void BindPlayerMovement()
+    private void BindMovement()
     {
-        Container.BindInstance(GetComponent<PlayerMovement>())
+        Container.BindInstance(GetComponent<MovementInputLink>())
             .AsSingle();
         Container.BindInstance(GetComponent<SlowWalkEffect>())
             .AsSingle();
@@ -32,7 +33,7 @@ public class PlayerInstaller : MonoInstaller
             .AsSingle();
         Container.BindInstance(GetComponent<StaminaDisabler>())
             .AsSingle();
-        Container.BindInstance(GetComponent<MovementController>())
+        Container.BindInstance(GetComponent<MoveSpeed>())
             .AsSingle();
         Container.BindInstance(GetComponent<RunController>())
             .AsSingle();
@@ -46,7 +47,7 @@ public class PlayerInstaller : MonoInstaller
             .AsSingle();
     }
 
-    private void BindPlayerHealth()
+    private void BindHealth()
     {
         Container.BindInstance(GetComponent<PlayerHealth>())
             .AsSingle();
@@ -60,7 +61,7 @@ public class PlayerInstaller : MonoInstaller
             .AsSingle();
     }
 
-    private void BindPlayer()
+    private void BindGameObjectAndTransform()
     {
         Container.BindInstance(transform)
             .WithId("Player").
@@ -85,6 +86,15 @@ public class PlayerInstaller : MonoInstaller
             .AsSingle();
 
         Container.BindInstance(GetComponent<DynamicFov>())
+            .AsSingle();
+    }
+
+    private void BindInput()
+    {
+        Container.BindInstance(GetComponent<InputContainer>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<MovementInputHandler>())
             .AsSingle();
     }
 }

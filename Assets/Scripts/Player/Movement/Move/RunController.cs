@@ -5,13 +5,13 @@ public class RunController : MoveController
     private PlayerStamina _playerStamina;
     protected SlowWalkController _slowWalkController;
     protected SlowWalkRunController _slowWalkRunController;
-    private PlayerMovement _playerMovement;
+    private MovementInputLink _playerMovement;
 
     [Inject]
     private void Construct(PlayerStamina playerStamina,
                            SlowWalkController slowWalkController,
                            SlowWalkRunController slowWalkRunController,
-                           PlayerMovement playerMovement)
+                           MovementInputLink playerMovement)
     {
         _playerStamina = playerStamina;
         _slowWalkController = slowWalkController;

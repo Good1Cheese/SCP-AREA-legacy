@@ -11,6 +11,7 @@ public class PlayerRotator : MonoBehaviour
 
     private Transform _mainCamera;
     private PickableInventoryToggler _pickableInventoryToggler;
+    private PauseMenuToggler _pauseMenuToggler;
     private Transform _playerTransform;
 
     private float _mouseY;
@@ -22,10 +23,12 @@ public class PlayerRotator : MonoBehaviour
     [Inject]
     private void Construct([Inject(Id = "Camera")] Transform mainCamera,
                            PickableInventoryToggler pickableInventoryToggler,
+                           PauseMenuToggler pauseMenuToggler,
                            [Inject(Id = "Player")] Transform playerTransform)
     {
         _mainCamera = mainCamera;
         _pickableInventoryToggler = pickableInventoryToggler;
+        _pauseMenuToggler = pauseMenuToggler;
         _playerTransform = playerTransform;
     }
 
@@ -33,6 +36,7 @@ public class PlayerRotator : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         _pickableInventoryToggler.Toggled += DisableRotation;
+        _pauseMenuToggler.Toggled += DisableRotation;
     }
 
     private void Update()
@@ -72,5 +76,6 @@ public class PlayerRotator : MonoBehaviour
     private void OnDestroy()
     {
         _pickableInventoryToggler.Toggled -= DisableRotation;
+        _pauseMenuToggler.Toggled -= DisableRotation;
     }
 }

@@ -55,7 +55,6 @@ public abstract class MovementHeadBob : CameraHeadBob
 
     private IEnumerator ActivateHeadbobCoroutine()
     {
-        print("Started");
         while (_curveTime < _targetTime)
         {
             _curveTime += Time.fixedDeltaTime;
@@ -65,7 +64,6 @@ public abstract class MovementHeadBob : CameraHeadBob
         }
 
         _curveTime = 0;
-        print("Ended");
     }
 
     protected virtual void OnCurveTimeChanged()

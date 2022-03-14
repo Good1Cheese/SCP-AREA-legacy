@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class InventorySlot : MonoBehaviour, IPointerClickHandler
+public abstract class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
     private const int CLICK_COUNT_TO_USE = 2;
 

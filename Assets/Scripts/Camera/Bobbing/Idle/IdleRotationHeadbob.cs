@@ -1,15 +1,14 @@
-﻿using UnityEngine;
-
-public class IdleRotationHeadBob : IdleCameraHeadBob
+﻿public class IdleRotationHeadBob : IdleCameraHeadBob
 {
-    private Quaternion _newRotation = Quaternion.identity;
+    private CurrentRotate _currentRotate;
 
-    protected override void ActivateHeadbob()
+    private void Awake()
     {
-        _newRotation = Quaternion.Euler(GetCurveValue(xAxis),
-                                        GetCurveValue(yAxis),
-                                        GetCurveValue(zAxis));
-
-        transform.localRotation = _newRotation;
+        _currentRotate = new CurrentRotate(() => GetCurveValue(xAxis),
+                                           () => GetCurveValue(yAxis),
+                                           () => GetCurveValue(zAxis),
+                                           transform);
     }
+
+    protected override void ActivateHeadbob() => _currentRotate.Rotate();
 }

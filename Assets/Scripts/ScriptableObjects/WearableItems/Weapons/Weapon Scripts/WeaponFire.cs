@@ -11,33 +11,30 @@ public class WeaponFire : WeaponScriptBase
     private WeaponAim _weaponAim;
     private WeaponShot _weaponShot;
     private WeaponNoAmmo _weaponNoAmmo;
-    private WeaponReload _weaponReload;
 
-    public override WaitForSeconds RequestTimeout => _weaponHandler.Weapon_SO.shotTimeout;
+    public override WaitForSeconds InteractionTimeout => _weaponHandler.Weapon_SO.shotTimeout;
 
-    public override AudioClip RequestClip => _weaponHandler.Weapon_SO.shotSound;
+    public override AudioClip Sound => _weaponHandler.Weapon_SO.shotSound;
 
     [Inject]
     private void Inject(RayForFireProvider rayForFireProvider,
                         WeaponAim weaponAim,
                         WeaponShot weaponShot,
-                        WeaponNoAmmo weaponMiss,
-                        WeaponReload weaponReload)
+                        WeaponNoAmmo weaponMiss)
     {
         _rayForFireProvider = rayForFireProvider;
         _weaponAim = weaponAim;
         _weaponShot = weaponShot;
         _weaponNoAmmo = weaponMiss;
-        _weaponReload = weaponReload;
     }
 
     private void Update()
     {
         if (!Input.GetKeyDown(FIRE_KEY)) { return; }
 
-        if (CanNotWeaponDoAction()) { return; }
+        if (IsWeaponNotAvailable()) { return; }
 
-        if (_weaponReload.CurrentClipAmmo == 0)
+        if (_weaponHandler.CurrentClipAmmo == 0)
         {
             _weaponNoAmmo.ShootWithNoAmmo();
             return;
@@ -48,7 +45,7 @@ public class WeaponFire : WeaponScriptBase
 
     private void Fire()
     {
-        _weaponReload.CurrentClipAmmo--;
+        _weaponHandler.CurrentClipAmmo--;
 
         Physics.Raycast(_rayForFireProvider.ProvideRay(), out RaycastHit raycastHit);
         _weaponShot.Shoot(raycastHit);

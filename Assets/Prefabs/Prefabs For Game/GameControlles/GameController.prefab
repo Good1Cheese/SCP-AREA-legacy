@@ -570,7 +570,7 @@ MonoBehaviour:
   _timeoutBeforeInteraction:
     _delay: 0
   _timeoutAfterInteraction:
-    _delay: 0
+    _delay: 0.15
   _pickableItemssInventoryUIUpdater: {fileID: 0}
 --- !u!114 &3431791440854551778
 MonoBehaviour:

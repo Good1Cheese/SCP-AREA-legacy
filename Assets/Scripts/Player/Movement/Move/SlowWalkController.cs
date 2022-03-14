@@ -4,7 +4,7 @@ using Zenject;
 [RequireComponent(typeof(SlowWalkEffect))]
 public class SlowWalkController : MoveController
 {
-    private PlayerMovement _playerMovement;
+    private MovementInputLink _playerMovement;
 
     private void Start()
     {
@@ -12,7 +12,7 @@ public class SlowWalkController : MoveController
     }
 
     [Inject]
-    private void Construct(PlayerMovement playerMovement)
+    private void Construct(MovementInputLink playerMovement)
     {
         _playerMovement = playerMovement;
     }

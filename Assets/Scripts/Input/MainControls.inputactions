@@ -1,0 +1,77 @@
+{
+    "name": "MainControls",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "37c43c7e-98cb-4932-818a-696a76c5c153",
+            "actions": [
+                {
+                    "name": "Main",
+                    "type": "Value",
+                    "id": "be1a00f3-65c5-41f2-a00d-73fbd7c515ca",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "HorizontalAndVectical",
+                    "id": "dd95f25e-fca4-4730-8769-f6cd8d12c532",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "ca13c2b9-2c54-4459-9c76-d34f3b72eccc",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "c8653732-0521-439c-9077-97ef53422e4e",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "29dbc8ba-ef66-4efb-aa98-ed1cd6c9b830",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "b2330435-d2b8-4b92-ab8d-47627aeff269",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

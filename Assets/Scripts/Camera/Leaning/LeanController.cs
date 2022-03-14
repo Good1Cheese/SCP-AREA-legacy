@@ -5,8 +5,8 @@ public class LeanController : MonoBehaviour
 {
     [SerializeField] private KeyCode _key;
 
-    [Inject] readonly private PlayerMovement _playerMovement;
-    [Inject] readonly private MovementController _movementController;
+    [Inject] readonly private MovementInputLink _playerMovement;
+    [Inject] readonly private MoveSpeed _moveSpeed;
     [Inject] readonly private SlowWalkController _slowWalkController;
 
     private VerticalLean _verticalLean;
@@ -54,8 +54,8 @@ public class LeanController : MonoBehaviour
     {
         _horizontalLean.CurveTime = 0;
         _verticalLean.CurveTime = 0;
+        _moveSpeed.MoveTime = 0;
         _playerMovement.HorizontalMove = 0;
         _playerMovement.VerticalMove = 0;
-        _movementController.MoveTime = 0;
     }
 }

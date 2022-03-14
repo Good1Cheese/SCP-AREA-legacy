@@ -13,6 +13,7 @@ public class WearableItemActivator : InteractableWithDelay
     private bool _itemActiveState;
 
     public WearableSlot ItemSlot => _itemSlot;
+    public bool IsActive => _wearableItemHandler.GameObjectForPlayer.activeSelf;
     public virtual bool CanItemActivateDeactivate => _wearableItemHandler != null && !_inventoryEnablerDisabler.IsToggled;
 
     [Inject]
@@ -35,14 +36,20 @@ public class WearableItemActivator : InteractableWithDelay
 
         if (CanItemActivateDeactivate)
         {
-            SetItemActiveState(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+            TrySetItemActiveState(!IsActive);
         }
+    }
+
+    public void TrySetItemActiveState(bool itemActiveState)
+    {
+        _itemActiveState = itemActiveState;
+        TryInteract();
     }
 
     public void SetItemActiveState(bool itemActiveState)
     {
         _itemActiveState = itemActiveState;
-        TryInteract();
+        Interact();
     }
 
     private void SetItemActiveState()
@@ -81,14 +88,14 @@ public class WearableItemActivator : InteractableWithDelay
     private void ActivateItemFromInventory()
     {
         _activatedFromInventory = true;
-        _wearableItemHandler.GameObjectForPlayer.SetActive(!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        _wearableItemHandler.GameObjectForPlayer.SetActive(!IsActive);
     }
 
     private void ActivateItemIfActivated()
     {
         if (!_activatedFromInventory) { return; }
 
-        SetItemActiveState(!!_wearableItemHandler.GameObjectForPlayer.activeSelf);
+        SetItemActiveState(!!IsActive);
         _activatedFromInventory = false;
     }
 

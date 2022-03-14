@@ -3,21 +3,23 @@ using UnityEngine;
 public class SideHeadBob : CurveInputUser
 {
     [SerializeField] private AnimationCurve _curve;
-    [SerializeField] private Transform _transform;
 
-    private Quaternion _newRotation = Quaternion.identity;
+    private CurrentRotate _currentRotate;
 
     private void Awake()
     {
         _topCurveTimeLimit = _curve.GetLastKeyFrame().time;
         _bottomCurveTimeLimit = -_topCurveTimeLimit;
+
+        _currentRotate = new CurrentRotate(() => 0,
+                                           () => 0,
+                                           () => _curve.Evaluate(_curveTime),
+                                           transform); 
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         CalculateCurveTime();
-
-        _newRotation = Quaternion.Euler(0, 0, _curve.Evaluate(_curveTime));
-        _transform.localRotation = _newRotation;
+        _currentRotate.Rotate();
     }
 }

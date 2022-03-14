@@ -30,7 +30,9 @@ public class AmmoHandler : PickableItemHandler
 
     public override void Equip()
     {
-        if (!_ammoPackage.Store(this)) return;
+        bool stored = _ammoPackage.Store(this);
+
+        if (!stored) { return; }
 
         Equiped();
     }

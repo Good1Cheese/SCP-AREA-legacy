@@ -1,23 +1,26 @@
 ﻿using System;
 using Zenject;
 
-public abstract class WearableSlot : InventorySlot
+public abstract class WearableSlot : ItemSlot
 {
     private static WearableItemActivator _currentItemActivator;
     private WearableItemsDrop _wearableItemsDrop;
 
+    public static Action<WearableItemActivator> CurrentItemActivatorChanged { get; set; }
+    public WearableItemActivator Activator { get; set; }
     public Action<WearableItemHandler> ItemChanged { get; set; }
     public Action<bool> Toggled { get; set; }
     public Action ItemRemoved { get; set; }
     public Action ActionStarted { get; set; }
     public Action Used { get; set; }
-    public WearableItemActivator Activator { get; set; }
 
     public static WearableItemActivator CurrentItemActivator
     {
         get => _currentItemActivator;
         set
         {
+            CurrentItemActivatorChanged?.Invoke(value);
+
             if (value == _currentItemActivator) { return; }
 
             if (_currentItemActivator != null)
@@ -60,6 +63,7 @@ public abstract class WearableSlot : InventorySlot
 
     public override void Cleared()
     {
+        Activator.SetItemActiveState(false);
         ItemRemoved?.Invoke();
         _image.enabled = false;
 

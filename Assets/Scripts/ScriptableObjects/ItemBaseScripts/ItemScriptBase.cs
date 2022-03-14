@@ -1,15 +1,6 @@
-﻿using Zenject;
-
-public abstract class ItemScriptBase : InteractableWithDelay
+﻿public abstract class ItemScriptBase : InteractableWithDelay
 {
-    protected PickableInventoryToggler _pickableInventoryToggler;
     protected WearableSlot _itemSlot;
-
-    [Inject]
-    private void Inject(PickableInventoryToggler pickableInventoryToggler)
-    {
-        _pickableInventoryToggler = pickableInventoryToggler;
-    }
 
     protected void Start()
     {

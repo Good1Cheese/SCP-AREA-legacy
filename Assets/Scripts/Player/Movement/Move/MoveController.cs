@@ -10,7 +10,7 @@ public abstract class MoveController : MonoBehaviour
     [SerializeField] private float _targetStepTime;
 
     protected DynamicFov _dynamicFov;
-    protected MovementController _movementController;
+    protected MoveSpeed _moveSpeed;
     protected bool _leftIsLastStep;
 
     public float MaxMoveTime => _maxMoveTime;
@@ -26,33 +26,33 @@ public abstract class MoveController : MonoBehaviour
     public Action UseStopped { get; set; }
 
     [Inject]
-    private void Construct(DynamicFov dynamicFov, MovementController movementController)
+    private void Construct(DynamicFov dynamicFov, MoveSpeed moveSpeed)
     {
         _dynamicFov = dynamicFov;
-        _movementController = movementController;
+        _moveSpeed = moveSpeed;
     }
 
     protected float Move()
     {
         Using?.Invoke();
 
-        if (_movementController.MoveTime < MaxMoveTime)
+        if (_moveSpeed.MoveTime < MaxMoveTime)
         {
-            _movementController.MoveTime += Time.deltaTime;
+            _moveSpeed.MoveTime += Time.deltaTime;
         }
 
-        return _movementController.MovementSpeed.Evaluate(_movementController.MoveTime);
+        return _moveSpeed.MovementSpeed.Evaluate(_moveSpeed.MoveTime);
     }
 
     public void InvokeStepInvoke()
     {
-        _movementController.StepTime += Time.deltaTime;
+        _moveSpeed.StepTime += Time.deltaTime;
 
-        if (_movementController.StepTime < _targetStepTime) { return; }
+        if (_moveSpeed.StepTime < _targetStepTime) { return; }
 
         Stepped?.Invoke();
 
-        _movementController.StepTime = 0;
+        _moveSpeed.StepTime = 0;
 
         if (_leftIsLastStep)
         {

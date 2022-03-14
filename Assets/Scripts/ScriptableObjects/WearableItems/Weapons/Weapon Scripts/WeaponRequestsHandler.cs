@@ -2,59 +2,59 @@
 using UnityEngine;
 using Zenject;
 
-public class WeaponRequestsHandler : RequestsHandler
+public class WeaponRequestsHandler : CoroutineUser
 {
     private AudioSource _audioSource;
-    private bool _canInterrupt;
+    private PickableInventoryToggler _pickableInventoryToggler;
+    private AmmoUIEnablerDisabler _ammoUIEnablerDisabler;
+    private PauseMenuToggler _pauseMenuToggler;
 
-    private WeaponScriptBase _weaponScript;
+    public bool IsCurrentInterruptable { get; set; }
+    public WeaponScriptBase WeaponScript { get; set; }
 
     [Inject]
-    private void Construct([Inject(Id = "Weapon")] AudioSource audioSource)
+    private void Construct([Inject(Id = "Weapon")] AudioSource audioSource,
+                           PickableInventoryToggler pickableInventoryToggler,
+                           AmmoUIEnablerDisabler ammoUIEnablerDisabler,
+                           PauseMenuToggler pauseMenuToggler)
     {
         _audioSource = audioSource;
+        _pickableInventoryToggler = pickableInventoryToggler;
+        _ammoUIEnablerDisabler = ammoUIEnablerDisabler;
+        _pauseMenuToggler = pauseMenuToggler;
     }
 
     public void Handle(WeaponScriptBase weaponScriptBase)
     {
-        if (CanNotHandle) { return; }
+        if (_pickableInventoryToggler.IsToggled
+            || _pauseMenuToggler.IsToggled
+            || _ammoUIEnablerDisabler.IsActivated) { return; }
 
-        _weaponScript = weaponScriptBase;
-
-        if (_canInterrupt)
-        {
-            StartWithInterrupt();
-            _canInterrupt = false;
-            return;
-        }
-
+        WeaponScript = weaponScriptBase;
         StartWithoutInterrupt();
-        _canInterrupt = _weaponScript.Interuppable;
     }
 
     protected override void StartCoroutine(IEnumerator enumerator)
     {
-        _audioSource.PlayOneShot(_weaponScript.RequestClip);
         base.StartCoroutine(enumerator);
+
+        if (WeaponScript.Sound == null) { return; }
+
+        _audioSource.PlayOneShot(WeaponScript.Sound);
     }
 
     public override void StopCoroutine()
     {
-        _audioSource.Stop();
         base.StopCoroutine();
+        _audioSource.Stop();
     }
 
     protected override IEnumerator Coroutine()
     {
-        print($"Weapon Action Started {_weaponScript}");
+        WeaponScript.Interact();
 
-        _weaponScript.Interact();
+        yield return WeaponScript.InteractionTimeout;
 
-        yield return _weaponScript.RequestTimeout;
-        
-        _weaponScript.OnSuccesRequest();
         IsCoroutineGoing = false;
-
-        print($"Weapon Action Ended {_weaponScript}");
     }
 }

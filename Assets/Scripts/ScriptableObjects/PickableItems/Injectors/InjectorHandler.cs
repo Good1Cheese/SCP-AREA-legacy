@@ -41,6 +41,7 @@ public class InjectorHandler : WearableItemHandler
 
     public override void Dropped()
     {
+        base.Dropped();
         _wearableSlot.ClearSlot();
     }
 }

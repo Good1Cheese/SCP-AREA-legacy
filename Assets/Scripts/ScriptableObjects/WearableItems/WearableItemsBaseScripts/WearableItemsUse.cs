@@ -2,7 +2,7 @@
 {
     private void Use()
     {
-        var itemSlot = _inventorySlot.ItemHandler as IClickable;
+        var itemSlot = _itemSlot.ItemHandler as IClickable;
         itemSlot.Clicked(-1);
     }
 

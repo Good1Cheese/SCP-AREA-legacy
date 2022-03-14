@@ -11,7 +11,7 @@ public class PlayerStamina : CoroutineWithDelayUser
 
     private RunController _runController;
     private SlowWalkRunController _slowWalkRunController;
-    private PlayerMovement _playerMovement;
+    private MovementInputLink _playerMovement;
 
     private float _maxAmount;
     private float _curveTime;
@@ -45,7 +45,7 @@ public class PlayerStamina : CoroutineWithDelayUser
     [Inject]
     private void Construct(RunController runController,
                            SlowWalkRunController slowWalkRunController,
-                           PlayerMovement playerMovement)
+                           MovementInputLink playerMovement)
     {
         _runController = runController;
         _slowWalkRunController = slowWalkRunController;

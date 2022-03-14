@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
-[RequireComponent(typeof(CharacterController), typeof(MovementController), typeof(PlayerStamina))]
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(CharacterController), typeof(MoveSpeed), typeof(PlayerStamina))]
+public class MovementInputLink : MonoBehaviour
 {
     private const float MOVE_MAGNUTUDE_MAX_LENGHT = 1f;
 
-    private MovementController _movementController;
+    private MoveSpeed _movementController;
     private WalkController _walkController;
     private PauseMenuToggler _pauseMenuToggler;
     private Transform _playerTransform;
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float VerticalMove { get; set; }
 
     [Inject]
-    private void Construct(MovementController movementController,
+    private void Construct(MoveSpeed movementController,
                            WalkController walkController,
                            PauseMenuToggler pauseMenuToggler,
                            [Inject(Id = "Player")] Transform playerTransform,

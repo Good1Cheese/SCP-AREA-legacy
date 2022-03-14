@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public abstract class WeaponScriptBase : MonoBehaviour, IInteractable
+public abstract class WeaponScriptBase : WeaponUser, IInteractable
 {
-    protected WeaponSlot _weaponSlot;
     protected PauseMenuToggler _pauseMenuToggler;
     protected PickableInventoryToggler _pickableInventoryToggler;
     protected WeaponRequestsHandler _weaponRequestsHandler;
-    protected WeaponHandler _weaponHandler;
 
-    public abstract WaitForSeconds RequestTimeout { get; }
-    public abstract AudioClip RequestClip { get; }
-    public virtual bool Interuppable => false;
+    public abstract WaitForSeconds InteractionTimeout { get; }
+    public abstract AudioClip Sound { get; }
 
     [Inject]
     private void Inject(WeaponSlot weaponSlot,
@@ -19,33 +16,30 @@ public abstract class WeaponScriptBase : MonoBehaviour, IInteractable
                         PickableInventoryToggler pickableInventoryToggler,
                         WeaponRequestsHandler weaponRequestsHandler)
     {
-        _weaponSlot = weaponSlot;
         _pickableInventoryToggler = pickableInventoryToggler;
         _pauseMenuToggler = pauseMenuToggler;
         _weaponRequestsHandler = weaponRequestsHandler;
     }
 
-    protected void Start()
+    protected new void Start()
     {
-        _weaponSlot.Changed += SetWeaponHandler;
+        base.Start();
         _weaponSlot.ItemRemoved += SetWeaponHandlerToNull;
     }
 
-    protected virtual void SetWeaponHandler(WeaponHandler weaponHandler) => _weaponHandler = weaponHandler;
     private void SetWeaponHandlerToNull() => _weaponHandler = null;
 
-    protected bool CanNotWeaponDoAction()
+    protected bool IsWeaponNotAvailable()
     {
         return _weaponHandler == null
             || !_weaponHandler.GameObjectForPlayer.activeSelf;
     }
 
-    protected void OnDestroy()
+    protected new void OnDestroy()
     {
-        _weaponSlot.Changed -= SetWeaponHandler;
+        base.OnDestroy();
         _weaponSlot.ItemRemoved -= SetWeaponHandlerToNull;
     }
 
     public virtual void Interact() { }
-    public virtual void OnSuccesRequest() { }
 }

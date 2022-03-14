@@ -12,9 +12,9 @@ public class PickabeItemsDrop : ItemsInteraction
 
     private void Drop()
     {
-        _inventorySlot.Clear();
+        _itemSlot.Clear();
 
-        var pickableSlot = (PickableSlot)_inventorySlot;
+        var pickableSlot = (PickableSlot)_itemSlot;
         _pickableItemsInventory.Remove(pickableSlot.SlotIndex);
     }
 

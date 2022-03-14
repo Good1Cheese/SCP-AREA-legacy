@@ -7,13 +7,13 @@ public class WearableItemsDrop : ItemsInteraction
     private void Drop()
     {
         ItemRemoved?.Invoke();
-        _inventorySlot.Clear();
+        _itemSlot.Clear();
     }
 
-    public void Drop(InventorySlot inventorySlot)
+    public void Drop(ItemSlot itemSlot)
     {
         ItemRemoved?.Invoke();
-        inventorySlot.Clear();
+        itemSlot.Clear();
     }
 
     public override void Interact() => Drop();

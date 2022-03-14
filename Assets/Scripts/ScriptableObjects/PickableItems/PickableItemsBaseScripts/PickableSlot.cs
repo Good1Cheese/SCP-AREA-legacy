@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-public class PickableSlot : InventorySlot, IPointerClickHandler
+public class PickableSlot : ItemSlot, IPointerClickHandler
 {
     [SerializeField] private TextMeshProUGUI _itemDescription;
 

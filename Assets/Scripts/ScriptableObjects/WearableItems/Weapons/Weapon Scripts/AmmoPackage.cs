@@ -1,32 +1,23 @@
 ﻿using System;
 using UnityEngine;
-using Zenject;
 using static Ammo_SO;
 
 public class AmmoPackage : MonoBehaviour
 {
     [SerializeField] private int _capacity;
 
-    private WeaponSlot _weaponSlot;
-
-    public ItemSlots<AmmoHandler> Сlips { get; private set; }
-
-    [Inject]
-    private void Construct(WeaponSlot weaponSlot)
-    {
-        _weaponSlot = weaponSlot;
-    }
+    public ItemSlots<AmmoHandler> Clips { get; private set; }
 
     private void Awake()
     {
-        Сlips = new ItemSlots<AmmoHandler>(_capacity);
+        Clips = new ItemSlots<AmmoHandler>(_capacity);
     }
 
     public bool Store(AmmoHandler ammoHandler)
     {
-        var freeSlot = Array.Find(Сlips.Slots, slot => !slot.HasItem);
+        var freeSlot = Array.Find(Clips.Slots, slot => !slot.HasItem);
 
-        if (freeSlot == null) return false;
+        if (freeSlot == null) { return false; }
 
         freeSlot.Set(ammoHandler);
 
@@ -35,13 +26,25 @@ public class AmmoPackage : MonoBehaviour
 
     public void DropAll(AmmoType ammoType)
     {
-        for (int i = 0; i < Сlips.Slots.Length; i++)
+        for (int i = 0; i < Clips.Slots.Length; i++)
         {
-            var item = Сlips.Slots[i].Item;
+            var item = Clips.Slots[i].Item;
 
             if (item == null || item.Ammo_SO.ammoType != ammoType) { continue; }
 
             item.Dropped();
+        }
+    }
+
+    public void Remove(ItemSlot<AmmoHandler> clipSlot)
+    {
+        for (int i = 0; i < Clips.Slots.Length; i++)
+        {
+            if (Clips.Slots[i] == clipSlot)
+            {
+                Clips.Slots[i].Clear();
+                return;
+            }
         }
     }
 }

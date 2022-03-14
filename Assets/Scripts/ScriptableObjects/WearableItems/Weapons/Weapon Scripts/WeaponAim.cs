@@ -22,8 +22,8 @@ public class WeaponAim : WeaponScriptBase
     public Action Unaimed { get; set; }
     public bool WasAimed { get; set; }
 
-    public override WaitForSeconds RequestTimeout => _aimTimeout;
-    public override AudioClip RequestClip => null;
+    public override WaitForSeconds InteractionTimeout => _aimTimeout;
+    public override AudioClip Sound => null;
 
 
     [Inject]
@@ -71,7 +71,7 @@ public class WeaponAim : WeaponScriptBase
 
     private void Aim()
     {
-        if (CanNotWeaponDoAction()) { return; }
+        if (IsWeaponNotAvailable()) { return; }
 
         IsAiming = _isAiming;
         _weaponAnimator.SetBool("Aimed", _isAiming);
