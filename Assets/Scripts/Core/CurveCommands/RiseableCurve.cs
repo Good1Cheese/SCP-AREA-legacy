@@ -2,13 +2,13 @@
 using UnityEngine;
 
 [Serializable]
-public class RiseableCurve
+public class RiseableCurve : ICurveValueGetter
 {
     [SerializeField] protected AnimationCurve _curve;
 
     protected float _curveTime;
-    private  CurveCommand _riseCommand;
-    private  CurveCommand _decreaseCommand;
+    private CurveCommand _riseCommand;
+    private CurveCommand _decreaseCommand;
 
     public AnimationCurve Curve => _curve;
     public Action Changed { get; set; }
@@ -23,14 +23,14 @@ public class RiseableCurve
         }
     }
 
-    public virtual void Initialize(Func<float, bool> riseCommandCondition, Func<float, bool> decreaseCommandCondition)
+    public void Initialize(Func<float, bool> riseCommandCondition, Func<float, bool> decreaseCommandCondition)
     {
-        Initialize();
+        InitializeDefault();
         _riseCommand.Condition = riseCommandCondition;
         _decreaseCommand.Condition = decreaseCommandCondition;
     }
 
-    public virtual void Initialize()
+    public virtual void InitializeDefault()
     {
         var riseCommand = new CurveCommand(this, curveValue => curveValue > Curve.GetLastKeyFrame().value, true);
         var decreaseCommand = new CurveCommand(this, curveValue => curveValue < Curve.GetFirstKeyFrame().value, false);
@@ -39,7 +39,8 @@ public class RiseableCurve
         _decreaseCommand = decreaseCommand;
     }
 
-    public float Evaluate() => _curve.Evaluate(_curveTime);
+    public float GetCurrent() => _curve.Evaluate(_curveTime);
+
     public void Rise() => _riseCommand.CallCommand();
     public void Decrease() => _decreaseCommand.CallCommand();
 }

@@ -7,7 +7,7 @@ public abstract class MoveSound : SoundOnAction
 
     private PauseMenuToggler _pauseMenuToggler;
     private PlayerHealth _playerHealth;
-    protected MoveController _moveController;
+    protected Move _move;
 
     [Inject]
     private void Construct(PauseMenuToggler pauseMenuToggler, PlayerHealth playerHealth)
@@ -41,15 +41,15 @@ public abstract class MoveSound : SoundOnAction
 
     protected override void SubscribeToAction()
     {
-        _moveController.Stepped += PlaySound;
-        _moveController.UseStopped += StopSound;
+        _move.Actions.Stepped += PlaySound;
+        _move.Actions.UseStopped += StopSound;
         _pauseMenuToggler.Toggled += StopSound;
     }
 
     protected override void UnscribeToAction()
     {
-        _moveController.Stepped -= PlaySound;
-        _moveController.UseStopped -= StopSound;
+        _move.Actions.Stepped -= PlaySound;
+        _move.Actions.UseStopped -= StopSound;
         _pauseMenuToggler.Toggled -= StopSound;
     }
 

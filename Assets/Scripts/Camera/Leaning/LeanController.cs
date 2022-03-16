@@ -5,9 +5,9 @@ public class LeanController : MonoBehaviour
 {
     [SerializeField] private KeyCode _key;
 
-    [Inject] readonly private MovementInputLink _playerMovement;
-    [Inject] readonly private MoveSpeed _moveSpeed;
-    [Inject] readonly private SlowWalkController _slowWalkController;
+    [Inject] readonly private MovementInputLink _movementInputLink;
+    [Inject] readonly private MovesContainer _movesContainer;
+    [Inject] readonly private SlowWalk _slowWalk;
 
     private VerticalLean _verticalLean;
     private HorizontalLean _horizontalLean;
@@ -24,14 +24,14 @@ public class LeanController : MonoBehaviour
         if (Input.GetKeyDown(_key))
         {
             _isPeekEnabled = !_isPeekEnabled;
-            _playerMovement.enabled = !_isPeekEnabled;
+            _movementInputLink.enabled = !_isPeekEnabled;
             StopPlayer();
         }
 
         if (Input.GetKeyUp(_key))
         {
             _isPeekEnabled = !_isPeekEnabled;
-            _playerMovement.enabled = !_isPeekEnabled;
+            _movementInputLink.enabled = !_isPeekEnabled;
         }
     }
 
@@ -39,7 +39,7 @@ public class LeanController : MonoBehaviour
     {
         if (_isPeekEnabled)
         {
-            _slowWalkController.GetSpeed();
+            _slowWalk.Use();
             _verticalLean.Lean();
             _horizontalLean.Lean();
 
@@ -54,8 +54,8 @@ public class LeanController : MonoBehaviour
     {
         _horizontalLean.CurveTime = 0;
         _verticalLean.CurveTime = 0;
-        _moveSpeed.MoveTime = 0;
-        _playerMovement.HorizontalMove = 0;
-        _playerMovement.VerticalMove = 0;
+        _movesContainer.MoveTime = 0;
+        _movementInputLink.HorizontalMove = 0;
+        _movementInputLink.VerticalMove = 0;
     }
 }

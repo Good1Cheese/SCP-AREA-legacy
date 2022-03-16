@@ -5,7 +5,7 @@ public class MoveDetector : MonoBehaviour
 {
     [Inject] private readonly GameObject _playerGameObject;
 
-    protected MoveController _moveController;
+    protected Move _move;
     private EnemyManager _enemyManager;
 
     private void Start()
@@ -15,7 +15,7 @@ public class MoveDetector : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject == _playerGameObject && _moveController.IsMoving)
+        if (other.gameObject == _playerGameObject && _move.Using)
         {
             /*            _enemyManager.WasPlayerDetected = true*/
             ;

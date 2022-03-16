@@ -3,7 +3,7 @@ using Zenject;
 
 public class VerticalLean : DirectionLean
 {
-    [Inject] readonly private SlowWalkController _slowWalkController;
+    [Inject] readonly private SlowWalk _slowWalk;
 
     private Vector3 _zero = Vector3.zero;
     private Vector3 _leanPosition = Vector3.zero;
@@ -11,12 +11,12 @@ public class VerticalLean : DirectionLean
     private new void Start()
     {
         base.Start();
-        _slowWalkController.NotUsing += Restore;
+        _slowWalk.Actions.NotUsing += Restore;
     }
 
     public override void Lean()
     {
-        if (!_slowWalkController.IsMoving) { return; }
+        if (!_slowWalk.Using) { return; }
 
         GetCurveTime();
 
@@ -32,6 +32,6 @@ public class VerticalLean : DirectionLean
     private new void OnDestroy()
     {
         base.OnDestroy();
-        _slowWalkController.NotUsing -= Restore;
+        _slowWalk.Actions.NotUsing -= Restore;
     }
 }

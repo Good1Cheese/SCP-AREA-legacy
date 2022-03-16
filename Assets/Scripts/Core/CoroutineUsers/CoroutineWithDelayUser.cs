@@ -29,5 +29,7 @@ public abstract class CoroutineWithDelayUser : CoroutineUser
         yield return timeout;
 
         yield return Coroutine();
+
+        IsCoroutineGoing = false;
     }
 }

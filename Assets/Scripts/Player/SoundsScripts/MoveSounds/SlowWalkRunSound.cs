@@ -3,8 +3,8 @@
 public class SlowWalkRunSound : MoveSound
 {
     [Inject]
-    private void Construct(SlowWalkRunController slowWalkRunController)
+    private void Construct(SlowWalkRun slowWalkRun)
     {
-        _moveController = slowWalkRunController;
+        _move = slowWalkRun;
     }
 }

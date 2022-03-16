@@ -12,9 +12,9 @@ public class RotationHeadBobWhileRun : MovementHeadBob
     private CurrentRotate _currentRotate;
 
     [Inject]
-    private void Construct(RunController runController)
+    private void Construct(Run runController)
     {
-        _moveController = runController;
+        _move = runController;
     }
 
     private void Awake()

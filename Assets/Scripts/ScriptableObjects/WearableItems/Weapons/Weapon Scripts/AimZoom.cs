@@ -17,7 +17,7 @@ public class AimZoom : MonoBehaviour
 
     private void Awake()
     {
-        _fovCurve.Initialize();
+        _fovCurve.InitializeDefault();
     }
 
     private void Start()
@@ -29,7 +29,7 @@ public class AimZoom : MonoBehaviour
 
     private void UpdateFOV()
     {
-        _playerCamera.fieldOfView = _fovCurve.Evaluate();
+        _playerCamera.fieldOfView = _fovCurve.GetCurrent();
     }
 
     private void OnDestroy()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemsSaving : DataSaving
 {
-    private ItemSaveableStateChanger[] _itemDataControllerss;
+    private ItemSaveableStateChanger[] _itemDataControllers;
 
     public bool[] itemsSaveableStates;
 
@@ -10,33 +10,33 @@ public class ItemsSaving : DataSaving
     {
         _gameSaving.SaveData.AddRange(gameObject.GetComponentsInChildren<DataSaving>());
 
-        _itemDataControllerss = gameObject.GetComponentsInChildren<ItemSaveableStateChanger>();
-        itemsSaveableStates = new bool[_itemDataControllerss.Length];
+        _itemDataControllers = gameObject.GetComponentsInChildren<ItemSaveableStateChanger>();
+        itemsSaveableStates = new bool[_itemDataControllers.Length];
     }
 
     public override void Save()
     {
-        for (int i = 0; i < _itemDataControllerss.Length; i++)
+        for (int i = 0; i < _itemDataControllers.Length; i++)
         {
-            itemsSaveableStates[i] = _itemDataControllerss[i].ItemDataHandler.IsSaveable;
+            itemsSaveableStates[i] = _itemDataControllers[i].ItemDataHandler.IsSaveable;
         }
     }
 
     public override void Load()
     {
-        for (int i = 0; i < _itemDataControllerss.Length; i++)
+        for (int i = 0; i < _itemDataControllers.Length; i++)
         {
             bool isItemSaveable = itemsSaveableStates[i];
-            _itemDataControllerss[i].SetSaveableState(isItemSaveable);
-            _itemDataControllerss[i].ItemHandler.GameObject.SetActive(isItemSaveable);
+            _itemDataControllers[i].SetSaveableState(isItemSaveable);
+            _itemDataControllers[i].ItemHandler.GameObject.SetActive(isItemSaveable);
         }
     }
 
     public override void Load(string json)
     {
-        ItemSaveableStateChanger[] itemDataHandlers = _itemDataControllerss;
+        ItemSaveableStateChanger[] itemDataHandlers = _itemDataControllers;
         JsonUtility.FromJsonOverwrite(json, this);
-        _itemDataControllerss = itemDataHandlers;
+        _itemDataControllers = itemDataHandlers;
         Load();
     }
 }

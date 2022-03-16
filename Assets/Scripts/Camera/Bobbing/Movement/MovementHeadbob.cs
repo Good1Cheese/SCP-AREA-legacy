@@ -11,7 +11,7 @@ public abstract class MovementHeadBob : CameraHeadBob
     private float _targetTime;
     private Vector3 _newPosition = Vector3.zero;
     protected sbyte _curveValueMultipliyer;
-    protected MoveController _moveController;
+    protected Move _move;
 
     protected override float СurveTime => _curveTime;
 
@@ -22,8 +22,8 @@ public abstract class MovementHeadBob : CameraHeadBob
 
     private void Start()
     {
-        _moveController.OnLeftStep += ActivateLeftStepHeadbob;
-        _moveController.OnRightStep += ActivateRightStepHeadbob;
+        _move.Actions.OnLeftStep += ActivateLeftStepHeadbob;
+        _move.Actions.OnRightStep += ActivateRightStepHeadbob;
     }
 
     private void ActivateLeftStepHeadbob()
@@ -75,7 +75,7 @@ public abstract class MovementHeadBob : CameraHeadBob
 
     private void OnDestroy()
     {
-        _moveController.OnLeftStep -= ActivateLeftStepHeadbob;
-        _moveController.OnRightStep -= ActivateRightStepHeadbob;
+        _move.Actions.OnLeftStep -= ActivateLeftStepHeadbob;
+        _move.Actions.OnRightStep -= ActivateRightStepHeadbob;
     }
 }

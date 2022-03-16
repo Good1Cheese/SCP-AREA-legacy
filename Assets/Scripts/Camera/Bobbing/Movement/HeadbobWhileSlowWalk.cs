@@ -3,8 +3,8 @@
 public class HeadBobWhileSlowWalk : MovementHeadBob
 {
     [Inject]
-    private void Construct(SlowWalkController slowWalkController)
+    private void Construct(SlowWalk slowWalk)
     {
-        _moveController = slowWalkController;
+        _move = slowWalk;
     }
 }

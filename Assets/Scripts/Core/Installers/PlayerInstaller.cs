@@ -25,24 +25,35 @@ public class PlayerInstaller : MonoInstaller
 
     private void BindMovement()
     {
+        Container.Bind<MoveSteps>()
+            .FromNew()
+            .AsSingle();
+
         Container.BindInstance(GetComponent<MovementInputLink>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<SlowWalkEffect>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<PlayerStamina>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<StaminaDisabler>())
             .AsSingle();
-        Container.BindInstance(GetComponent<MoveSpeed>())
+
+        Container.BindInstance(GetComponent<MovesContainer>())
             .AsSingle();
-        Container.BindInstance(GetComponent<RunController>())
+
+        Container.BindInstance(GetComponent<Run>())
             .AsSingle();
-        Container.BindInstance(GetComponent<SlowWalkRunController>())
+        Container.BindInstance(GetComponent<SlowWalkRun>())
             .AsSingle();
-        Container.BindInstance(GetComponent<SlowWalkController>())
+        Container.BindInstance(GetComponent<SlowWalk>())
             .AsSingle();
-        Container.BindInstance(GetComponent<WalkController>())
+
+        Container.BindInstance(GetComponent<Walk>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<StaminaDrain>())
             .AsSingle();
     }
@@ -51,12 +62,16 @@ public class PlayerInstaller : MonoInstaller
     {
         Container.BindInstance(GetComponent<PlayerHealth>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<BloodGain>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<HealableHealth>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<PlayerBlood>())
             .AsSingle();
+
         Container.BindInstance(GetComponent<InjuryEffectsController>())
             .AsSingle();
     }
@@ -94,7 +109,7 @@ public class PlayerInstaller : MonoInstaller
         Container.BindInstance(GetComponent<InputContainer>())
             .AsSingle();
 
-        Container.BindInstance(GetComponent<MovementInputHandler>())
+        Container.BindInstance(GetComponent<MovementInputGetter>())
             .AsSingle();
     }
 }

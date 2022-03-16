@@ -18,8 +18,8 @@ public class HealthBarUpdater : MonoBehaviour
 
     private void Awake()
     {
-        Func<float, bool> decreaseCondition = curveValue => curveValue > _playerHealth.Amount;
-        Func<float, bool> riseCondition = curveValue => curveValue < _playerHealth.Amount;
+        bool decreaseCondition(float curveValue) => curveValue > _playerHealth.Amount;
+        bool riseCondition(float curveValue) => curveValue < _playerHealth.Amount;
 
         _healthCurve.Initialize(riseCondition, decreaseCondition);
         _healthCurve.CurveTime = _healthCurve.Curve.GetLastKeyFrame().time;
@@ -32,12 +32,12 @@ public class HealthBarUpdater : MonoBehaviour
 
     private void UpdateHealthAmount()
     {
-        HealthBarUIController.Slider.value = _healthCurve.Evaluate();
+        HealthBarUIController.Slider.value = _healthCurve.GetCurrent();
     }
 
     public void UpdateUI()
     {
-        if (_healthCurve.Evaluate() > _playerHealth.Amount)
+        if (_healthCurve.GetCurrent() > _playerHealth.Amount)
         {
             _healthCurve.Decrease();
             return;

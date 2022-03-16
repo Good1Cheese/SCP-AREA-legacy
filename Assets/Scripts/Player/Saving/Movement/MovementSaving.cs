@@ -2,8 +2,8 @@ using Zenject;
 
 public class MovementSaving : DataSaving
 {
-    [Inject] private readonly MoveSpeed _moveSpeed;
-    [Inject] private readonly SlowWalkController _slowWalkController;
+    [Inject] private readonly MovesContainer _movesContainer;
+    [Inject] private readonly SlowWalk _slowWalk;
 
     public float speed;
     public float moveTime;
@@ -11,20 +11,20 @@ public class MovementSaving : DataSaving
 
     public override void Save()
     {
-        speed = _moveSpeed.Speed;
-        moveTime = _moveSpeed.MoveTime;
-        isSlowWalkUsing = _slowWalkController.IsMoving;
+        speed = _movesContainer.Speed;
+        moveTime = _movesContainer.MoveTime;
+        isSlowWalkUsing = _slowWalk.Using;
     }
 
     public override void Load()
     {
-        _moveSpeed.Speed = speed;
-        _moveSpeed.MoveTime = moveTime;
+        _movesContainer.Speed = speed;
+        _movesContainer.MoveTime = moveTime;
 
         if (!isSlowWalkUsing) { return; }
 
-        _slowWalkController.IsMoving = true;
-        _slowWalkController.UseStarted?.Invoke();
-        _slowWalkController.GetSpeed();
+        _slowWalk.Using = true;
+        _slowWalk.Actions.UseStarted?.Invoke();
+        _slowWalk.Use();
     }
 }

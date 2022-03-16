@@ -2,10 +2,10 @@
 
 public class InjurySlowDownEffect : InjuryEffect
 {
-    [Inject] private readonly MoveSpeed _moveSpeed;
+    [Inject] private readonly MovesContainer _movesContainer;
 
     protected override float EffectValue
     {
-        set => _moveSpeed.SlowDownFactor = value;
+        set => _movesContainer.SlowDownFactor = value;
     }
 }

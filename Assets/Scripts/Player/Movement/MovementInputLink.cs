@@ -1,36 +1,31 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
-[RequireComponent(typeof(CharacterController), typeof(MoveSpeed), typeof(PlayerStamina))]
+[RequireComponent(typeof(CharacterController), typeof(MovesContainer), typeof(PlayerStamina))]
 public class MovementInputLink : MonoBehaviour
 {
     private const float MOVE_MAGNUTUDE_MAX_LENGHT = 1f;
 
-    private MoveSpeed _movementController;
-    private WalkController _walkController;
+    private MovesContainer _movesContainer;
     private PauseMenuToggler _pauseMenuToggler;
-    private Transform _playerTransform;
+    private Transform _player;
     private CharacterController _characterController;
-    private bool _isPlayerMoving;
+    private bool _moving;
 
-    public Action NotMoving { get; set; }
     public Action StoppedMoving { get; set; }
     public float HorizontalMove { get; set; }
     public float VerticalMove { get; set; }
 
     [Inject]
-    private void Construct(MoveSpeed movementController,
-                           WalkController walkController,
+    private void Construct(MovesContainer movesContainer,
                            PauseMenuToggler pauseMenuToggler,
                            [Inject(Id = "Player")] Transform playerTransform,
                            CharacterController characterController)
     {
-        _movementController = movementController;
-        _walkController = walkController;
+        _movesContainer = movesContainer;
         _pauseMenuToggler = pauseMenuToggler;
-        _playerTransform = playerTransform;
+        _player = playerTransform;
         _characterController = characterController;
     }
 
@@ -39,41 +34,45 @@ public class MovementInputLink : MonoBehaviour
         _pauseMenuToggler.Toggled += ReverseEnableState;
     }
 
-    private void ReverseEnableState()
-    {
-        enabled = !enabled;
-    }
+    private void ReverseEnableState() => enabled = !enabled;
 
-    private void Update()
+    public void Handle(ref Vector2 input)
     {
-        HorizontalMove = Input.GetAxis("Horizontal");
-        VerticalMove = Input.GetAxis("Vertical");
+        HorizontalMove = input.x;
+        VerticalMove = input.y;
 
-        if (HorizontalMove == 0 && VerticalMove == 0)
+        if (input.x == 0 && input.y == 0)
         {
-            NotMoving?.Invoke();
-            _movementController.MoveTime = 0;
-            _movementController.StepTime = 0;
-
-            if (_isPlayerMoving)
-            {
-                StoppedMoving?.Invoke();
-                _walkController.StopMove();
-                _isPlayerMoving = false;
-            }
-
+            StopMovement();
+            DecreasteMoveTime();
             return;
         }
 
-        _isPlayerMoving = true;
-        MovePlayer(_movementController.GetPlayerSpeed());
+        _moving = true;
+        Move(_movesContainer.CheckAndReturnSpeed());
     }
 
-    private void MovePlayer(float moveSpeed)
+    private void StopMovement()
     {
-        Vector3 move = _playerTransform.right * HorizontalMove + _playerTransform.forward * VerticalMove;
+        if (!_moving) { return; }
+
+        StoppedMoving?.Invoke();
+        _moving = false;
+    }
+
+    private void DecreasteMoveTime()
+    {
+        if (_movesContainer.MoveTime < 0) { return; }
+
+        _movesContainer.MoveTime -= Time.deltaTime;
+    }
+
+    private void Move(float speed)
+    {
+        Vector3 move = _player.right * HorizontalMove + _player.forward * VerticalMove;
         move = Vector3.ClampMagnitude(move, MOVE_MAGNUTUDE_MAX_LENGHT) * Time.deltaTime;
-        _characterController.Move(move * moveSpeed);
+
+        _characterController.Move(move * speed);
     }
 
     private void OnDestroy()
